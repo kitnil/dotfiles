@@ -1792,7 +1792,7 @@ PasswordAuthentication yes")))
                                       (include . ,(run-with-store (open-connection)
                                                     (lower-object
                                                      (local-file
-                                                      (string-append %distro-directory "dotfiles/guixsd/etc/nginx/stream.conf")))))))
+                                                      (string-append %distro-directory "/dotfiles/guixsd/etc/nginx/stream.conf")))))))
                                    (server-blocks %nginx-server-blocks)
                                    (upstream-blocks
                                     (list
