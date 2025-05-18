@@ -29,7 +29,7 @@
            ("dest" . ,%dotfiles-directory)))
          (("name" . "Pull Guix")
           ("guix_pull"
-           ("channels" . ,(string-append %dotfiles-directory "/dotfiles/channels-current.scm"))))
+           ("channels" . ,(string-append %dotfiles-directory "/dotfiles/guixsd.scm"))))
          (("name" . "Apply Guix manifest")
           ("guix_package"
            ("profile" . ,%user-profile-directory)
@@ -40,7 +40,7 @@
        .
        #((("name" . "Pull Guix")
           ("guix_pull"
-           ("channels" . ,(string-append %dotfiles-directory "/dotfiles/channels-current.scm"))))))
+           ("channels" . ,(string-append %dotfiles-directory "/dotfiles/guixsd.scm"))))))
       ("hosts" . #("guix_vm" "guix_work"))
       ("become_flags" . "-i")
       ("become" . "yes")))))
