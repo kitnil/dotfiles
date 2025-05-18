@@ -3,6 +3,6 @@ kind: Kustomization
 namespace: guix
 nameSuffix: -workstation
 resources:
-- ../../base/maintenance-guix-image-workstation
+- ../../base/maintenance-guix-system-build
 patchesStrategicMerge:
 - job.yaml
