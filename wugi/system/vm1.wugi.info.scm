@@ -132,12 +132,12 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                        (local-file
                                         (string-append
                                          %distro-directory
-                                         "etc/iptables/iptables.rules")))
+                                         "/etc/iptables/iptables.rules")))
                                       (ipv6-rules
                                        (local-file
                                         (string-append
                                          %distro-directory
-                                         "etc/iptables/ip6tables.rules")))))
+                                         "/etc/iptables/ip6tables.rules")))))
                             (service ntp-service-type
                                      (ntp-configuration
                                       (servers
@@ -153,7 +153,7 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                           ,(local-file
                                             (string-append
                                              %distro-directory
-                                             "ssh/id_rsa_jenkins.wugi.info.pub")))))
+                                             "/ssh/id_rsa_jenkins.wugi.info.pub")))))
                                       (password-authentication? #f)
                                       (gateway-ports? 'client)
                                       (use-pam? #f)
