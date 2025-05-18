@@ -193,7 +193,7 @@ $(foreach configuration,$(guix-system-configurations),guix-system-configuration-
 
 prefix := time-machine-guix-system-configuration-
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-system-configuration-$(configuration)):
-$(call guix-time-machine-arguments) -- $(call guix-system-arguments,$(prefix),$@)
+	$(call guix-time-machine-arguments) -- $(call guix-system-arguments,$(prefix),$@)
 
 prefix := guix-package-manifest-
 $(foreach configuration,$(guix-system-configurations),guix-package-manifest-$(configuration)):
