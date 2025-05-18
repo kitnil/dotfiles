@@ -1,15 +1,15 @@
-(use-modules (gnu)
-             (gnu packages certs)
-             (gnu packages linux)
-             (nongnu packages linux)
-             (nongnu system linux-initrd))
-(use-service-modules networking)
-
-(use-modules (gnu packages xorg) (gnu packages ratpoison))
-(use-service-modules xorg desktop)
-
-(use-modules (wugi bootloader grub)
-             (packages linux))
+(define-module (wugi system hardware guixsd)
+  #:use-module (gnu)
+  #:use-module (gnu packages certs)
+  #:use-module (gnu packages xorg)
+  #:use-module (gnu packages ratpoison)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu services desktop)
+  #:use-module (gnu services networking)
+  #:use-module (gnu services xorg)
+  #:use-module (nongnu packages linux)
+  #:use-module (nongnu system linux-initrd)
+  #:use-module (wugi bootloader grub))
 
 (define (amdgpu+amdgpu.conf)
   (string-append "\
