@@ -28,6 +28,7 @@
   #:use-module (guix gexp)
   #:use-module (wugi packages mail)
   #:use-module (wugi services certbot)
+  #:use-module (wugi utils)
   #:export (%mail-hosts-file-hosts
             %mail-packages
             %mail-services
@@ -65,7 +66,9 @@
 (define %exim-configuration
   (exim-configuration
    (package exim-lmtp)
-   (config-file (local-file "../../exim.conf"))))
+   (config-file
+    (local-file
+     (string-append %distro-directory "/dotfiles/guixsd/exim.conf")))))
 
 (define (exim-wrapper config)
   (let ((wrapper
