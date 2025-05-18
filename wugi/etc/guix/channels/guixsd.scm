@@ -33,7 +33,7 @@
             "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"))))
         (channel
          (name 'prometheus-shepherd-exporter)
-         (url "https://gitlab.com/wigust/prometheus-shepherd-exporter")
+         (url "https://cgit.wugi.info/git/guix/prometheus-shepherd-exporter")
          (branch "master")
          (commit
           "542ec52c4955c854e770f615148ced99de5e9fec"))))
