@@ -43,6 +43,7 @@
   #:use-module (wugi services monitoring)
   #:use-module (wugi services nix)
   #:use-module (wugi services openvpn)
+  #:use-module (wugi utils)
   #:use-module (wugi utils package)
   #:export (%notebook))
 
