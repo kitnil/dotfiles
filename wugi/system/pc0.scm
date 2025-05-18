@@ -275,7 +275,11 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                        "iptable_nat"
                                        "iptable_mangle"
                                        "iptable_raw"
-                                       "iptable_filter"))
+                                       "iptable_filter"
+
+                                       ;; ddc to backlight interface.
+                                       "ddcci"
+                                       "ddcci_backlight"))
                             (service containerd-service-type)
                             (service docker-service-type)
                             (service kubelet-service-type
