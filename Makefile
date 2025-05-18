@@ -161,7 +161,7 @@ guix-system-configurations =			\
   vm2
 
 define guix-system-arguments
-build --load-path=. -e "((@ (wugi system $(subst $(1),,$(2))) %$(subst $(1),,$(2))))"
+guix time-machine --channels=wugi/etc/guix/channels/$(subst $(1),,$(2)).scm -- build --load-path=. -e "((@ (wugi system $(subst $(1),,$(2))) %$(subst $(1),,$(2))))"
 endef
 
 define guix-package-manifest-arguments
@@ -170,7 +170,7 @@ endef
 
 prefix := guix-system-configuration-
 $(foreach configuration,$(guix-system-configurations),$(configuration)):
-	guix $(call guix-system-arguments,$(prefix),$@)
+	$(call guix-system-arguments,$(prefix),$@)
 
 prefix := time-machine-guix-system-configuration-
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-system-configuration-$(configuration)):
