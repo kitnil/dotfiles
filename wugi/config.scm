@@ -745,7 +745,10 @@ remote-random
                                           #~(begin
                                               (use-modules (json builder))
                                               (define jenkins-jobs
-                                                #$(local-file "../../jenkins/jobs.groovy"))
+                                                #$(local-file
+                                                   (string-append
+                                                    %distro-directory
+                                                    "/dotfiles/jenkins/jobs.groovy")))
                                               (with-output-to-file #$output
                                                 (lambda ()
                                                   (scm->json
