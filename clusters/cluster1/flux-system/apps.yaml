@@ -483,6 +483,7 @@ spec:
   dependsOn:
   - name: maintenance-git-dotfiles-kube2
   prune: true
+  suspend: true
   sourceRef:
     kind: GitRepository
     name: flux-system
