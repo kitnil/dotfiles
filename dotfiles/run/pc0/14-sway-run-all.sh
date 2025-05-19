@@ -176,7 +176,7 @@ sleep 0.4
 
 swaymsg layout tabbed
 
-pactl set-default-sink alsa_output.pci-0000_12_00.4.analog-stereo
+pactl set-default-sink alsa_output.pci-0000_12_00.6.analog-stereo
 
 pactl set-source-volume alsa_input.usb-FIFINE_Microphones_FIFINE_K670_Microphone_REV1.0-00.analog-stereo 80%
 EOF
