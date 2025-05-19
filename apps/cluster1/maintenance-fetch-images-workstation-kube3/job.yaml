@@ -15,6 +15,8 @@ spec:
         env:
         - name: FETCH_IMAGES_KUSTOMIZATION_FILE
           value: /home/oleg/.local/share/chezmoi/apps/cluster1/workstation/workstation-kube3/kustomization.yaml
+        - name: GIT_COMMIT
+          value: 755a865020ab4c2e305dd578dab0da227d8df0f9
       nodeSelector:
         kubernetes.io/hostname: kube3
       tolerations:
