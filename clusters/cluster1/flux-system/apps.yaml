@@ -576,6 +576,7 @@ metadata:
 spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-guix-system-reconfigure-kube1
+  suspend: true
   prune: true
   # This means that the maintenance-guix-home-reconfigure-kube1 Kustomization
   # will wait until all the Jobs in maintenance-guix-pull-kube1 run to
