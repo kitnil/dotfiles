@@ -15,21 +15,7 @@ spec:
       hostPID: true
       restartPolicy: Never
       containers:
-      - command:
-        - nsenter
-        - --target
-        - "1"
-        - --mount
-        - --uts
-        - --ipc
-        - --net
-        - --pid
-        - --no-fork
-        - /bin/sh
-        - -l
-        - -c
-        - sudo --user=oleg --login bash -ic 'exec &> >(tee -a /home/oleg/.local/var/log/containers/guix-system-switch.log); guix system switch --allow-downgrades'
-        image: docker-registry.wugi.info/library/util-linux-with-udev
+      - image: docker-registry.wugi.info/library/util-linux-with-udev:44cd2b5c
         name: refresh
         resources:
           limits:
@@ -40,3 +26,62 @@ spec:
             memory: 512Mi
         securityContext:
           privileged: true
+        command:
+        - /bin/guile
+        - --no-auto-compile
+        - -c
+        - |
+          (define (host-code)
+            `(begin
+               (define (git . args)
+                 (apply system* (append '("guix" "shell" "git" "--" "git") args)))
+               (system* "/usr/bin/env")
+               (and=>
+                (getenv "HOME")
+                (lambda (home)
+                  (let ((commit ,(getenv "GIT_COMMIT"))
+                        (workdir
+                         (mkdtemp
+                          (string-append
+                           home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX"))))
+                    (chdir workdir)
+                    (and
+                     (zero? (git "init"))
+                     (zero?
+                      (git "remote" "add" "origin" ,%git-origin))
+                     (zero?
+                      (git "fetch" "--depth" (number->string 1) "origin" commit))
+                     (zero? (git "checkout" commit))
+                     (zero?
+                      (system*
+                       "guix" "system" "reconfigure"
+                       "--load-path=."
+                       (string-append "--expression="
+                                      ,(and=> (getenv "GUIX_SYSTEM")
+                                              (lambda (system-name)
+                                                (with-output-to-string
+                                                  (lambda ()
+                                                    (write
+                                                     `(@ (wugi system ,system-name) %,system-name)))))))))))))))
+
+          (apply system*
+                 `("nsenter"
+                   ,(string-append "--target=" (number->string 1))
+                   "--mount"
+                   "--uts"
+                   "--ipc"
+                   "--net"
+                   "--pid"
+                   "--no-fork"
+                   ,@(or (and=> (getenv "NSENTER_UID")
+                                (lambda (uid)
+                                  (list (string-append "--setuid=" uid))))
+                         '())
+                   ,@(or (and=> (getenv "NSENTER_GID")
+                                (lambda (gid)
+                                  (list (string-append "--setgid=" gid))))
+                         '())
+                   "/run/current-system/profile/bin/guile" "--no-auto-compile"
+                   "-c" ,(with-output-to-string
+                           (lambda ()
+                             (write (guile-with-environment (host-code)))))))
