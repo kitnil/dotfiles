@@ -49,7 +49,7 @@
 (defun aichat-git-common (buffer-first-character)
   (insert
    (shell-command-to-string
-    (concat "cat <(git diff --staged) <(git diff) | aichat --prompt \"" aichat-git-prompt "\"")))
+    (concat "cat <(git diff --staged) | aichat --prompt \"" aichat-git-prompt "\"")))
 
   (goto-char 0)
   (replace-string "Fix: job.yaml -" "")
