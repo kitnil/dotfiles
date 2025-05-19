@@ -13,3 +13,13 @@
 (add-hook 'yaml-mode-hook
           '(lambda ()
              (set (make-local-variable 'yas-indent-line) 'nil)))
+
+(defun yaml-code-block-edit ()
+  "Edit the current synopsis/description in `texinfo-mode'."
+  (interactive)
+  (let* ((begin (point))
+         (end (point))
+         (edit-indirect-guess-mode-function
+          (lambda (&rest _)
+            (scheme-mode))))
+    (edit-indirect-region begin end 'display-buffer)))
