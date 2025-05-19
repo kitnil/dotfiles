@@ -33,6 +33,77 @@
   (let ((map vc-git-log-view-mode-map))
     (define-key map (kbd "s") 'magit-show-commit)))
 
+(defvar aichat-git-prompt
+  (string-join
+   '("Generate Git commit message following Changelog style."
+     "First commit line should end with a period as a sentence followed by a newline and a more detailed description."
+     "Each modified file should be described as in example \"* a/b/c.txt: Add something.\"."
+     "Without saying what you are doing."
+     "Limit is 200 characters."
+     "Maximum column width is 78 characters."
+     "Avoid write \"Add\" \"Update\" \"Delete\" words instead \"Fix\" or \"feat\" in a commit title (first line)."
+     "Make sure dots not duplicated in a first line."
+     "If a single file was in a diff then first line should contain a path to this file separated by colon symbol.")
+   " "))
+
+(defun aichat-git-common (buffer-first-character)
+  (insert
+   (shell-command-to-string
+    (concat "cat <(git diff --staged) <(git diff) | aichat --prompt \"" aichat-git-prompt "\"")))
+
+  (goto-char 0)
+  (replace-string "Fix: job.yaml -" "")
+
+  (goto-char 0)
+  (replace-string ".." ".")
+
+  (goto-char 0)
+  (replace-string "``` " "")
+
+  (goto-char 0)
+  (replace-string " ```" "")
+
+  (goto-char 0)
+  (replace-string "```" "")
+
+  (goto-char 0)
+  (replace-string "Fix: " "")
+
+  (goto-char 0)
+  (replace-string "feat: " "")
+
+  (goto-char 0)
+  (replace-string "`" "")
+
+  (goto-char buffer-first-character)
+  (let ((end (progn (end-of-line) (point))))
+    (goto-char 0)
+    (save-excursion
+      (replace-string "/" ": " nil 0 end))
+    (save-excursion
+      (replace-string "private_dot_emacs.d: modules: " "emacs: "
+                      nil 0 end))
+    (save-excursion
+      (replace-string ".el" "" nil 0 end))
+    (save-excursion
+      (replace-string " -" ":" nil 0 end))
+    (save-excursion
+      (replace-string "guixsd.scm " "system: guixsd: " nil 0 end)))
+
+  (goto-char buffer-first-character)
+  (next-line)
+  (fill-region (point) (point-max))
+
+  (goto-char buffer-first-character)
+  (next-line)
+  (replace-string "  *" "\n*" nil (point) (point-max)))
+
+(defun vc-aichat ()
+  (aichat-git-common 2))
+
+(add-hook 'log-edit-hook #'vc-aichat)
+(add-hook 'log-edit-hook #'auto-fill-mode)
+
 
 ;;;
 ;;; Git Gutter
@@ -44,9 +115,9 @@
   (flet ((yes-or-no-p (action)
                       (y-or-n-p
                        (format "%s current hunk ? " action))))
-    (git-gutter:query-action "Stage"
-                             #'git-gutter:do-stage-hunk
-                             #'git-gutter)))
+        (git-gutter:query-action "Stage"
+                                 #'git-gutter:do-stage-hunk
+                                 #'git-gutter)))
 
 (advice-add 'git-gutter:stage-hunk
             :override #'wi-git-gutter:stage-hunk)
@@ -311,6 +382,13 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   (setq magit-process-password-prompt-regexps
         '("^\r?\\(Enter \\)?[Pp]assphrase\\( for \\(RSA \\)?key '.*'\\)?: ?$" "^\\(Enter \\)?[Pp]assword\\( for '\\(https?://\\)?\\(?99:.*\\)'\\)?: ?$" "^.*'s password: ?$" "^Yubikey for .*: ?$" "^Enter PIN for .*: ?$")))
 
+(defun git-commit-aichat ()
+  (delete-region (point) (point-max))
+  (let ((default-directory (projectile-project-root)))
+    (aichat-git-common 0)))
+
+(add-hook 'git-commit-setup-hook #'git-commit-aichat)
+
 
 ;;;
 ;;; magit-todos
@@ -323,81 +401,3 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ;; NOTE: Use ivy-magit-todos instead of magit-todos-mode
 (when (boundp #'magit-todos-mode)
   (magit-todos-mode))
-
-
-;;;
-;;; vc
-;;;
-
-
-
-;;;
-;;; git-auto-commit-mode
-;;;
-
-(defun vc-aichat ()
-  (let ((prompt
-         (string-join
-          '("Generate Git commit message following Changelog style."
-            "First commit line should end with a period as a sentence followed by a newline and a more detailed description."
-            "Each modified file should be described as in example \"* a/b/c.txt: Add something.\"."
-            "Without saying what you are doing."
-            "Limit is 200 characters."
-            "Maximum column width is 78 characters."
-            "Avoid write \"Add\" \"Update\" \"Delete\" words instead \"Fix\" or \"feat\" in a commit title (first line)."
-            "Make sure dots not duplicated in a first line."
-            "If a single file was in a diff then first line should contain a path to this file separated by colon symbol.")
-          " ")))
-    (insert
-     (shell-command-to-string
-      (concat "cat <(git diff --staged) <(git diff) | aichat --prompt \"" prompt "\"")))
-    (save-excursion
-      (goto-char 0)
-      (replace-string "Fix: job.yaml -" "")
-
-      (goto-char 0)
-      (replace-string ".." ".")
-
-      (goto-char 0)
-      (replace-string "``` " "")
-
-      (goto-char 0)
-      (replace-string " ```" "")
-
-      (goto-char 0)
-      (replace-string "```" "")
-
-      (goto-char 0)
-      (replace-string "Fix: " "")
-
-      (goto-char 0)
-      (replace-string "feat: " "")
-
-      (goto-char 0)
-      (replace-string "`" "")
-
-      (goto-char 2)
-      (let ((end (progn (end-of-line) (point))))
-        (goto-char 0)
-        (save-excursion
-          (replace-string "/" ": " nil 0 end))
-        (save-excursion
-          (replace-string "private_dot_emacs.d: modules: " "emacs: "
-                          nil 0 end))
-        (save-excursion
-          (replace-string ".el" "" nil 0 end))
-        (save-excursion
-          (replace-string " -" ":" nil 0 end))
-        (save-excursion
-          (replace-string "guixsd.scm " "system: guixsd: " nil 0 end)))
-
-      (goto-char 2)
-      (next-line)
-      (fill-region (point) (point-max))
-
-      (goto-char 2)
-      (next-line)
-      (replace-string "  *" "\n*" nil (point) (point-max)))))
-
-(add-hook 'log-edit-hook #'vc-aichat)
-(add-hook 'log-edit-hook #'auto-fill-mode)
