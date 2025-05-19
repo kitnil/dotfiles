@@ -64,6 +64,20 @@ spec:
                                                     (write
                                                      `(@ (wugi system ,system-name) %,system-name)))))))))))))))
 
+          (define (guile-with-environment expression)
+            `(let* ((user (getpw (getuid)))
+                    (name (passwd:name user))
+                    (shell (passwd:shell user)))
+               (execl shell shell "--login" "-c"
+                      (with-output-to-string
+                        (lambda ()
+                          (write
+                           (list
+                            "/run/current-system/profile/bin/guile" "--no-auto-compile"
+                            "-c" ,(with-output-to-string
+                                    (lambda ()
+                                      (write expression))))))))))
+
           (apply system*
                  `("nsenter"
                    ,(string-append "--target=" (number->string 1))
