@@ -31,6 +31,9 @@ spec:
         - --no-auto-compile
         - -c
         - |
+          (define %git-origin
+            "https://cgit.wugi.info/git/wigust/dotfiles")
+
           (define (host-code)
             `(begin
                (define (git . args)
