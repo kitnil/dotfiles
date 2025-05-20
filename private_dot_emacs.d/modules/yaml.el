@@ -17,8 +17,8 @@
 (defun yaml-code-block-edit ()
   "Edit the current synopsis/description in `texinfo-mode'."
   (interactive)
-  (let* ((begin (point))
-         (end (point))
+  (let* ((begin (region-beginning))
+         (end (region-end))
          (edit-indirect-guess-mode-function
           (lambda (&rest _)
             (scheme-mode))))
