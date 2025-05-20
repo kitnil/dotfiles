@@ -68,8 +68,8 @@ spec:
                                     (with-output-to-string
                                       (lambda ()
                                         (write
-                                         `(@ (wugi system ,system-name-symbol)
-                                             ,(symbol-append '% system-name-symbol)))))))))))))))))
+                                         `((@ (wugi system ,system-name-symbol)
+                                              ,(symbol-append '% system-name-symbol))))))))))))))))))
 
           (define (guile-with-environment expression)
             `(let* ((user (getpw (getuid)))
