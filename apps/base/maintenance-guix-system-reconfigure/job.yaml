@@ -42,11 +42,12 @@ spec:
                (and=>
                 (getenv "HOME")
                 (lambda (home)
-                  (let ((commit ,(getenv "GIT_COMMIT"))
-                        (workdir
-                         (mkdtemp
-                          (string-append
-                           home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX"))))
+                  (let* ((commit ,(getenv "GIT_COMMIT"))
+                         (checkouts (string-append home "/.cache/wigust/checkouts"))
+                         (workdir
+                          (begin
+                            (system* "mkdir" "-p" checkouts)
+                            (mkdtemp (string-append checkouts "/dotfiles.XXXXXXXXXX")))))
                     (chdir workdir)
                     (and
                      (zero? (git "init"))
