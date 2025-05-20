@@ -19,7 +19,7 @@ spec:
                 - "false"
       initContainers:
       - name: install-multus-binary
-        image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.0.2-thick
+        image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.2.0
       - name: install-cni
         image: ghcr.io/siderolabs/install-cni:v1.7.0
         command:
@@ -32,7 +32,7 @@ spec:
           name: cnibin
       containers:
       - name: kube-multus
-        image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.0.2-thick
+        image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.2.0
         volumeMounts:
         - mountPath: /var/run/cilium
           name: cilium-run
