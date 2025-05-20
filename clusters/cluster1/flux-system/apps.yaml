@@ -637,8 +637,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-guix-system-reconfigure-kube3
   prune: true
-  dependsOn:
-  - name: maintenance-guix-pull-kube3
   sourceRef:
     kind: GitRepository
     name: flux-system
