@@ -152,9 +152,9 @@ install_pycharm()
     aur install pycharm-community-edition
 }
 
-install_vscode()
+install_vscodium()
 {
-    aur install vscode
+    aur install vscodium
 }
 
 install_wlvncc()
@@ -162,16 +162,17 @@ install_wlvncc()
     aur install wlvncc-git
 }
 
-install_vscode_extensions()
+install_vscodium_extensions()
 {
-    local extensions=(
-        golang.go
-        sumneko.lua
-    )
-    for extension in "${extensions[@]}"
-    do
-        sudo -u oleg -i code --install-extension "$extension"
-    done
+    sudo -u oleg -i bash <<'EOF'
+curl  -L -o golang.Go-0.46.1.vsix https://marketplace.windsurf.com/api/golang/Go/0.46.1/file/golang.Go-0.46.1.vsix
+codium --install-extension golang.Go-0.46.1.vsix
+rm golang.Go-0.46.1.vsix
+
+curl  -L -o sumneko.lua-3.14.0.vsix https://open-vsx.org/api/sumneko/lua/linux-x64/3.14.0/file/sumneko.lua-3.14.0@linux-x64.vsix
+codium --install-extension sumneko.lua-3.14.0.vsix
+rm sumneko.lua-3.14.0.vsix
+EOF
 }
 
 install_kubebuilder()
@@ -207,12 +208,13 @@ main()
     base_system
     locale-gen
 
-    install_socialstream
     install_aura
+
+    install_vscodium
+    install_vscodium_extensions
+    install_socialstream
     install_idea
     install_pycharm
-    install_vscode
-    install_vscode_extensions
     install_kubebuilder
     install_kind
     install_dlv
