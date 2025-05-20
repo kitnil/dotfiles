@@ -70,6 +70,7 @@
 (load-config-file "utils.el")
 
 (load-config-file "dired.el")
+(load-config-file "window.el")
 (load-config-file "ffap.el")
 (load-config-file "nav.el")
 (load-config-file "keys.el")
