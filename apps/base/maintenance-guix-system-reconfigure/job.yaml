@@ -17,6 +17,9 @@ spec:
       containers:
       - image: harbor.home.wugi.info/library/util-linux-with-udev:44cd2b5c
         name: refresh
+        env:
+        - name: HOME
+          value: /root
         resources:
           limits:
             cpu: 14000m
