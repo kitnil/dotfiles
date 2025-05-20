@@ -80,10 +80,6 @@ packages+=(
     zenity
 )
 
-packages+=(
-    code
-)
-
 base_system()
 {
     groups=(
@@ -156,6 +152,11 @@ install_pycharm()
     aur install pycharm-community-edition
 }
 
+install_vscode()
+{
+    aur install vscode
+}
+
 install_wlvncc()
 {
     aur install wlvncc-git
@@ -210,6 +211,7 @@ main()
     install_aura
     install_idea
     install_pycharm
+    install_vscode
     install_vscode_extensions
     install_kubebuilder
     install_kind
