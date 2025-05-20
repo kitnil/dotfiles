@@ -64,10 +64,12 @@ spec:
                         "--expression="
                         ,(and=> (getenv "GUIX_SYSTEM")
                                 (lambda (system-name)
-                                  (with-output-to-string
-                                    (lambda ()
-                                      (write
-                                       `(@ (wugi system ,system-name) ,(symbol-append '% system-name))))))))))))))))
+                                  (let ((system-name-symbol (string->symbol system-name)))
+                                    (with-output-to-string
+                                      (lambda ()
+                                        (write
+                                         `(@ (wugi system ,system-name-symbol)
+                                             ,(symbol-append '% system-name-symbol)))))))))))))))))
 
           (define (guile-with-environment expression)
             `(let* ((user (getpw (getuid)))
