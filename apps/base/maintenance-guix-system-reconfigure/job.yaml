@@ -94,14 +94,6 @@ spec:
                    "--net"
                    "--pid"
                    "--no-fork"
-                   ,@(or (and=> (getenv "NSENTER_UID")
-                                (lambda (uid)
-                                  (list (string-append "--setuid=" uid))))
-                         '())
-                   ,@(or (and=> (getenv "NSENTER_GID")
-                                (lambda (gid)
-                                  (list (string-append "--setgid=" gid))))
-                         '())
                    "/run/current-system/profile/bin/guile" "--no-auto-compile"
                    "-c" ,(with-output-to-string
                            (lambda ()
