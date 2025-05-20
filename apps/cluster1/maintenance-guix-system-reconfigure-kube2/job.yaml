@@ -11,6 +11,6 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: kube2
       tolerations:
-        - key: edge.cluster.local/not-schedulable
-          operator: Equal
-          effect: NoSchedule
+      - key: edge.cluster.local/not-schedulable
+        operator: Equal
+        effect: NoSchedule
