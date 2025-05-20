@@ -10,6 +10,13 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: kube2
+      containers:
+      - name: refresh
+        env:
+        - name: GIT_COMMIT
+          value: 4133d5518eed520ef037a8b77addf355d5bf18e9
+        - name: GUIX_SYSTEM
+          value: notebook
       tolerations:
       - key: edge.cluster.local/not-schedulable
         operator: Equal
