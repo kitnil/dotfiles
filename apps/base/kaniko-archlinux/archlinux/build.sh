@@ -137,7 +137,7 @@ aur()
 {
     case "$1" in
         install)
-            aura --noconfirm -A "$2"
+            sudo -u oleg -i aura --noconfirm -A "$2"
             ;;
     esac
 }
