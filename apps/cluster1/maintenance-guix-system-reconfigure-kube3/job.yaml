@@ -18,7 +18,7 @@ spec:
         - name: GUIX_SYSTEM
           value: pc0
         - name: HOME
-          value: /home/oleg
+          value: /root
       tolerations:
       - key: workstation.cluster.local
         operator: Equal
