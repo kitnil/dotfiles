@@ -50,6 +50,8 @@
   `(begin
      (define (git . args)
        (apply system* (append '("guix" "shell" "git" "--" "git") args)))
+     (define dependencies
+       '("git" "autoconf" "automake" "make" "skopeo"))
      (system* "/usr/bin/env")
      (and=> (getenv "HOME")
             (lambda (home)
@@ -66,8 +68,14 @@
                  (zero?
                   (git "fetch" "--depth" (number->string 1) "origin" commit))
                  (zero? (git "checkout" commit))
-                 (zero? (system* "guix" "shell" "git" "make" "skopeo" "--"
-                                 "make" (getenv "RUNC_MAKE_TARGET")))))))))
+                 (for-each (lambda (command)
+                             (zero?
+                              (apply system*
+                                     (append `("guix" "shell" ,dependencies "--")
+                                             command))))
+                           `(("./bootstrap")
+                             ("./configure")
+                             ("make" ,(getenv "RUNC_MAKE_TARGET"))))))))))
 
 (define kubectl
   "/home/oleg/.guix-profile")
