@@ -1,0 +1,9 @@
+#!/usr/bin/env -S guile --no-auto-compile -s
+!#
+
+(define %outputs
+  '("DP-1" "HDMI-A-1"))
+
+(for-each (lambda (output)
+            (system* "swaymsg" "output" output "dpms" "on"))
+          %outputs)
