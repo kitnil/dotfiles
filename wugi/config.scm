@@ -230,8 +230,7 @@ EndSection\n")
           %xorg-packages))
 
 (define %pc0-packages
-  (append %admin-packages
-          %audio-packages))
+  (append %admin-packages))
 
 (define %my-setuid-programs
   (append (list (setuid-program (program (file-append fping "/sbin/fping")))
