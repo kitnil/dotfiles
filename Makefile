@@ -51,7 +51,7 @@ guix/dotfiles/guile/ssh.txt: guix/dotfiles/guile/ssh.scm
 	guile guix/dotfiles/guile/ssh.scm > guix/dotfiles/guile/ssh.txt
 
 guix/wugi/home/config/openssh.scm:
-	gpg --quiet --decrypt guix/wugi/home/config/openssh.scm.gpg > guix/wugi/home/config/openssh.scm
+	pass show dotfiles/guix/wugi/home/config/openssh.scm > guix/wugi/home/config/openssh.scm
 
 .PHONY: guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
 guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm:
@@ -96,7 +96,7 @@ guix/dotfiles/mjru/intr.nix:
 	guix/dotfiles/mjru/intr.nix > guix/wugi/etc/mjru/intr.json
 
 guix/wugi/etc/mjru/intr.json:
-	gpg --decrypt guix/wugi/etc/mjru/intr.json.gpg > guix/wugi/etc/mjru/intr.json
+	pass show dotfiles/guix/wugi/etc/mjru/intr.json > guix/wugi/etc/mjru/intr.json
 
 .PHONY: install
 install: guix/wugi/home/config/openssh.scm guix/dotfiles/guixsd/machines.scm guix/dotfiles/nix/nix.conf guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
