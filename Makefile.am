@@ -82,12 +82,6 @@ nix/firefox/generated-firefox-addons.nix:
 guix/dotfiles/mjru/intr.nix:
 	guix/dotfiles/mjru/intr.nix > guix/wugi/etc/mjru/intr.json
 
-.PHONY: shepherd-restart
-shepherd-restart:
-	$(shell set +e; herd stop root)
-	rm -f /run/user/$(UID)/shepherd/socket
-	make install
-
 .PHONY: guile-ihs
 guile-ihs:
 	$(GUIX) environment --manifest=guix/dotfiles/manifests/majordomo.scm -- sh -c 'type -p ihs'
