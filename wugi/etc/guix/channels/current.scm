@@ -16,7 +16,7 @@
             "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
         (channel
          (name 'guix-wigust)
-         (url "https://github.com/kitnil/guix-wigust")
+         (url "https://cgit.duckdns.org/git/guix/guix-wigust")
          (branch "master")
          (commit
           "1cb2b18e4b7e83c396dcdde75ed6b532440d627a"))
