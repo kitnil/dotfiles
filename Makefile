@@ -149,7 +149,7 @@ guix-system-configurations =			\
   workstation
 
 define guix-system-arguments
-guix time-machine --channels=guix/wugi/etc/guix/channels/$(subst $(1),,$(2)).scm -- build --load-path=guix -e "((@ (wugi system $(subst $(1),,$(2))) %$(subst $(1),,$(2))))"
+guix time-machine --channels=guix/wugi/etc/guix/channels/$(subst $(1),,$(2)).scm -- build --load-path=guix --expression="((@ (wugi system $(subst $(1),,$(2))) %$(subst $(1),,$(2))))"
 endef
 
 define guix-package-manifest-arguments
