@@ -160,6 +160,10 @@ guix-system-configurations =			\
   vm1					\
   vm2
 
+define guix-time-machine-arguments
+guix time-machine -C dotfiles/channels-current.scm
+endef
+
 define guix-system-arguments
 guix time-machine --channels=wugi/etc/guix/channels/$(subst $(1),,$(2)).scm -- build --load-path=. -e "((@ (wugi system $(subst $(1),,$(2))) %$(subst $(1),,$(2))))"
 endef
