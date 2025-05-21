@@ -9,7 +9,7 @@ clean-nix:
 .PHONY: clean
 clean: clean-guile clean-nix
 	rm -rf test-tmp
-	rm -f dotfiles/nix/result
+	rm -f guix/dotfiles/nix/result
 
 .PHONY: check
 check:
@@ -31,7 +31,7 @@ QEMU_FLAGS =					\
   -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22
 
 define guix-system-vm-arguments
-system vm -L wugi --no-offload dotfiles/system/$(1)
+system vm -L wugi --no-offload guix/dotfiles/system/$(1)
 endef
 
 guix-system-vm-configurations =			\
@@ -45,51 +45,51 @@ $(foreach configuration,$(guix-system-vm-configurations),$(guix-system-vm-config
 
 .PHONY: extension-graph
 extension-graph:
-	guix system -L wugi extension-graph dotfiles/guixsd/guixsd.scm | xdot -
+	guix system -L wugi extension-graph guix/dotfiles/guixsd/guixsd.scm | xdot -
 
 .PHONY: shepherd-graph
 shepherd-graph:
-	guix system -L wugi shepherd-graph dotfiles/guixsd/guixsd.scm | xdot -
+	guix system -L wugi shepherd-graph guix/dotfiles/guixsd/guixsd.scm | xdot -
 
 .PHONY: configure
 configure:
 	./configure
 
-dotfiles/guile/ssh.txt: dotfiles/guile/ssh.scm
-	guile dotfiles/guile/ssh.scm > dotfiles/guile/ssh.txt
+guix/dotfiles/guile/ssh.txt: guix/dotfiles/guile/ssh.scm
+	guile guix/dotfiles/guile/ssh.scm > guix/dotfiles/guile/ssh.txt
 
 wugi/home/config/openssh.scm.gpg:
 	gpg --quiet --decrypt wugi/home/config/openssh.scm.gpg > wugi/home/config/openssh.scm
 
-.PHONY: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
-dotfiles/scripts/nix-ssh-known-hosts-to-file.scm:
+.PHONY: guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
+guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm:
 	mkdir -p private_dot_ssh
-	$(shell guix build -f dotfiles/scripts/nix-ssh-known-hosts-to-file.scm)/bin/run.scm > private_dot_ssh/known_hosts2
+	$(shell guix build -f guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm)/bin/run.scm > private_dot_ssh/known_hosts2
 
-.PHONY: dotfiles/nix/flake.lock
-dotfiles/nix/flake.lock:
-	sh -c 'set -e; cd dotfiles/nix || exit 1; nix flake lock --update-input nixpkgs'
+.PHONY: guix/dotfiles/nix/flake.lock
+guix/dotfiles/nix/flake.lock:
+	sh -c 'set -e; cd guix/dotfiles/nix || exit 1; nix flake lock --update-input nixpkgs'
 
-.PHONY: dotfiles/nix/flake.nix
-dotfiles/nix/flake.nix:
-	sh -c 'set -e; cd dotfiles/nix || exit 1; ./flake.nix'
+.PHONY: guix/dotfiles/nix/flake.nix
+guix/dotfiles/nix/flake.nix:
+	sh -c 'set -e; cd guix/dotfiles/nix || exit 1; ./flake.nix'
 
-.PHONY: dotfiles/dns/flake.nix
-dotfiles/dns/flake.nix:
-	sh -c 'set -e; cd dotfiles/dns || exit 1; ./flake.nix'
+.PHONY: guix/dotfiles/dns/flake.nix
+guix/dotfiles/dns/flake.nix:
+	sh -c 'set -e; cd guix/dotfiles/dns || exit 1; ./flake.nix'
 
-.PHONY: dotfiles/nix/nix.conf
-dotfiles/nix/nix.conf:
+.PHONY: guix/dotfiles/nix/nix.conf
+guix/dotfiles/nix/nix.conf:
 	sudo mkdir -p /etc/nix
-	sudo install -m644 dotfiles/nix/nix.conf /etc/nix/nix.conf
+	sudo install -m644 guix/dotfiles/nix/nix.conf /etc/nix/nix.conf
 
-.PHONY: dotfiles/nix/firefox/generated-firefox-addons.nix
-dotfiles/nix/firefox/generated-firefox-addons.nix:
-	mozilla-addons-to-nix dotfiles/nix/firefox/addons.json dotfiles/nix/firefox/generated-firefox-addons.nix
+.PHONY: guix/dotfiles/nix/firefox/generated-firefox-addons.nix
+guix/dotfiles/nix/firefox/generated-firefox-addons.nix:
+	mozilla-addons-to-nix guix/dotfiles/nix/firefox/addons.json guix/dotfiles/nix/firefox/generated-firefox-addons.nix
 
-.PHONY: dotfiles/guixsd/machines.scm
-dotfiles/guixsd/machines.scm:
-	sudo install -m644 dotfiles/guixsd/machines.scm /etc/guix
+.PHONY: guix/dotfiles/guixsd/machines.scm
+guix/dotfiles/guixsd/machines.scm:
+	sudo install -m644 guix/dotfiles/guixsd/machines.scm /etc/guix
 
 .PHONY: dot_config/transmission/settings.json.gpg
 dot_config/transmission/settings.json.gpg:
@@ -99,27 +99,27 @@ dot_config/transmission/settings.json.gpg:
 dot_config/espanso/user/censor.yml.gpg:
 	gpg --decrypt dot_config/espanso/user/censor.yml.gpg > $(HOME)/.config/espanso/user/censor.yml
 
-.PHONY: dotfiles/mjru/intr.nix
-dotfiles/mjru/intr.nix:
-	dotfiles/mjru/intr.nix > dotfiles/mjru/intr.json
+.PHONY: guix/dotfiles/mjru/intr.nix
+guix/dotfiles/mjru/intr.nix:
+	guix/dotfiles/mjru/intr.nix > guix/dotfiles/mjru/intr.json
 
 .PHONY: install
-install: wugi/home/config/openssh.scm.gpg dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
+install: wugi/home/config/openssh.scm.gpg guix/dotfiles/guixsd/machines.scm guix/dotfiles/nix/nix.conf guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
 	dot_local/bin/gpg-unlock > /dev/null
 	update-desktop-database $(HOME)/.local/share/applications
 	mkdir -p $(HOME)/.config/mpv/scripts
 	ln -sf $(HOME)/.nix-profile/share/mpv/scripts/notify-send.lua $(HOME)/.config/mpv/scripts/notify-send.lua
-	install --mode=755 dotfiles/scripts/guix-channels-update $(HOME)/bin
-	install --mode=755 dotfiles/scripts/guix-ci $(HOME)/bin
-	install --mode=755 dotfiles/scripts/guix-package-version $(HOME)/bin
-	install --mode=755 dotfiles/scripts/guix-profile-to-manifest $(HOME)/bin
-	install --mode=755 dotfiles/scripts/maintenance $(HOME)/bin
-	install --mode=755 dotfiles/scripts/sshrc $(HOME)/bin
-	gpg --decrypt dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
+	install --mode=755 guix/dotfiles/scripts/guix-channels-update $(HOME)/bin
+	install --mode=755 guix/dotfiles/scripts/guix-ci $(HOME)/bin
+	install --mode=755 guix/dotfiles/scripts/guix-package-version $(HOME)/bin
+	install --mode=755 guix/dotfiles/scripts/guix-profile-to-manifest $(HOME)/bin
+	install --mode=755 guix/dotfiles/scripts/maintenance $(HOME)/bin
+	install --mode=755 guix/dotfiles/scripts/sshrc $(HOME)/bin
+	gpg --decrypt guix/dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
 	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
-	install -Dm644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
-	install -Dm644 dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
-	guix home --load-path=wugi reconfigure dotfiles/guixsd/home/$(HOSTNAME).scm
+	install -Dm644 guix/dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
+	install -Dm644 guix/dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
+	guix home --load-path=wugi reconfigure guix/dotfiles/guixsd/home/$(HOSTNAME).scm
 	install -Dm644 private_dot_ssh/known_hosts2 $(HOME)/.ssh/known_hosts2
 
 .PHONY: shepherd-restart
@@ -130,15 +130,15 @@ shepherd-restart:
 
 .PHONY: guile-ihs
 guile-ihs:
-	guix environment --manifest=dotfiles/manifests/majordomo.scm -- sh -c 'type -p ihs'
+	guix environment --manifest=guix/dotfiles/manifests/majordomo.scm -- sh -c 'type -p ihs'
 
 .PHONY: deploy
 deploy:
-	guix deploy -L wugi dotfiles/guixsd/deploy.scm
+	guix deploy -L wugi guix/dotfiles/guixsd/deploy.scm
 
-.PHONY: dotfiles/packer/build.scm
-dotfiles/packer/build.scm:
-	sh -c 'cd dotfiles/packer; guix build -f build.scm'
+.PHONY: guix/dotfiles/packer/build.scm
+guix/dotfiles/packer/build.scm:
+	sh -c 'cd guix/dotfiles/packer; guix build -f build.scm'
 
 guix-system-configurations =			\
   guixsd					\
@@ -188,11 +188,11 @@ $(foreach configuration,$(guix-system-configurations),time-machine-guix-build-ma
 
 .PHONY: github
 github:
-	make --directory=dotfiles/maintenance/github
+	make --directory=guix/dotfiles/maintenance/github
 
 .PHONY: gitlab
 gitlab:
-	make --directory=dotfiles/maintenance/gitlab
+	make --directory=guix/dotfiles/maintenance/gitlab
 
 .PHONY: home
 home:
@@ -284,7 +284,7 @@ container_registry=harbor.home.wugi.info
 isc-dhcp:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix system image --load-path=/home/oleg/.local/share/chezmoi/wugi --max-layers=100 -t docker --network dotfiles/guixsd/docker-image-isc-dhcp.scm)
+	container=$$(guix system image --load-path=/home/oleg/.local/share/chezmoi/wugi --max-layers=100 -t docker --network guix/dotfiles/guixsd/docker-image-isc-dhcp.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 container_registry=harbor.home.wugi.info
@@ -292,7 +292,7 @@ container_registry=harbor.home.wugi.info
 mumble:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix time-machine --channels=dotfiles/channels-guix-mumble.scm -- system image --max-layers=100 -t docker --network dotfiles/guixsd/docker-image-mumble.scm)
+	container=$$(guix time-machine --channels=guix/dotfiles/channels-guix-mumble.scm -- system image --max-layers=100 -t docker --network guix/dotfiles/guixsd/docker-image-mumble.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 container_registry=harbor.home.wugi.info
@@ -314,16 +314,16 @@ container_registry=harbor.home.wugi.info
 guix-image-builder: wugi/home/config/openssh.scm.gpg
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix time-machine --channels=dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls='https://guix.wugi.info https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --max-layers=100 -t docker --network ~/.local/share/chezmoi/dotfiles/guixsd/guix-image-builder.scm)
+	container=$$(guix time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls='https://guix.wugi.info https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --max-layers=100 -t docker --network ~/.local/share/chezmoi/guix/dotfiles/guixsd/guix-image-builder.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	echo $(container_registry)/library/$@:$$commit_8
 
 nix-update-inputs:
-	$(MAKE) -C dotfiles/nix/container-systemd dotfiles-home-manager
-	$(MAKE) -C dotfiles/nix/container-systemd-taskexecutor original
+	$(MAKE) -C guix/dotfiles/nix/container-systemd dotfiles-home-manager
+	$(MAKE) -C guix/dotfiles/nix/container-systemd-taskexecutor original
 
 container-systemd-taskexecutor:
-	$(MAKE) -C dotfiles/nix/container-systemd-taskexecutor
+	$(MAKE) -C guix/dotfiles/nix/container-systemd-taskexecutor
 
 container_registry=harbor.home.wugi.info
 .ONESHELL:
@@ -343,4 +343,4 @@ archlinux:
 	$(MAKE) -C apps/base/kaniko-archlinux
 
 .PHONY: all
-all: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
+all: guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
