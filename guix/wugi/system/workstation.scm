@@ -126,7 +126,11 @@ program.")))
                                               (respawn? #f))))
                             (service skopeo-service-type
                                      (skopeo-configuration
-                                      (policy-file (local-file "etc/containers/policy.json"))))
+                                      (policy-file
+                                       (local-file
+                                        (string-append
+                                         %distro-directory
+                                         "/wugi/system/etc/containers/policy.json")))))
                             (service containerd-service-type)
                             (service syslog-service-type
                                      (syslog-configuration
