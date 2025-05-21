@@ -1184,7 +1184,7 @@ lsp_mode()
             --volume /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket    \
             --volume /tmp/.X11-unix:/tmp/.X11-unix                                      \
             --volume /etc/machine-id:/etc/machine-id:ro                                 \
-            --volume /home/oleg/src/gitlab.intr/hms:/src                                      \
+            --volume /home/oleg/src/gitlab.intr/hms:/src                                \
             --volume "$PWD/emacs.d/:/home/lsp/.emacs.d"                                 \
             --user 1000:1000                                                            \
             --env DISPLAY="$DISPLAY"                                                    \
