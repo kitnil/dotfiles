@@ -1151,26 +1151,26 @@ jenkins_build_project_branch()
 # Create a new directory and enter it
 mkd()
 {
-	mkdir -p "$@"
-	cd "$@" || exit
+        mkdir -p "$@"
+        cd "$@" || exit
 }
 
 # Make a temporary directory and enter it
 tmpd()
 {
-	local dir
-	if [ $# -eq 0 ]; then
-		dir=$(mktemp -d)
-	else
-		dir=$(mktemp -d -t "${1}.XXXXXXXXXX")
-	fi
-	cd "$dir" || exit
+        local dir
+        if [ $# -eq 0 ]; then
+                dir=$(mktemp -d)
+        else
+                dir=$(mktemp -d -t "${1}.XXXXXXXXXX")
+        fi
+        cd "$dir" || exit
 }
 
 # Run `dig` and display the most useful info
 digga()
 {
-	dig +nocmd "$1" any +multiline +noall +answer
+    dig +nocmd "$1" any +multiline +noall +answer
 }
 
 alias feh-bg="feh --borderless --image-bg black --auto-zoom --draw-filename"
@@ -2015,7 +2015,7 @@ curl()
                 "$var"
             )
         else
-	    new_args+=($var)
+            new_args+=($var)
         fi
     done
     command curl "${new_args[@]}"
@@ -2178,9 +2178,9 @@ if [[ -n $ALACRITTY_WINDOW_ID ]]
 then
     if [[ ${EUID} == 0 ]]
     then
-	PS1='\[\033[01;31m\]\h\[\033[01;34m\] \W\$\[\033[00m\] '
+        PS1='\[\033[01;31m\]\h\[\033[01;34m\] \W\$\[\033[00m\] '
     else
-	PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\$\[\033[00m\] '
+        PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\$\[\033[00m\] '
     fi
 
     if type -p bat
