@@ -96,7 +96,8 @@ DECRYPT_TARGETS = \
   guix/wugi/home/config/openssh.scm \
   guix/wugi/etc/mjru/intr.json \
   guix/private_dot_emacs.d/modules/mjru-network.el \
-  guix/dot_config/espanso/user/censor.yml
+  guix/dot_config/espanso/user/censor.yml \
+  guix/dot_config/transmission/settings.json
 
 $(foreach secret,$(DECRYPT_TARGETS),$(secret)):
 	pass show dotfiles/$@ > $@
