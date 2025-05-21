@@ -27,3 +27,12 @@
 /dotfiles/nix/openvpn/ca.crt
 /dotfiles/nix/openvpn/client.crt
 /dotfiles/nix/openvpn/client.key
+/missing
+/INSTALL
+/Makefile
+/Makefile.in
+/aclocal.m4
+/autom4te.cache/
+/config.status
+/configure
+/install-sh
