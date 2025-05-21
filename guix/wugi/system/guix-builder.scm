@@ -5,25 +5,32 @@
 ;;
 ;; also make sure to update /entrypoint.sh
 
-(use-modules (gnu packages)
-             (gnu services)
-             (gnu system linux-container)
-             (gnu)
-             (guix channels)
-             (guix gexp)
-             (guix inferior)
-             (guix packages)
-             (guix profiles)
-             (guix ui)
-             (srfi srfi-1))
+(define-module (wugi system guix-builder)
+  #:use-module (gnu packages)
+  #:use-module (gnu services)
+  #:use-module (gnu system linux-container)
+  #:use-module (gnu)
+  #:use-module (guix channels)
+  #:use-module (guix gexp)
+  #:use-module (guix inferior)
+  #:use-module (guix packages)
+  #:use-module (guix profiles)
+  #:use-module (guix ui)
+  #:use-module (srfi srfi-1)
+  #:use-module (gnu packages bash)
+  #:use-module (gnu packages package-management)
+  #:use-module (gnu packages ssh)
+  #:use-module (gnu services base)
+  #:use-module (gnu services desktop)
+  #:use-module (gnu services guix)
+  #:use-module (gnu services shepherd)
+  #:use-module (gnu services ssh)
+  #:export (%guix-builder))
 
-(use-package-modules bash package-management ssh)
-(use-service-modules base desktop guix shepherd ssh)
+(define (%my-operating-system)
+  (define my-channels
+    (include "/etc/channels.scm"))
 
-(define my-channels
-  (include "/etc/channels.scm"))
-
-(define %my-operating-system
   (operating-system
     (host-name "builder")
     (timezone "Europe/Moscow")
