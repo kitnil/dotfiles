@@ -85,10 +85,6 @@ nix/nix.conf:
 nix/firefox/generated-firefox-addons.nix:
 	mozilla-addons-to-nix nix/firefox/addons.json nix/firefox/generated-firefox-addons.nix
 
-.PHONY: guix/dotfiles/guixsd/machines.scm
-guix/dotfiles/guixsd/machines.scm:
-	sudo install -m644 guix/dotfiles/guixsd/machines.scm /etc/guix
-
 .PHONY: guix/dotfiles/mjru/intr.nix
 guix/dotfiles/mjru/intr.nix:
 	guix/dotfiles/mjru/intr.nix > guix/wugi/etc/mjru/intr.json
