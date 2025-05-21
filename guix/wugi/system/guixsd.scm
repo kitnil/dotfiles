@@ -93,268 +93,259 @@
   #:use-module (wugi utils package)
   #:export (%guixsd))
 
-(define %home
-  (passwd:dir (getpw "oleg")))
+(define (%guixsd)
+  (define %home
+    (passwd:dir (getpw "oleg")))
 
-(define %private-ip-address
-  "192.168.0.144")
+  (define %private-ip-address
+    "192.168.0.144")
 
-
-;;;
-;;; Certbot
-;;;
+  (define %certbot-hosts
+    (list "cgit.duckdns.org"
+          "cgit.wugi.info"
+          "guix.duckdns.org"
+          "guix.wugi.info"
+          "jenkins.wugi.info"
+          "monitor.wugi.info"
+          "syncthing.wugi.info"
+          "webssh.wugi.info"
+          "docker-registry.wugi.info"
+          "iso.wugi.info"
+          "githunt.wugi.info"))
 
-(define %certbot-hosts
-  (list "cgit.duckdns.org"
-        "cgit.wugi.info"
-        "guix.duckdns.org"
-        "guix.wugi.info"
-        "jenkins.wugi.info"
-        "monitor.wugi.info"
-        "syncthing.wugi.info"
-        "webssh.wugi.info"
-        "docker-registry.wugi.info"
-        "iso.wugi.info"
-        "githunt.wugi.info"))
+  (define %nginx-certbot
+    (nginx-location-configuration
+     (uri "/.well-known")
+     (body '("root /var/www;"))))
 
-
-;;;
-;;; NGINX
-;;;
+  (define %nginx-server-blocks
+    (list (nginx-server-configuration
+           (listen '("192.168.0.144:80 default_server"))
+           (locations
+            (list
+             (nginx-location-configuration
+              (uri "/")
+              (body
+               (list
+                "proxy_pass http://192.168.0.139;" ;Proxy to Kubernetes
+                "proxy_set_header Host $http_host;"
+                "proxy_set_header X-Real-IP $remote_addr;" ;# pass on real client's IP
+                "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
+                "proxy_set_header X-Forwarded-Proto $scheme;"))))))
+          (nginx-server-configuration
+           (server-name '("www.tld"))
+           (listen '("192.168.0.144:80"))
+           (root "/srv/share"))
+          (nginx-server-configuration
+           (server-name '("opensearch.home"))
+           (listen '("192.168.0.144:80"))
+           (raw-content (list "client_max_body_size 200M;"))
+           (locations
+            (list
+             (nginx-location-configuration
+              (uri "/")
+              (body
+               (list
+                "resolver 80.80.80.80 ipv6=off;"
+                "proxy_pass https://node-0.example.com:9200;"
+                "proxy_ssl_certificate /etc/opensearch/kirk.pem;"
+                "proxy_ssl_certificate_key /etc/opensearch/kirk-key.pem;"
+                "proxy_ssl_trusted_certificate /etc/opensearch/root-ca.pem;"
+                "add_header Access-Control-Allow-Origin *;"))))))
+          (nginx-server-configuration
+           (server-name '("netmap.intr"))
+           (listen '("192.168.0.144:80"))
+           (root "/home/oleg/archive/src/drawthe.net"))
+          (nginx-server-configuration
+           (server-name '("techinfo.intr"))
+           (listen '("192.168.0.144:80"))
+           (root "/var/www/techinfo.intr"))
+          (nginx-server-configuration
+           (server-name '("iso.wugi.info"))
+           (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
+           (ssl-certificate (letsencrypt-certificate "iso.wugi.info"))
+           (ssl-certificate-key (letsencrypt-key "iso.wugi.info"))
+           (root "/srv/iso")
+           (locations
+            (list
+             (nginx-location-configuration
+              (uri "/windows")
+              (body
+               '("allow 192.168.0.0/16;"
+                 "allow 10.0.0.0/8;"
+                 "allow 172.16.103.0/24;"
+                 "allow 78.108.80.212/32;" ;Majordomo NAT
+                 "allow 88.201.161.72/32;"
+                 "deny all;")))
+             (nginx-location-configuration
+              (uri "/.well-known")
+              (body '("root /var/www;"))))))
+          (nginx-server-configuration
+           (server-name '("gitlab.wugi.info"))
+           (listen '("127.0.0.1:80"))
+           (locations
+            (list
+             (nginx-location-configuration
+              (uri "/")
+              (body (list
+                     "resolver 80.80.80.80 ipv6=off;"
+                     "proxy_pass https://gitlab.com$empty;"
+                     "set $empty \"\";"
+                     "proxy_set_header Host gitlab.com;"
+                     "proxy_ssl_server_name on;"
+                     "client_max_body_size 0;"
+                     "proxy_busy_buffers_size 512k;"
+                     "proxy_buffers 4 512k;"
+                     "proxy_buffer_size 256k;"
+                     "add_header Access-Control-Allow-Origin *;"))))))
+          (nginx-server-configuration
+           (server-name '("docker-registry.wugi.info"))
+           (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
+           (ssl-certificate (letsencrypt-certificate "docker-registry.wugi.info"))
+           (ssl-certificate-key (letsencrypt-key "docker-registry.wugi.info"))
+           (locations
+            (list
+             (nginx-location-configuration
+              (uri "/")
+              (body
+               '("allow 192.168.0.0/16;"
+                 "allow 10.0.0.0/8;"
+                 "allow 172.16.103.0/24;"
+                 "allow 78.108.80.212/32;" ;Majordomo NAT
+                 "allow 88.201.161.72/32;"
+                 "allow 185.105.108.96/32;" ;vm3.wugi.info has address 185.105.108.96
+                 "deny all;")))
+             (nginx-location-configuration
+              (uri "/.well-known")
+              (body '("root /var/www;")))
+             (nginx-location-configuration
+              (uri "/v2/")
+              (body (append
+                     '("allow 192.168.0.0/16;"
+                       "allow 10.0.0.0/8;"
+                       "allow 172.16.103.0/24;"
+                       "allow 78.108.80.212/32;" ;Majordomo NAT
+                       "allow 88.201.161.72/32;"
+                       "allow 78.108.82.44/32;" ;vm1.wugi.info
+                       "allow 78.108.92.69/32;" ;vm2.wugi.info
+                       "deny all;")
+                     (list
+                      ;; Do not allow connections from docker 1.5 and earlier
+                      ;; docker pre-1.6.0 did not properly set the user agent on ping, catch "Go *" user agents
+                      "if ($http_user_agent ~ \"^(docker\\/1\\.(3|4|5(?!\\.[0-9]-dev))|Go ).*$\" ) { return 404; }"
 
-(define %nginx-certbot
-  (nginx-location-configuration
-   (uri "/.well-known")
-   (body '("root /var/www;"))))
+                      ;; from [[https://docs.docker.com/registry/recipes/nginx/][Authenticate proxy with nginx | Docker Documentation]]
+                      "proxy_pass http://docker-registry;"
+                      "proxy_set_header Host $http_host;"
+                      "proxy_set_header X-Real-IP $remote_addr;" ;# pass on real client's IP
+                      "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
+                      "proxy_set_header X-Forwarded-Proto $scheme;"
+                      "proxy_read_timeout 900;"
 
-(define %nginx-server-blocks
-  (list (nginx-server-configuration
-         (listen '("192.168.0.144:80 default_server"))
-         (locations
-          (list
-           (nginx-location-configuration
-            (uri "/")
-            (body
-             (list
-              "proxy_pass http://192.168.0.139;" ;Proxy to Kubernetes
-              "proxy_set_header Host $http_host;"
-              "proxy_set_header X-Real-IP $remote_addr;" ;# pass on real client's IP
-              "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
-              "proxy_set_header X-Forwarded-Proto $scheme;"))))))
-        (nginx-server-configuration
-         (server-name '("www.tld"))
-         (listen '("192.168.0.144:80"))
-         (root "/srv/share"))
-        (nginx-server-configuration
-         (server-name '("opensearch.home"))
-         (listen '("192.168.0.144:80"))
-         (raw-content (list "client_max_body_size 200M;"))
-         (locations
-          (list
-           (nginx-location-configuration
-            (uri "/")
-            (body
-             (list
-              "resolver 80.80.80.80 ipv6=off;"
-              "proxy_pass https://node-0.example.com:9200;"
-              "proxy_ssl_certificate /etc/opensearch/kirk.pem;"
-              "proxy_ssl_certificate_key /etc/opensearch/kirk-key.pem;"
-              "proxy_ssl_trusted_certificate /etc/opensearch/root-ca.pem;"
-              "add_header Access-Control-Allow-Origin *;"))))))
-        (nginx-server-configuration
-         (server-name '("netmap.intr"))
-         (listen '("192.168.0.144:80"))
-         (root "/home/oleg/archive/src/drawthe.net"))
-        (nginx-server-configuration
-         (server-name '("techinfo.intr"))
-         (listen '("192.168.0.144:80"))
-         (root "/var/www/techinfo.intr"))
-        (nginx-server-configuration
-         (server-name '("iso.wugi.info"))
-         (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
-         (ssl-certificate (letsencrypt-certificate "iso.wugi.info"))
-         (ssl-certificate-key (letsencrypt-key "iso.wugi.info"))
-         (root "/srv/iso")
-         (locations
-          (list
-           (nginx-location-configuration
-            (uri "/windows")
-            (body
-             '("allow 192.168.0.0/16;"
-               "allow 10.0.0.0/8;"
-               "allow 172.16.103.0/24;"
-               "allow 78.108.80.212/32;" ;Majordomo NAT
-               "allow 88.201.161.72/32;"
-               "deny all;")))
-           (nginx-location-configuration
-            (uri "/.well-known")
-            (body '("root /var/www;"))))))
-        (nginx-server-configuration
-         (server-name '("gitlab.wugi.info"))
-         (listen '("127.0.0.1:80"))
-         (locations
-          (list
-           (nginx-location-configuration
-            (uri "/")
-            (body (list
-                   "resolver 80.80.80.80 ipv6=off;"
-                   "proxy_pass https://gitlab.com$empty;"
-                   "set $empty \"\";"
-                   "proxy_set_header Host gitlab.com;"
-                   "proxy_ssl_server_name on;"
-                   "client_max_body_size 0;"
-                   "proxy_busy_buffers_size 512k;"
-                   "proxy_buffers 4 512k;"
-                   "proxy_buffer_size 256k;"
-                   "add_header Access-Control-Allow-Origin *;"))))))
-        (nginx-server-configuration
-         (server-name '("docker-registry.wugi.info"))
-         (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
-         (ssl-certificate (letsencrypt-certificate "docker-registry.wugi.info"))
-         (ssl-certificate-key (letsencrypt-key "docker-registry.wugi.info"))
-         (locations
-          (list
-           (nginx-location-configuration
-            (uri "/")
-            (body
-             '("allow 192.168.0.0/16;"
-               "allow 10.0.0.0/8;"
-               "allow 172.16.103.0/24;"
-               "allow 78.108.80.212/32;" ;Majordomo NAT
-               "allow 88.201.161.72/32;"
-               "allow 185.105.108.96/32;" ;vm3.wugi.info has address 185.105.108.96
-               "deny all;")))
-           (nginx-location-configuration
-            (uri "/.well-known")
-            (body '("root /var/www;")))
-           (nginx-location-configuration
-            (uri "/v2/")
-            (body (append
-                   '("allow 192.168.0.0/16;"
-                     "allow 10.0.0.0/8;"
-                     "allow 172.16.103.0/24;"
-                     "allow 78.108.80.212/32;" ;Majordomo NAT
-                     "allow 88.201.161.72/32;"
-                     "allow 78.108.82.44/32;" ;vm1.wugi.info
-                     "allow 78.108.92.69/32;" ;vm2.wugi.info
-                     "deny all;")
-                   (list
-                    ;; Do not allow connections from docker 1.5 and earlier
-                    ;; docker pre-1.6.0 did not properly set the user agent on ping, catch "Go *" user agents
-                    "if ($http_user_agent ~ \"^(docker\\/1\\.(3|4|5(?!\\.[0-9]-dev))|Go ).*$\" ) { return 404; }"
+                      "client_max_body_size 0;"
+                      "proxy_busy_buffers_size 512k;"
+                      "proxy_buffers 4 512k;"
+                      "proxy_buffer_size 256k;"
+                      "add_header Access-Control-Allow-Origin *;"
+                      )))))))
+          (nginx-server-configuration
+           (server-name '("texinfo.tld"))
+           (listen '("192.168.0.144:80"))
+           (root "/var/www/texinfo"))
 
-                    ;; from [[https://docs.docker.com/registry/recipes/nginx/][Authenticate proxy with nginx | Docker Documentation]]
-                    "proxy_pass http://docker-registry;"
-                    "proxy_set_header Host $http_host;"
-                    "proxy_set_header X-Real-IP $remote_addr;" ;# pass on real client's IP
-                    "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
-                    "proxy_set_header X-Forwarded-Proto $scheme;"
-                    "proxy_read_timeout 900;"
+          ;; (proxy "hms.majordomo.ru" 7777 #:ssl? #f)
+          ;; (proxy "www.majordomo.ru" 7777 #:ssl? #f)
+          ;; (proxy "majordomo.ru" 7777 #:ssl? #f)
+          ;; (proxy "hms-dev.intr" 7777 #:ssl? #f)
+          ;; (proxy "hms.majordomo.ru" 7777 #:ssl? #f)
+          (nginx-server-configuration
+           (server-name '("hms.majordomo.ru" "hms-dev.intr" "www.majordomo.ru" "majordomo.ru"))
+           (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
+           (ssl-certificate "/etc/tls/hms.majordomo.ru.pem")
+           (ssl-certificate-key "/etc/tls/hms.majordomo.ru.key")
+           (locations (list (nginx-location-configuration
+                             (uri "/")
+                             (body (list "root /home/oleg/src/gitlab.intr/hms/frontend-app/public;"
+                                         "proxy_set_header Access-Control-Allow-Origin *;"
+                                         "index  index.html;"
+                                         "try_files $uri $uri/ /index.html;"
+                                         ;; "proxy_pass http://127.0.0.1:3000;"
+                                         ;; "proxy_set_header Host hms.majordomo.ru;"
+                                         ;; "proxy_set_header X-Forwarded-Proto $scheme;"
+                                         ;; "proxy_set_header X-Real-IP $remote_addr;"
+                                         ;; "proxy_set_header X-Forwarded-for $remote_addr;"
+                                         ;; "proxy_connect_timeout 300;"
+                                         ;; "client_max_body_size 0;"
+                                         ))))))
+          (nginx-server-configuration
+           (server-name '("hms-billing-dev.intr"))
+           (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
+           (ssl-certificate "/etc/tls/hms.majordomo.ru.pem")
+           (ssl-certificate-key "/etc/tls/hms.majordomo.ru.key")
+           ;; (root "/home/oleg/src/gitlab.intr/hms/staff-frontend-app/public")
+           (locations (list (nginx-location-configuration
+                             (uri "/")
+                             (body (list "proxy_set_header Access-Control-Allow-Origin *;"
+                                         ;; "rewrite     ^   https://$server_name$request_uri?;"
+                                         "root   /home/oleg/src/gitlab.intr/hms/staff-frontend-app/public;"
+                                         "index  index.html;"
+                                         "try_files $uri $uri/ /index.html;"
+                                         ;; "proxy_pass http://127.0.0.1:3001;"
+                                         ;; "proxy_set_header Host hms.majordomo.ru;"
+                                         ;; "proxy_set_header X-Forwarded-Proto $scheme;"
+                                         ;; "proxy_set_header X-Real-IP $remote_addr;"
+                                         ;; "proxy_set_header X-Forwarded-for $remote_addr;"
+                                         ;; "proxy_connect_timeout 300;"
+                                         ;; "client_max_body_size 0;"
+                                         ;; "proxy_set_header Access-Control-Allow-Origin *;"
+                                         ))))))
 
-                    "client_max_body_size 0;"
-                    "proxy_busy_buffers_size 512k;"
-                    "proxy_buffers 4 512k;"
-                    "proxy_buffer_size 256k;"
-                    "add_header Access-Control-Allow-Origin *;"
-                    )))))))
-        (nginx-server-configuration
-         (server-name '("texinfo.tld"))
-         (listen '("192.168.0.144:80"))
-         (root "/var/www/texinfo"))
+          ;; (nginx-server-configuration
+          ;;  (server-name '("ci.guix.gnu.org.wugi.info"))
+          ;;  (listen '("192.168.0.144:80"))
+          ;;  (locations (list (nginx-location-configuration
+          ;;                    (uri "/")
+          ;;                    (body (list
+          ;;                           "resolver 80.80.80.80 ipv6=off;"
+          ;;                           "proxy_set_header Host ci.guix.trop.in;"
+          ;;                           "set $ci_guix_trop_in ci.guix.trop.in:80;"
+          ;;                           "proxy_pass http://$ci_guix_trop_in;"))))))
 
-        ;; (proxy "hms.majordomo.ru" 7777 #:ssl? #f)
-        ;; (proxy "www.majordomo.ru" 7777 #:ssl? #f)
-        ;; (proxy "majordomo.ru" 7777 #:ssl? #f)
-        ;; (proxy "hms-dev.intr" 7777 #:ssl? #f)
-        ;; (proxy "hms.majordomo.ru" 7777 #:ssl? #f)
-        (nginx-server-configuration
-         (server-name '("hms.majordomo.ru" "hms-dev.intr" "www.majordomo.ru" "majordomo.ru"))
-         (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
-         (ssl-certificate "/etc/tls/hms.majordomo.ru.pem")
-         (ssl-certificate-key "/etc/tls/hms.majordomo.ru.key")
-         (locations (list (nginx-location-configuration
-                           (uri "/")
-                           (body (list "root /home/oleg/src/gitlab.intr/hms/frontend-app/public;"
-                                       "proxy_set_header Access-Control-Allow-Origin *;"
-                                       "index  index.html;"
-                                       "try_files $uri $uri/ /index.html;"
-                                       ;; "proxy_pass http://127.0.0.1:3000;"
-                                       ;; "proxy_set_header Host hms.majordomo.ru;"
-                                       ;; "proxy_set_header X-Forwarded-Proto $scheme;"
-                                       ;; "proxy_set_header X-Real-IP $remote_addr;"
-                                       ;; "proxy_set_header X-Forwarded-for $remote_addr;"
-                                       ;; "proxy_connect_timeout 300;"
-                                       ;; "client_max_body_size 0;"
-                                       ))))))
-        (nginx-server-configuration
-         (server-name '("hms-billing-dev.intr"))
-         (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
-         (ssl-certificate "/etc/tls/hms.majordomo.ru.pem")
-         (ssl-certificate-key "/etc/tls/hms.majordomo.ru.key")
-         ;; (root "/home/oleg/src/gitlab.intr/hms/staff-frontend-app/public")
-         (locations (list (nginx-location-configuration
-                           (uri "/")
-                           (body (list "proxy_set_header Access-Control-Allow-Origin *;"
-                                       ;; "rewrite     ^   https://$server_name$request_uri?;"
-                                       "root   /home/oleg/src/gitlab.intr/hms/staff-frontend-app/public;"
-                                       "index  index.html;"
-                                       "try_files $uri $uri/ /index.html;"
-                                       ;; "proxy_pass http://127.0.0.1:3001;"
-                                       ;; "proxy_set_header Host hms.majordomo.ru;"
-                                       ;; "proxy_set_header X-Forwarded-Proto $scheme;"
-                                       ;; "proxy_set_header X-Real-IP $remote_addr;"
-                                       ;; "proxy_set_header X-Forwarded-for $remote_addr;"
-                                       ;; "proxy_connect_timeout 300;"
-                                       ;; "client_max_body_size 0;"
-                                       ;; "proxy_set_header Access-Control-Allow-Origin *;"
-                                       ))))))
+          (nginx-server-configuration
+           (server-name '("ci.guix.gnu.org.wugi.info"))
+           (listen '("192.168.0.144:80"))
+           (locations (list (nginx-location-configuration
+                             (uri "/")
+                             (body (list "proxy_pass https://socat-ci-guix-gnu-onion;"
+                                         "proxy_ssl_verify off;"))))))
 
-        ;; (nginx-server-configuration
-        ;;  (server-name '("ci.guix.gnu.org.wugi.info"))
-        ;;  (listen '("192.168.0.144:80"))
-        ;;  (locations (list (nginx-location-configuration
-        ;;                    (uri "/")
-        ;;                    (body (list
-        ;;                           "resolver 80.80.80.80 ipv6=off;"
-        ;;                           "proxy_set_header Host ci.guix.trop.in;"
-        ;;                           "set $ci_guix_trop_in ci.guix.trop.in:80;"
-        ;;                           "proxy_pass http://$ci_guix_trop_in;"))))))
-
-        (nginx-server-configuration
-         (server-name '("ci.guix.gnu.org.wugi.info"))
-         (listen '("192.168.0.144:80"))
-         (locations (list (nginx-location-configuration
-                           (uri "/")
-                           (body (list "proxy_pass https://socat-ci-guix-gnu-onion;"
-                                       "proxy_ssl_verify off;"))))))
-
-        (nginx-server-configuration
-         (server-name '("mirror.sentries.org" "mirror.sentries.org.wugi.info"))
-         (listen '("192.168.0.144:80"))
-         (locations (list (nginx-location-configuration
-                           (uri "/")
-                           (body (list "proxy_set_header Host mirror.sentries.org;"
-                                       "proxy_pass https://socat-mirror-sentries-org;"
-                                       "proxy_ssl_verify off;"))))))
+          (nginx-server-configuration
+           (server-name '("mirror.sentries.org" "mirror.sentries.org.wugi.info"))
+           (listen '("192.168.0.144:80"))
+           (locations (list (nginx-location-configuration
+                             (uri "/")
+                             (body (list "proxy_set_header Host mirror.sentries.org;"
+                                         "proxy_pass https://socat-mirror-sentries-org;"
+                                         "proxy_ssl_verify off;"))))))
 
 
-;;         (nginx-server-configuration
-;;          (server-name '("hms-dev.intr" "hms.majordomo.ru"))
-;;          (listen '("192.168.0.144:80"))
-;;          (root "/home/static/hms-frontend")
-;;          (raw-content (list "\
-;; location / {
-;;     proxy_set_header Access-Control-Allow-Origin *;
-;;     root   /home/static/hms-frontend;
-;;     index  index.html;
-;;     try_files $uri $uri/ /index.html;
-;; }
-;; ")))
+          ;;         (nginx-server-configuration
+          ;;          (server-name '("hms-dev.intr" "hms.majordomo.ru"))
+          ;;          (listen '("192.168.0.144:80"))
+          ;;          (root "/home/static/hms-frontend")
+          ;;          (raw-content (list "\
+          ;; location / {
+          ;;     proxy_set_header Access-Control-Allow-Origin *;
+          ;;     root   /home/static/hms-frontend;
+          ;;     index  index.html;
+          ;;     try_files $uri $uri/ /index.html;
+          ;; }
+          ;; ")))
 
-        (nginx-server-configuration
-         (server-name '("api-dev.intr"))
-         (listen '("192.168.0.144:80"))
-         (raw-content (list "\
+          (nginx-server-configuration
+           (server-name '("api-dev.intr"))
+           (listen '("192.168.0.144:80"))
+           (raw-content (list "\
 location / {
     proxy_set_header Access-Control-Allow-Origin *;
     proxy_set_header X-Real-IP $remote_addr;
@@ -368,10 +359,10 @@ location / {
     proxy_buffers 4 256k;
 }
 ")))
-        (nginx-server-configuration
-         (server-name '("www.example.com" "example.com"))
-         (listen '("192.168.0.144:80"))
-         (raw-content (list "\
+          (nginx-server-configuration
+           (server-name '("www.example.com" "example.com"))
+           (listen '("192.168.0.144:80"))
+           (raw-content (list "\
 location / {
     proxy_set_header Access-Control-Allow-Origin *;
     proxy_set_header X-Real-IP $remote_addr;
@@ -386,904 +377,867 @@ location / {
 }
 ")))
 
-        (nginx-server-configuration
-         (inherit %webssh-configuration-nginx)
-         (server-name '("webssh.wugi.info"))
-         (listen '("192.168.0.144:443 ssl"))
-         (ssl-certificate (letsencrypt-certificate "webssh.wugi.info"))
-         (ssl-certificate-key (letsencrypt-key "webssh.wugi.info"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/.well-known")
-                 (body '("root /var/www;")))
-                (nginx-location-configuration
-                 (uri "/")
-                 (body '("proxy_pass http://127.0.0.1:8888;"
-                         "proxy_http_version 1.1;"
-                         "proxy_read_timeout 300;"
-                         "proxy_set_header Upgrade $http_upgrade;"
-                         "proxy_set_header Connection \"upgrade\";"
-                         "proxy_set_header Host $http_host;"
-                         "proxy_set_header X-Real-IP $remote_addr;"
-                         "proxy_set_header X-Real-PORT $remote_port;"
-                         "add_header Access-Control-Allow-Origin *;"))))))
-        (proxy "cups.tld" 631)
-        (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #f)
-        (proxy "syncthing.wugi.info" 8384 #:ssl? #t #:ssl-key? #t #:mtls? #t
-               ;; https://docs.syncthing.net/users/faq.html#why-do-i-get-host-check-error-in-the-gui-api
-               #:proxy-set-header-host "localhost")
-        (proxy "monitor.wugi.info" 8080)
-        (proxy "guix.duckdns.org" 5556 #:ssl? #t)
-        (proxy "kiwiirc.wugi.info" 8194 #:ssl? #t #:ssl-key? #t #:mtls? #t)
-        (proxy "prometheus.wugi.info" 9090 #:listen %private-ip-address)
-        (proxy "guix.wugi.info" 5556 #:ssl? #t #:ssl-key? #t)
-        ((lambda* (host #:key
-                  (ssl? #f)
-                  (ssl-target? #f)
-                  (target #f)
-                  (sub-domains? #f))
           (nginx-server-configuration
-           (server-name (if sub-domains?
-                            (list (string-append sub-domains?
-                                                 (string-join (string-split host #\.)
-                                                              "\\.")
-                                                 "$"))
-                            (list host (string-append "www." host))))
-           (locations (delete #f
-                              (list (nginx-location-configuration
-                                     (uri "/api/queue")
-                                     (body (list "return 404;")))
-                                    (nginx-location-configuration
-                                     (uri "/")
-                                     (body (list "resolver 80.80.80.80;"
-                                                 (string-append "set $target "
-                                                                "ci.guix.gnu.org"
-                                                                ":" (number->string 80) ";")
-                                                 (format #f "proxy_pass ~a://$target;" "http")
-                                                 (if sub-domains?
-                                                     "proxy_set_header Host $http_host;"
-                                                     (format #f "proxy_set_header Host ~a;" "ci.guix.gnu.org"))
-                                                 "proxy_set_header X-Forwarded-Proto $scheme;"
-                                                 "proxy_set_header X-Real-IP $remote_addr;"
-                                                 "proxy_set_header X-Forwarded-for $remote_addr;"
-                                                 "proxy_connect_timeout 300;"
-                                                 "client_max_body_size 0;"
-                                                 ;; https://qasseta.ru/q/100/368287/cloudfront-%D0%BA%D0%B0%D0%BA-%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B8%D1%82%D1%8C-%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D0%BD%D1%8B%D0%B9-%D0%BF%D1%80%D0%BE%D0%BA%D1%81%D0%B8-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80-%D0%BD%D0%B0-%D1%81%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D1%83%D1%8E%D1%89%D0%B5%D0%BC-%D0%B2%D0%B5%D0%B1-%D1%81%D0%B0%D0%B9%D1%82%D0%B5-%D0%BE%D0%B1%D1%81%D0%BB%D1%83%D0%B6%D0%B8%D0%B2%D0%B0%D1%8E%D1%89%D0%B5%D0%BC-%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BE%D1%82-s3
-                                                 ;; "proxy_cache_bypass $http_upgrade;"
-                                                 ;; "proxy_set_header Connection 'upgrade';"
-                                                 ;; "proxy_set_header Upgrade $http_upgrade;"
-                                                 ;; "proxy_http_version 1.1;"
-                                                 ))))))
-           (listen (if ssl?
-                       (list "192.168.0.144:443 ssl")
-                       (list "192.168.0.144:80")))
-           (ssl-certificate (if ssl?
-                                (letsencrypt-certificate host)
-                                #f))
-           (ssl-certificate-key (if ssl?
-                                    (letsencrypt-key host)
-                                    #f))))
-         "cuirass.wugi.info")))
+           (inherit %webssh-configuration-nginx)
+           (server-name '("webssh.wugi.info"))
+           (listen '("192.168.0.144:443 ssl"))
+           (ssl-certificate (letsencrypt-certificate "webssh.wugi.info"))
+           (ssl-certificate-key (letsencrypt-key "webssh.wugi.info"))
+           (locations
+            (list (nginx-location-configuration
+                   (uri "/.well-known")
+                   (body '("root /var/www;")))
+                  (nginx-location-configuration
+                   (uri "/")
+                   (body '("proxy_pass http://127.0.0.1:8888;"
+                           "proxy_http_version 1.1;"
+                           "proxy_read_timeout 300;"
+                           "proxy_set_header Upgrade $http_upgrade;"
+                           "proxy_set_header Connection \"upgrade\";"
+                           "proxy_set_header Host $http_host;"
+                           "proxy_set_header X-Real-IP $remote_addr;"
+                           "proxy_set_header X-Real-PORT $remote_port;"
+                           "add_header Access-Control-Allow-Origin *;"))))))
+          (proxy "cups.tld" 631)
+          (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #f)
+          (proxy "syncthing.wugi.info" 8384 #:ssl? #t #:ssl-key? #t #:mtls? #t
+                 ;; https://docs.syncthing.net/users/faq.html#why-do-i-get-host-check-error-in-the-gui-api
+                 #:proxy-set-header-host "localhost")
+          (proxy "monitor.wugi.info" 8080)
+          (proxy "guix.duckdns.org" 5556 #:ssl? #t)
+          (proxy "kiwiirc.wugi.info" 8194 #:ssl? #t #:ssl-key? #t #:mtls? #t)
+          (proxy "prometheus.wugi.info" 9090 #:listen %private-ip-address)
+          (proxy "guix.wugi.info" 5556 #:ssl? #t #:ssl-key? #t)
+          ((lambda* (host #:key
+                          (ssl? #f)
+                          (ssl-target? #f)
+                          (target #f)
+                          (sub-domains? #f))
+             (nginx-server-configuration
+              (server-name (if sub-domains?
+                               (list (string-append sub-domains?
+                                                    (string-join (string-split host #\.)
+                                                                 "\\.")
+                                                    "$"))
+                               (list host (string-append "www." host))))
+              (locations (delete #f
+                                 (list (nginx-location-configuration
+                                        (uri "/api/queue")
+                                        (body (list "return 404;")))
+                                       (nginx-location-configuration
+                                        (uri "/")
+                                        (body (list "resolver 80.80.80.80;"
+                                                    (string-append "set $target "
+                                                                   "ci.guix.gnu.org"
+                                                                   ":" (number->string 80) ";")
+                                                    (format #f "proxy_pass ~a://$target;" "http")
+                                                    (if sub-domains?
+                                                        "proxy_set_header Host $http_host;"
+                                                        (format #f "proxy_set_header Host ~a;" "ci.guix.gnu.org"))
+                                                    "proxy_set_header X-Forwarded-Proto $scheme;"
+                                                    "proxy_set_header X-Real-IP $remote_addr;"
+                                                    "proxy_set_header X-Forwarded-for $remote_addr;"
+                                                    "proxy_connect_timeout 300;"
+                                                    "client_max_body_size 0;"
+                                                    ;; https://qasseta.ru/q/100/368287/cloudfront-%D0%BA%D0%B0%D0%BA-%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B8%D1%82%D1%8C-%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D0%BD%D1%8B%D0%B9-%D0%BF%D1%80%D0%BE%D0%BA%D1%81%D0%B8-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80-%D0%BD%D0%B0-%D1%81%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D1%83%D1%8E%D1%89%D0%B5%D0%BC-%D0%B2%D0%B5%D0%B1-%D1%81%D0%B0%D0%B9%D1%82%D0%B5-%D0%BE%D0%B1%D1%81%D0%BB%D1%83%D0%B6%D0%B8%D0%B2%D0%B0%D1%8E%D1%89%D0%B5%D0%BC-%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BE%D1%82-s3
+                                                    ;; "proxy_cache_bypass $http_upgrade;"
+                                                    ;; "proxy_set_header Connection 'upgrade';"
+                                                    ;; "proxy_set_header Upgrade $http_upgrade;"
+                                                    ;; "proxy_http_version 1.1;"
+                                                    ))))))
+              (listen (if ssl?
+                          (list "192.168.0.144:443 ssl")
+                          (list "192.168.0.144:80")))
+              (ssl-certificate (if ssl?
+                                   (letsencrypt-certificate host)
+                                   #f))
+              (ssl-certificate-key (if ssl?
+                                       (letsencrypt-key host)
+                                       #f))))
+           "cuirass.wugi.info")))
 
-
-;;;
-;;; Autofs
-;;;
+  ;; XXX: Maybe generate /etc/autofs.conf with Scheme.
+  ;; [ autofs ]
+  ;; timeout = 300
+  ;; browse_mode = no
+  ;; [ amd ]
+  ;; dismount_interval = 300
+  (define %autofs-mounts
+    (list
+     (autofs-mount-configuration
+      (target "/mnt/autofs/ssh/ws1.intr/home/oleg")
+      (source ":sshfs\\#ws1.intr\\:/home/oleg"))
+     (autofs-mount-configuration
+      (target "/mnt/autofs/ssh/web30s.intr/home/u226391")
+      (source ":sshfs\\#web30s.majordomo.ru\\:"))
+     (autofs-mount-configuration
+      (target "/mnt/autofs/ssh/web33s.intr/home/u7590")
+      (source ":sshfs\\#web33s.majordomo.ru\\:"))
+     (autofs-mount-configuration
+      (target "/mnt/autofs/ssh/web30.intr/home/eng")
+      (source ":sshfs\\#web30.intr\\:"))
+     (autofs-mount-configuration
+      (target "/mnt/autofs/ssh/web99.intr/root")
+      (source ":sshfs\\#root@web99.intr\\:"))
+     (autofs-mount-configuration
+      (target "/mnt/autofs/ssh/web99.intr/root")
+      (source ":sshfs\\#root@web99.intr\\:"))
+     (autofs-mount-configuration
+      (target "/mnt/autofs/ssh/web99.intr/home/oleg")
+      (source ":sshfs\\#root@web99.intr\\:/home/oleg"))
+     (autofs-mount-configuration
+      (target "/mnt/autofs/ssh/ubuntu.local/home/oleg")
+      (source ":sshfs\\#oleg@ubuntu.local\\:/home/oleg"))
+     ;; TODO: Move autofs mount hierarchally lower after changing restic configuration.
+     (autofs-mount-configuration
+      (target "/mnt/windows/games")
+      (source "://windows.local/games")
+      (fstype
+       (string-append "-fstype=cifs,ro,user=oleg,pass="
+                      (string-trim-right
+                       (with-input-from-file
+                           (or (and=> (getenv "USER")
+                                      (lambda (user)
+                                        (and (string= user "root")
+                                             "/etc/guix/secrets/windows")))
+                               "/dev/null")
+                         read-string)))))))
 
-;; XXX: Maybe generate /etc/autofs.conf with Scheme.
-;; [ autofs ]
-;; timeout = 300
-;; browse_mode = no
-;; [ amd ]
-;; dismount_interval = 300
+  (define backup-job
+    #~(job '(next-hour '(3))
+           #$(restic-command)))
 
-(define %autofs-mounts
-  (list
-   (autofs-mount-configuration
-    (target "/mnt/autofs/ssh/ws1.intr/home/oleg")
-    (source ":sshfs\\#ws1.intr\\:/home/oleg"))
-   (autofs-mount-configuration
-    (target "/mnt/autofs/ssh/web30s.intr/home/u226391")
-    (source ":sshfs\\#web30s.majordomo.ru\\:"))
-   (autofs-mount-configuration
-    (target "/mnt/autofs/ssh/web33s.intr/home/u7590")
-    (source ":sshfs\\#web33s.majordomo.ru\\:"))
-   (autofs-mount-configuration
-    (target "/mnt/autofs/ssh/web30.intr/home/eng")
-    (source ":sshfs\\#web30.intr\\:"))
-   (autofs-mount-configuration
-    (target "/mnt/autofs/ssh/web99.intr/root")
-    (source ":sshfs\\#root@web99.intr\\:"))
-   (autofs-mount-configuration
-    (target "/mnt/autofs/ssh/web99.intr/root")
-    (source ":sshfs\\#root@web99.intr\\:"))
-   (autofs-mount-configuration
-    (target "/mnt/autofs/ssh/web99.intr/home/oleg")
-    (source ":sshfs\\#root@web99.intr\\:/home/oleg"))
-   (autofs-mount-configuration
-    (target "/mnt/autofs/ssh/ubuntu.local/home/oleg")
-    (source ":sshfs\\#oleg@ubuntu.local\\:/home/oleg"))
-   ;; TODO: Move autofs mount hierarchally lower after changing restic configuration.
-   (autofs-mount-configuration
-    (target "/mnt/windows/games")
-    (source "://windows.local/games")
-    (fstype
-     (string-append "-fstype=cifs,ro,user=oleg,pass="
-                    (string-trim-right
-                     (with-input-from-file
-                         (or (and=> (getenv "USER")
-                                    (lambda (user)
-                                      (and (string= user "root")
-                                           "/etc/guix/secrets/windows")))
-                             "/dev/null")
-                       read-string)))))))
+  (define (create-openvswitch-internal-port bridge port)
+    #~(invoke/quiet #$(file-append openvswitch "/bin/ovs-vsctl")
+                    "--may-exist" "add-port" #$bridge #$port
+                    "vlan_mode=native-untagged"
+                    "--" "set" "Interface" #$port "type=internal"))
 
-
-;;;
-;;; Backup
-;;;
+  ;; Add interface to VLAN 154:
+  ;;
+  ;; <interface type='bridge'>
+  ;;   <mac address='xx:xx:xx:xx:xx:xx'/>
+  ;;   <source bridge='br154'/>
+  ;;   <vlan>
+  ;;     <tag id='154' nativeMode='untagged'/>
+  ;;   </vlan>
+  ;;   <virtualport type='openvswitch'>
+  ;;     <parameters interfaceid='7c2d76d7-7c4b-4227-a117-4759b8ff994d'/>
+  ;;   </virtualport>
+  ;;   <target dev='netboot'/>
+  ;;   <model type='e1000e'/>
+  ;;   <address type='pci' domain='0x0000' bus='0x01' slot='0x01' function='0x0'/>
+  ;; </interface>
 
-(define backup-job
-  #~(job '(next-hour '(3))
-         #$(restic-command)))
+  (define tftp-root
+    #~(begin
+        (mkdir #$output)
+        (symlink (string-append #$netboot-xyz-efi
+                                "/share/netboot-xyz/netboot-xyz.efi")
+                 (string-append #$output "/netboot.xyz.efi"))))
 
-
-;;;
-;;; Networking
-;;;
+  (define %dnsmasq-br154
+    (simple-service
+     'dnsmasq-br154 shepherd-root-service-type
+     (list (shepherd-service
+            (provision '(dnsmasq-br154))
+            (requirement '(networking vswitchd))
+            (start #~(make-forkexec-constructor
+                      (list #$(file-append dnsmasq "/sbin/dnsmasq")
+                            "--keep-in-foreground"
+                            "--pid-file=/run/dnsmasq.pid"
+                            "--local-service"
+                            "--cache-size=150"
+                            "--dhcp-range" "192.168.154.52,192.168.154.148,12h"
+                            "--dhcp-host=52:54:00:f1:75:45,192.168.154.129" ;web99
+                            "--dhcp-host=52:54:00:7a:62:8d,192.168.154.130" ;nginx99
+                            "--dhcp-host=52:54:00:23:17:ff,192.168.154.119" ;ubuntu
+                            "--dhcp-host=52:54:00:51:3e:ad,192.168.154.131" ;kube1
+                            "--bind-interfaces"
+                            "--interface=br154.154"
+                            "--except-interface=br0"
+                            "--except-interface=br156.br156"
+                            "--except-interface=enp34s0"
+                            "--except-interface=lo"
+                            "--dhcp-boot=netboot.xyz.efi"
+                            (string-append "--tftp-root="
+                                           #$(run-with-store (open-connection)
+                                               (gexp->derivation "tftp-root" tftp-root)))
+                            "--enable-tftp"
+                            #$(string-append "--server=" %private-ip-address)
+                            "--no-resolv"
+                            "--dhcp-option=option:domain-search,intr")))
+            (respawn? #f)))))
 
-(define (create-openvswitch-internal-port bridge port)
-  #~(invoke/quiet #$(file-append openvswitch "/bin/ovs-vsctl")
-                  "--may-exist" "add-port" #$bridge #$port
-                  "vlan_mode=native-untagged"
-                  "--" "set" "Interface" #$port "type=internal"))
+  (define %dnsmasq-br156
+    (simple-service
+     'dnsmasq-br156 shepherd-root-service-type
+     (list (shepherd-service
+            (provision '(dnsmasq-br156))
+            (requirement '(networking vswitchd))
+            (start #~(make-forkexec-constructor
+                      (list #$(file-append dnsmasq "/sbin/dnsmasq")
+                            "--keep-in-foreground"
+                            "--pid-file=/run/dnsmasq-vlan156.pid"
+                            "--local-service"
+                            "--cache-size=150"
+                            "--dhcp-range" "192.168.156.52,192.168.156.148,12h"
+                            "--bind-interfaces"
+                            "--interface=br156.156"
+                            "--except-interface=br0"
+                            "--except-interface=br154.br154"
+                            "--except-interface=enp34s0"
+                            "--except-interface=lo"
+                            "--no-resolv"
+                            "--server=192.168.156.1")))
+            (respawn? #f)))))
 
-;; Add interface to VLAN 154:
-;;
-;; <interface type='bridge'>
-;;   <mac address='xx:xx:xx:xx:xx:xx'/>
-;;   <source bridge='br154'/>
-;;   <vlan>
-;;     <tag id='154' nativeMode='untagged'/>
-;;   </vlan>
-;;   <virtualport type='openvswitch'>
-;;     <parameters interfaceid='7c2d76d7-7c4b-4227-a117-4759b8ff994d'/>
-;;   </virtualport>
-;;   <target dev='netboot'/>
-;;   <model type='e1000e'/>
-;;   <address type='pci' domain='0x0000' bus='0x01' slot='0x01' function='0x0'/>
-;; </interface>
+  ;; (define %dnsmasq-lo
+  ;;   (simple-service
+  ;;    'dnsmasq-enp34s0 shepherd-root-service-type
+  ;;    (list (shepherd-service
+  ;;           (provision '(dnsmasq-enp34s0))
+  ;;           (requirement '(networking vswitchd))
+  ;;           (start #~(make-forkexec-constructor
+  ;;                     (list #$(file-append dnsmasq "/sbin/dnsmasq")
+  ;;                           "--keep-in-foreground"
+  ;;                           "--pid-file=/var/run/dnsmasq-main.pid"
+  ;;                           "--local-service"
+  ;;                           "--interface=lo"
+  ;;                           "--server=8.8.8.8"
+  ;;                           "--no-resolv"
+  ;;                           "--bind-interfaces"
+  ;;                           "--except-interface=enp34s0"
+  ;;                           "--except-interface=br0"
+  ;;                           "--except-interface=br154.br154"
+  ;;                           "--except-interface=br156.br156"
+  ;;                           "--ipset=/googleapis.com/googlevideo.com/gvt1.com/nhacmp3youtube.com/video.google.com/www.youtube.com/youtu.be/youtube.com/youtubeeducation.com/youtubei.googleapis.com/youtubekids.com/youtube-nocookie.com/youtube-ui.l.google.com/yt3.ggpht.com/yt.be/ytimg.com/byedpi"
+  ;;                           "--ipset=/ntc.party/play.google.com/yt3.ggpht.com/tor")
+  ;;                     #:pid-file "/var/run/dnsmasq-main.pid"))
+  ;;           (respawn? #f)))))
 
-(define tftp-root
-  #~(begin
-      (mkdir #$output)
-      (symlink (string-append #$netboot-xyz-efi
-                              "/share/netboot-xyz/netboot-xyz.efi")
-               (string-append #$output "/netboot.xyz.efi"))))
+  ;; TODO: Add libvirtd network configuration.
+  ;; (use-modules (sxml simple))
+  ;; (call-with-output-string
+  ;;   (lambda (port)
+  ;;     (sxml->xml '(network
+  ;;                  (portgroup (@ (name "vlan-01") (default "yes")))
+  ;;                  (portgroup (@ (name "vlan-02"))
+  ;;                             (vlan (tag (@ (id "2")))))
+  ;;                  (portgroup (@ (name "vlan-03"))
+  ;;                             (vlan (tag (@ (id "3")))))
+  ;;                  (portgroup (@ (name "vlan-all"))
+  ;;                             (vlan (@ (trunk "yes"))
+  ;;                                   (tag (@ (id "2")))
+  ;;                                   (tag (@ (id "3")))))
+  ;;                  (virtualport (@ (type "openvswitch")))
+  ;;                  (bridge (@ (name "ovsbr0")))
+  ;;                  (forward (@ (mode "bridge")))
+  ;;                  (name "ovs-network"))
+  ;;                port)))
 
-(define %dnsmasq-br154
-  (simple-service
-   'dnsmasq-br154 shepherd-root-service-type
-   (list (shepherd-service
-          (provision '(dnsmasq-br154))
-          (requirement '(networking vswitchd))
-          (start #~(make-forkexec-constructor
-                    (list #$(file-append dnsmasq "/sbin/dnsmasq")
-                          "--keep-in-foreground"
-                          "--pid-file=/run/dnsmasq.pid"
-                          "--local-service"
-                          "--cache-size=150"
-                          "--dhcp-range" "192.168.154.52,192.168.154.148,12h"
-                          "--dhcp-host=52:54:00:f1:75:45,192.168.154.129" ;web99
-                          "--dhcp-host=52:54:00:7a:62:8d,192.168.154.130" ;nginx99
-                          "--dhcp-host=52:54:00:23:17:ff,192.168.154.119" ;ubuntu
-                          "--dhcp-host=52:54:00:51:3e:ad,192.168.154.131" ;kube1
-                          "--bind-interfaces"
-                          "--interface=br154.154"
-                          "--except-interface=br0"
-                          "--except-interface=br156.br156"
-                          "--except-interface=enp34s0"
-                          "--except-interface=lo"
-                          "--dhcp-boot=netboot.xyz.efi"
-                          (string-append "--tftp-root="
-                                         #$(run-with-store (open-connection)
-                                             (gexp->derivation "tftp-root" tftp-root)))
-                          "--enable-tftp"
-                          #$(string-append "--server=" %private-ip-address)
-                          "--no-resolv"
-                          "--dhcp-option=option:domain-search,intr")))
-          (respawn? #f)))))
+  ;; Provides a workaround service to activate LVM thin volume on boot.
+  (define %lvm-thin
+    (simple-service
+     'lvm-thin shepherd-root-service-type
+     (list (shepherd-service
+            (provision '(lvm-thin))
+            (requirement '())
+            (start #~(make-forkexec-constructor
+                      (list #$(file-append lvm2 "/sbin/lvchange")
+                            "-ay" "-v" "lvm2/ntfsgames")))
+            (respawn? #f)
+            (one-shot? #t)))))
 
-(define %dnsmasq-br156
-  (simple-service
-   'dnsmasq-br156 shepherd-root-service-type
-   (list (shepherd-service
-          (provision '(dnsmasq-br156))
-          (requirement '(networking vswitchd))
-          (start #~(make-forkexec-constructor
-                    (list #$(file-append dnsmasq "/sbin/dnsmasq")
-                          "--keep-in-foreground"
-                          "--pid-file=/run/dnsmasq-vlan156.pid"
-                          "--local-service"
-                          "--cache-size=150"
-                          "--dhcp-range" "192.168.156.52,192.168.156.148,12h"
-                          "--bind-interfaces"
-                          "--interface=br156.156"
-                          "--except-interface=br0"
-                          "--except-interface=br154.br154"
-                          "--except-interface=enp34s0"
-                          "--except-interface=lo"
-                          "--no-resolv"
-                          "--server=192.168.156.1")))
-          (respawn? #f)))))
+  (define %firewall-service
+    (simple-service
+     'firewall shepherd-root-service-type
+     (list (shepherd-service
+            (provision '(firewall))
+            (start #~(begin
+                       (lambda ()
+                         (define (ovs-vsctl cmd)
+                           ;; (apply invoke/quiet
+                           ;;        #$(file-append openvswitch "/bin/ovs-vsctl")
+                           ;;        (string-tokenize cmd))
+                           #t)
+                         (define (ip cmd)
+                           ;; (apply system*
+                           ;;        #$(file-append iproute "/sbin/ip")
+                           ;;        (string-tokenize cmd))
+                           #t)
+                         (define (iptables cmd)
+                           (apply system*
+                                  #$(file-append iptables "/sbin/iptables")
+                                  (string-tokenize cmd)))
+                         (define (ip6tables cmd)
+                           (apply system*
+                                  #$(file-append iptables "/sbin/ip6tables")
+                                  (string-tokenize cmd)))
+                         (and ;; Set default chain policies.
+                          (iptables
+                           (string-join
+                            '("-P" "INPUT" "DROP")))
+                          (iptables
+                           (string-join
+                            '("-P" "FORWARD" "DROP")))
+                          (ip6tables
+                           (string-join
+                            '("-P" "INPUT" "DROP")))
+                          (ip6tables
+                           (string-join
+                            '("-P" "FORWARD" "DROP")))
 
-;; (define %dnsmasq-lo
-;;   (simple-service
-;;    'dnsmasq-enp34s0 shepherd-root-service-type
-;;    (list (shepherd-service
-;;           (provision '(dnsmasq-enp34s0))
-;;           (requirement '(networking vswitchd))
-;;           (start #~(make-forkexec-constructor
-;;                     (list #$(file-append dnsmasq "/sbin/dnsmasq")
-;;                           "--keep-in-foreground"
-;;                           "--pid-file=/var/run/dnsmasq-main.pid"
-;;                           "--local-service"
-;;                           "--interface=lo"
-;;                           "--server=8.8.8.8"
-;;                           "--no-resolv"
-;;                           "--bind-interfaces"
-;;                           "--except-interface=enp34s0"
-;;                           "--except-interface=br0"
-;;                           "--except-interface=br154.br154"
-;;                           "--except-interface=br156.br156"
-;;                           "--ipset=/googleapis.com/googlevideo.com/gvt1.com/nhacmp3youtube.com/video.google.com/www.youtube.com/youtu.be/youtube.com/youtubeeducation.com/youtubei.googleapis.com/youtubekids.com/youtube-nocookie.com/youtube-ui.l.google.com/yt3.ggpht.com/yt.be/ytimg.com/byedpi"
-;;                           "--ipset=/ntc.party/play.google.com/yt3.ggpht.com/tor")
-;;                     #:pid-file "/var/run/dnsmasq-main.pid"))
-;;           (respawn? #f)))))
+                          ;; Accept egress from Kubernetes network,
+                          ;; so flux, cdi and other pods can run.
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-s" "10.0.0.0/14"
+                              "-j" "ACCEPT")))
 
-;; TODO: Add libvirtd network configuration.
-;; (use-modules (sxml simple))
-;; (call-with-output-string
-;;   (lambda (port)
-;;     (sxml->xml '(network
-;;                  (portgroup (@ (name "vlan-01") (default "yes")))
-;;                  (portgroup (@ (name "vlan-02"))
-;;                             (vlan (tag (@ (id "2")))))
-;;                  (portgroup (@ (name "vlan-03"))
-;;                             (vlan (tag (@ (id "3")))))
-;;                  (portgroup (@ (name "vlan-all"))
-;;                             (vlan (@ (trunk "yes"))
-;;                                   (tag (@ (id "2")))
-;;                                   (tag (@ (id "3")))))
-;;                  (virtualport (@ (type "openvswitch")))
-;;                  (bridge (@ (name "ovsbr0")))
-;;                  (forward (@ (mode "bridge")))
-;;                  (name "ovs-network"))
-;;                port)))
+                          ;; Deny all ingress connections.
+                          (iptables
+                           (string-join
+                            '("-A" "INPUT"
+                              "-i" "br0"
+                              "-d" "192.168.0.144/32"
+                              "-j" "DROP")))
+                          (iptables
+                           (string-join
+                            '("-A" "INPUT"
+                              "-i" "eth0"
+                              "-d" "192.168.0.144/32"
+                              "-j" "DROP")))
+                          ;; Accept HTTP traffic.
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "br0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "80"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "eth0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "80"
+                              "-j" "ACCEPT")))
+                          ;; Accept HTTPS traffic.
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "br0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "443"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "eth0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "443"
+                              "-j" "ACCEPT")))
+                          ;; Accept SSH traffic.
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "br0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "22"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "eth0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "22"
+                              "-j" "ACCEPT")))
+                          ;; Accept DC++ traffic.
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "br0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "3001"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "eth0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "3001"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "br0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "udp"
+                              "--dport" "3001"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "eth0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "udp"
+                              "--dport" "3001"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "br0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "3002"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "eth0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "3002"
+                              "-j" "ACCEPT")))
+                          ;; DC++ DHC.
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "br0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "udp"
+                              "--dport" "6250"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "eth0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "udp"
+                              "--dport" "6250"
+                              "-j" "ACCEPT")))
+                          ;; Accept VNC traffic.
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "br0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "5900"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "eth0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "5900"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "br0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "5901"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "eth0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "5901"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "br0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "5902"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "eth0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "5902"
+                              "-j" "ACCEPT")))
+                          ;; Accept OpenVPN traffic.
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "br0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "udp"
+                              "--dport" "1195"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "eth0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "udp"
+                              "--dport" "1195"
+                              "-j" "ACCEPT")))
+                          ;; Accept Diablo 2 traffic.
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "br0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "4000"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "eth0"
+                              "-d" "192.168.0.144/32"
+                              "-p" "tcp"
+                              "--dport" "4000"
+                              "-j" "ACCEPT")))
+                          ;; Accept qBittorrent API traffic.
+                          (iptables
+                           (string-join
+                            (list "-I" "INPUT"
+                                  "-p" "tcp"
+                                  "--destination" #$(string-append %private-ip-address "/32")
+                                  "--dport" "9091"
+                                  "-j" "ACCEPT")))
+                          ;; Accept DNS traffic, which is required for
+                          ;; Docker containers.
+                          (iptables
+                           (string-join
+                            (list "-I" "INPUT"
+                                  "-p" "tcp"
+                                  "--destination" #$(string-append %private-ip-address "/32")
+                                  "--dport" "53"
+                                  "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            (list "-I" "INPUT"
+                                  "-p" "udp"
+                                  "--destination" #$(string-append %private-ip-address "/32")
+                                  "--dport" "53"
+                                  "-j" "ACCEPT")))
+                          ;; Accept traffic which originated from current computer.
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-m" "state"
+                              "--state" "RELATED,ESTABLISHED"
+                              "-j" "ACCEPT")))
+                          (ip6tables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-m" "state"
+                              "--state" "RELATED,ESTABLISHED"
+                              "-j" "ACCEPT")))
+                          ;; Accept everything from specific networks.
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-s" "192.168.0.0/24"
+                              "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-s" "127.0.0.0/8"
+                              "-j" "ACCEPT")))
 
-
-;;;
-;;; LVM thin volume
-;;;
+                          ;; Accept everything on br154.154 interface, so
+                          ;; DHCP can give addresses to virtual machines.
+                          (iptables
+                           (string-join
+                            '("-I" "INPUT"
+                              "-i" "br154.154"
+                              "-j" "ACCEPT")))
 
-;; Provides a workaround service to activate LVM thin volume on boot.
+                          ;; Transparent proxy connections to
+                          ;; ci.guix.gnu.org via Tor network.
+                          ;;
+                          ;; From current machine:
+                          (iptables
+                           (string-join
+                            '("-t" "nat"
+                              "-I" "OUTPUT"
+                              "-d" "141.80.181.40/32"
+                              "-p" "tcp"
+                              "-j" "REDIRECT"
+                              "--to-ports" "889")))
+                          ;;
+                          ;; From other machines:
+                          (iptables
+                           (string-join
+                            '("-t" "nat"
+                              "-I" "PREROUTING"
+                              "-p" "tcp"
+                              "--destination" "141.80.181.40/32"
+                              "--dport" "443"
+                              "-j" "DNAT"
+                              "--to-destination" "127.0.0.1:889")))
 
-(define %lvm-thin
-  (simple-service
-   'lvm-thin shepherd-root-service-type
-   (list (shepherd-service
-          (provision '(lvm-thin))
-          (requirement '())
-          (start #~(make-forkexec-constructor
-                    (list #$(file-append lvm2 "/sbin/lvchange")
-                          "-ay" "-v" "lvm2/ntfsgames")))
-          (respawn? #f)
-          (one-shot? #t)))))
+                          ;; Forward connections from %private-ip-address:6443 to
+                          ;; 192.168.154.1:6443 for Kubernetes API on
+                          ;; Kubenav (Android application).
+                          ;;
+                          ;; https://serverfault.com/questions/586486/how-to-do-the-port-forwarding-from-one-ip-to-another-ip-in-same-network
+                          ;; linux - How to do the port forwarding from one
+                          ;; ip to another ip in same network? - Server
+                          ;; Fault
+                          (iptables
+                           (string-join
+                            (list "-t" "nat"
+                                  "-A" "PREROUTING"
+                                  "-p" "tcp"
+                                  #$(format #f "--destination ~a" %private-ip-address)
+                                  "--dport" "6443"
+                                  "-j" "DNAT"
+                                  "--to-destination" "192.168.154.1:6443")))
+                          (iptables
+                           (string-join
+                            (list "-t" "nat"
+                                  "-A" "POSTROUTING"
+                                  "-p" "tcp"
+                                  "-d" "192.168.154.1"
+                                  "--dport" "6443"
+                                  "-j" "SNAT"
+                                  "--to-source" #$%private-ip-address)))
 
-
-;;;
-;;; Firewall
-;;;
+                          ;; VLAN 154 provides:
+                          ;; - Network via Whonix
+                          (ovs-vsctl
+                           (string-join
+                            (list "--may-exist" "add-br" "br154")))
+                          (ovs-vsctl
+                           (string-join
+                            (list "--may-exist" "add-br" "br154-vlan154" "br154" "154")))
+                          (ip
+                           (string-join
+                            (list "link" "add" "link" "br154"
+                                  "name" "br154.154"
+                                  "type" "vlan"
+                                  "id" "154")))
+                          (iptables
+                           (string-join
+                            (list "-t" "nat"
+                                  "-A" "POSTROUTING"
+                                  "-o" "br0"
+                                  "-j" "MASQUERADE")))
+                          (iptables
+                           (string-join
+                            (list "-t" "nat"
+                                  "-A" "POSTROUTING"
+                                  "-o" "eth0"
+                                  "-j" "MASQUERADE")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "br0"
+                                  "-o" "br154.154"
+                                  "-m" "state"
+                                  "--state" "RELATED,ESTABLISHED"
+                                  "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "eth0"
+                                  "-o" "br154.154"
+                                  "-m" "state"
+                                  "--state" "RELATED,ESTABLISHED"
+                                  "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "br154.154"
+                                  "-o" "br0"
+                                  "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "br154.154"
+                                  "-o" "eth0"
+                                  "-j" "ACCEPT")))
+                          ;; NAT 192.168.0.0/24 -> 192.168.154.0/24
+                          (iptables
+                           (string-join
+                            (list "-t" "nat"
+                                  "-A" "POSTROUTING"
+                                  "-o" "br154.154"
+                                  "-j" "MASQUERADE")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "br154.154"
+                                  "-o" "br0"
+                                  "-m" "state"
+                                  "--state" "RELATED,ESTABLISHED"
+                                  "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "br154.154"
+                                  "-o" "eth0"
+                                  "-m" "state"
+                                  "--state" "RELATED,ESTABLISHED"
+                                  "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "br0"
+                                  "-o" "br154.154"
+                                  "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "eth0"
+                                  "-o" "br154.154"
+                                  "-j" "ACCEPT")))
+                          ;; OpenVPN NAT
+                          (iptables
+                           (string-join
+                            (list "-t" "nat"
+                                  "-A" "POSTROUTING"
+                                  "-o" "tapvpn"
+                                  "-j" "MASQUERADE")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "tapvpn"
+                                  "-o" "br154.154"
+                                  "-m" "state"
+                                  "--state" "RELATED,ESTABLISHED"
+                                  "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "br154.154"
+                                  "-o" "tapvpn"
+                                  "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "br0"
+                                  "-o" "tapvpn"
+                                  "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "eth0"
+                                  "-o" "tapvpn"
+                                  "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "tapvpn"
+                                  "-o" "br0"
+                                  "-m" "state"
+                                  "--state" "RELATED,ESTABLISHED"
+                                  "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "tapvpn"
+                                  "-o" "eth0"
+                                  "-m" "state"
+                                  "--state" "RELATED,ESTABLISHED"
+                                  "-j" "ACCEPT")))
 
-(define %firewall-service
-  (simple-service
-   'firewall shepherd-root-service-type
-   (list (shepherd-service
-          (provision '(firewall))
-          (start #~(begin
-                     (lambda ()
-                       (define (ovs-vsctl cmd)
-                         ;; (apply invoke/quiet
-                         ;;        #$(file-append openvswitch "/bin/ovs-vsctl")
-                         ;;        (string-tokenize cmd))
-                         #t)
-                       (define (ip cmd)
-                         ;; (apply system*
-                         ;;        #$(file-append iproute "/sbin/ip")
-                         ;;        (string-tokenize cmd))
-                         #t)
-                       (define (iptables cmd)
-                         (apply system*
-                                #$(file-append iptables "/sbin/iptables")
-                                (string-tokenize cmd)))
-                       (define (ip6tables cmd)
-                         (apply system*
-                                #$(file-append iptables "/sbin/ip6tables")
-                                (string-tokenize cmd)))
-                       (and ;; Set default chain policies.
-                            (iptables
-                             (string-join
-                              '("-P" "INPUT" "DROP")))
-                            (iptables
-                             (string-join
-                              '("-P" "FORWARD" "DROP")))
-                            (ip6tables
-                             (string-join
-                              '("-P" "INPUT" "DROP")))
-                            (ip6tables
-                             (string-join
-                              '("-P" "FORWARD" "DROP")))
+                          ;; access ci.guix.gnu.org via oracle on 192.168.154.2-154
+                          (iptables
+                           (string-join
+                            (list
+                             "-A" "FORWARD"
+                             "-i" "br154.154"
+                             "-o" "tapvpn1"
+                             "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "tapvpn1"
+                                  "-o" "br154.154"
+                                  "-j" "ACCEPT")))
 
-                            ;; Accept egress from Kubernetes network,
-                            ;; so flux, cdi and other pods can run.
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-s" "10.0.0.0/14"
-                                "-j" "ACCEPT")))
+                          ;; Allow to use current machine as a default
+                          ;; gateway on other machines.
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "br0"
+                                  "-o" "br0"
+                                  "-j" "ACCEPT")))
+                          (iptables
+                           (string-join
+                            (list "-A" "FORWARD"
+                                  "-i" "eth0"
+                                  "-o" "eth0"
+                                  "-j" "ACCEPT")))
 
-                            ;; Deny all ingress connections.
-                            (iptables
-                             (string-join
-                              '("-A" "INPUT"
-                                "-i" "br0"
-                                "-d" "192.168.0.144/32"
-                                "-j" "DROP")))
-                            (iptables
-                             (string-join
-                              '("-A" "INPUT"
-                                "-i" "eth0"
-                                "-d" "192.168.0.144/32"
-                                "-j" "DROP")))
-                            ;; Accept HTTP traffic.
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "br0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "80"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "eth0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "80"
-                                "-j" "ACCEPT")))
-                            ;; Accept HTTPS traffic.
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "br0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "443"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "eth0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "443"
-                                "-j" "ACCEPT")))
-                            ;; Accept SSH traffic.
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "br0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "22"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "eth0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "22"
-                                "-j" "ACCEPT")))
-                            ;; Accept DC++ traffic.
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "br0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "3001"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "eth0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "3001"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "br0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "udp"
-                                "--dport" "3001"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "eth0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "udp"
-                                "--dport" "3001"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "br0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "3002"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "eth0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "3002"
-                                "-j" "ACCEPT")))
-                            ;; DC++ DHC.
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "br0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "udp"
-                                "--dport" "6250"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "eth0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "udp"
-                                "--dport" "6250"
-                                "-j" "ACCEPT")))
-                            ;; Accept VNC traffic.
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "br0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "5900"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "eth0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "5900"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "br0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "5901"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "eth0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "5901"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "br0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "5902"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "eth0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "5902"
-                                "-j" "ACCEPT")))
-                            ;; Accept OpenVPN traffic.
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "br0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "udp"
-                                "--dport" "1195"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "eth0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "udp"
-                                "--dport" "1195"
-                                "-j" "ACCEPT")))
-                            ;; Accept Diablo 2 traffic.
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "br0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "4000"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "eth0"
-                                "-d" "192.168.0.144/32"
-                                "-p" "tcp"
-                                "--dport" "4000"
-                                "-j" "ACCEPT")))
-                            ;; Accept qBittorrent API traffic.
-                            (iptables
-                             (string-join
-                              (list "-I" "INPUT"
-                                    "-p" "tcp"
-                                    "--destination" #$(string-append %private-ip-address "/32")
-                                    "--dport" "9091"
-                                    "-j" "ACCEPT")))
-                            ;; Accept DNS traffic, which is required for
-                            ;; Docker containers.
-                            (iptables
-                             (string-join
-                              (list "-I" "INPUT"
-                                    "-p" "tcp"
-                                    "--destination" #$(string-append %private-ip-address "/32")
-                                    "--dport" "53"
-                                    "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              (list "-I" "INPUT"
-                                    "-p" "udp"
-                                    "--destination" #$(string-append %private-ip-address "/32")
-                                    "--dport" "53"
-                                    "-j" "ACCEPT")))
-                            ;; Accept traffic which originated from current computer.
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-m" "state"
-                                "--state" "RELATED,ESTABLISHED"
-                                "-j" "ACCEPT")))
-                            (ip6tables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-m" "state"
-                                "--state" "RELATED,ESTABLISHED"
-                                "-j" "ACCEPT")))
-                            ;; Accept everything from specific networks.
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-s" "192.168.0.0/24"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-s" "127.0.0.0/8"
-                                "-j" "ACCEPT")))
+                          ;; VLAN 155 provides:
+                          ;; - DHCP with a PXE by netboot.xyz.
+                          ;; - NAT for the Internet.
+                          ;; - NAT for OpenVPN to a work.
+                          (ovs-vsctl
+                           (string-join
+                            (list "--may-exist" "add-br" "br155")))
+                          (ovs-vsctl
+                           (string-join
+                            (list "--may-exist" "add-br" "br155-vlan155" "br155" "155")))
+                          ;; vlan 156
+                          (ovs-vsctl
+                           (string-join
+                            (list "--may-exist" "add-br" "br156")))
+                          (ovs-vsctl
+                           (string-join
+                            (list "--may-exist" "add-br" "br156-vlan156" "br156" "156")))
 
-                            ;; Accept everything on br154.154 interface, so
-                            ;; DHCP can give addresses to virtual machines.
-                            (iptables
-                             (string-join
-                              '("-I" "INPUT"
-                                "-i" "br154.154"
-                                "-j" "ACCEPT")))
+                          ;; VLAN 156 provides:
+                          ;; - DHCP with a PXE by netboot.xyz.
+                          ;; - NAT for the Internet.
+                          (ip
+                           (string-join
+                            (list "link" "add" "link" "br156"
+                                  "name" "br156.156"
+                                  "type" "vlan"
+                                  "id" "156")))
 
-                            ;; Transparent proxy connections to
-                            ;; ci.guix.gnu.org via Tor network.
-                            ;;
-                            ;; From current machine:
-                            (iptables
-                             (string-join
-                              '("-t" "nat"
-                                "-I" "OUTPUT"
-                                "-d" "141.80.181.40/32"
-                                "-p" "tcp"
-                                "-j" "REDIRECT"
-                                "--to-ports" "889")))
-                            ;;
-                            ;; From other machines:
-                            (iptables
-                             (string-join
-                              '("-t" "nat"
-                                "-I" "PREROUTING"
-                                "-p" "tcp"
-                                "--destination" "141.80.181.40/32"
-                                "--dport" "443"
-                                "-j" "DNAT"
-                                "--to-destination" "127.0.0.1:889")))
+                          ;; Drop all ingress and egress traffic related to
+                          ;; vm3.wugi.info.
+                          (iptables
+                           (string-join
+                            (list "-I" "INPUT"
+                                  "-s" "185.105.108.96/32"
+                                  "-j" "DROP")))
+                          (iptables
+                           (string-join
+                            (list "-I" "OUTPUT"
+                                  "-d" "185.105.108.96/32"
+                                  "-j" "DROP")))))))
+            (respawn? #f)))))
 
-                            ;; Forward connections from %private-ip-address:6443 to
-                            ;; 192.168.154.1:6443 for Kubernetes API on
-                            ;; Kubenav (Android application).
-                            ;;
-                            ;; https://serverfault.com/questions/586486/how-to-do-the-port-forwarding-from-one-ip-to-another-ip-in-same-network
-                            ;; linux - How to do the port forwarding from one
-                            ;; ip to another ip in same network? - Server
-                            ;; Fault
-                            (iptables
-                             (string-join
-                              (list "-t" "nat"
-                                    "-A" "PREROUTING"
-                                    "-p" "tcp"
-                                    #$(format #f "--destination ~a" %private-ip-address)
-                                    "--dport" "6443"
-                                    "-j" "DNAT"
-                                    "--to-destination" "192.168.154.1:6443")))
-                            (iptables
-                             (string-join
-                              (list "-t" "nat"
-                                    "-A" "POSTROUTING"
-                                    "-p" "tcp"
-                                    "-d" "192.168.154.1"
-                                    "--dport" "6443"
-                                    "-j" "SNAT"
-                                    "--to-source" #$%private-ip-address)))
+  ;; Avahi in workstation Pod
+  (define container-guix-networking-avahi-program
+    (program-file "container-guix-networking-avahi-program"
+                  #~(begin
+                      (setenv "PATH"
+                              "/run/setuid-programs:/root/.config/guix/current/bin:/run/current-system/profile/bin:/run/current-system/profile/sbin")
+                      (execl #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/10-avahi-namespace.sh")
+                                           #:recursive? #t)
+                             "container-guix-networking-avahi-program"))))
 
-                            ;; VLAN 154 provides:
-                            ;; - Network via Whonix
-                            (ovs-vsctl
-                             (string-join
-                              (list "--may-exist" "add-br" "br154")))
-                            (ovs-vsctl
-                             (string-join
-                              (list "--may-exist" "add-br" "br154-vlan154" "br154" "154")))
-                            (ip
-                             (string-join
-                              (list "link" "add" "link" "br154"
-                                    "name" "br154.154"
-                                    "type" "vlan"
-                                    "id" "154")))
-                            (iptables
-                             (string-join
-                              (list "-t" "nat"
-                                    "-A" "POSTROUTING"
-                                    "-o" "br0"
-                                    "-j" "MASQUERADE")))
-                            (iptables
-                             (string-join
-                              (list "-t" "nat"
-                                    "-A" "POSTROUTING"
-                                    "-o" "eth0"
-                                    "-j" "MASQUERADE")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "br0"
-                                    "-o" "br154.154"
-                                    "-m" "state"
-                                    "--state" "RELATED,ESTABLISHED"
-                                    "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "eth0"
-                                    "-o" "br154.154"
-                                    "-m" "state"
-                                    "--state" "RELATED,ESTABLISHED"
-                                    "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "br154.154"
-                                    "-o" "br0"
-                                    "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "br154.154"
-                                    "-o" "eth0"
-                                    "-j" "ACCEPT")))
-                            ;; NAT 192.168.0.0/24 -> 192.168.154.0/24
-                            (iptables
-                             (string-join
-                              (list "-t" "nat"
-                                    "-A" "POSTROUTING"
-                                    "-o" "br154.154"
-                                    "-j" "MASQUERADE")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "br154.154"
-                                    "-o" "br0"
-                                    "-m" "state"
-                                    "--state" "RELATED,ESTABLISHED"
-                                    "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "br154.154"
-                                    "-o" "eth0"
-                                    "-m" "state"
-                                    "--state" "RELATED,ESTABLISHED"
-                                    "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "br0"
-                                    "-o" "br154.154"
-                                    "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "eth0"
-                                    "-o" "br154.154"
-                                    "-j" "ACCEPT")))
-                            ;; OpenVPN NAT
-                            (iptables
-                             (string-join
-                              (list "-t" "nat"
-                                    "-A" "POSTROUTING"
-                                    "-o" "tapvpn"
-                                    "-j" "MASQUERADE")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "tapvpn"
-                                    "-o" "br154.154"
-                                    "-m" "state"
-                                    "--state" "RELATED,ESTABLISHED"
-                                    "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "br154.154"
-                                    "-o" "tapvpn"
-                                    "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "br0"
-                                    "-o" "tapvpn"
-                                    "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "eth0"
-                                    "-o" "tapvpn"
-                                    "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "tapvpn"
-                                    "-o" "br0"
-                                    "-m" "state"
-                                    "--state" "RELATED,ESTABLISHED"
-                                    "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "tapvpn"
-                                    "-o" "eth0"
-                                    "-m" "state"
-                                    "--state" "RELATED,ESTABLISHED"
-                                    "-j" "ACCEPT")))
-
-                            ;; access ci.guix.gnu.org via oracle on 192.168.154.2-154
-                            (iptables
-                             (string-join
-                              (list
-                               "-A" "FORWARD"
-                               "-i" "br154.154"
-                               "-o" "tapvpn1"
-                               "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "tapvpn1"
-                                    "-o" "br154.154"
-                                    "-j" "ACCEPT")))
-
-                            ;; Allow to use current machine as a default
-                            ;; gateway on other machines.
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "br0"
-                                    "-o" "br0"
-                                    "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              (list "-A" "FORWARD"
-                                    "-i" "eth0"
-                                    "-o" "eth0"
-                                    "-j" "ACCEPT")))
-
-                            ;; VLAN 155 provides:
-                            ;; - DHCP with a PXE by netboot.xyz.
-                            ;; - NAT for the Internet.
-                            ;; - NAT for OpenVPN to a work.
-                            (ovs-vsctl
-                             (string-join
-                              (list "--may-exist" "add-br" "br155")))
-                            (ovs-vsctl
-                             (string-join
-                              (list "--may-exist" "add-br" "br155-vlan155" "br155" "155")))
-                            ;; vlan 156
-                            (ovs-vsctl
-                             (string-join
-                              (list "--may-exist" "add-br" "br156")))
-                            (ovs-vsctl
-                             (string-join
-                              (list "--may-exist" "add-br" "br156-vlan156" "br156" "156")))
-
-                            ;; VLAN 156 provides:
-                            ;; - DHCP with a PXE by netboot.xyz.
-                            ;; - NAT for the Internet.
-                            (ip
-                             (string-join
-                              (list "link" "add" "link" "br156"
-                                    "name" "br156.156"
-                                    "type" "vlan"
-                                    "id" "156")))
-
-                            ;; Drop all ingress and egress traffic related to
-                            ;; vm3.wugi.info.
-                            (iptables
-                             (string-join
-                              (list "-I" "INPUT"
-                                    "-s" "185.105.108.96/32"
-                                    "-j" "DROP")))
-                            (iptables
-                             (string-join
-                              (list "-I" "OUTPUT"
-                                    "-d" "185.105.108.96/32"
-                                    "-j" "DROP")))))))
-          (respawn? #f)))))
-
-
-;;;
-;;; Avahi in workstation Pod
-;;;
-
-(define container-guix-networking-avahi-program
-  (program-file "container-guix-networking-avahi-program"
-                #~(begin
-                    (setenv "PATH"
-                            "/run/setuid-programs:/root/.config/guix/current/bin:/run/current-system/profile/bin:/run/current-system/profile/sbin")
-                    (execl #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/10-avahi-namespace.sh")
-                                         #:recursive? #t)
-                           "container-guix-networking-avahi-program"))))
-
-
-;;;
-;;; Entry point
-;;;
-
-(define (%guixsd)
   (let ((base-system (%guixsd-hardware)))
     (operating-system
       (inherit base-system)
