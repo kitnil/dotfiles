@@ -158,7 +158,8 @@ guix-system-configurations =			\
   notebook					\
   pc0					\
   vm1					\
-  vm2
+  vm2					\
+  workstation
 
 define guix-time-machine-arguments
 guix time-machine -C dotfiles/channels-current.scm
