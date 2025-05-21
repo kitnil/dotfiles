@@ -148,16 +148,16 @@ guix-system-configurations =			\
   vm2					\
   workstation
 
+define guix-time-machine
+guix time-machine "--channels=guix/wugi/etc/guix/channels/$(1).scm"
+endef
+
 define guix-system-arguments
-guix time-machine --channels=guix/wugi/etc/guix/channels/$(subst $(1),,$(2)).scm -- build --load-path=guix --expression="((@ (wugi system $(subst $(1),,$(2))) %$(subst $(1),,$(2))))"
+build --load-path=guix --expression="((@ (wugi system $$system) %$$system))"
 endef
 
 define guix-build-manifest
 build --load-path=guix --expression="((@ (wugi manifests $(subst $(1),,$(2))) %$(subst $(1),,$(2)-manifest)))"
-endef
-
-define guix-time-machine
-guix time-machine "--channels=guix/wugi/etc/guix/channels/$(1).scm"
 endef
 
 define guix-build-expression
@@ -169,7 +169,8 @@ home build --load-path=guix -e "((@ (wugi home config $$system) %$(1)))"
 endef
 
 $(foreach configuration,$(guix-system-configurations),$(configuration)):
-	$(call guix-system-arguments,guix-system-configuration-,$@)
+	system=$(subst time-machine-guix-system-configuration-,,$(@)); \
+	$(call guix-time-machine,$$system) -- $(call guix-system-arguments,guix-system-configuration-,$@)
 
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-system-configuration-$(configuration)):
 	system=$(subst time-machine-guix-system-configuration-,,$(@)); \
