@@ -165,7 +165,7 @@ home build --load-path=guix -e "((@ (wugi home config $$system) %$(1)))"
 endef
 
 $(foreach configuration,$(guix-system-configurations),$(configuration)):
-	system=$(subst time-machine-guix-system-configuration-,,$@); \
+	system=$@; \
 	guix $(call guix-build-expression,$$system)
 
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-system-configuration-$(configuration)):
