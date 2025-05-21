@@ -5,7 +5,7 @@ DECRYPT_TARGETS =					\
   guix/dot_config/espanso/user/censor.yml		\
   guix/dot_config/transmission/settings.json		\
   guix/dotfiles/guixsd/exim/dkim_rsa.private		\
-  nix/yggdrasil/yggdrasil.conf		\
+  nix/yggdrasil/yggdrasil.conf				\
   guix/dotfiles/etc/yggdrasil-private.conf
 
 .PHONY: all
@@ -27,11 +27,11 @@ clean-nix:
 clean-local:
 	$(GIT) clean -xdf
 
-QEMU_FLAGS =					\
-  -vnc :22					\
-  -daemonize					\
-  -m 4096					\
-  -smp 2					\
+QEMU_FLAGS =						\
+  -vnc :22						\
+  -daemonize						\
+  -m 4096						\
+  -smp 2						\
   -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22
 
 GUIX_SYSTEM_VM_CONFIGURATIONS =			\
@@ -178,7 +178,7 @@ home:
 	rm -f /run/user/1000/shepherd/socket
 	make install
 
-STATE_TO_VC_HOSTNAMES =			\
+STATE_TO_VC_HOSTNAMES =				\
   sr1-dh507-508					\
   sr1-mr13-14					\
   sw1-dh507					\
