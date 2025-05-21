@@ -102,6 +102,9 @@ dot_config/espanso/user/censor.yml.gpg:
 guix/dotfiles/mjru/intr.nix:
 	guix/dotfiles/mjru/intr.nix > guix/dotfiles/mjru/intr.json
 
+guix/dotfiles/mjru/intr.json:
+	gpg --decrypt guix/dotfiles/mjru/intr.json.gpg > guix/dotfiles/mjru/intr.json
+
 .PHONY: install
 install: guix/wugi/home/config/openssh.scm guix/dotfiles/guixsd/machines.scm guix/dotfiles/nix/nix.conf guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
 	guix/dot_local/bin/gpg-unlock > /dev/null
@@ -172,12 +175,12 @@ $(foreach configuration,$(guix-system-configurations),guix-home-build-$(configur
 	system=$(subst guix-home-build-,,$@); \
 	guix $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
 
-$(foreach configuration,$(guix-system-configurations),guix-time-machine-home-build-$(configuration)): guix/wugi/home/config/openssh.scm
+$(foreach configuration,$(guix-system-configurations),guix-time-machine-home-build-$(configuration)): guix/wugi/home/config/openssh.scm guix/dotfiles/mjru/intr.json
 	ACTION=build; \
 	system=$(subst guix-time-machine-home-build-,,$@); \
 	$(call guix-time-machine,$$system) -- $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
 
-$(foreach configuration,$(guix-system-configurations),guix-home-reconfigure-$(configuration)): guix/wugi/home/config/openssh.scm
+$(foreach configuration,$(guix-system-configurations),guix-home-reconfigure-$(configuration)): guix/wugi/home/config/openssh.scm guix/dotfiles/mjru/intr.json
 	ACTION=reconfigure; \
 	system=$(subst guix-home-reconfigure-,,$@); \
 	guix $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
@@ -311,7 +314,7 @@ SUBSTITUTE_URLS='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org h
 
 container_registry=harbor.home.wugi.info
 .ONESHELL:
-guix-image-workstation: guix/wugi/home/config/openssh.scm
+guix-image-workstation: guix/wugi/home/config/openssh.scm guix/dotfiles/mjru/intr.json
 	set -o nounset -o errexit -o pipefail -o xtrace
 	IMG=$(container_registry)/library/$@:$$(git rev-parse --abbrev-ref HEAD)-$$(git rev-parse HEAD | cut -c -8)-$$(date +%s)
 	container=$$(guix time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- system image --load-path=guix --substitute-urls=$(SUBSTITUTE_URLS) --max-layers=100 -t docker --network -e '((@ (wugi system workstation) %workstation))')
@@ -325,7 +328,7 @@ pc0-manifest:
 
 container_registry=harbor.home.wugi.info
 .ONESHELL:
-guix-image-builder: guix/wugi/home/config/openssh.scm
+guix-image-builder: guix/wugi/home/config/openssh.scm guix/dotfiles/mjru/intr.json
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
 	container=$$(guix time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls="$(SUBSTITUTE_URLS)" --max-layers=100 -t docker --network ~/.local/share/chezmoi/guix/wugi/system/guix-image-builder.scm)
