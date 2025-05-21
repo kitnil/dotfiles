@@ -12,6 +12,6 @@ AC_SUBST([GUIX])
 AC_PATH_PROG([PASS], [pass])
 AC_SUBST([PASS])
 
-AM_INIT_AUTOMAKE([])
+AM_INIT_AUTOMAKE([1.14 -Woverride -Wno-portability])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
