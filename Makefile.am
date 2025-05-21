@@ -40,7 +40,7 @@ GUIX_SYSTEM_VM_CONFIGURATIONS =			\
   stumpwm
 
 define guix-system-vm-arguments
-system vm --load-path=wugi --no-offload $(1)
+system vm --load-path=guix --no-offload $(1)
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_VM_CONFIGURATIONS),guix-system-vm-configuration-$(configuration)):
@@ -48,11 +48,11 @@ $(foreach configuration,$(GUIX_SYSTEM_VM_CONFIGURATIONS),guix-system-vm-configur
 
 .PHONY: extension-graph
 extension-graph:
-	$(GUIX) system --load-path=wugi extension-graph guix/wugi/system/guixsd.scm | xdot -
+	$(GUIX) system --load-path=guix extension-graph guix/wugi/system/guixsd.scm | xdot -
 
 .PHONY: shepherd-graph
 shepherd-graph:
-	$(GUIX) system --load-path=wugi shepherd-graph guix/wugi/system/guixsd.scm | xdot -
+	$(GUIX) system --load-path=guix shepherd-graph guix/wugi/system/guixsd.scm | xdot -
 
 guix/dotfiles/guile/ssh.txt: guix/dotfiles/guile/ssh.scm
 	guile guix/dotfiles/guile/ssh.scm > guix/dotfiles/guile/ssh.txt
@@ -99,7 +99,7 @@ guile-ihs:
 
 .PHONY: deploy
 deploy:
-	$(GUIX) deploy --load-path=wugi guix/dotfiles/guixsd/deploy.scm
+	$(GUIX) deploy --load-path=guix guix/dotfiles/guixsd/deploy.scm
 
 .PHONY: guix/dotfiles/packer/build.scm
 guix/dotfiles/packer/build.scm:
@@ -204,7 +204,7 @@ container_registry=harbor.corp1.majordomo.ru
 $(STATE_TO_VC_HOSTNAMES):
 	set -o nounset -o errexit -o pipefail
 	commit_8=$$($(GIT) rev-parse HEAD | cut -c -8)
-	container=$$($(guix_repository)/pre-inst-env guix pack -f docker-layered -S /bin=bin --load-path=wugi -e '(@ (packages networking) state-to-vc-$@)')
+	container=$$($(guix_repository)/pre-inst-env guix pack -f docker-layered -S /bin=bin --load-path=guix -e '(@ (packages networking) state-to-vc-$@)')
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/monitoring/$@:$$commit_8
 	$(GUIX) gc --delete $$container
 	cd $(HOME)/src/gitlab.intr/cd/state-to-git/apps/*/state-to-git-$@
@@ -220,7 +220,7 @@ state-to-vc-containers: $(STATE_TO_VC_HOSTNAMES)
 util-linux-with-udev:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$($(GIT) rev-parse HEAD | cut -c -8)
-	container=$$($(GUIX) pack -f docker --load-path=wugi --max-layers=100 -S /bin=bin util-linux-with-udev bash coreutils guile guix-refresh.sh)
+	container=$$($(GUIX) pack -f docker --load-path=guix --max-layers=100 -S /bin=bin util-linux-with-udev bash coreutils guile guix-refresh.sh)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	$(GUIX) gc --delete $$container
 	cd apps/base/maintenance-guix-refresh-gita
@@ -234,7 +234,7 @@ util-linux-with-udev:
 skopeo-umoci:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$($(GIT) rev-parse HEAD | cut -c -8)
-	container=$$($(GUIX) pack -f docker --load-path=wugi --max-layers=100 -S /bin=bin -S /etc=etc bash coreutils skopeo umoci nss-certs)
+	container=$$($(GUIX) pack -f docker --load-path=guix --max-layers=100 -S /bin=bin -S /etc=etc bash coreutils skopeo umoci nss-certs)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	$(GUIX) gc --delete $$container
 
@@ -242,7 +242,7 @@ skopeo-umoci:
 runc:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$($(GIT) rev-parse HEAD | cut -c -8)
-	container=$$($(GUIX) pack -f docker --load-path=wugi --max-layers=100 -S /bin=bin -S /sbin=sbin util-linux-with-udev bash coreutils runc)
+	container=$$($(GUIX) pack -f docker --load-path=guix --max-layers=100 -S /bin=bin -S /sbin=sbin util-linux-with-udev bash coreutils runc)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	$(GUIX) gc --delete $$container
 
