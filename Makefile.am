@@ -27,10 +27,6 @@ clean-nix:
 clean-local:
 	$(GIT) clean -xdf
 
-.PHONY: benchmark
-benchmark:
-	emacs --eval "(progn (with-current-buffer (get-buffer \"*Benchmark Init Results Tabulated*\") (princ (buffer-substring-no-properties (point-min) (point-max)) #'external-debugging-output)) (kill-emacs))"
-
 HOSTNAME = $(shell hostname)
 
 QEMU_FLAGS =					\

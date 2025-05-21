@@ -35,3 +35,4 @@
 /config.status
 /configure
 /install-sh
+/src/emacs/benchmark/benchmark.el
