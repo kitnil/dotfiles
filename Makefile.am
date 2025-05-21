@@ -23,8 +23,8 @@ clean-guile:
 clean-nix:
 	rm -rf $(HOME)/.cache/nix
 
-.PHONY: clean
-clean:
+.PHONY: clean-local
+clean-local:
 	git clean -xdf
 
 .PHONY: benchmark
@@ -40,7 +40,7 @@ QEMU_FLAGS =					\
   -smp 2					\
   -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22
 
-guix-system-vm-configurations =			\
+GUIX_SYSTEM_VM_CONFIGURATIONS =			\
   guixsd					\
   jenkins					\
   stumpwm
@@ -49,7 +49,7 @@ define guix-system-vm-arguments
 system vm --load-path=wugi --no-offload $(1)
 endef
 
-$(foreach configuration,$(guix-system-vm-configurations),guix-system-vm-configuration-$(configuration)):
+$(foreach configuration,$(GUIX_SYSTEM_VM_CONFIGURATIONS),guix-system-vm-configuration-$(configuration)):
 	guix $(call guix-system-vm-arguments,guix/dotfiles/system/vm-image-$(subst guix-system-vm-configuration-,,$@).tmpl)
 
 .PHONY: extension-graph
@@ -109,24 +109,6 @@ dot_config/espanso/user/censor.yml.gpg:
 guix/dotfiles/mjru/intr.nix:
 	guix/dotfiles/mjru/intr.nix > guix/wugi/etc/mjru/intr.json
 
-.PHONY: install
-install: guix/dotfiles/guixsd/machines.scm guix/dotfiles/nix/nix.conf guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
-	guix/dot_local/bin/gpg-unlock > /dev/null
-	update-desktop-database $(HOME)/.local/share/applications
-	mkdir -p $(HOME)/.config/mpv/scripts
-	ln -sf $(HOME)/.nix-profile/share/mpv/scripts/notify-send.lua $(HOME)/.config/mpv/scripts/notify-send.lua
-	install --mode=755 guix/dotfiles/scripts/guix-channels-update $(HOME)/bin
-	install --mode=755 guix/dotfiles/scripts/guix-ci $(HOME)/bin
-	install --mode=755 guix/dotfiles/scripts/guix-package-version $(HOME)/bin
-	install --mode=755 guix/dotfiles/scripts/guix-profile-to-manifest $(HOME)/bin
-	install --mode=755 guix/dotfiles/scripts/maintenance $(HOME)/bin
-	install --mode=755 guix/dotfiles/scripts/sshrc $(HOME)/bin
-	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
-	install -Dm644 guix/dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
-	install -Dm644 guix/dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
-	guix home --load-path=wugi reconfigure guix/dotfiles/guixsd/home/$(HOSTNAME).scm
-	install -Dm644 private_dot_ssh/known_hosts2 $(HOME)/.ssh/known_hosts2
-
 .PHONY: shepherd-restart
 shepherd-restart:
 	$(shell set +e; herd stop root)
@@ -145,7 +127,7 @@ deploy:
 guix/dotfiles/packer/build.scm:
 	sh -c 'cd guix/dotfiles/packer; guix build -f build.scm'
 
-guix-system-configurations =			\
+GUIX_SYSTEM_CONFIGURATIONS =			\
   guixsd					\
   notebook					\
   pc0						\
@@ -161,7 +143,7 @@ define guix-build-expression
 build --load-path=guix -e "((@ (wugi system $(1)) %$(2)))"
 endef
 
-$(foreach configuration,$(guix-system-configurations),guix-system-build-$(configuration)):
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-build-$(configuration)):
 	system=$(subst guix-system-build-,,$@); \
 	guix $(call guix-build-expression,$$system,$$system)
 
@@ -173,22 +155,22 @@ define guix-home-expression
 home $$ACTION --load-path=guix -e "((@ (wugi home config $(subst -home-environment,,$1)) %$(2)))"
 endef
 
-$(foreach configuration,$(guix-system-configurations),guix-home-build-$(configuration)):
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-home-build-$(configuration)):
 	ACTION=build; \
 	system=$(subst guix-home-build-,,$@); \
 	guix $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
 
-$(foreach configuration,$(guix-system-configurations),guix-time-machine-home-build-$(configuration)): $(DECRYPT_TARGETS)
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-home-build-$(configuration)): $(DECRYPT_TARGETS)
 	ACTION=build; \
 	system=$(subst guix-time-machine-home-build-,,$@); \
 	$(call guix-time-machine,$$system) -- $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
 
-$(foreach configuration,$(guix-system-configurations),guix-home-reconfigure-$(configuration)): $(DECRYPT_TARGETS)
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-home-reconfigure-$(configuration)): $(DECRYPT_TARGETS)
 	ACTION=reconfigure; \
 	system=$(subst guix-home-reconfigure-,,$@); \
 	guix $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
 
-$(foreach configuration,$(guix-system-configurations),guix-time-machine-home-reconfigure-$(configuration)):
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-home-reconfigure-$(configuration)):
 	ACTION=reconfigure; \
 	system=$(subst guix-time-machine-home-reconfigure-,,$@); \
 	$(call guix-time-machine,$$system) -- $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
@@ -197,10 +179,10 @@ define guix-build-manifest
 build --load-path=guix --expression="((@ (wugi manifests $(subst $(1),,$(2))) %$(subst $(1),,$(2)-manifest)))"
 endef
 
-$(foreach configuration,$(guix-system-configurations),guix-build-manifest-$(configuration)):
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-build-manifest-$(configuration)):
 	guix $(call guix-build-manifest,guix-build-manifest-,$@)
 
-$(foreach configuration,$(guix-system-configurations),guix-time-machine-build-manifest-$(configuration)):
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-build-manifest-$(configuration)):
 	system=$(subst guix-time-machine-build-manifest-,,$@); \
 	$(call guix-time-machine,$$system) -- $(call guix-build-manifest,guix-time-machine-build-manifest-,$$system)
 
@@ -218,7 +200,7 @@ home:
 	rm -f /run/user/1000/shepherd/socket
 	make install
 
-state-to-vc-hostnames =			\
+STATE_TO_VC_HOSTNAMES =			\
   sr1-dh507-508					\
   sr1-mr13-14					\
   sw1-dh507					\
@@ -237,10 +219,11 @@ state-to-vc-hostnames =			\
   sw4-mr14
 
 guix_repository=$(HOME)/src/git.savannah.gnu.org/git/guix
+
 container_registry=harbor.corp1.majordomo.ru
 
 .ONESHELL:
-$(state-to-vc-hostnames):
+$(STATE_TO_VC_HOSTNAMES):
 	set -o nounset -o errexit -o pipefail
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
 	container=$$($(guix_repository)/pre-inst-env guix pack -f docker-layered -S /bin=bin --load-path=wugi -e '(@ (packages networking) state-to-vc-$@)')
@@ -253,9 +236,8 @@ $(state-to-vc-hostnames):
 	    :
 	fi
 
-state-to-vc-containers: $(state-to-vc-hostnames)
+state-to-vc-containers: $(STATE_TO_VC_HOSTNAMES)
 
-container_registry=docker-registry.wugi.info
 .ONESHELL:
 util-linux-with-udev:
 	set -o nounset -o errexit -o pipefail -o xtrace
@@ -270,8 +252,6 @@ util-linux-with-udev:
 	    :
 	fi
 
-container_registry=docker-registry.wugi.info
-skopeo-umoci:
 .ONESHELL:
 skopeo-umoci:
 	set -o nounset -o errexit -o pipefail -o xtrace
@@ -280,7 +260,6 @@ skopeo-umoci:
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	guix gc --delete $$container
 
-container_registry=docker-registry.wugi.info
 .ONESHELL:
 runc:
 	set -o nounset -o errexit -o pipefail -o xtrace
@@ -289,7 +268,6 @@ runc:
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	guix gc --delete $$container
 
-container_registry=docker-registry.wugi.info
 .ONESHELL:
 haproxy:
 	set -o nounset -o errexit -o pipefail -o xtrace
@@ -297,7 +275,6 @@ haproxy:
 	container=$$(guix pack -f docker --max-layers=100 -S /sbin=sbin haproxy)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
-container_registry=harbor.home.wugi.info
 .ONESHELL:
 isc-dhcp:
 	set -o nounset -o errexit -o pipefail -o xtrace
@@ -305,7 +282,6 @@ isc-dhcp:
 	container=$$(guix system image --load-path=/home/oleg/.local/share/chezmoi/guix/wugi --max-layers=100 -t docker --network guix/dotfiles/guixsd/docker-image-isc-dhcp.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
-container_registry=harbor.home.wugi.info
 .ONESHELL:
 mumble:
 	set -o nounset -o errexit -o pipefail -o xtrace
@@ -315,7 +291,6 @@ mumble:
 
 SUBSTITUTE_URLS='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org https://mirrors.sjtug.sjtu.edu.cn/guix'
 
-container_registry=harbor.home.wugi.info
 .ONESHELL:
 guix-image-workstation: $(DECRYPT_TARGETS)
 	set -o nounset -o errexit -o pipefail -o xtrace
@@ -329,7 +304,6 @@ pc0-manifest:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	guix time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- build --load-path=guix -m wugi/manifests/pc0.scm --substitute-urls="$(SUBSTITUTE_URLS)"
 
-container_registry=harbor.home.wugi.info
 .ONESHELL:
 guix-image-builder: $(DECRYPT_TARGETS)
 	set -o nounset -o errexit -o pipefail -o xtrace
@@ -344,7 +318,6 @@ nix-update-inputs:
 container-systemd-taskexecutor:
 	$(MAKE) -C guix/dotfiles/nix/container-systemd-taskexecutor
 
-container_registry=harbor.home.wugi.info
 .ONESHELL:
 workstation-controller:
 	set -o nounset -o errexit -o pipefail -o xtrace
@@ -356,7 +329,6 @@ workstation-controller:
 dotfiles-update-commit:
 	guix shell guile guile-git guile-gcrypt guile-json yq -- guix/dot_local/bin/dotfiles-update-commit
 
-container_registry=harbor.home.wugi.info
 .ONESHELL:
 archlinux:
 	$(MAKE) -C apps/base/kaniko-archlinux
