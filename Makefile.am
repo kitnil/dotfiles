@@ -82,10 +82,6 @@ nix/firefox/generated-firefox-addons.nix:
 guix/dotfiles/mjru/intr.nix:
 	guix/dotfiles/mjru/intr.nix > guix/wugi/etc/mjru/intr.json
 
-.PHONY: guile-ihs
-guile-ihs:
-	$(GUIX) environment --manifest=guix/dotfiles/manifests/majordomo.scm -- sh -c 'type -p ihs'
-
 .PHONY: deploy
 deploy:
 	$(GUIX) deploy --load-path=guix guix/dotfiles/guixsd/deploy.scm
