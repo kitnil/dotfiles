@@ -68,7 +68,7 @@
    (services (list (if (file-exists?
                         (string-append %distro-directory "/wugi/home/config/openssh.scm"))
                        ((lambda ()
-                          (use-modules (home config openssh))
+                          (use-modules (wugi home config openssh))
                           (service home-openssh-service-type %home-openssh-configuration)))
                        (service home-openssh-service-type))
                    (service home-dbus-service-type)
