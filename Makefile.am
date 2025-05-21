@@ -50,15 +50,15 @@ system vm --load-path=wugi --no-offload $(1)
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_VM_CONFIGURATIONS),guix-system-vm-configuration-$(configuration)):
-	guix $(call guix-system-vm-arguments,guix/dotfiles/system/vm-image-$(subst guix-system-vm-configuration-,,$@).tmpl)
+	$(GUIX) $(call guix-system-vm-arguments,guix/dotfiles/system/vm-image-$(subst guix-system-vm-configuration-,,$@).tmpl)
 
 .PHONY: extension-graph
 extension-graph:
-	guix system --load-path=wugi extension-graph guix/wugi/system/guixsd.scm | xdot -
+	$(GUIX) system --load-path=wugi extension-graph guix/wugi/system/guixsd.scm | xdot -
 
 .PHONY: shepherd-graph
 shepherd-graph:
-	guix system --load-path=wugi shepherd-graph guix/wugi/system/guixsd.scm | xdot -
+	$(GUIX) system --load-path=wugi shepherd-graph guix/wugi/system/guixsd.scm | xdot -
 
 guix/dotfiles/guile/ssh.txt: guix/dotfiles/guile/ssh.scm
 	guile guix/dotfiles/guile/ssh.scm > guix/dotfiles/guile/ssh.txt
@@ -66,7 +66,7 @@ guix/dotfiles/guile/ssh.txt: guix/dotfiles/guile/ssh.scm
 .PHONY: guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
 guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm:
 	mkdir -p private_dot_ssh
-	$(shell guix build -f guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm)/bin/run.scm > private_dot_ssh/known_hosts2
+	$(shell $(GUIX) build -f guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm)/bin/run.scm > private_dot_ssh/known_hosts2
 
 .PHONY: nix/flake.lock
 nix/flake.lock:
@@ -113,15 +113,15 @@ shepherd-restart:
 
 .PHONY: guile-ihs
 guile-ihs:
-	guix environment --manifest=guix/dotfiles/manifests/majordomo.scm -- sh -c 'type -p ihs'
+	$(GUIX) environment --manifest=guix/dotfiles/manifests/majordomo.scm -- sh -c 'type -p ihs'
 
 .PHONY: deploy
 deploy:
-	guix deploy --load-path=wugi guix/dotfiles/guixsd/deploy.scm
+	$(GUIX) deploy --load-path=wugi guix/dotfiles/guixsd/deploy.scm
 
 .PHONY: guix/dotfiles/packer/build.scm
 guix/dotfiles/packer/build.scm:
-	sh -c 'cd guix/dotfiles/packer; guix build -f build.scm'
+	sh -c 'cd guix/dotfiles/packer; $(GUIX) build -f build.scm'
 
 GUIX_SYSTEM_CONFIGURATIONS =			\
   guixsd					\
@@ -132,7 +132,7 @@ GUIX_SYSTEM_CONFIGURATIONS =			\
   workstation
 
 define guix-time-machine
-guix time-machine "--channels=guix/wugi/etc/guix/channels/$(1).scm"
+$(GUIX) time-machine "--channels=guix/wugi/etc/guix/channels/$(1).scm"
 endef
 
 define guix-build-expression
@@ -141,7 +141,7 @@ endef
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-build-$(configuration)):
 	system=$(subst guix-system-build-,,$@); \
-	guix $(call guix-build-expression,$$system,$$system)
+	$(GUIX) $(call guix-build-expression,$$system,$$system)
 
 $(foreach configuration,$(guix-system-builds),guix-time-machine-system-build-$(configuration)):
 	system=$(subst guix-time-machine-system-build-,,$@); \
@@ -154,7 +154,7 @@ endef
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-home-build-$(configuration)):
 	ACTION=build; \
 	system=$(subst guix-home-build-,,$@); \
-	guix $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
+	$(GUIX) $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-home-build-$(configuration)): $(DECRYPT_TARGETS)
 	ACTION=build; \
@@ -164,7 +164,7 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-home-bui
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-home-reconfigure-$(configuration)): $(DECRYPT_TARGETS)
 	ACTION=reconfigure; \
 	system=$(subst guix-home-reconfigure-,,$@); \
-	guix $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
+	$(GUIX) $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-home-reconfigure-$(configuration)):
 	ACTION=reconfigure; \
@@ -176,7 +176,7 @@ build --load-path=guix --expression="((@ (wugi manifests $(subst $(1),,$(2))) %$
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-build-manifest-$(configuration)):
-	guix $(call guix-build-manifest,guix-build-manifest-,$@)
+	$(GUIX) $(call guix-build-manifest,guix-build-manifest-,$@)
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-build-manifest-$(configuration)):
 	system=$(subst guix-time-machine-build-manifest-,,$@); \
@@ -224,7 +224,7 @@ $(STATE_TO_VC_HOSTNAMES):
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
 	container=$$($(guix_repository)/pre-inst-env guix pack -f docker-layered -S /bin=bin --load-path=wugi -e '(@ (packages networking) state-to-vc-$@)')
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/monitoring/$@:$$commit_8
-	guix gc --delete $$container
+	$(GUIX) gc --delete $$container
 	cd $(HOME)/src/gitlab.intr/cd/state-to-git/apps/*/state-to-git-$@
 	nix develop git+https://gitlab.intr/nixos/kubernetes --command kustomize edit set image $(container_registry)/monitoring/$@:$$commit_8
 	if ! git commit --message="apps: $$(basename $$(dirname $$(pwd))): state-to-git-$@: Update image to $$commit_8." kustomization.yaml
@@ -238,9 +238,9 @@ state-to-vc-containers: $(STATE_TO_VC_HOSTNAMES)
 util-linux-with-udev:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix pack -f docker --load-path=wugi --max-layers=100 -S /bin=bin util-linux-with-udev bash coreutils guile guix-refresh.sh)
+	container=$$($(GUIX) pack -f docker --load-path=wugi --max-layers=100 -S /bin=bin util-linux-with-udev bash coreutils guile guix-refresh.sh)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
-	guix gc --delete $$container
+	$(GUIX) gc --delete $$container
 	cd apps/base/maintenance-guix-refresh-gita
 	nix develop git+https://gitlab.intr/nixos/kubernetes --command kustomize edit set image $(container_registry)/library/$@:$$commit_8
 	if ! git commit --message="apps: $$(basename $$(dirname $$(pwd))): maintenance-guix-refresh-gita: Update image to $$commit_8." kustomization.yaml
@@ -252,37 +252,37 @@ util-linux-with-udev:
 skopeo-umoci:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix pack -f docker --load-path=wugi --max-layers=100 -S /bin=bin -S /etc=etc bash coreutils skopeo umoci nss-certs)
+	container=$$($(GUIX) pack -f docker --load-path=wugi --max-layers=100 -S /bin=bin -S /etc=etc bash coreutils skopeo umoci nss-certs)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
-	guix gc --delete $$container
+	$(GUIX) gc --delete $$container
 
 .ONESHELL:
 runc:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix pack -f docker --load-path=wugi --max-layers=100 -S /bin=bin -S /sbin=sbin util-linux-with-udev bash coreutils runc)
+	container=$$($(GUIX) pack -f docker --load-path=wugi --max-layers=100 -S /bin=bin -S /sbin=sbin util-linux-with-udev bash coreutils runc)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
-	guix gc --delete $$container
+	$(GUIX) gc --delete $$container
 
 .ONESHELL:
 haproxy:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix pack -f docker --max-layers=100 -S /sbin=sbin haproxy)
+	container=$$($(GUIX) pack -f docker --max-layers=100 -S /sbin=sbin haproxy)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 .ONESHELL:
 isc-dhcp:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix system image --load-path=/home/oleg/.local/share/chezmoi/guix/wugi --max-layers=100 -t docker --network guix/dotfiles/guixsd/docker-image-isc-dhcp.scm)
+	container=$$($(GUIX) system image --load-path=/home/oleg/.local/share/chezmoi/guix/wugi --max-layers=100 -t docker --network guix/dotfiles/guixsd/docker-image-isc-dhcp.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 .ONESHELL:
 mumble:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix time-machine --channels=guix/dotfiles/channels-guix-mumble.scm -- system image --max-layers=100 -t docker --network guix/wugi/system/docker-image-mumble.scm)
+	container=$$($(GUIX) time-machine --channels=guix/dotfiles/channels-guix-mumble.scm -- system image --max-layers=100 -t docker --network guix/wugi/system/docker-image-mumble.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 SUBSTITUTE_URLS='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org https://mirrors.sjtug.sjtu.edu.cn/guix'
@@ -291,20 +291,20 @@ SUBSTITUTE_URLS='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org h
 guix-image-workstation: $(DECRYPT_TARGETS)
 	set -o nounset -o errexit -o pipefail -o xtrace
 	IMG=$(container_registry)/library/$@:$$(git rev-parse --abbrev-ref HEAD)-$$(git rev-parse HEAD | cut -c -8)-$$(date +%s)
-	container=$$(guix time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- system image --load-path=guix --substitute-urls=$(SUBSTITUTE_URLS) --max-layers=100 -t docker --network -e '((@ (wugi system workstation) %workstation))')
+	container=$$($(GUIX) time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- system image --load-path=guix --substitute-urls=$(SUBSTITUTE_URLS) --max-layers=100 -t docker --network -e '((@ (wugi system workstation) %workstation))')
 	skopeo copy docker-archive\:$$container docker://$$IMG
 	echo $$IMG
 
 .ONESHELL:
 pc0-manifest:
 	set -o nounset -o errexit -o pipefail -o xtrace
-	guix time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- build --load-path=guix -m wugi/manifests/pc0.scm --substitute-urls="$(SUBSTITUTE_URLS)"
+	$(GUIX) time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- build --load-path=guix -m wugi/manifests/pc0.scm --substitute-urls="$(SUBSTITUTE_URLS)"
 
 .ONESHELL:
 guix-image-builder: $(DECRYPT_TARGETS)
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls="$(SUBSTITUTE_URLS)" --max-layers=100 -t docker --network ~/.local/share/chezmoi/guix/wugi/system/guix-image-builder.scm)
+	container=$$($(GUIX) time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls="$(SUBSTITUTE_URLS)" --max-layers=100 -t docker --network ~/.local/share/chezmoi/guix/wugi/system/guix-image-builder.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 nix-update-inputs:
@@ -323,7 +323,7 @@ workstation-controller:
 
 .PHONY: dotfiles-update-commit
 dotfiles-update-commit:
-	guix shell guile guile-git guile-gcrypt guile-json yq -- guix/dot_local/bin/dotfiles-update-commit
+	$(GUIX) shell guile guile-git guile-gcrypt guile-json yq -- guix/dot_local/bin/dotfiles-update-commit
 
 .ONESHELL:
 archlinux:
