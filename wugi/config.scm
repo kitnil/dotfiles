@@ -30,6 +30,7 @@
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages lisp-xyz)
   #:use-module (gnu packages rsync)
+  #:use-module (gnu packages screen)
   #:use-module (gnu packages web)
   #:use-module (gnu services base)
   #:use-module (gnu services web)
@@ -157,6 +158,7 @@ EndSection\n")
    binutils
    bridge-utils
    cryptsetup
+   dtach
    file
    fping
    fuse ;mount -t fuse and autofs
