@@ -64,7 +64,7 @@
 
 (define (%workstation-home-environment)
   (home-environment
-   (packages (packages-from-manifest (%workstation-manifest)))
+   (packages (manifest->packages (%workstation-manifest)))
    (services (list (if (file-exists?
                         (string-append %distro-directory "/wugi/home/config/openssh.scm"))
                        ((lambda ()
