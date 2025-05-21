@@ -156,8 +156,9 @@ define guix-build-expression
 build --load-path=guix -e "((@ (wugi system $(1)) %$(2)))"
 endef
 
-$(foreach configuration,$(guix-system-configurations),$(configuration)):
-	guix $(call guix-build-expression,$@,$@)
+$(foreach configuration,$(guix-system-configurations),guix-system-build-$(configuration)):
+	system=$(subst guix-system-build-,,$@); \
+	guix $(call guix-build-expression,$$system,$$system)
 
 $(foreach configuration,$(guix-system-builds),guix-time-machine-system-build-$(configuration)):
 	system=$(subst guix-time-machine-system-build-,,$@); \
