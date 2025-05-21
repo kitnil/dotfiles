@@ -152,10 +152,6 @@ define guix-time-machine
 guix time-machine "--channels=guix/wugi/etc/guix/channels/$(1).scm"
 endef
 
-define guix-system-arguments
-build --load-path=guix --expression="((@ (wugi system $$system) %$$system))"
-endef
-
 define guix-build-manifest
 build --load-path=guix --expression="((@ (wugi manifests $(subst $(1),,$(2))) %$(subst $(1),,$(2)-manifest)))"
 endef
@@ -170,7 +166,7 @@ endef
 
 $(foreach configuration,$(guix-system-configurations),$(configuration)):
 	system=$(subst time-machine-guix-system-configuration-,,$(@)); \
-	$(call guix-time-machine,$$system) -- $(call guix-system-arguments,guix-system-configuration-,$@)
+	guix $(call guix-build-expression,$$system)
 
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-system-configuration-$(configuration)):
 	system=$(subst time-machine-guix-system-configuration-,,$(@)); \
