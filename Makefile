@@ -1,5 +1,19 @@
+DECRYPT_TARGETS =					\
+  guix/wugi/home/config/openssh.scm			\
+  guix/wugi/etc/mjru/intr.json				\
+  guix/private_dot_emacs.d/modules/mjru-network.el	\
+  guix/dot_config/espanso/user/censor.yml		\
+  guix/dot_config/transmission/settings.json		\
+  guix/dotfiles/guixsd/exim/dkim_rsa.private		\
+  guix/dotfiles/nix/yggdrasil/yggdrasil.conf		\
+  guix/dotfiles/etc/yggdrasil-private.conf
+
 .PHONY: all
-all: $(DECRYPT_TARGETS)
+all: $(foreach secret,$(DECRYPT_TARGETS),$(secret))
+
+$(foreach secret,$(DECRYPT_TARGETS),$(secret)):
+	mkdir -p $$(dirname $@)
+	pass show dotfiles/$@ > $@
 
 .PHONY: clean-guile
 clean-guile:
@@ -94,19 +108,6 @@ dot_config/espanso/user/censor.yml.gpg:
 .PHONY: guix/dotfiles/mjru/intr.nix
 guix/dotfiles/mjru/intr.nix:
 	guix/dotfiles/mjru/intr.nix > guix/wugi/etc/mjru/intr.json
-
-DECRYPT_TARGETS =					\
-  guix/wugi/home/config/openssh.scm			\
-  guix/wugi/etc/mjru/intr.json				\
-  guix/private_dot_emacs.d/modules/mjru-network.el	\
-  guix/dot_config/espanso/user/censor.yml		\
-  guix/dot_config/transmission/settings.json		\
-  guix/dotfiles/guixsd/exim/dkim_rsa.private		\
-  guix/dotfiles/nix/yggdrasil/yggdrasil.conf		\
-  guix/dotfiles/etc/yggdrasil-private.conf
-
-$(foreach secret,$(DECRYPT_TARGETS),$(secret)):
-	pass show dotfiles/$@ > $@
 
 .PHONY: install
 install: guix/dotfiles/guixsd/machines.scm guix/dotfiles/nix/nix.conf guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
