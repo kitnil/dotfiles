@@ -13,7 +13,7 @@ all: $(foreach secret,$(DECRYPT_TARGETS),$(secret))
 
 $(foreach secret,$(DECRYPT_TARGETS),$(secret)):
 	mkdir -p $$(dirname $@)
-	pass show dotfiles/$@ > $@
+	$(PASS) show dotfiles/$@ > $@
 
 .PHONY: clean-guile
 clean-guile:
