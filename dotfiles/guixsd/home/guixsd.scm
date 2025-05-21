@@ -27,7 +27,6 @@
              (gnu packages wm)
 
              (home config)
-             (home config openssh)
              (home services ansible)
              (home services cisco)
              (home services desktop)
@@ -1217,7 +1216,12 @@ account default : gmail
                                                       port
                                                       #:pretty #t)))))))
 
-    (service home-openssh-service-type %home-openssh-configuration)
+    (if (file-exists?
+         (string-append %distro-directory "wugi/home/config/openssh.scm"))
+        ((lambda ()
+           (use-modules (home config openssh))
+           (service home-openssh-service-type %home-openssh-configuration)))
+        (service home-openssh-service-type))
 
     ;; XXX: missing home-ssh-configuration
     ;; (service home-ssh-service-type

@@ -23,7 +23,6 @@
 
   #:use-module (wugi etc guix channels workstation)
   #:use-module (wugi home config)
-  #:use-module (wugi home config openssh)
   #:use-module (wugi home services audio)
   #:use-module (wugi home services databases)
   #:use-module (wugi home services desktop)
@@ -70,8 +69,12 @@
   (home-environment
     (packages (packages-from-manifest
                (string-append %distro-directory "/wugi/manifests/pc0.scm")))
-    (services (list (service home-openssh-service-type
-                             %home-openssh-configuration)
+    (services (list (if (file-exists?
+                         (string-append %distro-directory "wugi/home/config/openssh.scm"))
+                        ((lambda ()
+                           (use-modules (home config openssh))
+                           (service home-openssh-service-type %home-openssh-configuration)))
+                        (service home-openssh-service-type))
                     (service home-dbus-service-type)
                     (service home-pipewire-service-type)
                     (simple-service 'test-config
