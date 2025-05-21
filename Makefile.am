@@ -5,7 +5,7 @@ DECRYPT_TARGETS =					\
   guix/dot_config/espanso/user/censor.yml		\
   guix/dot_config/transmission/settings.json		\
   guix/dotfiles/guixsd/exim/dkim_rsa.private		\
-  guix/dotfiles/nix/yggdrasil/yggdrasil.conf		\
+  nix/yggdrasil/yggdrasil.conf		\
   guix/dotfiles/etc/yggdrasil-private.conf
 
 .PHONY: all
@@ -68,26 +68,26 @@ guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm:
 	mkdir -p private_dot_ssh
 	$(shell guix build -f guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm)/bin/run.scm > private_dot_ssh/known_hosts2
 
-.PHONY: guix/dotfiles/nix/flake.lock
-guix/dotfiles/nix/flake.lock:
-	sh -c 'set -e; cd guix/dotfiles/nix || exit 1; nix flake lock --update-input nixpkgs'
+.PHONY: nix/flake.lock
+nix/flake.lock:
+	sh -c 'set -e; cd nix || exit 1; nix flake lock --update-input nixpkgs'
 
-.PHONY: guix/dotfiles/nix/flake.nix
-guix/dotfiles/nix/flake.nix:
-	sh -c 'set -e; cd guix/dotfiles/nix || exit 1; ./flake.nix'
+.PHONY: nix/flake.nix
+nix/flake.nix:
+	sh -c 'set -e; cd nix || exit 1; ./flake.nix'
 
 .PHONY: guix/dotfiles/dns/flake.nix
 guix/dotfiles/dns/flake.nix:
 	sh -c 'set -e; cd guix/dotfiles/dns || exit 1; ./flake.nix'
 
-.PHONY: guix/dotfiles/nix/nix.conf
-guix/dotfiles/nix/nix.conf:
+.PHONY: nix/nix.conf
+nix/nix.conf:
 	sudo mkdir -p /etc/nix
-	sudo install -m644 guix/dotfiles/nix/nix.conf /etc/nix/nix.conf
+	sudo install -m644 nix/nix.conf /etc/nix/nix.conf
 
-.PHONY: guix/dotfiles/nix/firefox/generated-firefox-addons.nix
-guix/dotfiles/nix/firefox/generated-firefox-addons.nix:
-	mozilla-addons-to-nix guix/dotfiles/nix/firefox/addons.json guix/dotfiles/nix/firefox/generated-firefox-addons.nix
+.PHONY: nix/firefox/generated-firefox-addons.nix
+nix/firefox/generated-firefox-addons.nix:
+	mozilla-addons-to-nix nix/firefox/addons.json nix/firefox/generated-firefox-addons.nix
 
 .PHONY: guix/dotfiles/guixsd/machines.scm
 guix/dotfiles/guixsd/machines.scm:
@@ -308,11 +308,11 @@ guix-image-builder: $(DECRYPT_TARGETS)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 nix-update-inputs:
-	$(MAKE) -C guix/dotfiles/nix/container-systemd dotfiles-home-manager
-	$(MAKE) -C guix/dotfiles/nix/container-systemd-taskexecutor original
+	$(MAKE) -C nix/container-systemd dotfiles-home-manager
+	$(MAKE) -C nix/container-systemd-taskexecutor original
 
 container-systemd-taskexecutor:
-	$(MAKE) -C guix/dotfiles/nix/container-systemd-taskexecutor
+	$(MAKE) -C nix/container-systemd-taskexecutor
 
 .ONESHELL:
 workstation-controller:
