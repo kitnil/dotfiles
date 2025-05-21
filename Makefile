@@ -161,10 +161,6 @@ guix-system-configurations =			\
   vm2					\
   workstation
 
-define guix-time-machine-arguments
-guix time-machine -C dotfiles/channels-current.scm
-endef
-
 define guix-system-arguments
 guix time-machine --channels=wugi/etc/guix/channels/$(subst $(1),,$(2)).scm -- build --load-path=. -e "((@ (wugi system $(subst $(1),,$(2))) %$(subst $(1),,$(2))))"
 endef
@@ -179,7 +175,7 @@ $(foreach configuration,$(guix-system-configurations),$(configuration)):
 
 prefix := time-machine-guix-system-configuration-
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-system-configuration-$(configuration)):
-	$(call guix-time-machine-arguments) -- $(call guix-system-arguments,$(prefix),$@)
+	$(call guix-system-arguments,$(prefix),$@)
 
 prefix := guix-package-manifest-
 $(foreach configuration,$(guix-system-configurations),guix-package-manifest-$(configuration)):
@@ -187,7 +183,7 @@ $(foreach configuration,$(guix-system-configurations),guix-package-manifest-$(co
 
 prefix := time-machine-guix-package-manifest-
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-package-manifest-$(configuration)):
-	$(call guix-time-machine-arguments) -- $(call guix-package-manifest-arguments,$(prefix),$@)
+	$(call guix-package-manifest-arguments,$(prefix),$@)
 
 .PHONY: add
 add:
