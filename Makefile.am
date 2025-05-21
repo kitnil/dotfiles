@@ -89,14 +89,6 @@ nix/firefox/generated-firefox-addons.nix:
 guix/dotfiles/guixsd/machines.scm:
 	sudo install -m644 guix/dotfiles/guixsd/machines.scm /etc/guix
 
-.PHONY: dot_config/transmission/settings.json.gpg
-dot_config/transmission/settings.json.gpg:
-	gpg --decrypt dot_config/transmission/settings.json.gpg > $(HOME)/.config/transmission-daemon/settings.json
-
-.PHONY: dot_config/espanso/user/censor.yml.gpg
-dot_config/espanso/user/censor.yml.gpg:
-	gpg --decrypt dot_config/espanso/user/censor.yml.gpg > $(HOME)/.config/espanso/user/censor.yml
-
 .PHONY: guix/dotfiles/mjru/intr.nix
 guix/dotfiles/mjru/intr.nix:
 	guix/dotfiles/mjru/intr.nix > guix/wugi/etc/mjru/intr.json
