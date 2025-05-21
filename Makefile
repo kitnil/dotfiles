@@ -336,7 +336,7 @@ workstation-controller:
 
 .PHONY: dotfiles-update-commit
 dotfiles-update-commit:
-	guix shell guile guile-git guile-gcrypt guile-json yq -- dot_local/bin/dotfiles-update-commit
+	guix shell guile guile-git guile-gcrypt guile-json yq -- guix/dot_local/bin/dotfiles-update-commit
 
 container_registry=harbor.home.wugi.info
 .ONESHELL:
