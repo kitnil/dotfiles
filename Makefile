@@ -176,10 +176,6 @@ prefix := time-machine-guix-package-manifest-
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-package-manifest-$(configuration)):
 	$(call guix-package-manifest-arguments,$(prefix),$@)
 
-.PHONY: add
-add:
-	cp $(HOME)/.emacs dot_emacs
-
 .PHONY: github
 github:
 	make --directory=dotfiles/maintenance/github
