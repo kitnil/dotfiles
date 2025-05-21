@@ -54,9 +54,6 @@ extension-graph:
 shepherd-graph:
 	$(GUIX) system --load-path=guix shepherd-graph guix/wugi/system/guixsd.scm | xdot -
 
-guix/dotfiles/guile/ssh.txt: guix/dotfiles/guile/ssh.scm
-	guile guix/dotfiles/guile/ssh.scm > guix/dotfiles/guile/ssh.txt
-
 .PHONY: guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
 guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm:
 	mkdir -p private_dot_ssh
