@@ -153,7 +153,7 @@ guix-system-configurations =			\
   workstation
 
 define guix-system-arguments
-guix time-machine --channels=wugi/etc/guix/channels/$(subst $(1),,$(2)).scm -- build --load-path=. -e "((@ (wugi system $(subst $(1),,$(2))) %$(subst $(1),,$(2))))"
+guix time-machine --channels=guix/wugi/etc/guix/channels/$(subst $(1),,$(2)).scm -- build --load-path=guix -e "((@ (wugi system $(subst $(1),,$(2))) %$(subst $(1),,$(2))))"
 endef
 
 define guix-package-manifest-arguments
@@ -161,11 +161,11 @@ shell -L wugi --manifest=dotfiles/manifests/$(subst $(1),,$(2)).scm -- exit 0
 endef
 
 define guix-time-machine
-guix time-machine "--channels=wugi/etc/guix/channels/$(1).scm"
+guix time-machine "--channels=guix/wugi/etc/guix/channels/$(1).scm"
 endef
 
 define guix-build-expression
-build --load-path=. -e "((@ (wugi system $$system) %$(1)))"
+build --load-path=guix -e "((@ (wugi system $$system) %$(1)))"
 endef
 
 $(foreach configuration,$(guix-system-configurations),$(configuration)):
@@ -295,14 +295,14 @@ container_registry=harbor.home.wugi.info
 guix-image-workstation: wugi/home/config/openssh.scm.gpg
 	set -o nounset -o errexit -o pipefail -o xtrace
 	IMG=$(container_registry)/library/$@:$$(git rev-parse --abbrev-ref HEAD)-$$(git rev-parse HEAD | cut -c -8)-$$(date +%s)
-	container=$$(guix time-machine --channels=wugi/etc/guix/channels/workstation.scm -- system image --load-path=. --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --max-layers=100 -t docker --network -e '((@ (wugi system workstation) %workstation))')
+	container=$$(guix time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- system image --load-path=guix --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --max-layers=100 -t docker --network -e '((@ (wugi system workstation) %workstation))')
 	skopeo copy docker-archive\:$$container docker://$$IMG
 	echo $$IMG
 
 .ONESHELL:
 pc0-manifest:
 	set -o nounset -o errexit -o pipefail -o xtrace
-	guix time-machine --channels=wugi/etc/guix/channels/workstation.scm -- build --load-path=. -m wugi/manifests/pc0.scm --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in'
+	guix time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- build --load-path=guix -m wugi/manifests/pc0.scm --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in'
 
 container_registry=harbor.home.wugi.info
 .ONESHELL:
