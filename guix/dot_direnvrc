@@ -213,21 +213,6 @@ use_emacs-guix()
     export EMACSLOADPATH
 }
 
-use_dotfiles()
-{
-    check()
-    {
-        make check TESTS="tests/connect.bats tests/executables.bats tests/mail.bats tests/mjru.bats" "$@"
-    }
-    export_function check
-
-    GUILE_LOAD_PATH="${PWD}/dotfiles/guixsd/modules:${GUILE_LOAD_PATH}"
-    export GUILE_LOAD_PATH
-
-    GUIX_PACKAGE_PATH="${PWD}/dotfiles/guixsd/modules:${GUIX_PACKAGE_PATH}"
-    export GUIX_PACKAGE_PATH
-}
-
 use_guile()
 {
     unset GUIX_PACKAGE_PATH

@@ -10,12 +10,6 @@ clean-nix:
 clean:
 	git clean -xdf
 
-.PHONY: check
-check:
-	mkdir test-tmp
-	gpg --quiet --decrypt dhall/ssh/ssh.dhall.gpg | dhall text > test-tmp/config
-	bats $(TESTS)
-
 .PHONY: benchmark
 benchmark:
 	emacs --eval "(progn (with-current-buffer (get-buffer \"*Benchmark Init Results Tabulated*\") (princ (buffer-substring-no-properties (point-min) (point-max)) #'external-debugging-output)) (kill-emacs))"

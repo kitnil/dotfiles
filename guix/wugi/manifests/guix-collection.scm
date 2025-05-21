@@ -397,7 +397,6 @@
 
                  restic ;backup
 
-                 bats
                  cflow         ;C program call map.
                  gcc-toolchain ;For Emacs `semantic-mode'.
                  gdb           ;GNU debuger.
