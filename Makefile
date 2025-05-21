@@ -99,7 +99,8 @@ DECRYPT_TARGETS = \
   guix/dot_config/espanso/user/censor.yml \
   guix/dot_config/transmission/settings.json \
   guix/dotfiles/guixsd/exim/dkim_rsa.private \
-  guix/dotfiles/nix/yggdrasil/yggdrasil.conf
+  guix/dotfiles/nix/yggdrasil/yggdrasil.conf \
+  guix/dotfiles/etc/yggdrasil-private.conf
 
 $(foreach secret,$(DECRYPT_TARGETS),$(secret)):
 	pass show dotfiles/$@ > $@
