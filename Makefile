@@ -50,9 +50,6 @@ configure:
 guix/dotfiles/guile/ssh.txt: guix/dotfiles/guile/ssh.scm
 	guile guix/dotfiles/guile/ssh.scm > guix/dotfiles/guile/ssh.txt
 
-guix/wugi/home/config/openssh.scm:
-	pass show dotfiles/guix/wugi/home/config/openssh.scm > guix/wugi/home/config/openssh.scm
-
 .PHONY: guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
 guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm:
 	mkdir -p private_dot_ssh
@@ -98,16 +95,14 @@ guix/dotfiles/mjru/intr.nix:
 DECRYPT_TARGETS = \
   guix/wugi/home/config/openssh.scm \
   guix/wugi/etc/mjru/intr.json \
-  guix/private_dot_emacs.d/modules/mjru-network.el
+  guix/private_dot_emacs.d/modules/mjru-network.el \
+  guix/dot_config/espanso/user/censor.yml
 
-guix/wugi/etc/mjru/intr.json:
-	pass show dotfiles/guix/wugi/etc/mjru/intr.json > guix/wugi/etc/mjru/intr.json
-
-guix/private_dot_emacs.d/modules/mjru-network.el:
-	pass show dotfiles/guix/dotfiles/emacs/mjru-network > guix/private_dot_emacs.d/modules/mjru-network.el
+$(foreach secret,$(DECRYPT_TARGETS),$(secret)):
+	pass show dotfiles/$@ > $@
 
 .PHONY: install
-install: guix/wugi/home/config/openssh.scm guix/dotfiles/guixsd/machines.scm guix/dotfiles/nix/nix.conf guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
+install: guix/dotfiles/guixsd/machines.scm guix/dotfiles/nix/nix.conf guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
 	guix/dot_local/bin/gpg-unlock > /dev/null
 	update-desktop-database $(HOME)/.local/share/applications
 	mkdir -p $(HOME)/.config/mpv/scripts
