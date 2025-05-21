@@ -8,8 +8,7 @@ clean-nix:
 
 .PHONY: clean
 clean: clean-nix
-	rm -rf test-tmp
-	rm -f guix/dotfiles/nix/result
+	git clean -xdf
 
 .PHONY: check
 check:
