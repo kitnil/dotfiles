@@ -284,7 +284,7 @@ container_registry=harbor.home.wugi.info
 isc-dhcp:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix system image --load-path=/home/oleg/.local/share/chezmoi/wugi --max-layers=100 -t docker --network guix/dotfiles/guixsd/docker-image-isc-dhcp.scm)
+	container=$$(guix system image --load-path=/home/oleg/.local/share/chezmoi/guix/wugi --max-layers=100 -t docker --network guix/dotfiles/guixsd/docker-image-isc-dhcp.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 container_registry=harbor.home.wugi.info
