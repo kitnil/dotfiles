@@ -10,10 +10,6 @@
 
 (with-eval-after-load 'dired
   (require 'dired-x)
-  (setq dired-omit-files
-        (concat dired-omit-files "\\|^\\..+$"))
-  (setq dired-omit-files
-        (concat dired-omit-files  "\\|.*\\.~$"))
   (let ((map dired-mode-map))
     (define-key map (kbd "C-c x") 'crux-open-with)
     (define-key map (kbd "<f8>") 'crux-open-with)
