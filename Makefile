@@ -30,18 +30,17 @@ QEMU_FLAGS =					\
   -smp 2					\
   -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22
 
-define guix-system-vm-arguments
-system vm --load-path=wugi --no-offload guix/dotfiles/system/$(1)
-endef
-
 guix-system-vm-configurations =			\
   guixsd					\
   jenkins					\
   stumpwm
 
-guix-system-vm-configuration-prefix := guix-system-vm-configuration-
-$(foreach configuration,$(guix-system-vm-configurations),$(guix-system-vm-configuration-prefix)-$(configuration)):
-	guix $(call guix-system-vm-arguments,$(guix-system-vm-configuration-prefix),$@)
+define guix-system-vm-arguments
+system vm --load-path=wugi --no-offload $(1)
+endef
+
+$(foreach configuration,$(guix-system-vm-configurations),guix-system-vm-configuration-$(configuration)):
+	guix $(call guix-system-vm-arguments,guix/dotfiles/system/vm-image-$(subst guix-system-vm-configuration-,,$@).tmpl)
 
 .PHONY: extension-graph
 extension-graph:
