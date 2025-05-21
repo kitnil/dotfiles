@@ -159,8 +159,8 @@ endef
 $(foreach configuration,$(guix-system-configurations),$(configuration)):
 	guix $(call guix-build-expression,$@,$@)
 
-$(foreach configuration,$(guix-system-configurations),time-machine-guix-system-configuration-$(configuration)):
-	system=$(subst time-machine-guix-system-configuration-,,$@); \
+$(foreach configuration,$(guix-system-configurations),guix-time-machine-system-configuration-$(configuration)):
+	system=$(subst guix-time-machine-system-configuration-,,$@); \
 	$(call guix-time-machine,$$system) -- $(call guix-build-expression,$$system,$$system)
 
 define guix-home-build-expression
@@ -171,8 +171,8 @@ $(foreach configuration,$(guix-system-configurations),guix-home-build-$(configur
 	system=$(subst guix-home-build-,,$@); \
 	guix $(call guix-home-build-expression,$$system-home-environment,$$system-home-environment)
 
-$(foreach configuration,$(guix-system-configurations),time-machine-guix-home-build-$(configuration)):
-	system=$(subst time-machine-guix-home-build-,,$@); \
+$(foreach configuration,$(guix-system-configurations),guix-time-machine-home-build-$(configuration)):
+	system=$(subst guix-time-machine-home-build-,,$@); \
 	$(call guix-time-machine,$$system) -- $(call guix-home-build-expression,$$system-home-environment,$$system-home-environment)
 
 define guix-build-manifest
@@ -182,9 +182,9 @@ endef
 $(foreach configuration,$(guix-system-configurations),guix-build-manifest-$(configuration)):
 	guix $(call guix-build-manifest,guix-build-manifest-,$@)
 
-$(foreach configuration,$(guix-system-configurations),time-machine-guix-build-manifest-$(configuration)):
-	system=$(subst time-machine-guix-build-manifest-,,$@); \
-	$(call guix-time-machine,$$system) -- $(call guix-build-manifest,time-machine-guix-build-manifest-,$$system)
+$(foreach configuration,$(guix-system-configurations),guix-time-machine-build-manifest-$(configuration)):
+	system=$(subst guix-time-machine-build-manifest-,,$@); \
+	$(call guix-time-machine,$$system) -- $(call guix-build-manifest,guix-time-machine-build-manifest-,$$system)
 
 .PHONY: github
 github:
