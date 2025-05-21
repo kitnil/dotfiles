@@ -60,10 +60,6 @@ extension-graph:
 shepherd-graph:
 	guix system --load-path=wugi shepherd-graph guix/wugi/system/guixsd.scm | xdot -
 
-.PHONY: configure
-configure:
-	./configure
-
 guix/dotfiles/guile/ssh.txt: guix/dotfiles/guile/ssh.scm
 	guile guix/dotfiles/guile/ssh.scm > guix/dotfiles/guile/ssh.txt
 
