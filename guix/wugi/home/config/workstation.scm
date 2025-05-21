@@ -45,6 +45,7 @@
   #:use-module (wugi home services version-control)
   #:use-module (wugi home services video)
   #:use-module (wugi home services web)
+  #:use-module (wugi manifests workstation)
   #:use-module (wugi utils)
   #:export (%workstation-home-environment))
 
@@ -63,8 +64,7 @@
 
 (define (%workstation-home-environment)
   (home-environment
-   (packages (packages-from-manifest
-              (string-append %distro-directory "/wugi/manifests/pc0.scm")))
+   (packages (packages-from-manifest (%workstation-manifest)))
    (services (list (if (file-exists?
                         (string-append %distro-directory "wugi/home/config/openssh.scm"))
                        ((lambda ()

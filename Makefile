@@ -152,8 +152,8 @@ define guix-system-arguments
 guix time-machine --channels=guix/wugi/etc/guix/channels/$(subst $(1),,$(2)).scm -- build --load-path=guix --expression="((@ (wugi system $(subst $(1),,$(2))) %$(subst $(1),,$(2))))"
 endef
 
-define guix-package-manifest-arguments
-shell -L wugi --manifest=dotfiles/manifests/$(subst $(1),,$(2)).scm -- exit 0
+define guix-build-manifest
+build --load-path=guix --expression="((@ (wugi manifests $(subst $(1),,$(2))) %$(subst $(1),,$(2)-manifest)))"
 endef
 
 define guix-time-machine
@@ -179,11 +179,12 @@ $(foreach configuration,$(guix-system-configurations),time-machine-guix-home-bui
 	system=$(subst time-machine-guix-home-build-,,$(@)); \
 	$(call guix-time-machine,$$system) -- $(call guix-home-build-expression,$$system-home-environment)
 
-$(foreach configuration,$(guix-system-configurations),guix-package-manifest-$(configuration)):
-	$(call guix-package-manifest-arguments,guix-package-manifest-,$@)
+$(foreach configuration,$(guix-system-configurations),guix-build-manifest-$(configuration)):
+	$(call guix-build-manifest,guix-build-manifest-,$@)
 
-$(foreach configuration,$(guix-system-configurations),time-machine-guix-package-manifest-$(configuration)):
-	$(call guix-package-manifest-arguments,time-machine-guix-package-manifest-,$@)
+$(foreach configuration,$(guix-system-configurations),time-machine-guix-build-manifest-$(configuration)):
+	system=$(subst time-machine-guix-build-manifest-,,$(@)); \
+	$(call guix-time-machine,$$system) -- $(call guix-build-manifest,time-machine-guix-build-manifest-,$$system)
 
 .PHONY: github
 github:

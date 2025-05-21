@@ -2,7 +2,7 @@
 ;; Copyright © 2024, 2025 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(define-module (wugi manifests pc0)
+(define-module (wugi manifests workstation)
   #:use-module (srfi srfi-26)
   #:use-module (wugi manifests wm)
   #:use-module (wugi utils)
@@ -19,9 +19,9 @@
   #:use-module (wugi manifests pc0-packages)
   #:use-module (wugi manifests telegram)
   #:use-module (wugi manifests nonguix)
-  #:export (%pc0-manifest))
+  #:export (%workstation-manifest))
 
-(define (%pc0-manifest)
+(define (%workstation-manifest)
   (combined-manifest-from-files
    (list (%pc0-packages-manifest)
          (%desktop-manifest)
@@ -38,4 +38,4 @@
          (%guile-manifest)
          (%wm-manifest))))
 
-(%pc0-manifest)
+(%workstation-manifest)
