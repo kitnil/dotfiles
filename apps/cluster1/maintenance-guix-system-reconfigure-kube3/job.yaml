@@ -14,7 +14,7 @@ spec:
       - name: refresh
         env:
         - name: GIT_COMMIT
-          value: 4133d5518eed520ef037a8b77addf355d5bf18e9
+          value: 552c0944c039c031db0fbf1bb223ed2a196b4182
         - name: GUIX_SYSTEM
           value: pc0
       tolerations:
