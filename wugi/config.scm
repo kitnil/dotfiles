@@ -232,8 +232,7 @@ EndSection\n")
 (define %pc0-packages
   (append %admin-packages
           %audio-packages
-          %font-packages
-          %theme-packages))
+          %font-packages))
 
 (define %my-setuid-programs
   (append (list (setuid-program (program (file-append fping "/sbin/fping")))
