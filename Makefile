@@ -165,22 +165,22 @@ home build --load-path=guix -e "((@ (wugi home config $$system) %$(1)))"
 endef
 
 $(foreach configuration,$(guix-system-configurations),$(configuration)):
-	system=$(subst time-machine-guix-system-configuration-,,$(@)); \
+	system=$(subst time-machine-guix-system-configuration-,,$@); \
 	guix $(call guix-build-expression,$$system)
 
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-system-configuration-$(configuration)):
-	system=$(subst time-machine-guix-system-configuration-,,$(@)); \
+	system=$(subst time-machine-guix-system-configuration-,,$@); \
 	$(call guix-time-machine,$$system) -- $(call guix-build-expression,$$system)
 
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-home-build-$(configuration)):
-	system=$(subst time-machine-guix-home-build-,,$(@)); \
+	system=$(subst time-machine-guix-home-build-,,$@); \
 	$(call guix-time-machine,$$system) -- $(call guix-home-build-expression,$$system-home-environment)
 
 $(foreach configuration,$(guix-system-configurations),guix-build-manifest-$(configuration)):
 	$(call guix-build-manifest,guix-build-manifest-,$@)
 
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-build-manifest-$(configuration)):
-	system=$(subst time-machine-guix-build-manifest-,,$(@)); \
+	system=$(subst time-machine-guix-build-manifest-,,$@); \
 	$(call guix-time-machine,$$system) -- $(call guix-build-manifest,time-machine-guix-build-manifest-,$$system)
 
 .PHONY: github
