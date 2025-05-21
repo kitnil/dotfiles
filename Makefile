@@ -45,11 +45,11 @@ $(foreach configuration,$(guix-system-vm-configurations),$(guix-system-vm-config
 
 .PHONY: extension-graph
 extension-graph:
-	guix system --load-path=wugi extension-graph guix/dotfiles/guixsd/guixsd.scm | xdot -
+	guix system --load-path=wugi extension-graph guix/wugi/system/guixsd.scm | xdot -
 
 .PHONY: shepherd-graph
 shepherd-graph:
-	guix system --load-path=wugi shepherd-graph guix/dotfiles/guixsd/guixsd.scm | xdot -
+	guix system --load-path=wugi shepherd-graph guix/wugi/system/guixsd.scm | xdot -
 
 .PHONY: configure
 configure:
@@ -292,7 +292,7 @@ container_registry=harbor.home.wugi.info
 mumble:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix time-machine --channels=guix/dotfiles/channels-guix-mumble.scm -- system image --max-layers=100 -t docker --network guix/dotfiles/guixsd/docker-image-mumble.scm)
+	container=$$(guix time-machine --channels=guix/dotfiles/channels-guix-mumble.scm -- system image --max-layers=100 -t docker --network guix/wugi/system/docker-image-mumble.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 container_registry=harbor.home.wugi.info
@@ -314,7 +314,7 @@ container_registry=harbor.home.wugi.info
 guix-image-builder: wugi/home/config/openssh.scm.gpg
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls='https://guix.wugi.info https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --max-layers=100 -t docker --network ~/.local/share/chezmoi/guix/dotfiles/guixsd/guix-image-builder.scm)
+	container=$$(guix time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls='https://guix.wugi.info https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --max-layers=100 -t docker --network ~/.local/share/chezmoi/guix/wugi/system/guix-image-builder.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	echo $(container_registry)/library/$@:$$commit_8
 
