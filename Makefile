@@ -7,7 +7,7 @@ clean-nix:
 	rm -rf $(HOME)/.cache/nix
 
 .PHONY: clean
-clean: clean-guile clean-nix
+clean: clean-nix
 	rm -rf test-tmp
 	rm -f guix/dotfiles/nix/result
 
