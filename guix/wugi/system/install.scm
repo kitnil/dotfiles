@@ -13,7 +13,7 @@
   #:use-module (gnu)
   #:export (installation-os-nonfree))
 
-(define installation-os-nonfree
+(define (installation-os-nonfree)
   (operating-system
     (inherit installation-os)
     (kernel linux)
@@ -30,5 +30,3 @@
          (substitute-urls '("http://ci.guix.trop.in"
                             "https://bordeaux.guix.gnu.org"
                             "https://substitutes.nonguix.org"))))))))
-
-installation-os-nonfree
