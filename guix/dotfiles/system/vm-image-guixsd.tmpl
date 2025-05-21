@@ -162,7 +162,7 @@ root ALL=(ALL) ALL
                           xhost
                           xdpyinfo
                           sbcl
-                          
+
                           stumpwm
                           `(,stumpwm "lib")
                           sbcl-stumpwm-ttf-fonts
@@ -171,52 +171,50 @@ root ALL=(ALL) ALL
                           sbcl-stumpwm-stumptray
                           sbcl-slime-swank
                           stumpish
-                          xterm
-
-                          )
+                          xterm)
                     %base-packages))
 
   (services
    (append (list ;; (service vncserver-service-type (vncserver-configuration
-                 ;;                                  (display 1)
-                 ;;                                  (user "oleg")
-                 ;;                                  (group "users")
-                 ;;                                  (directory "/home/oleg")
-                 ;;                                  (xstartup "/home/oleg/.vnc/xstartup")
-                 ;;                                  (host-name "gnu")))
-                 ;; (vnc-service 2)
-                 ;; (vnc-service 3)
-                 ;; TODO: Avoid in (modules vnc) add to requirement vncserver-config
+            ;;                                  (display 1)
+            ;;                                  (user "oleg")
+            ;;                                  (group "users")
+            ;;                                  (directory "/home/oleg")
+            ;;                                  (xstartup "/home/oleg/.vnc/xstartup")
+            ;;                                  (host-name "gnu")))
+            ;; (vnc-service 2)
+            ;; (vnc-service 3)
+            ;; TODO: Avoid in (modules vnc) add to requirement vncserver-config
 
-                 ;; Choose SLiM, which is lighter than the default GDM.
-                 (service slim-service-type
-                          (slim-configuration
-                           (auto-login? #t)
-                           (default-user "oleg")
-                           (xorg-configuration
-                            (xorg-configuration
-                             (keyboard-layout keyboard-layout)))))
+            ;; Choose SLiM, which is lighter than the default GDM.
+            (service slim-service-type
+                     (slim-configuration
+                      (auto-login? #t)
+                      (default-user "oleg")
+                      (xorg-configuration
+                       (xorg-configuration
+                        (keyboard-layout keyboard-layout)))))
 
-                 ;; (simple-service 'stumpwm-config shepherd-root-service-type
-                 ;;                 (list
-                 ;;                  (shepherd-service
-                 ;;                   (provision '(stumpwm-config))
-                 ;;                   (documentation "Configure StumpWM")
-                 ;;                   (requirement '())
-                 ;;                   (start #~(make-forkexec-constructor
-                 ;;                               (list #$stumpwm-configure)
-                 ;;                               #:user "oleg"
-                 ;;                               #:group "users"))
-                 ;;                   (one-shot? #t)
-                 ;;                   (stop #~(make-kill-destructor)))))
+            ;; (simple-service 'stumpwm-config shepherd-root-service-type
+            ;;                 (list
+            ;;                  (shepherd-service
+            ;;                   (provision '(stumpwm-config))
+            ;;                   (documentation "Configure StumpWM")
+            ;;                   (requirement '())
+            ;;                   (start #~(make-forkexec-constructor
+            ;;                               (list #$stumpwm-configure)
+            ;;                               #:user "oleg"
+            ;;                               #:group "users"))
+            ;;                   (one-shot? #t)
+            ;;                   (stop #~(make-kill-destructor)))))
 
-                 (service openssh-service-type
-                          (openssh-configuration
-                           (authorized-keys
-                            `(("oleg" ,(local-file "/home/oleg/.ssh/id_rsa.pub"))))))
+            (service openssh-service-type
+                     (openssh-configuration
+                      (authorized-keys
+                       `(("oleg" ,(local-file "/home/oleg/.ssh/id_rsa.pub"))))))
 
-                 ;; Use the DHCP client service rather than NetworkManager.
-                 (service dhcp-client-service-type))
+            ;; Use the DHCP client service rather than NetworkManager.
+            (service dhcp-client-service-type))
 
            ;; Remove GDM, ModemManager, NetworkManager, and wpa-supplicant,
            ;; which don't make sense in a VM.
