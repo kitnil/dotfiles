@@ -66,10 +66,6 @@ dotfiles/scripts/nix-ssh-known-hosts-to-file.scm:
 	mkdir -p private_dot_ssh
 	$(shell guix build -f dotfiles/scripts/nix-ssh-known-hosts-to-file.scm)/bin/run.scm > private_dot_ssh/known_hosts2
 
-.PHONY: dotfiles/guixsd/home/guixsd.scm
-dotfiles/guixsd/home/guixsd.scm:
-	guix home -L wugi build dotfiles/guixsd/home/guixsd.scm
-
 .PHONY: dotfiles/nix/flake.lock
 dotfiles/nix/flake.lock:
 	sh -c 'set -e; cd dotfiles/nix || exit 1; nix flake lock --update-input nixpkgs'
