@@ -74,11 +74,6 @@ nix/flake.nix:
 guix/dotfiles/dns/flake.nix:
 	sh -c 'set -e; cd guix/dotfiles/dns || exit 1; ./flake.nix'
 
-.PHONY: nix/nix.conf
-nix/nix.conf:
-	sudo mkdir -p /etc/nix
-	sudo install -m644 nix/nix.conf /etc/nix/nix.conf
-
 .PHONY: nix/firefox/generated-firefox-addons.nix
 nix/firefox/generated-firefox-addons.nix:
 	mozilla-addons-to-nix nix/firefox/addons.json nix/firefox/generated-firefox-addons.nix
