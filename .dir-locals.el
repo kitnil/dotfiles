@@ -9,6 +9,7 @@
                            (append (list (concat (getenv "HOME") "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
                                    (list (concat (getenv "HOME") "/src/gitlab.com/nonguix/nonguix"))
                                    (if (boundp #'projectile-project-root)
-                                       (list (projectile-project-root))
+                                       (list (concat (projectile-project-root)
+                                                     "/guix"))
                                      '())))
                (aggressive-indent-mode))))))
