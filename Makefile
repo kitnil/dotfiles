@@ -144,9 +144,9 @@ guix/dotfiles/packer/build.scm:
 guix-system-configurations =			\
   guixsd					\
   notebook					\
-  pc0					\
-  vm1					\
-  vm2					\
+  pc0						\
+  vm1						\
+  vm2						\
   workstation
 
 define guix-time-machine
