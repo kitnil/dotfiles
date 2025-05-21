@@ -164,12 +164,20 @@ define guix-build-expression
 build --load-path=guix -e "((@ (wugi system $$system) %$(1)))"
 endef
 
+define guix-home-build-expression
+home build --load-path=guix -e "((@ (wugi home config $$system) %$(1)))"
+endef
+
 $(foreach configuration,$(guix-system-configurations),$(configuration)):
 	$(call guix-system-arguments,guix-system-configuration-,$@)
 
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-system-configuration-$(configuration)):
 	system=$(subst time-machine-guix-system-configuration-,,$(@)); \
 	$(call guix-time-machine,$$system) -- $(call guix-build-expression,$$system)
+
+$(foreach configuration,$(guix-system-configurations),time-machine-guix-home-build-$(configuration)):
+	system=$(subst time-machine-guix-home-build-,,$(@)); \
+	$(call guix-time-machine,$$system) -- $(call guix-home-build-expression,$$system-home-environment)
 
 $(foreach configuration,$(guix-system-configurations),guix-package-manifest-$(configuration)):
 	$(call guix-package-manifest-arguments,guix-package-manifest-,$@)
