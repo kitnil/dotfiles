@@ -307,26 +307,28 @@ mumble:
 	container=$$(guix time-machine --channels=guix/dotfiles/channels-guix-mumble.scm -- system image --max-layers=100 -t docker --network guix/wugi/system/docker-image-mumble.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
+SUBSTITUTE_URLS='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org https://mirrors.sjtug.sjtu.edu.cn/guix'
+
 container_registry=harbor.home.wugi.info
 .ONESHELL:
 guix-image-workstation: wugi/home/config/openssh.scm.gpg
 	set -o nounset -o errexit -o pipefail -o xtrace
 	IMG=$(container_registry)/library/$@:$$(git rev-parse --abbrev-ref HEAD)-$$(git rev-parse HEAD | cut -c -8)-$$(date +%s)
-	container=$$(guix time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- system image --load-path=guix --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org' --max-layers=100 -t docker --network -e '((@ (wugi system workstation) %workstation))')
+	container=$$(guix time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- system image --load-path=guix --substitute-urls="$(SUBSTITUTE_URLS)" --max-layers=100 -t docker --network -e '((@ (wugi system workstation) %workstation))')
 	skopeo copy docker-archive\:$$container docker://$$IMG
 	echo $$IMG
 
 .ONESHELL:
 pc0-manifest:
 	set -o nounset -o errexit -o pipefail -o xtrace
-	guix time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- build --load-path=guix -m wugi/manifests/pc0.scm --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org'
+	guix time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- build --load-path=guix -m wugi/manifests/pc0.scm --substitute-urls="$(SUBSTITUTE_URLS)"
 
 container_registry=harbor.home.wugi.info
 .ONESHELL:
 guix-image-builder: wugi/home/config/openssh.scm.gpg
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls='https://guix.wugi.info https://bordeaux.guix.gnu.org https://substitutes.nonguix.org' --max-layers=100 -t docker --network ~/.local/share/chezmoi/guix/wugi/system/guix-image-builder.scm)
+	container=$$(guix time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls="$(SUBSTITUTE_URLS)" --max-layers=100 -t docker --network ~/.local/share/chezmoi/guix/wugi/system/guix-image-builder.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 nix-update-inputs:
