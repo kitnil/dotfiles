@@ -1,3 +1,6 @@
+.PHONY: all
+all: $(DECRYPT_TARGETS)
+
 .PHONY: clean-guile
 clean-guile:
 	rm -rf $(HOME)/.cache/guile/ccache
@@ -357,5 +360,6 @@ container_registry=harbor.home.wugi.info
 archlinux:
 	$(MAKE) -C apps/base/kaniko-archlinux
 
-.PHONY: all
-all: guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
+.PHONY: known_hosts
+known_hosts:
+	guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
