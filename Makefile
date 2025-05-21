@@ -177,7 +177,7 @@ $(foreach configuration,$(guix-system-configurations),time-machine-guix-home-bui
 	$(call guix-time-machine,$$system) -- $(call guix-home-build-expression,$$system-home-environment)
 
 $(foreach configuration,$(guix-system-configurations),guix-build-manifest-$(configuration)):
-	$(call guix-build-manifest,guix-build-manifest-,$@)
+	guix $(call guix-build-manifest,guix-build-manifest-,$@)
 
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-build-manifest-$(configuration)):
 	system=$(subst time-machine-guix-build-manifest-,,$@); \
