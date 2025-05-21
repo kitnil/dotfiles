@@ -68,11 +68,11 @@
                  (zero? (git "checkout" commit))
                  ;; TODO: Do not copy openssh.scm from other location.
                  (copy-file (string-append home "/openssh.scm")
-                            "wugi/home/config/openssh.scm")
+                            "guix/wugi/home/config/openssh.scm")
                  ;; TODO: Do not copy intr.json from other location.
                  (system* "mkdir" "-p" "wugi/etc/mjru")
                  (copy-file (string-append home "/intr.json")
-                            "wugi/etc/mjru/intr.json")
+                            "guix/wugi/etc/mjru/intr.json")
                  (zero? (system* "guix" "shell" "git" "make" "skopeo" "--"
                                  "make" (getenv "RUNC_MAKE_TARGET")))))))))
 
