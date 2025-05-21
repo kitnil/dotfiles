@@ -105,7 +105,7 @@ guix/dotfiles/mjru/intr.nix:
 
 .PHONY: install
 install: wugi/home/config/openssh.scm.gpg guix/dotfiles/guixsd/machines.scm guix/dotfiles/nix/nix.conf guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
-	dot_local/bin/gpg-unlock > /dev/null
+	guix/dot_local/bin/gpg-unlock > /dev/null
 	update-desktop-database $(HOME)/.local/share/applications
 	mkdir -p $(HOME)/.config/mpv/scripts
 	ln -sf $(HOME)/.nix-profile/share/mpv/scripts/notify-send.lua $(HOME)/.config/mpv/scripts/notify-send.lua
