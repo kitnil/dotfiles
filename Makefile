@@ -316,7 +316,6 @@ guix-image-builder: wugi/home/config/openssh.scm.gpg
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
 	container=$$(guix time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls='https://guix.wugi.info https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --max-layers=100 -t docker --network ~/.local/share/chezmoi/guix/wugi/system/guix-image-builder.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
-	echo $(container_registry)/library/$@:$$commit_8
 
 nix-update-inputs:
 	$(MAKE) -C guix/dotfiles/nix/container-systemd dotfiles-home-manager
