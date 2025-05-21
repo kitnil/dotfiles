@@ -27,8 +27,6 @@ clean-nix:
 clean-local:
 	$(GIT) clean -xdf
 
-HOSTNAME = $(shell hostname)
-
 QEMU_FLAGS =					\
   -vnc :22					\
   -daemonize					\
