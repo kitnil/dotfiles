@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/novnc-guix
+  path: ./flux/apps/cluster1/novnc-guix
   prune: true
   sourceRef:
     kind: GitRepository
@@ -19,7 +19,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/novnc-tv
+  path: ./flux/apps/cluster1/novnc-tv
   prune: true
   sourceRef:
     kind: GitRepository
@@ -32,7 +32,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/windows-gpu-passthrough
+  path: ./flux/apps/cluster1/windows-gpu-passthrough
   prune: true
   sourceRef:
     kind: GitRepository
@@ -45,7 +45,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/windows-novnc-firefox
+  path: ./flux/apps/cluster1/windows-novnc-firefox
   prune: true
   sourceRef:
     kind: GitRepository
@@ -58,7 +58,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/peertube
+  path: ./flux/apps/base/peertube
   prune: true
   sourceRef:
     kind: GitRepository
@@ -71,7 +71,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/metube
+  path: ./flux/apps/cluster1/metube
   prune: true
   sourceRef:
     kind: GitRepository
@@ -84,7 +84,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/podinfo
+  path: ./flux/apps/cluster1/podinfo
   prune: true
   sourceRef:
     kind: GitRepository
@@ -97,7 +97,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/cluster1/guix
+  path: ./flux/apps/cluster1/guix
   prune: true
   sourceRef:
     kind: GitRepository
@@ -110,7 +110,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/cluster1/guix-vm-pc0
+  path: ./flux/apps/cluster1/guix-vm-pc0
   prune: true
   sourceRef:
     kind: GitRepository
@@ -123,7 +123,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/samba
+  path: ./flux/apps/cluster1/samba
   prune: true
   sourceRef:
     kind: GitRepository
@@ -136,7 +136,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/registry
+  path: ./flux/apps/base/registry
   prune: true
   sourceRef:
     kind: GitRepository
@@ -149,7 +149,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/qbittorrent-exporter
+  path: ./flux/apps/base/qbittorrent-exporter
   prune: true
   sourceRef:
     kind: GitRepository
@@ -162,7 +162,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/3proxy-tor
+  path: ./flux/apps/base/3proxy-tor
   prune: true
   sourceRef:
     kind: GitRepository
@@ -175,7 +175,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/3proxy-byedpi
+  path: ./flux/apps/base/3proxy-byedpi
   prune: true
   sourceRef:
     kind: GitRepository
@@ -188,7 +188,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/byedpi
+  path: ./flux/apps/cluster1/byedpi
   prune: true
   sourceRef:
     kind: GitRepository
@@ -201,7 +201,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maloja
+  path: ./flux/apps/cluster1/maloja
   prune: true
   sourceRef:
     kind: GitRepository
@@ -214,7 +214,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/homebox
+  path: ./flux/apps/cluster1/homebox
   prune: true
   sourceRef:
     kind: GitRepository
@@ -227,7 +227,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/kubernetes-dashboard
+  path: ./flux/apps/cluster1/kubernetes-dashboard
   prune: true
   sourceRef:
     kind: GitRepository
@@ -240,7 +240,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/base/tor-controller
+  path: ./flux/apps/base/tor-controller
   prune: true
   sourceRef:
     kind: GitRepository
@@ -253,7 +253,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/tor-controller-instance
+  path: ./flux/apps/cluster1/tor-controller-instance
   prune: true
   sourceRef:
     kind: GitRepository
@@ -266,7 +266,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/karma
+  path: ./flux/apps/cluster1/karma
   prune: true
   sourceRef:
     kind: GitRepository
@@ -279,7 +279,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/popeye
+  path: ./flux/apps/base/popeye
   prune: true
   sourceRef:
     kind: GitRepository
@@ -292,7 +292,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/i2pd
+  path: ./flux/apps/base/i2pd
   prune: true
   sourceRef:
     kind: GitRepository
@@ -305,7 +305,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/webtlo
+  path: ./flux/apps/cluster1/webtlo
   prune: true
   sourceRef:
     kind: GitRepository
@@ -318,7 +318,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-guix
+  path: ./flux/apps/cluster1/maintenance-guix
   prune: true
   # Setting spec.wait to true makes Flux wait for the Job to complete before
   # it is considered ready.
@@ -335,7 +335,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/maintenance-vm1
+  path: ./flux/apps/base/maintenance-vm1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -348,7 +348,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/maintenance-guix-refresh-bird
+  path: ./flux/apps/base/maintenance-guix-refresh-bird
   prune: true
   sourceRef:
     kind: GitRepository
@@ -361,7 +361,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/maintenance-guix-refresh-gource
+  path: ./flux/apps/base/maintenance-guix-refresh-gource
   prune: true
   sourceRef:
     kind: GitRepository
@@ -374,7 +374,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/maintenance-guix-refresh-jc
+  path: ./flux/apps/base/maintenance-guix-refresh-jc
   prune: true
   sourceRef:
     kind: GitRepository
@@ -387,7 +387,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/maintenance-guix-refresh-bats
+  path: ./flux/apps/base/maintenance-guix-refresh-bats
   prune: true
   sourceRef:
     kind: GitRepository
@@ -400,7 +400,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/maintenance-guix-refresh-firefox-decrypt
+  path: ./flux/apps/base/maintenance-guix-refresh-firefox-decrypt
   prune: true
   sourceRef:
     kind: GitRepository
@@ -413,7 +413,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/maintenance-guix-refresh-cava
+  path: ./flux/apps/base/maintenance-guix-refresh-cava
   prune: true
   sourceRef:
     kind: GitRepository
@@ -426,7 +426,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/maintenance-guix-refresh-gita
+  path: ./flux/apps/base/maintenance-guix-refresh-gita
   prune: true
   sourceRef:
     kind: GitRepository
@@ -439,7 +439,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-git-dotfiles-kube2
+  path: ./flux/apps/cluster1/maintenance-git-dotfiles-kube2
   prune: true
   # This means that the maintenance-guix-home-reconfigure-kube2 Kustomization
   # will wait until all the Jobs in maintenance-git-dotfiles-kube2 run to
@@ -462,7 +462,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-guix-pull-kube2
+  path: ./flux/apps/cluster1/maintenance-guix-pull-kube2
   prune: true
   sourceRef:
     kind: GitRepository
@@ -475,7 +475,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-guix-system-reconfigure-kube2
+  path: ./flux/apps/cluster1/maintenance-guix-system-reconfigure-kube2
   # This means that the maintenance-guix-package-manifest-kube3 Kustomization
   # will wait until all the Jobs in maintenance-guix-pull-kube3 run to
   # completion. If the Job fails, the app changes will not be applied by the
@@ -495,7 +495,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-guix-package-manifest-kube2
+  path: ./flux/apps/cluster1/maintenance-guix-package-manifest-kube2
   prune: true
   # This means that the maintenance-guix-package-manifest-kube2 Kustomization
   # will wait until all the Jobs in maintenance-guix-pull-kube2 run to
@@ -514,7 +514,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/nix
+  path: ./flux/apps/base/nix
   prune: true
   timeout: 2m
   sourceRef:
@@ -528,7 +528,7 @@ spec:
 #   namespace: flux-system
 # spec:
 #   interval: 30m0s
-#   path: ./apps/base/maintenance-dns
+#   path: ./flux/apps/base/maintenance-dns
 #   prune: true
 #   timeout: 2m
 #   sourceRef:
@@ -542,7 +542,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/maintenance-guix-latest-local-file
+  path: ./flux/apps/base/maintenance-guix-latest-local-file
   prune: true
   # Setting spec.wait to true makes Flux wait for the Job to complete before
   # it is considered ready.
@@ -559,7 +559,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-guix-pull-kube1
+  path: ./flux/apps/cluster1/maintenance-guix-pull-kube1
   prune: true
   # Setting spec.wait to true makes Flux wait for the Job to complete before
   # it is considered ready.
@@ -576,7 +576,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-guix-system-reconfigure-kube1
+  path: ./flux/apps/cluster1/maintenance-guix-system-reconfigure-kube1
   suspend: true
   prune: true
   # This means that the maintenance-guix-home-reconfigure-kube1 Kustomization
@@ -596,7 +596,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-guix-package-manifest-kube1
+  path: ./flux/apps/cluster1/maintenance-guix-package-manifest-kube1
   prune: true
   # This means that the maintenance-guix-package-manifest-kube1 Kustomization
   # will wait until all the Jobs in maintenance-guix-pull-kube1 run to
@@ -615,7 +615,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-guix-pull-kube3
+  path: ./flux/apps/cluster1/maintenance-guix-pull-kube3
   prune: true
   # This means that the maintenance-guix-home-reconfigure-kube5001 Kustomization
   # will wait until all the Jobs in maintenance-git-dotfiles-kube5001 run to
@@ -635,7 +635,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-guix-system-reconfigure-kube3
+  path: ./flux/apps/cluster1/maintenance-guix-system-reconfigure-kube3
   prune: true
   sourceRef:
     kind: GitRepository
@@ -648,7 +648,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-git-dotfiles
+  path: ./flux/apps/cluster1/maintenance-git-dotfiles
   prune: true
   sourceRef:
     kind: GitRepository
@@ -661,7 +661,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-git-dotfiles-kube3
+  path: ./flux/apps/cluster1/maintenance-git-dotfiles-kube3
   prune: true
   # This means that the maintenance-guix-home-reconfigure-kube3 Kustomization
   # will wait until all the Jobs in maintenance-git-dotfiles-kube3 run to
@@ -684,7 +684,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-guix-copy-kube3
+  path: ./flux/apps/cluster1/maintenance-guix-copy-kube3
   prune: true
   # This means that the maintenance-guix-home-reconfigure-kube3 Kustomization
   # will wait until all the Jobs in maintenance-git-dotfiles-kube3 run to
@@ -707,7 +707,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-guix-package-manifest-kube3
+  path: ./flux/apps/cluster1/maintenance-guix-package-manifest-kube3
   prune: true
   # This means that the maintenance-guix-package-manifest-kube3 Kustomization
   # will wait until all the Jobs in maintenance-guix-pull-kube3 run to
@@ -726,7 +726,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/majordomo-gitlab
+  path: ./flux/apps/base/majordomo-gitlab
   prune: true
   sourceRef:
     kind: GitRepository
@@ -739,7 +739,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/haproxy
+  path: ./flux/apps/cluster1/haproxy
   prune: true
   sourceRef:
     kind: GitRepository
@@ -752,7 +752,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/fio
+  path: ./flux/apps/cluster1/fio
   prune: true
   sourceRef:
     kind: GitRepository
@@ -765,7 +765,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/restreamer
+  path: ./flux/apps/cluster1/restreamer
   prune: true
   sourceRef:
     kind: GitRepository
@@ -778,7 +778,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/redsocks
+  path: ./flux/apps/base/redsocks
   prune: true
   sourceRef:
     kind: GitRepository
@@ -791,7 +791,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-git-guix-kube1
+  path: ./flux/apps/cluster1/maintenance-git-guix-kube1
   prune: true
   # Setting spec.wait to true makes Flux wait for the Job to complete before
   # it is considered ready.
@@ -808,7 +808,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/clamav-kube1
+  path: ./flux/apps/cluster1/clamav-kube1
   prune: true
   # Setting spec.wait to true makes Flux wait for the Job to complete before
   # it is considered ready.
@@ -825,7 +825,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/state-to-git
+  path: ./flux/apps/cluster1/state-to-git
   prune: true
   sourceRef:
     kind: GitRepository
@@ -838,7 +838,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/skopeo-copy-openwrt
+  path: ./flux/apps/cluster1/skopeo-copy-openwrt
   prune: true
   sourceRef:
     kind: GitRepository
@@ -851,7 +851,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/maintenance-guix-system-build-guixsd
+  path: ./flux/apps/cluster1/maintenance-guix-system-build-guixsd
   prune: true
   sourceRef:
     kind: GitRepository
@@ -864,7 +864,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/maintenance-guix-system-build-notebook
+  path: ./flux/apps/cluster1/maintenance-guix-system-build-notebook
   prune: true
   sourceRef:
     kind: GitRepository
@@ -877,7 +877,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/maintenance-guix-system-build-pc0
+  path: ./flux/apps/cluster1/maintenance-guix-system-build-pc0
   prune: true
   sourceRef:
     kind: GitRepository
@@ -890,7 +890,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/maintenance-guix-system-build-vm1
+  path: ./flux/apps/cluster1/maintenance-guix-system-build-vm1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -903,7 +903,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/maintenance-guix-system-build-vm2
+  path: ./flux/apps/cluster1/maintenance-guix-system-build-vm2
   prune: true
   sourceRef:
     kind: GitRepository
@@ -916,7 +916,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/maintenance-guix-system-build-workstation
+  path: ./flux/apps/cluster1/maintenance-guix-system-build-workstation
   prune: true
   sourceRef:
     kind: GitRepository
@@ -929,7 +929,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/maintenance-guix-rde-image-workstation
+  path: ./flux/apps/cluster1/maintenance-guix-rde-image-workstation
   prune: true
   sourceRef:
     kind: GitRepository
@@ -942,7 +942,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/base/workstation-controller
+  path: ./flux/apps/base/workstation-controller
   prune: true
   sourceRef:
     kind: GitRepository
@@ -955,7 +955,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/workstation
+  path: ./flux/apps/cluster1/workstation
   prune: true
   sourceRef:
     kind: GitRepository
@@ -968,7 +968,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/workstation-staging
+  path: ./flux/apps/cluster1/workstation-staging
   prune: true
   sourceRef:
     kind: GitRepository
@@ -981,7 +981,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/build-workstation-controller-kube1
+  path: ./flux/apps/cluster1/build-workstation-controller-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -994,7 +994,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/archlinux-builder
+  path: ./flux/apps/cluster1/archlinux-builder
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1007,7 +1007,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/base/kaniko-archlinux
+  path: ./flux/apps/base/kaniko-archlinux
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1020,7 +1020,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/maintenance-guix-build-iso
+  path: ./flux/apps/cluster1/maintenance-guix-build-iso
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1033,7 +1033,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/vendir
+  path: ./flux/apps/cluster1/vendir
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1046,7 +1046,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/vendir-kube1
+  path: ./flux/apps/cluster1/vendir-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1059,7 +1059,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/base/kali
+  path: ./flux/apps/base/kali
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1072,7 +1072,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/tor-bridges
+  path: ./flux/apps/cluster1/tor-bridges
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1085,7 +1085,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/base/open-webui
+  path: ./flux/apps/base/open-webui
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1098,7 +1098,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/lm-studio
+  path: ./flux/apps/cluster1/lm-studio
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1111,7 +1111,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/dovecot
+  path: ./flux/apps/cluster1/dovecot
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1124,7 +1124,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/maintenance-nix-build-container-systemd-kube1
+  path: ./flux/apps/cluster1/maintenance-nix-build-container-systemd-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1137,7 +1137,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/runc-guix-builder-kube1
+  path: ./flux/apps/cluster1/runc-guix-builder-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1150,7 +1150,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/runc-nix-builder-kube1
+  path: ./flux/apps/cluster1/runc-nix-builder-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1163,7 +1163,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/pcopy
+  path: ./flux/apps/cluster1/pcopy
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1176,7 +1176,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/maintenance-runc-guix-builder-contribute-kube1
+  path: ./flux/apps/cluster1/maintenance-runc-guix-builder-contribute-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1189,7 +1189,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/maintenance-runc-guix-builder-skopeo-umoci-kube1
+  path: ./flux/apps/cluster1/maintenance-runc-guix-builder-skopeo-umoci-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1202,7 +1202,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/restic
+  path: ./flux/apps/base/restic
   prune: true
   wait: true
   sourceRef:
@@ -1216,7 +1216,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-restic-backup-system-kube1
+  path: ./flux/apps/cluster1/maintenance-restic-backup-system-kube1
   prune: true
   dependsOn:
   - name: restic
@@ -1231,7 +1231,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/mbsync
+  path: ./flux/apps/base/mbsync
   prune: true
   wait: true
   sourceRef:
@@ -1245,7 +1245,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-gmail-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-gmail-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1258,7 +1258,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-wugi-oleg-windows-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-wugi-oleg-windows-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1271,7 +1271,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-wugi-oleg-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-wugi-oleg-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1284,7 +1284,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-web-script-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-web-script-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1297,7 +1297,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-ihc-zabbix-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-ihc-zabbix-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1310,7 +1310,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-tracker-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-tracker-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1323,7 +1323,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-smartmontools-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-smartmontools-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1336,7 +1336,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-security-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-security-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1349,7 +1349,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-prometheus-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-prometheus-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1362,7 +1362,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-opensearch-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-opensearch-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1375,7 +1375,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-jenkins-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-jenkins-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1388,7 +1388,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-issues-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-issues-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1401,7 +1401,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-healthchecks-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-healthchecks-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1414,7 +1414,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-grafana-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-grafana-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1427,7 +1427,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-git-commits-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-git-commits-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1440,7 +1440,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-alertmanager-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-alertmanager-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1453,7 +1453,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-noc-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-noc-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1466,7 +1466,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-pr-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-pr-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1479,7 +1479,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-fired-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-fired-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1492,7 +1492,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-sidorov-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-sidorov-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1505,7 +1505,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-mbsync-majordomo-pyhalov-kube1
+  path: ./flux/apps/cluster1/maintenance-mbsync-majordomo-pyhalov-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1518,7 +1518,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-fetch-images-workstation-kube3
+  path: ./flux/apps/cluster1/maintenance-fetch-images-workstation-kube3
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1531,7 +1531,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/debian
+  path: ./flux/apps/base/debian
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1544,7 +1544,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/runc-bootstrap-container-debian-12-kube1
+  path: ./flux/apps/cluster1/runc-bootstrap-container-debian-12-kube1
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1557,7 +1557,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/maintenance-guix-checkout-kube3
+  path: ./flux/apps/cluster1/maintenance-guix-checkout-kube3
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1570,7 +1570,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/nmap-prometheus-exporter
+  path: ./flux/apps/base/nmap-prometheus-exporter
   prune: true
   sourceRef:
     kind: GitRepository

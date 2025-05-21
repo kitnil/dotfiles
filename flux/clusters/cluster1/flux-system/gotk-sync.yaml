@@ -9,7 +9,7 @@ spec:
   interval: 1m0s
   ref:
     branch: master
-  url: https://gitlab.com/wigust/dotfiles.git
+  url: https://cgit.wugi.info/git/wigust/dotfiles
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
@@ -18,7 +18,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./clusters/cluster2
+  path: ./flux/clusters/cluster1
   prune: true
   sourceRef:
     kind: GitRepository

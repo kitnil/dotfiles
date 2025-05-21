@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/cluster3/maintenance-git-dotfiles
+  path: ./flux/apps/cluster3/maintenance-git-dotfiles
   prune: true
   # Setting spec.wait to true makes Flux wait for the Job to complete before
   # it is considered ready.
@@ -22,7 +22,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/cluster3/maintenance-git-dotfiles-kube10001
+  path: ./flux/apps/cluster3/maintenance-git-dotfiles-kube10001
   prune: true
   # This means that the maintenance-guix-home-reconfigure-kube10001 Kustomization
   # will wait until all the Jobs in maintenance-git-dotfiles-kube10001 run to
@@ -41,7 +41,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/cluster3/maintenance-guix
+  path: ./flux/apps/cluster3/maintenance-guix
   prune: true
   # Setting spec.wait to true makes Flux wait for the Job to complete before
   # it is considered ready.
@@ -57,7 +57,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/cluster3/maintenance-guix-pull-kube10001
+  path: ./flux/apps/cluster3/maintenance-guix-pull-kube10001
   prune: true
   # This means that the maintenance-guix-home-reconfigure-kube10001 Kustomization
   # will wait until all the Jobs in maintenance-git-dotfiles-kube10001 run to
@@ -77,7 +77,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/cluster3/maintenance-guix-system-reconfigure-kube10001
+  path: ./flux/apps/cluster3/maintenance-guix-system-reconfigure-kube10001
   prune: true
   # This means that the maintenance-guix-home-reconfigure-kube10001 Kustomization
   # will wait until all the Jobs in maintenance-guix-pull-kube10001 run to
@@ -96,7 +96,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/cluster3/maintenance-guix-package-manifest-kube10001
+  path: ./flux/apps/cluster3/maintenance-guix-package-manifest-kube10001
   prune: true
   # This means that the maintenance-guix-package-manifest-kube10001 Kustomization
   # will wait until all the Jobs in maintenance-guix-pull-kube10001 run to

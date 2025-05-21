@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./infrastructure/base/sources
+  path: ./flux/infrastructure/base/sources
   prune: true
   sourceRef:
     kind: GitRepository
@@ -19,7 +19,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./infrastructure/cluster2/cilium
+  path: ./flux/infrastructure/cluster2/cilium
   prune: false
   suspend: true
   sourceRef:
@@ -33,7 +33,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./infrastructure/cluster2/kube-dns
+  path: ./flux/infrastructure/cluster2/kube-dns
   prune: false
   sourceRef:
     kind: GitRepository
