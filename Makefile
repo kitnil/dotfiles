@@ -92,14 +92,14 @@ dot_config/espanso/user/censor.yml.gpg:
 guix/dotfiles/mjru/intr.nix:
 	guix/dotfiles/mjru/intr.nix > guix/wugi/etc/mjru/intr.json
 
-DECRYPT_TARGETS = \
-  guix/wugi/home/config/openssh.scm \
-  guix/wugi/etc/mjru/intr.json \
-  guix/private_dot_emacs.d/modules/mjru-network.el \
-  guix/dot_config/espanso/user/censor.yml \
-  guix/dot_config/transmission/settings.json \
-  guix/dotfiles/guixsd/exim/dkim_rsa.private \
-  guix/dotfiles/nix/yggdrasil/yggdrasil.conf \
+DECRYPT_TARGETS =					\
+  guix/wugi/home/config/openssh.scm			\
+  guix/wugi/etc/mjru/intr.json				\
+  guix/private_dot_emacs.d/modules/mjru-network.el	\
+  guix/dot_config/espanso/user/censor.yml		\
+  guix/dot_config/transmission/settings.json		\
+  guix/dotfiles/guixsd/exim/dkim_rsa.private		\
+  guix/dotfiles/nix/yggdrasil/yggdrasil.conf		\
   guix/dotfiles/etc/yggdrasil-private.conf
 
 $(foreach secret,$(DECRYPT_TARGETS),$(secret)):
