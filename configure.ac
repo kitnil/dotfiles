@@ -21,6 +21,9 @@ else
     AC_CONFIG_FILES([src/emacs/benchmark/benchmark.el], [chmod +x src/emacs/benchmark/benchmark.el])
 fi
 
+AC_PATH_PROG([SKOPEO], [skopeo])
+AC_SUBST([SKOPEO])
+
 AM_INIT_AUTOMAKE([1.14 -Woverride -Wno-portability])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

@@ -205,7 +205,7 @@ $(STATE_TO_VC_HOSTNAMES):
 	set -o nounset -o errexit -o pipefail
 	commit_8=$$($(GIT) rev-parse HEAD | cut -c -8)
 	container=$$($(guix_repository)/pre-inst-env guix pack -f docker-layered -S /bin=bin --load-path=guix -e '(@ (packages networking) state-to-vc-$@)')
-	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/monitoring/$@:$$commit_8
+	$(SKOPEO) copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/monitoring/$@:$$commit_8
 	$(GUIX) gc --delete $$container
 	cd $(HOME)/src/gitlab.intr/cd/state-to-git/apps/*/state-to-git-$@
 	nix develop git+https://gitlab.intr/nixos/kubernetes --command kustomize edit set image $(container_registry)/monitoring/$@:$$commit_8
@@ -221,7 +221,7 @@ util-linux-with-udev:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$($(GIT) rev-parse HEAD | cut -c -8)
 	container=$$($(GUIX) pack -f docker --load-path=guix --max-layers=100 -S /bin=bin util-linux-with-udev bash coreutils guile guix-refresh.sh)
-	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+	$(SKOPEO) copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	$(GUIX) gc --delete $$container
 	cd apps/base/maintenance-guix-refresh-gita
 	nix develop git+https://gitlab.intr/nixos/kubernetes --command kustomize edit set image $(container_registry)/library/$@:$$commit_8
@@ -235,7 +235,7 @@ skopeo-umoci:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$($(GIT) rev-parse HEAD | cut -c -8)
 	container=$$($(GUIX) pack -f docker --load-path=guix --max-layers=100 -S /bin=bin -S /etc=etc bash coreutils skopeo umoci nss-certs)
-	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+	$(SKOPEO) copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	$(GUIX) gc --delete $$container
 
 .ONESHELL:
@@ -243,7 +243,7 @@ runc:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$($(GIT) rev-parse HEAD | cut -c -8)
 	container=$$($(GUIX) pack -f docker --load-path=guix --max-layers=100 -S /bin=bin -S /sbin=sbin util-linux-with-udev bash coreutils runc)
-	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+	$(SKOPEO) copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	$(GUIX) gc --delete $$container
 
 .ONESHELL:
@@ -251,21 +251,21 @@ haproxy:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$($(GIT) rev-parse HEAD | cut -c -8)
 	container=$$($(GUIX) pack -f docker --max-layers=100 -S /sbin=sbin haproxy)
-	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+	$(SKOPEO) copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 .ONESHELL:
 isc-dhcp:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$($(GIT) rev-parse HEAD | cut -c -8)
 	container=$$($(GUIX) system image --load-path=/home/oleg/.local/share/chezmoi/guix/wugi --max-layers=100 -t docker --network guix/dotfiles/guixsd/docker-image-isc-dhcp.scm)
-	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+	$(SKOPEO) copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 .ONESHELL:
 mumble:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$($(GIT) rev-parse HEAD | cut -c -8)
 	container=$$($(GUIX) time-machine --channels=guix/dotfiles/channels-guix-mumble.scm -- system image --max-layers=100 -t docker --network guix/wugi/system/docker-image-mumble.scm)
-	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+	$(SKOPEO) copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 SUBSTITUTE_URLS='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org https://mirrors.sjtug.sjtu.edu.cn/guix'
 
@@ -274,7 +274,7 @@ guix-image-workstation: $(DECRYPT_TARGETS)
 	set -o nounset -o errexit -o pipefail -o xtrace
 	IMG=$(container_registry)/library/$@:$$($(GIT) rev-parse --abbrev-ref HEAD)-$$($(GIT) rev-parse HEAD | cut -c -8)-$$(date +%s)
 	container=$$($(GUIX) time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- system image --load-path=guix --substitute-urls=$(SUBSTITUTE_URLS) --max-layers=100 -t docker --network -e '((@ (wugi system workstation) %workstation))')
-	skopeo copy docker-archive\:$$container docker://$$IMG
+	$(SKOPEO) copy docker-archive\:$$container docker://$$IMG
 	echo $$IMG
 
 .ONESHELL:
@@ -287,7 +287,7 @@ guix-image-builder: $(DECRYPT_TARGETS)
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$($(GIT) rev-parse HEAD | cut -c -8)
 	container=$$($(GUIX) time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls="$(SUBSTITUTE_URLS)" --max-layers=100 -t docker --network ~/.local/share/chezmoi/guix/wugi/system/guix-image-builder.scm)
-	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+	$(SKOPEO) copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 nix-update-inputs:
 	$(MAKE) -C nix/container-systemd dotfiles-home-manager
