@@ -1,20 +1,33 @@
 ;; eval ""$(sed 's,-nic user[^ ]* ,,' "$(make check-system)" | tail -1 | sed 's/\sexec\s//')" -m 4096  -smp 2 -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22"
 ;; ssh -fL 5901:localhost:5901 -F /dev/null localhost -p 10022
 
-(use-modules (gnu)
+(use-modules (gnu packages astronomy)
+             (gnu packages bootloaders)
+             (gnu packages certs)
+             (gnu packages fonts)
+             (gnu packages linux)
+             (gnu packages lisp)
+             (gnu packages lisp-xyz)
+             (gnu packages nvi)
+             (gnu packages package-management)
+             (gnu packages pulseaudio)
+             (gnu packages ratpoison)
+             (gnu packages wget)
+             (gnu packages wm)
+             (gnu packages xorg)
+             (gnu services desktop)
+             (gnu services networking)
+             (gnu services shepherd)
+             (gnu services ssh)
+             (gnu services xorg)
+             (gnu)
              (guix build utils)
              (guix)
              (ice-9 match)
-             (packages linux)
              (nongnu system linux-initrd)
-             (srfi srfi-1))
-
-(use-service-modules desktop networking ssh xorg shepherd)
-
-(use-package-modules bootloaders certs fonts nvi package-management wget xorg
-                     wm linux lisp lisp-xyz pulseaudio astronomy ratpoison)
-
-(use-modules (wigust packages lisp))
+             (srfi srfi-1)
+             (wigust packages lisp)
+             (wugi packages linux))
 
 (define vm-image-motd (plain-file "motd" "
 \x1b[1;37mThis is the GNU system.  Welcome!\x1b[0m
