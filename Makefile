@@ -163,17 +163,29 @@ $(foreach configuration,$(guix-system-builds),guix-time-machine-system-build-$(c
 	system=$(subst guix-time-machine-system-build-,,$@); \
 	$(call guix-time-machine,$$system) -- $(call guix-build-expression,$$system,$$system)
 
-define guix-home-build-expression
-home build --load-path=guix -e "((@ (wugi home config $(subst -home-environment,,$1)) %$(2)))"
+define guix-home-expression
+home $$ACTION --load-path=guix -e "((@ (wugi home config $(subst -home-environment,,$1)) %$(2)))"
 endef
 
 $(foreach configuration,$(guix-system-configurations),guix-home-build-$(configuration)):
+	ACTION=build; \
 	system=$(subst guix-home-build-,,$@); \
-	guix $(call guix-home-build-expression,$$system-home-environment,$$system-home-environment)
+	guix $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
 
 $(foreach configuration,$(guix-system-configurations),guix-time-machine-home-build-$(configuration)):
+	ACTION=build; \
 	system=$(subst guix-time-machine-home-build-,,$@); \
-	$(call guix-time-machine,$$system) -- $(call guix-home-build-expression,$$system-home-environment,$$system-home-environment)
+	$(call guix-time-machine,$$system) -- $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
+
+$(foreach configuration,$(guix-system-configurations),guix-home-reconfigure-$(configuration)):
+	ACTION=reconfigure; \
+	system=$(subst guix-home-reconfigure-,,$@); \
+	guix $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
+
+$(foreach configuration,$(guix-system-configurations),guix-time-machine-home-reconfigure-$(configuration)):
+	ACTION=reconfigure; \
+	system=$(subst guix-time-machine-home-reconfigure-,,$@); \
+	$(call guix-time-machine,$$system) -- $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
 
 define guix-build-manifest
 build --load-path=guix --expression="((@ (wugi manifests $(subst $(1),,$(2))) %$(subst $(1),,$(2)-manifest)))"
