@@ -48,7 +48,7 @@ newspace."
        (modify-phases %standard-phases
          (add-after 'unpack 'chdir
            (lambda _
-             (chdir "src/python-cisco"))))))
+             (chdir "src/python/python-cisco"))))))
     (home-page "https://wugi.info")
     (synopsis "Run commands on Cisco hardware")
     (description "This package provides a Python program to run commands on
@@ -70,7 +70,7 @@ Cisco hardware.")
        (modify-phases %standard-phases
          (add-after 'unpack 'chdir
            (lambda _
-             (chdir "src/python-cisco-interact"))))))
+             (chdir "src/python/python-cisco-interact"))))))
     (home-page "https://wugi.info")
     (synopsis "Connect to Cisco hardware and type a password")
     (description "This package provides a Python program to connect to Cisco
