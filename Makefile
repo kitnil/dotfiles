@@ -1,12 +1,3 @@
-TESTS =						\
-  tests/connect.bats				\
-  tests/executables.bats			\
-  tests/mail.bats				\
-  tests/mjru.bats				\
-  tests/guix.bats				\
-  tests/ssh-mjru.bats				\
-  tests/ssh-home.bats
-
 .PHONY: clean-guile
 clean-guile:
 	rm -rf $(HOME)/.cache/guile/ccache
