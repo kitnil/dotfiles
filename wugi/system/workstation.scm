@@ -6,7 +6,7 @@
 ;; docker run --network=host --security-opt seccomp=unconfined --detach --name tor --network=host example.org:5000/tor
 ;; docker exec --detach tor /gnu/store/…-tor-0.4.6.10/bin/tor -f /gnu/store/…-torrc
 
-(define-module (wugi system container-workstation)
+(define-module (wugi system workstation)
   #:use-module (gnu packages)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages gnupg)
@@ -50,9 +50,9 @@
   #:use-module (wugi services docker)
   #:use-module (wugi services openvpn)
   #:use-module (wugi utils)
-  #:export (%container-workstation))
+  #:export (%workstation))
 
-(define (%container-workstation)
+(define (%workstation)
   (define container-mingetty-service-type
     (service-type (name 'mingetty)
                   (extensions (list (service-extension shepherd-root-service-type

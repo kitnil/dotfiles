@@ -302,7 +302,7 @@ container_registry=harbor.home.wugi.info
 guix-image-workstation: wugi/home/config/openssh.scm.gpg
 	set -o nounset -o errexit -o pipefail -o xtrace
 	IMG=$(container_registry)/library/$@:$$(git rev-parse --abbrev-ref HEAD)-$$(git rev-parse HEAD | cut -c -8)-$$(date +%s)
-	container=$$(guix time-machine --channels=wugi/etc/guix/channels/workstation.scm -- system image --load-path=. --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --max-layers=100 -t docker --network -e '((@ (wugi system container-workstation) %container-workstation))')
+	container=$$(guix time-machine --channels=wugi/etc/guix/channels/workstation.scm -- system image --load-path=. --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --max-layers=100 -t docker --network -e '((@ (wugi system workstation) %workstation))')
 	skopeo copy docker-archive\:$$container docker://$$IMG
 	echo $$IMG
 
