@@ -7,7 +7,7 @@ clean-nix:
 	rm -rf $(HOME)/.cache/nix
 
 .PHONY: clean
-clean: clean-nix
+clean:
 	git clean -xdf
 
 .PHONY: check
