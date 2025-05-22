@@ -34,7 +34,7 @@ explanations of each file's purpose.
 *   Guix (for `guix/`)
 *   Nix (for `nix/`)
 *   Flux (for `flux/`)
-*   Autotools (`autoconf`, `automake`, `make` - likely needed for building tools in `src/`)
+*   Autotools (`autoconf`, `automake`, `make`)
 *   GPG
 
 ## Contributing
