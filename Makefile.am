@@ -6,7 +6,8 @@ DECRYPT_TARGETS =					\
   guix/dot_config/transmission/settings.json		\
   guix/dotfiles/guixsd/exim/dkim_rsa.private		\
   nix/yggdrasil/yggdrasil.conf				\
-  guix/dotfiles/etc/yggdrasil-private.conf
+  guix/dotfiles/etc/yggdrasil-private.conf		\
+  guix/dotfiles/etc/ssl/ca.pem
 
 .PHONY: all
 all: $(foreach secret,$(DECRYPT_TARGETS),$(secret))
