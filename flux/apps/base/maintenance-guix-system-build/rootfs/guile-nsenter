@@ -46,6 +46,9 @@
 (define %git-origin
   "https://cgit.wugi.info/git/wigust/dotfiles")
 
+(define %git-password-store-url
+  "git@guixsd:wigust/password-store-dotfiles")
+
 (define (runc-code)
   `(begin
      (define (git . args)
@@ -59,7 +62,8 @@
                     (workdir
                      (mkdtemp
                       (string-append
-                       home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX"))))
+                       home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX")))
+                    (password-store-dotfiles ".password-store/dotfiles"))
                 (chdir workdir)
                 (and
                  (zero? (git "init"))
@@ -68,6 +72,10 @@
                  (zero?
                   (git "fetch" "--depth" (number->string 1) "origin" commit))
                  (zero? (git "checkout" commit))
+                 (zero? (system* "mkdir" "-p" ".password-store"))
+                 (zero? (system* "git" "clone"
+                                 ,%git-password-store-url
+                                 password-store-dotfiles))
                  (for-each (lambda (command)
                              (zero?
                               (apply system*
@@ -75,7 +83,10 @@
                                              command))))
                            `(("./bootstrap")
                              ("./configure")
-                             ("make" ,(getenv "RUNC_MAKE_TARGET"))))))))))
+                             ("make"
+                              (string-append "PASSWORD_STORE="
+                                             password-store-dotfiles)
+                              ,(getenv "RUNC_MAKE_TARGET"))))))))))
 
 (define kubectl
   "/home/oleg/.guix-profile")
