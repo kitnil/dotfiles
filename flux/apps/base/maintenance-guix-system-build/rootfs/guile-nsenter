@@ -63,7 +63,7 @@
                      (mkdtemp
                       (string-append
                        home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX")))
-                    (password-store-dotfiles ".password-store/dotfiles"))
+                    (password-store ".password-store"))
                 (chdir workdir)
                 (and
                  (zero? (git "init"))
@@ -73,9 +73,8 @@
                   (git "fetch" "--depth" (number->string 1) "origin" commit))
                  (zero? (git "checkout" commit))
                  (zero? (system* "mkdir" "-p" ".password-store"))
-                 (zero? (system* "git" "clone"
-                                 ,%git-password-store-url
-                                 password-store-dotfiles))
+                 (zero? (system* "git" "clone" ,%git-password-store-url
+                                 (string-append password-store "/dotfiles")))
                  (for-each (lambda (command)
                              (zero?
                               (apply
@@ -86,7 +85,7 @@
                              ("./configure")
                              ("make"
                               ,(string-append "PASSWORD_STORE="
-                                              password-store-dotfiles)
+                                              password-store)
                               ,(getenv "RUNC_MAKE_TARGET"))))))))))
 
 (define kubectl
