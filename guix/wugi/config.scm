@@ -266,7 +266,8 @@ EndSection\n")
 (define %mtls
   (begin
     (if (file-exists? %mtls-certificate)
-        (list (format #f "ssl_client_certificate ~a;" (local-file file))
+        (list (format #f "ssl_client_certificate ~a;"
+                      (local-file %mtls-certificate))
               "ssl_verify_client on;")
         '())))
 
