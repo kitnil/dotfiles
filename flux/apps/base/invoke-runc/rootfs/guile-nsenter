@@ -51,6 +51,7 @@
 
 (define (runc-code)
   `(begin
+     (use-modules (srfi srfi-26))
      (define (invoke program . args)
        "Invoke PROGRAM with the given ARGS.  Raise an error if the exit
 code is non-zero; otherwise return #t."
@@ -59,8 +60,21 @@ code is non-zero; otherwise return #t."
            (error (format #f "program ~s exited with non-zero code" program)
                   status))
          #t))
+     (define (invoke-environment . args)
+       (apply invoke
+              (append (let ((package-manager
+                             ,(getenv "RUNC_ENVIRONMENT_MANAGEMENT_PACKAGE")))
+                        (cond
+                         ((string= package-manager "guix")
+                          `("guix" "shell" ,@dependencies "--"))
+                         ((string= package-manager "nix")
+                          `("nix" "shell"
+                            ,@(map (cut string-append "nixpkgs#" <>)
+                                   dependencies)
+                            "--command"))))
+                      args)))
      (define (git . args)
-       (apply invoke (append '("guix" "shell" "git" "--" "git") args)))
+       (apply invoke-environment (append '("git") args)))
      (define dependencies
        '("git" "autoconf" "automake" "make" "skopeo"))
      (system* "/usr/bin/env")
@@ -88,22 +102,7 @@ code is non-zero; otherwise return #t."
                  (git "submodule" "add" ,%git-password-store-url "dotfiles")
                  (chdir "..")
 
-                 (for-each (lambda (command)
-                             (apply
-                              invoke
-                              (append
-                               (let ((package-manager
-                                      ,(getenv "RUNC_ENVIRONMENT_MANAGEMENT_PACKAGE")))
-                                 (cond
-                                  ((string= package-manager "guix")
-                                   `("guix" "shell" ,@dependencies "--"))
-                                  ((string= package-manager "nix")
-                                   `("nix" "shell"
-                                     ,@(map (lambda (dependency)
-                                              (string-append "nixpkgs#" dependency))
-                                            dependencies)
-                                     "--command"))))
-                               command)))
+                 (for-each (cut invoke-environment <>)
                            `(("./bootstrap")
                              ("./configure")
                              ("make"
