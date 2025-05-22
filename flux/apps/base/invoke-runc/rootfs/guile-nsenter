@@ -51,8 +51,16 @@
 
 (define (runc-code)
   `(begin
+     (define (invoke program . args)
+       "Invoke PROGRAM with the given ARGS.  Raise an error if the exit
+code is non-zero; otherwise return #t."
+       (let ((status (apply system* program args)))
+         (unless (zero? status)
+           (error (format #f "program ~s exited with non-zero code" program)
+                  status))
+         #t))
      (define (git . args)
-       (apply system* (append '("guix" "shell" "git" "--" "git") args)))
+       (apply invoke (append '("guix" "shell" "git" "--" "git") args)))
      (define dependencies
        '("git" "autoconf" "automake" "make" "skopeo"))
      (system* "/usr/bin/env")
@@ -69,37 +77,33 @@
                      (password-store ".password-store"))
                 (chdir workdir)
                 (and
-                 (zero? (git "init"))
-                 (zero?
-                  (git "remote" "add" "origin" ,%git-origin))
-                 (zero?
-                  (git "fetch" "--depth" (number->string 1) "origin" commit))
-                 (zero? (git "checkout" commit))
+                 (git "init")
+                 (git "remote" "add" "origin" ,%git-origin)
+                 (git "fetch" "--depth" (number->string 1) "origin" commit)
+                 (git "checkout" commit)
 
-                 (zero? (system* "mkdir" "-p" ".password-store"))
+                 (invoke "mkdir" "-p" ".password-store")
                  (chdir password-store)
-                 (zero? (system* "git" "init"))
-                 (zero? (system* "git" "submodule" "add"
-                                 ,%git-password-store-url "dotfiles"))
+                 (git "init")
+                 (git "submodule" "add" ,%git-password-store-url "dotfiles")
                  (chdir "..")
 
                  (for-each (lambda (command)
-                             (zero?
-                              (apply
-                               system*
-                               (append
-                                (let ((package-manager
-                                       ,(getenv "RUNC_ENVIRONMENT_MANAGEMENT_PACKAGE")))
-                                  (cond
-                                   ((string= package-manager "guix")
-                                    `("guix" "shell" ,@dependencies "--"))
-                                   ((string= package-manager "nix")
-                                    `("nix" "shell"
-                                      ,@(map (lambda (dependency)
-                                               (string-append "nixpkgs#" dependency))
-                                             dependencies)
-                                      "--command"))))
-                                command))))
+                             (apply
+                              invoke
+                              (append
+                               (let ((package-manager
+                                      ,(getenv "RUNC_ENVIRONMENT_MANAGEMENT_PACKAGE")))
+                                 (cond
+                                  ((string= package-manager "guix")
+                                   `("guix" "shell" ,@dependencies "--"))
+                                  ((string= package-manager "nix")
+                                   `("nix" "shell"
+                                     ,@(map (lambda (dependency)
+                                              (string-append "nixpkgs#" dependency))
+                                            dependencies)
+                                     "--command"))))
+                               command)))
                            `(("./bootstrap")
                              ("./configure")
                              ("make"
