@@ -154,7 +154,7 @@ install_pycharm()
 
 install_vscodium()
 {
-    aur install vscodium
+    aur install vscodium-bin
 }
 
 install_wlvncc()
