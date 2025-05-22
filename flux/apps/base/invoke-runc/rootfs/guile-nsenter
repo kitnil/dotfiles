@@ -92,14 +92,13 @@
                                        ,(getenv "RUNC_ENVIRONMENT_MANAGEMENT_PACKAGE")))
                                   (cond
                                    ((string= package-manager "guix")
-                                    (list "guix" "shell" ,@dependencies
-                                          "--"))
+                                    `("guix" "shell" ,@dependencies "--"))
                                    ((string= package-manager "nix")
-                                    (list "nix" "shell"
-                                          ,@(map (lambda (dependency)
-                                                   (string-append "nixpkgs#" dependency))
-                                                 dependencies)
-                                          "--command"))))
+                                    `("nix" "shell"
+                                      ,@(map (lambda (dependency)
+                                               (string-append "nixpkgs#" dependency))
+                                             dependencies)
+                                      "--command"))))
                                 command))))
                            `(("./bootstrap")
                              ("./configure")
