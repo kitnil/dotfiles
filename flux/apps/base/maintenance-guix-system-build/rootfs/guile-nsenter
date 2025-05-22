@@ -85,8 +85,8 @@
                            `(("./bootstrap")
                              ("./configure")
                              ("make"
-                              (string-append "PASSWORD_STORE="
-                                             password-store-dotfiles)
+                              ,(string-append "PASSWORD_STORE="
+                                              password-store-dotfiles)
                               ,(getenv "RUNC_MAKE_TARGET"))))))))))
 
 (define kubectl
