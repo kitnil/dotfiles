@@ -280,7 +280,7 @@ nix-update-inputs:
 	$(MAKE) -C nix/container-systemd dotfiles-home-manager
 	$(MAKE) -C nix/container-systemd-taskexecutor original
 
-container-systemd-taskexecutor:
+container-systemd-taskexecutor: $(DECRYPT_TARGETS)
 	$(MAKE) -C nix/container-systemd-taskexecutor
 
 .ONESHELL:
