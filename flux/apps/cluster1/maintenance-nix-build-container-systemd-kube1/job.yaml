@@ -22,3 +22,5 @@ spec:
           value: nix
         - name: RUNC_GUILE
           value: /nix/store/g4xbhkf97vi6ahas661kf0jd6yskr12d-guile-3.0.10/bin/guile
+        - name: RUNC_ENVIRONMENT_MANAGEMENT_PACKAGE
+          value: nix
