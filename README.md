@@ -35,7 +35,7 @@ explanations of each file's purpose.
 *   Nix (for `nix/`)
 *   Flux (for `flux/`)
 *   Autotools (`autoconf`, `automake`, `make` - likely needed for building tools in `src/`)
-*   Password-store
+*   GPG
 
 ## Contributing
 

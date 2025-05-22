@@ -9,8 +9,8 @@ AC_SUBST([GIT])
 AC_PATH_PROG([GUIX], [guix])
 AC_SUBST([GUIX])
 
-AC_PATH_PROG([PASS], [pass])
-AC_SUBST([PASS])
+AC_PATH_PROG([GPG], [gpg])
+AC_SUBST([GPG])
 
 dnl Emacs (optional), for 'src/emacs/benchmark/benchmark.el'.
 AC_PATH_PROG([EMACS], [emacs])

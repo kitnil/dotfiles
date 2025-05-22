@@ -14,9 +14,10 @@ DECRYPT_TARGETS =					\
 .PHONY: all
 all: $(foreach secret,$(DECRYPT_TARGETS),$(secret))
 
+PASSWORD_STORE=$(HOME)/.password-store
 $(foreach secret,$(DECRYPT_TARGETS),$(secret)):
 	mkdir -p $$(dirname $@)
-	$(PASS) show dotfiles/$@ > $@
+	$(GPG) --output $@ --decrypt $(PASSWORD_STORE)/dotfiles/$@.gpg
 
 .PHONY: clean-guile
 clean-guile:
