@@ -114,7 +114,7 @@
               "--env" (string-append "RUNC_MAKE_TARGET="
                                      (getenv "RUNC_MAKE_TARGET"))
               (getenv "RUNC_CONTAINER_ID")
-              "/run/current-system/profile/bin/guile" "--no-auto-compile"
+              (getenv "RUNC_GUILE") "--no-auto-compile"
               "-c" ,(with-output-to-string
                       (lambda ()
                         (write
@@ -149,6 +149,7 @@
            "/usr/bin/env"
            ,(string-append "GIT_COMMIT=" (getenv "GIT_COMMIT"))
            ,(string-append "RUNC_CONTAINER_ID=" (getenv "RUNC_CONTAINER_ID"))
+           ,(string-append "RUNC_GUILE=" (getenv "RUNC_GUILE"))
            ,(string-append "KUBERNETES_POD_NAME="
                            (getenv "KUBERNETES_POD_NAME"))
            ,(string-append "KUBERNETES_NAMESPACE="

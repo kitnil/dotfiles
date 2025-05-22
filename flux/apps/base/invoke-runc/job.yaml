@@ -39,6 +39,8 @@ spec:
           value: "1000"
         - name: RUNC_GID
           value: "998"
+        - name: RUNC_GUILE
+          value: /run/current-system/profile/bin/guile
         resources:
           limits:
             cpu: 14000m
