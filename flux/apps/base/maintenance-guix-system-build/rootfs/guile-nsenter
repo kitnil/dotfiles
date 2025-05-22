@@ -72,9 +72,14 @@
                  (zero?
                   (git "fetch" "--depth" (number->string 1) "origin" commit))
                  (zero? (git "checkout" commit))
+
                  (zero? (system* "mkdir" "-p" ".password-store"))
-                 (zero? (system* "git" "clone" ,%git-password-store-url
-                                 (string-append password-store "/dotfiles")))
+                 (chdir password-store)
+                 (zero? (system* "git" "init"))
+                 (zero? (system* "git" "submodule" "add"
+                                 ,%git-password-store-url "dotfiles"))
+                 (chdir "..")
+
                  (for-each (lambda (command)
                              (zero?
                               (apply
