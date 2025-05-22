@@ -9,6 +9,8 @@ DECRYPT_TARGETS =					\
   guix/dotfiles/etc/yggdrasil-private.conf		\
   guix/dotfiles/etc/ssl/ca.pem
 
+.IGNORE: $(foreach secret,$(DECRYPT_TARGETS),$(secret))
+
 .PHONY: all
 all: $(foreach secret,$(DECRYPT_TARGETS),$(secret))
 
