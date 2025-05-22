@@ -58,12 +58,13 @@
      (system* "/usr/bin/env")
      (and=> (getenv "HOME")
             (lambda (home)
-              (let ((commit (getenv "GIT_COMMIT"))
-                    (workdir
-                     (mkdtemp
-                      (string-append
-                       home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX")))
-                    (password-store ".password-store"))
+              (let* ((commit (getenv "GIT_COMMIT"))
+                     (checkouts
+                      (string-append home "/.cache/wigust/checkouts"))
+                     (workdir
+                      (mkdtemp
+                       (string-append checkouts "/dotfiles.XXXXXXXXXX")))
+                     (password-store ".password-store"))
                 (chdir workdir)
                 (and
                  (zero? (git "init"))
