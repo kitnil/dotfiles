@@ -67,8 +67,8 @@ code is non-zero; otherwise return #t."
                         (cond
                          ((string= package-manager "guix")
                           `("guix" "shell"
-                            '("autoconf" "automake" "make"
-                              "git" "skopeo")
+                            ,@'("autoconf" "automake" "make"
+                                "git" "skopeo")
                             "--"))
                          ((string= package-manager "nix")
                           `("nix" "shell"
