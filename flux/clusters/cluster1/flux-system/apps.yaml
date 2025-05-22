@@ -708,6 +708,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-guixsd
+  suspend: true
   prune: true
   sourceRef:
     kind: GitRepository
@@ -721,6 +722,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-notebook
+  suspend: true
   prune: true
   sourceRef:
     kind: GitRepository
@@ -734,6 +736,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-pc0
+  suspend: true
   prune: true
   sourceRef:
     kind: GitRepository
@@ -747,6 +750,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-vm1
+  suspend: true
   prune: true
   sourceRef:
     kind: GitRepository
@@ -760,6 +764,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-vm2
+  suspend: true
   prune: true
   sourceRef:
     kind: GitRepository
@@ -773,6 +778,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-workstation
+  suspend: true
   prune: true
   sourceRef:
     kind: GitRepository
@@ -786,6 +792,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-rde-image-workstation
+  suspend: true
   prune: true
   sourceRef:
     kind: GitRepository
