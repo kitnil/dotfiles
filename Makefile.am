@@ -116,7 +116,7 @@ define guix-home-expression
 home $$ACTION --load-path=guix -e "((@ (wugi home config $(subst -home-environment,,$1)) %$(2)))"
 endef
 
-$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-home-build-$(configuration)):
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-home-build-$(configuration)): $(DECRYPT_TARGETS)
 	ACTION=build; \
 	system=$(subst guix-home-build-,,$@); \
 	$(GUIX) $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
