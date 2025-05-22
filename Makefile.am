@@ -15,6 +15,8 @@ DECRYPT_TARGETS =					\
 .PHONY: all
 all: $(foreach secret,$(DECRYPT_TARGETS),$(secret))
 
+SUBSTITUTE_URLS='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org https://mirrors.sjtug.sjtu.edu.cn/guix'
+
 PASSWORD_STORE=$(HOME)/.password-store
 $(foreach secret,$(DECRYPT_TARGETS),$(secret)):
 	mkdir -p $$(dirname $@)
@@ -101,11 +103,11 @@ GUIX_SYSTEM_CONFIGURATIONS =			\
   workstation
 
 define guix-time-machine
-$(GUIX) time-machine "--channels=guix/wugi/etc/guix/channels/$(1).scm"
+$(GUIX) time-machine "--channels=guix/wugi/etc/guix/channels/$(1).scm" --substitute-urls=$(SUBSTITUTE_URLS)
 endef
 
 define guix-build-expression
-build --load-path=guix -e "((@ (wugi system $(1)) %$(2)))"
+build --load-path=guix --substitute-urls=$(SUBSTITUTE_URLS) --expression="((@ (wugi system $(1)) %$(2)))"
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-build-$(configuration)):
@@ -117,7 +119,7 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-b
 	$(call guix-time-machine,$$system) -- $(call guix-build-expression,$$system,$$system)
 
 define guix-home-expression
-home $$ACTION --load-path=guix -e "((@ (wugi home config $(subst -home-environment,,$1)) %$(2)))"
+home $$ACTION --load-path=guix --substitute-urls=$(SUBSTITUTE_URLS) -e "((@ (wugi home config $(subst -home-environment,,$1)) %$(2)))"
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-home-build-$(configuration)): $(DECRYPT_TARGETS)
@@ -254,13 +256,11 @@ mumble:
 	container=$$($(GUIX) time-machine --channels=guix/dotfiles/channels-guix-mumble.scm -- system image --max-layers=100 -t docker --network guix/wugi/system/docker-image-mumble.scm)
 	$(SKOPEO) copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
-SUBSTITUTE_URLS='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org https://mirrors.sjtug.sjtu.edu.cn/guix'
-
 .ONESHELL:
 guix-image-workstation: $(DECRYPT_TARGETS)
 	set -o nounset -o errexit -o pipefail -o xtrace
 	IMG=$(container_registry)/library/$@:$$($(GIT) rev-parse --abbrev-ref HEAD)-$$($(GIT) rev-parse HEAD | cut -c -8)-$$(date +%s)
-	container=$$($(GUIX) time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- system image --load-path=guix --substitute-urls=$(SUBSTITUTE_URLS) --max-layers=100 -t docker --network -e '((@ (wugi system workstation) %workstation))')
+	container=$$($(GUIX) time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm --substitute-urls=$(SUBSTITUTE_URLS) -- system image --load-path=guix --substitute-urls=$(SUBSTITUTE_URLS) --max-layers=100 -t docker --network -e '((@ (wugi system workstation) %workstation))')
 	$(SKOPEO) copy docker-archive\:$$container docker://$$IMG
 	echo $$IMG
 
