@@ -62,8 +62,10 @@
                      (checkouts
                       (string-append home "/.cache/wigust/checkouts"))
                      (workdir
-                      (mkdtemp
-                       (string-append checkouts "/dotfiles.XXXXXXXXXX")))
+                      (begin
+                        (system* "mkdir" "-p" checkouts)
+                        (mkdtemp
+                         (string-append checkouts "/dotfiles.XXXXXXXXXX"))))
                      (password-store ".password-store"))
                 (chdir workdir)
                 (and
