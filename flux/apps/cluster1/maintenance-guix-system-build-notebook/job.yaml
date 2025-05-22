@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: guix-system-build
+  name: invoke-runc
 spec:
   template:
     spec:
@@ -11,6 +11,6 @@ spec:
       - name: nsenter
         env:
         - name: GIT_COMMIT
-          value: 2f0582e5be6d45b61775095ff87eb3fc484522a6
+          value: 0d2145a16e36d2e3bba961fe2d702740bae6b505
         - name: RUNC_MAKE_TARGET
-          value: "notebook"
+          value: "guix-time-machine-system-build-notebook"
