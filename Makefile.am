@@ -1,16 +1,16 @@
 DECRYPT_TARGETS =					\
-  guix/wugi/home/config/openssh.scm			\
-  guix/wugi/etc/mjru/intr.json				\
-  guix/private_dot_emacs.d/modules/mjru-network.el	\
   guix/dot_config/espanso/user/censor.yml		\
   guix/dot_config/transmission/settings.json		\
-  guix/dotfiles/guixsd/exim/dkim_rsa.private		\
-  nix/yggdrasil/yggdrasil.conf				\
-  guix/dotfiles/etc/yggdrasil-private.conf		\
-  guix/dotfiles/etc/ssl/ca.pem				\
+  guix/dot_config/wayvnc/config				\
   guix/dot_config/wayvnc/tls_cert.pem			\
   guix/dot_config/wayvnc/tls_key.pem			\
-  guix/dot_config/wayvnc/config
+  guix/dotfiles/etc/ssl/ca.pem				\
+  guix/dotfiles/etc/yggdrasil-private.conf		\
+  guix/dotfiles/guixsd/exim/dkim_rsa.private		\
+  guix/private_dot_emacs.d/modules/mjru-network.el	\
+  guix/wugi/etc/mjru/intr.json				\
+  guix/wugi/home/config/openssh.scm			\
+  nix/yggdrasil/yggdrasil.conf
 
 .PHONY: all
 all: $(foreach secret,$(DECRYPT_TARGETS),$(secret))
