@@ -78,9 +78,10 @@
                                  password-store-dotfiles))
                  (for-each (lambda (command)
                              (zero?
-                              (apply system*
-                                     (append `("guix" "shell" ,dependencies "--")
-                                             command))))
+                              (apply
+                               system*
+                               (append `("guix" "shell" ,@dependencies "--")
+                                       command))))
                            `(("./bootstrap")
                              ("./configure")
                              ("make"
