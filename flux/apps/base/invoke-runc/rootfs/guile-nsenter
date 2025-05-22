@@ -66,17 +66,19 @@ code is non-zero; otherwise return #t."
                              ,(getenv "RUNC_ENVIRONMENT_MANAGEMENT_PACKAGE")))
                         (cond
                          ((string= package-manager "guix")
-                          `("guix" "shell" ,@dependencies "--"))
+                          `("guix" "shell"
+                            '("autoconf" "automake" "make"
+                              "git" "skopeo")
+                            "--"))
                          ((string= package-manager "nix")
                           `("nix" "shell"
                             ,@(map (cut string-append "nixpkgs#" <>)
-                                   dependencies)
+                                   '("autoconf" "automake" "gnumake"
+                                     "skopeo" "git"))
                             "--command"))))
                       args)))
      (define (git . args)
        (apply invoke-environment (append '("git") args)))
-     (define dependencies
-       '("git" "autoconf" "automake" "make" "skopeo"))
      (system* "/usr/bin/env")
      (and=> (getenv "HOME")
             (lambda (home)
