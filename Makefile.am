@@ -112,7 +112,7 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-build-$(config
 	system=$(subst guix-system-build-,,$@); \
 	$(GUIX) $(call guix-build-expression,$$system,$$system)
 
-$(foreach configuration,$(guix-system-builds),guix-time-machine-system-build-$(configuration)):
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-build-$(configuration)):
 	system=$(subst guix-time-machine-system-build-,,$@); \
 	$(call guix-time-machine,$$system) -- $(call guix-build-expression,$$system,$$system)
 
