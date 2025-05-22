@@ -3,6 +3,6 @@ kind: Kustomization
 namespace: guix
 nameSuffix: -vm2
 resources:
-- ../../base/maintenance-guix-system-build
+- ../../base/invoke-runc
 patchesStrategicMerge:
 - job.yaml
