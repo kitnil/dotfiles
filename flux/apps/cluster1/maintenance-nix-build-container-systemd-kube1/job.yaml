@@ -20,3 +20,5 @@ spec:
           value: runc-kube1-nix-builder
         - name: KUBERNETES_NAMESPACE
           value: nix
+        - name: RUNC_GUILE
+          value: /nix/store/g4xbhkf97vi6ahas661kf0jd6yskr12d-guile-3.0.10/bin/guile
