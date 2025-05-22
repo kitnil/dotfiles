@@ -1715,9 +1715,6 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                    (use-pam? #f)
                                    (extra-content "\
 Match Address 127.0.0.1
-PasswordAuthentication yes
-
-Match Address 192.168.0.144
 PasswordAuthentication yes")))
 
                          (service nfs-service-type
