@@ -79,7 +79,7 @@ code is non-zero; otherwise return #t."
                       args)))
      (define (git . args)
        (apply invoke-environment (append '("git") args)))
-     (system* "/usr/bin/env")
+     (invoke "/usr/bin/env")
      (and=> (getenv "HOME")
             (lambda (home)
               (let* ((commit (getenv "GIT_COMMIT"))
@@ -87,7 +87,7 @@ code is non-zero; otherwise return #t."
                       (string-append home "/.cache/wigust/checkouts"))
                      (workdir
                       (begin
-                        (system* "mkdir" "-p" checkouts)
+                        (invoke "mkdir" "-p" checkouts)
                         (mkdtemp
                          (string-append checkouts "/dotfiles.XXXXXXXXXX"))))
                      (password-store ".password-store"))
