@@ -38,7 +38,7 @@
               (lambda ()
                 (write
                  (list
-                  "/run/current-system/profile/bin/guile" "--no-auto-compile"
+                  (getenv "RUNC_GUILE") "--no-auto-compile"
                   "-c" ,(with-output-to-string
                           (lambda ()
                             (write expression))))))))))
@@ -113,6 +113,7 @@
               "--env" (string-append "GIT_COMMIT=" (getenv "GIT_COMMIT"))
               "--env" (string-append "RUNC_MAKE_TARGET="
                                      (getenv "RUNC_MAKE_TARGET"))
+              "--env" (string-append "RUNC_GUILE=" (getenv "RUNC_GUILE"))
               (getenv "RUNC_CONTAINER_ID")
               (getenv "RUNC_GUILE") "--no-auto-compile"
               "-c" ,(with-output-to-string
