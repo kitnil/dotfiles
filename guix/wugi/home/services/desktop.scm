@@ -121,6 +121,7 @@
                    #:environment-variables
                    (append '("WAYLAND_DISPLAY=wayland-1")
                            (environ))))
+         (respawn-delay 30)
          (stop #~(make-kill-destructor)))))
 
 (define home-wayvnc-service-type
