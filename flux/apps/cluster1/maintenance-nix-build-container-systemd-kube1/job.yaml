@@ -14,3 +14,9 @@ spec:
           value: 0d2145a16e36d2e3bba961fe2d702740bae6b505
         - name: RUNC_MAKE_TARGET
           value: "container-systemd-taskexecutor"
+        - name: RUNC_CONTAINER_ID
+          value: nix-builder
+        - name: KUBERNETES_POD_NAME
+          value: runc-kube1-nix-builder
+        - name: KUBERNETES_NAMESPACE
+          value: nix
