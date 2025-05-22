@@ -104,13 +104,11 @@ code is non-zero; otherwise return #t."
                  (git "submodule" "add" ,%git-password-store-url "dotfiles")
                  (chdir "..")
 
-                 (for-each (cut invoke-environment <>)
-                           `(("./bootstrap")
-                             ("./configure")
-                             ("make"
-                              ,(string-append "PASSWORD_STORE="
-                                              password-store)
-                              ,(getenv "RUNC_MAKE_TARGET"))))))))))
+                 (invoke-environment "./bootstrap")
+                 (invoke-environment "./configure")
+                 (invoke-environment
+                  "make" (string-append "PASSWORD_STORE=" password-store)
+                  ,(getenv "RUNC_MAKE_TARGET"))))))))
 
 (define kubectl
   "/home/oleg/.guix-profile")
