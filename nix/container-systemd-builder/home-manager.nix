@@ -34,6 +34,25 @@
 
   programs.home-manager.enable = true;
 
+  programs.gpg = {
+    enable = true;
+  };
+
+  services.gpg-agent = {
+    enable = true;
+    enableBashIntegration = true;
+    defaultCacheTtl = 172800;
+    defaultCacheTtlSsh = 172800;
+    maxCacheTtl = 172800;
+    maxCacheTtlSsh = 172800;
+    pinentry.package = pinentry-tty;
+    pinentry.program = "pinentry";
+    grabKeyboardAndMouse = false;
+    extraConfig = ''
+      allow-preset-passphrase
+    ''
+  };
+
   programs.ssh = {
     enable = true;
     extraConfig = ''
