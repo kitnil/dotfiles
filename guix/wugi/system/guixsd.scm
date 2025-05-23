@@ -93,6 +93,9 @@
   #:use-module (wugi utils package)
   #:export (%guixsd))
 
+(define %guixsd-private-ip-address
+  "192.168.0.144")
+
 (define (%firewall-program)
   (program-file
    "firewall"
@@ -162,10 +165,10 @@
         (iptables "-I" "INPUT" "-i" "br0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "4000" "-j" "ACCEPT")
         (iptables "-I" "INPUT" "-i" "eth0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "4000" "-j" "ACCEPT")
         ;; Accept qBittorrent API traffic.
-        (iptables "-I" "INPUT" "-p" "tcp" "--destination" #$(string-append %private-ip-address "/32") "--dport" "9091" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-p" "tcp" "--destination" #$(string-append %guixsd-private-ip-address "/32") "--dport" "9091" "-j" "ACCEPT")
         ;; Accept DNS traffic, which is required for Docker containers.
-        (iptables "-I" "INPUT" "-p" "tcp" "--destination" #$(string-append %private-ip-address "/32") "--dport" "53" "-j" "ACCEPT")
-        (iptables "-I" "INPUT" "-p" "udp" "--destination" #$(string-append %private-ip-address "/32") "--dport" "53" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-p" "tcp" "--destination" #$(string-append %guixsd-private-ip-address "/32") "--dport" "53" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-p" "udp" "--destination" #$(string-append %guixsd-private-ip-address "/32") "--dport" "53" "-j" "ACCEPT")
         ;; Accept traffic which originated from current computer.
         (iptables "-I" "INPUT" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")
         (ip6tables "-I" "INPUT" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")
@@ -186,7 +189,7 @@
         ;; From other machines:
         (iptables "-t" "nat" "-I" "PREROUTING" "-p" "tcp" "--destination" "141.80.181.40/32" "--dport" "443" "-j" "DNAT" "--to-destination" "127.0.0.1:889")
 
-        ;; Forward connections from %private-ip-address:6443 to
+        ;; Forward connections from %guixsd-private-ip-address:6443 to
         ;; 192.168.154.1:6443 for Kubernetes API on
         ;; Kubenav (Android application).
         ;;
@@ -194,8 +197,8 @@
         ;; linux - How to do the port forwarding from one
         ;; ip to another ip in same network? - Server
         ;; Fault
-        (iptables "-t" "nat" "-A" "PREROUTING" "-p" "tcp" #$(format #f "--destination ~a" %private-ip-address) "--dport" "6443" "-j" "DNAT" "--to-destination" "192.168.154.1:6443")
-        (iptables "-t" "nat" "-A" "POSTROUTING" "-p" "tcp" "-d" "192.168.154.1" "--dport" "6443" "-j" "SNAT" "--to-source" #$%private-ip-address)
+        (iptables "-t" "nat" "-A" "PREROUTING" "-p" "tcp" #$(format #f "--destination ~a" %guixsd-private-ip-address) "--dport" "6443" "-j" "DNAT" "--to-destination" "192.168.154.1:6443")
+        (iptables "-t" "nat" "-A" "POSTROUTING" "-p" "tcp" "-d" "192.168.154.1" "--dport" "6443" "-j" "SNAT" "--to-source" #$%guixsd-private-ip-address)
 
         ;; VLAN 154 provides:
         ;; - Network via Whonix
@@ -255,9 +258,6 @@
 (define (%guixsd)
   (define %home
     (passwd:dir (getpw "oleg")))
-
-  (define %private-ip-address
-    "192.168.0.144")
 
   (define %certbot-hosts
     (list "cgit.duckdns.org"
@@ -565,7 +565,7 @@ location / {
           (proxy "monitor.wugi.info" 8080)
           (proxy "guix.duckdns.org" 5556 #:ssl? #t)
           (proxy "kiwiirc.wugi.info" 8194 #:ssl? #t #:ssl-key? #t #:mtls? #t)
-          (proxy "prometheus.wugi.info" 9090 #:listen %private-ip-address)
+          (proxy "prometheus.wugi.info" 9090 #:listen %guixsd-private-ip-address)
           (proxy "guix.wugi.info" 5556 #:ssl? #t #:ssl-key? #t)
           ((lambda* (host #:key
                      (ssl? #f)
@@ -723,7 +723,7 @@ location / {
                                            #$(run-with-store (open-connection)
                                                (gexp->derivation "tftp-root" tftp-root)))
                             "--enable-tftp"
-                            #$(string-append "--server=" %private-ip-address)
+                            #$(string-append "--server=" %guixsd-private-ip-address)
                             "--no-resolv"
                             "--dhcp-option=option:domain-search,intr")))
             (respawn? #f)))))
@@ -1013,7 +1013,7 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
          (service knot-resolver-service-type
                   (knot-resolver-configuration
                    (kresd-config-file
-                    (generate-kresd-file %private-ip-address))))
+                    (generate-kresd-file %guixsd-private-ip-address))))
 
          (service openvpn-service-type %openvpn-configuration-majordomo.ru)
          (service openvpn-service-type %openvpn-configuration-wugi.info)
@@ -1717,7 +1717,7 @@ PasswordAuthentication yes")))
 
          (dovecot-service
           #:config (dovecot-configuration
-                    (listen (list "127.0.0.1" %private-ip-address))
+                    (listen (list "127.0.0.1" %guixsd-private-ip-address))
                     (disable-plaintext-auth? #f)
                     (mail-location
                      (string-append "maildir:~/Maildir"
@@ -1856,7 +1856,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 
          (service libvirt-service-type
                   (libvirt-configuration
-                   (listen-addr %private-ip-address)
+                   (listen-addr %guixsd-private-ip-address)
                    (listen-tcp? #t)
                    (auth-tcp "none")))
          (simple-service 'libvirt-qemu-config activation-service-type
