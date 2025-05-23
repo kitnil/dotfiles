@@ -11,6 +11,7 @@
     dtach
     git
     gnumake
+    guile
     strace
     viddy
   ];
