@@ -11,7 +11,7 @@ spec:
       - name: nsenter
         env:
         - name: GIT_COMMIT
-          value: dff7bba794533963b2471bd3f6d9d006fc0efe82
+          value: 45f70defb766a88cf6dcba2ecb4a821633ec995f
         - name: RUNC_MAKE_TARGET
           value: "runc-nix-builder-nixos-rebuild-switch-flake"
         - name: RUNC_CONTAINER_ID
@@ -21,4 +21,4 @@ spec:
         - name: KUBERNETES_NAMESPACE
           value: nix
         - name: RUNC_GUILE
-          value: /nix/store/g4xbhkf97vi6ahas661kf0jd6yskr12d-guile-3.0.10/bin/guile
+          value: /etc/profiles/per-user/oleg/bin/guile
