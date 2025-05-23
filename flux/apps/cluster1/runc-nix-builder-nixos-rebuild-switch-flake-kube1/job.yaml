@@ -11,7 +11,7 @@ spec:
       - name: nsenter
         env:
         - name: GIT_COMMIT
-          value: 45f70defb766a88cf6dcba2ecb4a821633ec995f
+          value: 24876124ae200dcde678743c83e0599eb82a43e6
         - name: RUNC_MAKE_TARGET
           value: "runc-nix-builder-nixos-rebuild-switch-flake"
         - name: RUNC_CONTAINER_ID
