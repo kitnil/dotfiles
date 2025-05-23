@@ -187,7 +187,7 @@ STATE_TO_VC_HOSTNAMES =				\
 
 guix_repository=$(HOME)/src/git.savannah.gnu.org/git/guix
 
-container_registry=harbor.corp1.majordomo.ru
+container_registry=harbor.home.wugi.info
 
 .ONESHELL:
 $(STATE_TO_VC_HOSTNAMES):
