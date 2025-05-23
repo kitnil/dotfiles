@@ -45,7 +45,7 @@
     defaultCacheTtlSsh = 172800;
     maxCacheTtl = 172800;
     maxCacheTtlSsh = 172800;
-    pinentryPackage = pkgs.pinentry-tty;
+    pinentryFlavor = pkgs.pinentry-tty;
     grabKeyboardAndMouse = false;
     extraConfig = ''
       allow-preset-passphrase
