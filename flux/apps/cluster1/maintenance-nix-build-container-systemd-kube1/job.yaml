@@ -11,7 +11,7 @@ spec:
       - name: nsenter
         env:
         - name: GIT_COMMIT
-          value: b49110376b5836595c475cf5dc176cc6f5f99590
+          value: 51c66f9337e8c413d244d6f7568c9221b44b17e3
         - name: RUNC_MAKE_TARGET
           value: "container-systemd-taskexecutor"
         - name: RUNC_CONTAINER_ID
@@ -21,4 +21,4 @@ spec:
         - name: KUBERNETES_NAMESPACE
           value: nix
         - name: RUNC_GUILE
-          value: /nix/store/g4xbhkf97vi6ahas661kf0jd6yskr12d-guile-3.0.10/bin/guile
+          value: /etc/profiles/per-user/oleg/bin/guile
