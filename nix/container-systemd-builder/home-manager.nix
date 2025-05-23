@@ -6,9 +6,12 @@
   manual.manpages.enable = false;
 
   home.packages = with pkgs; [
+    autoconf
+    automake
+    dtach
+    git
     gnumake
     strace
-    tmux
     viddy
   ];
 
