@@ -17,7 +17,8 @@
   #:use-module (guix build-system trivial)
   #:use-module (guix gexp)
   #:use-module (ice-9 match)
-  #:use-module (nonguix licenses))
+  #:use-module (nonguix licenses)
+  #:use-module (srfi srfi-26))
 
 (define linux-libre-deblob-scripts
   (@@ (gnu packages linux) linux-libre-deblob-scripts))
