@@ -13,6 +13,7 @@
   #:use-module (gnu packages dictionaries)
   #:use-module (gnu packages games)
   #:use-module (gnu packages gnupg)
+  #:use-module (gnu packages hardware)
   #:use-module (gnu packages golang-web)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages ncdu)
@@ -46,6 +47,7 @@
          bluez
          clipman
          curl
+         ddcutil
          dialog
          direnv
          dmenu
