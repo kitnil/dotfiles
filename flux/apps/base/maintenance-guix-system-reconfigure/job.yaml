@@ -40,7 +40,7 @@ spec:
           (define (host-code)
             `(begin
                (define (git . args)
-                 (apply system* (append '("guix" "shell" "git" "--" "git") args)))
+                 (apply system* "git" args))
                (system* "/usr/bin/env")
                (and=>
                 (getenv "HOME")
