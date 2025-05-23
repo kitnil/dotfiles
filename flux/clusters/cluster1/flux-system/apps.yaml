@@ -778,6 +778,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-workstation
+  suspend: true
   prune: true
   sourceRef:
     kind: GitRepository
@@ -988,6 +989,7 @@ spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/runc-nix-builder-nixos-rebuild-switch-flake-kube1
   prune: true
+  suspend: true
   sourceRef:
     kind: GitRepository
     name: flux-system
