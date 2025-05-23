@@ -924,402 +924,406 @@ location / {
         '("127.0.0.1 guixsd localhost home.wugi.info gitlab.wugi.info"
           "::1 guixsd localhost")))
 
-      (services (append (list
+      (services
+       (append
+        (list
 
-                         %lvm-thin
+         %lvm-thin
 
 
-                         ;; Allow desktop users to also mount NTFS and NFS file systems
-                         ;; without root.
-                         (simple-service 'mount-setuid-helpers setuid-program-service-type
-                                         (map (lambda (program)
-                                                (setuid-program
-                                                 (program program)))
-                                              (list (file-append nfs-utils "/sbin/mount.nfs"))))
+         ;; Allow desktop users to also mount NTFS and NFS file systems
+         ;; without root.
+         (simple-service 'mount-setuid-helpers setuid-program-service-type
+                         (map (lambda (program)
+                                (setuid-program
+                                 (program program)))
+                              (list
+                               (file-append nfs-utils "/sbin/mount.nfs"))))
 
-                         (service earlyoom-service-type
-                                  (earlyoom-configuration
-                                   (avoid-regexp "(^|/)(guix-daemon|Xorg|ssh)$")
-                                   (prefer-regexp "(^|/)(chrome|firefox)$")))
+         (service earlyoom-service-type
+                  (earlyoom-configuration
+                   (avoid-regexp "(^|/)(guix-daemon|Xorg|ssh)$")
+                   (prefer-regexp "(^|/)(chrome|firefox)$")))
 
-                         ;; Raise the maximum number of open file descriptors
-                         ;; that can be used.
-                         (pam-limits-service
-                          (list
-                           (pam-limits-entry "*" 'both 'nofile 100000)))
+         ;; Raise the maximum number of open file descriptors
+         ;; that can be used.
+         (pam-limits-service
+          (list
+           (pam-limits-entry "*" 'both 'nofile 100000)))
 
-                         ;; (service crowdsec-service-type)
-                         ;; (service crowdsec-firewall-bouncer-service-type)
+         ;; (service crowdsec-service-type)
+         ;; (service crowdsec-firewall-bouncer-service-type)
 
-                         (extra-special-file "/usr/bin/env"
-                                             (file-append coreutils "/bin/env"))
+         (extra-special-file "/usr/bin/env"
+                             (file-append coreutils "/bin/env"))
 
-                         ;; mount -t fuse and autofs
-                         (extra-special-file "/bin/sshfs"
-                                             (file-append sshfs "/bin/sshfs"))
-                         (extra-special-file
-                          "/bin/ssh"
-                          (file-append (@ (gnu packages ssh) openssh)
-                                       "/bin/ssh"))
+         ;; mount -t fuse and autofs
+         (extra-special-file "/bin/sshfs"
+                             (file-append sshfs "/bin/sshfs"))
+         (extra-special-file
+          "/bin/ssh"
+          (file-append (@ (gnu packages ssh) openssh)
+                       "/bin/ssh"))
 
-                         ;; for taskexecutor
-                         (extra-special-file "/bin/bash"
-                                             (file-append bash "/bin/bash"))
-                         ;; (extra-special-file "/bin/setquota")
+         ;; for taskexecutor
+         (extra-special-file "/bin/bash"
+                             (file-append bash "/bin/bash"))
+         ;; (extra-special-file "/bin/setquota")
 
-                         ;; “adb” and “fastboot” without root privileges
-                         (udev-rules-service 'android android-udev-rules
-                                             #:groups '("adbusers"))
+         ;; “adb” and “fastboot” without root privileges
+         (udev-rules-service 'android android-udev-rules
+                             #:groups '("adbusers"))
 
-                         (udev-rules-service 'kvm
-                                             (udev-rule
-                                              "91-kvm-custom.rules"
-                                              "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n"))
+         (udev-rules-service 'kvm
+                             (udev-rule
+                              "91-kvm-custom.rules"
+                              "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n"))
 
-                         (udev-rules-service 'wol
-                                             (file->udev-rule
-                                              "91-wol.rules"
-                                              (mixed-text-file "91-wol.rules" ;https://wiki.archlinux.org/index.php/Wake-on-LAN
-                                                               #~(string-join
-                                                                  (list "ACTION==\"add\""
-                                                                        "SUBSYSTEM==\"net\""
-                                                                        "NAME==\"enp*\""
-                                                                        (format #f "RUN+=\"~a/sbin/ethtool -s $name wol g\"~%" #$ethtool))))))
+         (udev-rules-service 'wol
+                             (file->udev-rule
+                              "91-wol.rules"
+                              (mixed-text-file
+                               "91-wol.rules" ;https://wiki.archlinux.org/index.php/Wake-on-LAN
+                               #~(string-join
+                                  (list "ACTION==\"add\""
+                                        "SUBSYSTEM==\"net\""
+                                        "NAME==\"enp*\""
+                                        (format #f "RUN+=\"~a/sbin/ethtool -s $name wol g\"~%" #$ethtool))))))
 
-                         (udev-rules-service 'kmonad kmonad)
+         (udev-rules-service 'kmonad kmonad)
 
-                         ;; (service singularity-service-type)
+         ;; (service singularity-service-type)
 
-                         (service ladspa-service-type
-                                  (ladspa-configuration (plugins (list swh-plugins))))
+         (service ladspa-service-type
+                  (ladspa-configuration (plugins (list swh-plugins))))
 
-                         (service alsa-service-type)
+         (service alsa-service-type)
 
-                         ;; TODO: Fix substituters
-                         (service nix-service-type
-                                  (nix-configuration
-                                   (extra-config '("\
+         ;; TODO: Fix substituters
+         (service nix-service-type
+                  (nix-configuration
+                   (extra-config '("\
 trusted-users = oleg root
 binary-caches = https://cache.nixos.org/
 trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
 "))))
 
-                         ;; nix-service
+         ;; nix-service
 
-                         (service knot-resolver-service-type
-                                  (knot-resolver-configuration
-                                   (kresd-config-file
-                                    (generate-kresd-file %private-ip-address))))
+         (service knot-resolver-service-type
+                  (knot-resolver-configuration
+                   (kresd-config-file
+                    (generate-kresd-file %private-ip-address))))
 
-                         (service openvpn-service-type %openvpn-configuration-majordomo.ru)
-                         (service openvpn-service-type %openvpn-configuration-wugi.info)
+         (service openvpn-service-type %openvpn-configuration-majordomo.ru)
+         (service openvpn-service-type %openvpn-configuration-wugi.info)
 
-                         (service ddcutil-daemon-service-type)
+         (service ddcutil-daemon-service-type)
 
-                         ;; TODO:
-                         ;; (openvpn-client-service
-                         ;;  #:config (openvpn-client-configuration
-                         ;;            ;; (dev 'tapvpn)
-                         ;;            (auth-user-pass "/etc/openvpn/login.conf")
-                         ;;            (remote (list
-                         ;;                     ;; 78.108.80.230
-                         ;;                     (openvpn-remote-configuration
-                         ;;                      (name "vpn-miran.majordomo.ru"))
-                         ;;                     ;; 78.108.91.250
-                         ;;                     (openvpn-remote-configuration
-                         ;;                      (name "vpn-dh.majordomo.ru"))
-                         ;;                     ;; 81.95.28.29
-                         ;;                     (openvpn-remote-configuration
-                         ;;                      (name "vpn-office.majordomo.ru"))))))
+         ;; TODO:
+         ;; (openvpn-client-service
+         ;;  #:config (openvpn-client-configuration
+         ;;            ;; (dev 'tapvpn)
+         ;;            (auth-user-pass "/etc/openvpn/login.conf")
+         ;;            (remote (list
+         ;;                     ;; 78.108.80.230
+         ;;                     (openvpn-remote-configuration
+         ;;                      (name "vpn-miran.majordomo.ru"))
+         ;;                     ;; 78.108.91.250
+         ;;                     (openvpn-remote-configuration
+         ;;                      (name "vpn-dh.majordomo.ru"))
+         ;;                     ;; 81.95.28.29
+         ;;                     (openvpn-remote-configuration
+         ;;                      (name "vpn-office.majordomo.ru"))))))
 
-                         ;; (service autofs-service-type
-                         ;;          (autofs-configuration
-                         ;;           (autofs (@ (deprecated) autofs))
-                         ;;           (mounts %autofs-mounts)))
+         ;; (service autofs-service-type
+         ;;          (autofs-configuration
+         ;;           (autofs (@ (deprecated) autofs))
+         ;;           (mounts %autofs-mounts)))
 
-                         ;; (service osquery-service-type)
+         ;; (service osquery-service-type)
 
-                         (service prometheus-lvm-exporter-service-type)
+         (service prometheus-lvm-exporter-service-type)
 
-                         ;; (service prometheus-restic-exporter-service-type
-                         ;;          (prometheus-restic-exporter-configuration
-                         ;;           (name "srv-backup-guixsd")
-                         ;;           (environment-variables
-                         ;;            (list
-                         ;;             (string-append
-                         ;;              "RESTIC_PASSWORD="
-                         ;;              (if (= (getuid) 0)
-                         ;;                  (with-input-from-file "/etc/guix/secrets/restic"
-                         ;;                    read-string)
-                         ;;                  "skipping /etc/guix/secrets/restic"))
-                         ;;             "RESTIC_REPOSITORY=/srv/backup/guixsd"
-                         ;;             "RESTIC_EXPORTER_PORT=8049"
-                         ;;             "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
+         ;; (service prometheus-restic-exporter-service-type
+         ;;          (prometheus-restic-exporter-configuration
+         ;;           (name "srv-backup-guixsd")
+         ;;           (environment-variables
+         ;;            (list
+         ;;             (string-append
+         ;;              "RESTIC_PASSWORD="
+         ;;              (if (= (getuid) 0)
+         ;;                  (with-input-from-file "/etc/guix/secrets/restic"
+         ;;                    read-string)
+         ;;                  "skipping /etc/guix/secrets/restic"))
+         ;;             "RESTIC_REPOSITORY=/srv/backup/guixsd"
+         ;;             "RESTIC_EXPORTER_PORT=8049"
+         ;;             "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
 
-                         ;; (service prometheus-restic-exporter-service-type
-                         ;;          (prometheus-restic-exporter-configuration
-                         ;;           (name "srv-backup-ubuntu")
-                         ;;           (environment-variables
-                         ;;            (list
-                         ;;             (string-append
-                         ;;              "RESTIC_PASSWORD="
-                         ;;              (if (= (getuid) 0)
-                         ;;                  (with-input-from-file "/etc/guix/secrets/restic"
-                         ;;                    read-string)
-                         ;;                  "skipping /etc/guix/secrets/restic"))
-                         ;;             "RESTIC_REPOSITORY=/srv/backup/ubuntu"
-                         ;;             "RESTIC_EXPORTER_PORT=8050"
-                         ;;             "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
+         ;; (service prometheus-restic-exporter-service-type
+         ;;          (prometheus-restic-exporter-configuration
+         ;;           (name "srv-backup-ubuntu")
+         ;;           (environment-variables
+         ;;            (list
+         ;;             (string-append
+         ;;              "RESTIC_PASSWORD="
+         ;;              (if (= (getuid) 0)
+         ;;                  (with-input-from-file "/etc/guix/secrets/restic"
+         ;;                    read-string)
+         ;;                  "skipping /etc/guix/secrets/restic"))
+         ;;             "RESTIC_REPOSITORY=/srv/backup/ubuntu"
+         ;;             "RESTIC_EXPORTER_PORT=8050"
+         ;;             "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
 
-                         ;; (service prometheus-restic-exporter-service-type
-                         ;;          (prometheus-restic-exporter-configuration
-                         ;;           (name "srv-backup-win10")
-                         ;;           (environment-variables
-                         ;;            (list
-                         ;;             (string-append
-                         ;;              "RESTIC_PASSWORD="
-                         ;;              (if (= (getuid) 0)
-                         ;;                  (with-input-from-file "/etc/guix/secrets/windows"
-                         ;;                    read-string)
-                         ;;                  "skipping /etc/guix/secrets/windows"))
-                         ;;             "RESTIC_REPOSITORY=/srv/backup/win10"
-                         ;;             "RESTIC_EXPORTER_PORT=8051"
-                         ;;             "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
+         ;; (service prometheus-restic-exporter-service-type
+         ;;          (prometheus-restic-exporter-configuration
+         ;;           (name "srv-backup-win10")
+         ;;           (environment-variables
+         ;;            (list
+         ;;             (string-append
+         ;;              "RESTIC_PASSWORD="
+         ;;              (if (= (getuid) 0)
+         ;;                  (with-input-from-file "/etc/guix/secrets/windows"
+         ;;                    read-string)
+         ;;                  "skipping /etc/guix/secrets/windows"))
+         ;;             "RESTIC_REPOSITORY=/srv/backup/win10"
+         ;;             "RESTIC_EXPORTER_PORT=8051"
+         ;;             "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
 
-                         ;; (service prometheus-restic-exporter-service-type
-                         ;;          (prometheus-restic-exporter-configuration
-                         ;;           (name "srv-backup-ntfsgames")
-                         ;;           (environment-variables
-                         ;;            (list
-                         ;;             (string-append
-                         ;;              "RESTIC_PASSWORD="
-                         ;;              (if (= (getuid) 0)
-                         ;;                  (with-input-from-file "/etc/guix/secrets/windows"
-                         ;;                    read-string)
-                         ;;                  "skipping /etc/guix/secrets/windows"))
-                         ;;             "RESTIC_REPOSITORY=/srv/backup/ntfsgames"
-                         ;;             "RESTIC_EXPORTER_PORT=8052"
-                         ;;             "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
+         ;; (service prometheus-restic-exporter-service-type
+         ;;          (prometheus-restic-exporter-configuration
+         ;;           (name "srv-backup-ntfsgames")
+         ;;           (environment-variables
+         ;;            (list
+         ;;             (string-append
+         ;;              "RESTIC_PASSWORD="
+         ;;              (if (= (getuid) 0)
+         ;;                  (with-input-from-file "/etc/guix/secrets/windows"
+         ;;                    read-string)
+         ;;                  "skipping /etc/guix/secrets/windows"))
+         ;;             "RESTIC_REPOSITORY=/srv/backup/ntfsgames"
+         ;;             "RESTIC_EXPORTER_PORT=8052"
+         ;;             "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
 
-                         (service prometheus-tp-link-exporter-service-type
-                                  (prometheus-tp-link-exporter-configuration
-                                   ;; XXX: Deprecated SSH client.
-                                   (ssh ((@ (wugi manifests deprecated) openssh)))
-                                   (host "192.168.0.1")
-                                   (environment-variables
-                                    (list
-                                     (string-append
-                                      "PROMETHEUS_TP_LINK_EXPORTER_PASSWORD="
-                                      (string-trim-right
-                                       (if (= (getuid) 0)
-                                           (with-input-from-file "/etc/guix/secrets/prometheus-tp-link-exporter"
-                                             read-string)
-                                           "skipping /etc/guix/secrets/prometheus-tp-link-exporter")))))))
+         (service prometheus-tp-link-exporter-service-type
+                  (prometheus-tp-link-exporter-configuration
+                   ;; XXX: Deprecated SSH client.
+                   (ssh ((@ (wugi manifests deprecated) openssh)))
+                   (host "192.168.0.1")
+                   (environment-variables
+                    (list
+                     (string-append
+                      "PROMETHEUS_TP_LINK_EXPORTER_PASSWORD="
+                      (string-trim-right
+                       (if (= (getuid) 0)
+                           (with-input-from-file "/etc/guix/secrets/prometheus-tp-link-exporter"
+                             read-string)
+                           "skipping /etc/guix/secrets/prometheus-tp-link-exporter")))))))
 
-                         ;; (service yggdrasil-service-type
-                         ;;          (yggdrasil-configuration
-                         ;;           (autoconf? #f)
-                         ;;           (json-config
-                         ;;            '(("NodeInfo" . null)
-                         ;;              ("NodeInfoPrivacy" . #f)
-                         ;;              ("IfMTU" . 65535)
-                         ;;              ("IfName" . "auto")
-                         ;;              ("AllowedPublicKeys" . #())
-                         ;;              ("MulticastInterfaces" . #((("Port" . 0)
-                         ;;                                          ("Listen" . #t)
-                         ;;                                          ("Beacon" . #t)
-                         ;;                                          ("Regex" . ".*"))))
-                         ;;              ("AdminListen" . "unix:///var/run/yggdrasil.sock")
-                         ;;              ("Listen" . #())
-                         ;;              ("InterfacePeers" . null)))))
+         ;; (service yggdrasil-service-type
+         ;;          (yggdrasil-configuration
+         ;;           (autoconf? #f)
+         ;;           (json-config
+         ;;            '(("NodeInfo" . null)
+         ;;              ("NodeInfoPrivacy" . #f)
+         ;;              ("IfMTU" . 65535)
+         ;;              ("IfName" . "auto")
+         ;;              ("AllowedPublicKeys" . #())
+         ;;              ("MulticastInterfaces" . #((("Port" . 0)
+         ;;                                          ("Listen" . #t)
+         ;;                                          ("Beacon" . #t)
+         ;;                                          ("Regex" . ".*"))))
+         ;;              ("AdminListen" . "unix:///var/run/yggdrasil.sock")
+         ;;              ("Listen" . #())
+         ;;              ("InterfacePeers" . null)))))
 
-                         (service prometheus-alertmanager-service-type
-                                  (prometheus-alertmanager-configuration
-                                   (requirement '(networking))
-                                   (listen-address "127.0.0.1:9093")
-                                   (prometheus-alertmanager "/home/oleg/.nix-profile/bin/alertmanager")
-                                   ;; (arguments '("--log.level=debug"))
-                                   (config-file
-                                    (computed-file
-                                     "prometheus-alertmanager.json"
-                                     (with-extensions (list guile-json-4)
-                                       (with-imported-modules (source-module-closure '((json builder)))
-                                         #~(begin
-                                             (use-modules (json builder)
-                                                          (ice-9 rdelim))
-                                             (define password
-                                               (string-trim-right
-                                                #$(if (= (getuid) 0)
-                                                      (with-input-from-file "/etc/prometheus-alertmanager/secrets"
-                                                        read-string)
-                                                      "skipping /etc/prometheus-alertmanager/secrets")))
-                                             (with-output-to-file #$output
-                                               (lambda ()
-                                                 (scm->json
-                                                  `(("global"
-                                                     ("smtp_smarthost" . "smtp.wugi.info:587")
-                                                     ("smtp_from" . "alertmanager@wugi.info")
-                                                     ("smtp_auth_username" . "alertmanager@wugi.info")
-                                                     ("smtp_auth_password" . ,password))
-                                                    ("route"
-                                                     ("receiver" . "smtp")
-                                                     ("group_by" . #("alertname" "datacenter" "app")))
-                                                    ("receivers"
-                                                     .
-                                                     #((("name" . "smtp")
-                                                        ("email_configs" .
-                                                         #((("to" . "alertmanager@wugi.info"))))))))
-                                                  #:pretty #t))))))))))
+         (service prometheus-alertmanager-service-type
+                  (prometheus-alertmanager-configuration
+                   (requirement '(networking))
+                   (listen-address "127.0.0.1:9093")
+                   (prometheus-alertmanager "/home/oleg/.nix-profile/bin/alertmanager")
+                   ;; (arguments '("--log.level=debug"))
+                   (config-file
+                    (computed-file
+                     "prometheus-alertmanager.json"
+                     (with-extensions (list guile-json-4)
+                       (with-imported-modules (source-module-closure '((json builder)))
+                         #~(begin
+                             (use-modules (json builder)
+                                          (ice-9 rdelim))
+                             (define password
+                               (string-trim-right
+                                #$(if (= (getuid) 0)
+                                      (with-input-from-file "/etc/prometheus-alertmanager/secrets"
+                                        read-string)
+                                      "skipping /etc/prometheus-alertmanager/secrets")))
+                             (with-output-to-file #$output
+                               (lambda ()
+                                 (scm->json
+                                  `(("global"
+                                     ("smtp_smarthost" . "smtp.wugi.info:587")
+                                     ("smtp_from" . "alertmanager@wugi.info")
+                                     ("smtp_auth_username" . "alertmanager@wugi.info")
+                                     ("smtp_auth_password" . ,password))
+                                    ("route"
+                                     ("receiver" . "smtp")
+                                     ("group_by" . #("alertname" "datacenter" "app")))
+                                    ("receivers"
+                                     .
+                                     #((("name" . "smtp")
+                                        ("email_configs" .
+                                         #((("to" . "alertmanager@wugi.info"))))))))
+                                  #:pretty #t))))))))))
 
-                         (service prometheus-blackbox-exporter-service-type
-                                  (prometheus-blackbox-exporter-configuration
-                                   (log-level "error")
-                                   (config-file
-                                    (computed-file
-                                     "prometheus-blackbox-exporter.json"
-                                     (with-extensions (list guile-json-4)
-                                       (with-imported-modules (source-module-closure '((json builder)))
-                                         #~(begin
-                                             (use-modules (json builder)
-                                                          (ice-9 rdelim))
-                                             (with-output-to-file #$output
-                                               (lambda ()
-                                                 (scm->json
-                                                  '(("modules"
-                                                     ("http_2xx"
-                                                      ("timeout" . "5s")
-                                                      ("prober" . "http")
-                                                      ("http"
-                                                       ("valid_status_codes" . #())
-                                                       ("valid_http_versions" . #("HTTP/1.1" "HTTP/2" "HTTP/2.0"))
-                                                       ("preferred_ip_protocol" . "ip4")
-                                                       ("no_follow_redirects" . #f)))
-                                                     ("icmp"
-                                                      ("timeout" . "5s")
-                                                      ("prober" . "icmp")
-                                                      ("icmp"
-                                                       ("preferred_ip_protocol" . "ip4")))
-                                                     ("smtp_starttls"
-                                                      ("timeout" . "20s")
-                                                      ("tcp"
-                                                       ("query_response"
-                                                        .
-                                                        #((("expect" . "^220 ([^ ]+) ESMTP (.+)$"))
-                                                          (("send" . "EHLO prober\r"))
-                                                          (("expect" . "^250-STARTTLS"))
-                                                          (("send" . "STARTTLS\r"))
-                                                          (("expect" . "^220"))
-                                                          (("starttls" . #t))
-                                                          (("send" . "EHLO prober\r"))
-                                                          (("expect" . "^250-AUTH"))
-                                                          (("send" . "QUIT\r")))))
-                                                      ("prober" . "tcp"))
-                                                     ("imap_starttls"
-                                                      ("timeout" . "10s")
-                                                      ("tcp"
-                                                       ("query_response"
-                                                        .
-                                                        #((("expect" . "OK.*STARTTLS"))
-                                                          (("send" . ". STARTTLS"))
-                                                          (("expect" . "OK"))
-                                                          (("starttls" . #t))
-                                                          (("send" . ". capability"))
-                                                          (("expect" . "CAPABILITY IMAP4rev1")))))
-                                                      ("prober" . "tcp"))
-                                                     ("dns_udp_mjru_wugi_info"
-                                                      ("timeout" . "5s")
-                                                      ("prober" . "dns")
-                                                      ("dns"
-                                                       ("validate_answer_rrs"
-                                                        ("fail_if_not_matches_regexp"
-                                                         .
-                                                         #("mjru.wugi.info.\t.*\tIN\tNS\tns[1-3]*.majordomo.ru.")))
-                                                       ("valid_rcodes" . #("NOERROR"))
-                                                       ("query_type" . "NS")
-                                                       ("query_name" . "mjru.wugi.info")))))
-                                                  #:pretty #t))))))))))
+         (service prometheus-blackbox-exporter-service-type
+                  (prometheus-blackbox-exporter-configuration
+                   (log-level "error")
+                   (config-file
+                    (computed-file
+                     "prometheus-blackbox-exporter.json"
+                     (with-extensions (list guile-json-4)
+                       (with-imported-modules (source-module-closure '((json builder)))
+                         #~(begin
+                             (use-modules (json builder)
+                                          (ice-9 rdelim))
+                             (with-output-to-file #$output
+                               (lambda ()
+                                 (scm->json
+                                  '(("modules"
+                                     ("http_2xx"
+                                      ("timeout" . "5s")
+                                      ("prober" . "http")
+                                      ("http"
+                                       ("valid_status_codes" . #())
+                                       ("valid_http_versions" . #("HTTP/1.1" "HTTP/2" "HTTP/2.0"))
+                                       ("preferred_ip_protocol" . "ip4")
+                                       ("no_follow_redirects" . #f)))
+                                     ("icmp"
+                                      ("timeout" . "5s")
+                                      ("prober" . "icmp")
+                                      ("icmp"
+                                       ("preferred_ip_protocol" . "ip4")))
+                                     ("smtp_starttls"
+                                      ("timeout" . "20s")
+                                      ("tcp"
+                                       ("query_response"
+                                        .
+                                        #((("expect" . "^220 ([^ ]+) ESMTP (.+)$"))
+                                          (("send" . "EHLO prober\r"))
+                                          (("expect" . "^250-STARTTLS"))
+                                          (("send" . "STARTTLS\r"))
+                                          (("expect" . "^220"))
+                                          (("starttls" . #t))
+                                          (("send" . "EHLO prober\r"))
+                                          (("expect" . "^250-AUTH"))
+                                          (("send" . "QUIT\r")))))
+                                      ("prober" . "tcp"))
+                                     ("imap_starttls"
+                                      ("timeout" . "10s")
+                                      ("tcp"
+                                       ("query_response"
+                                        .
+                                        #((("expect" . "OK.*STARTTLS"))
+                                          (("send" . ". STARTTLS"))
+                                          (("expect" . "OK"))
+                                          (("starttls" . #t))
+                                          (("send" . ". capability"))
+                                          (("expect" . "CAPABILITY IMAP4rev1")))))
+                                      ("prober" . "tcp"))
+                                     ("dns_udp_mjru_wugi_info"
+                                      ("timeout" . "5s")
+                                      ("prober" . "dns")
+                                      ("dns"
+                                       ("validate_answer_rrs"
+                                        ("fail_if_not_matches_regexp"
+                                         .
+                                         #("mjru.wugi.info.\t.*\tIN\tNS\tns[1-3]*.majordomo.ru.")))
+                                       ("valid_rcodes" . #("NOERROR"))
+                                       ("query_type" . "NS")
+                                       ("query_name" . "mjru.wugi.info")))))
+                                  #:pretty #t))))))))))
 
-                         (service prometheus-smartctl-exporter-service-type
-                                  (prometheus-smartctl-exporter-configuration
-                                   (arguments
-                                    '("--web.listen-address=0.0.0.0:9633"
-                                      "--smartctl.path=/run/current-system/profile/sbin/smartctl"
-                                      "--smartctl.device=/dev/sda"
-                                      "--smartctl.device=/dev/sdb"
-                                      "--smartctl.device=/dev/sdc"
-                                      "--smartctl.device=/dev/sdd"
-                                      "--smartctl.device=/dev/nvme0"))))
+         (service prometheus-smartctl-exporter-service-type
+                  (prometheus-smartctl-exporter-configuration
+                   (arguments
+                    '("--web.listen-address=0.0.0.0:9633"
+                      "--smartctl.path=/run/current-system/profile/sbin/smartctl"
+                      "--smartctl.device=/dev/sda"
+                      "--smartctl.device=/dev/sdb"
+                      "--smartctl.device=/dev/sdc"
+                      "--smartctl.device=/dev/sdd"
+                      "--smartctl.device=/dev/nvme0"))))
 
-                         ;; (service prometheus-shepherd-exporter-service-type)
+         ;; (service prometheus-shepherd-exporter-service-type)
 
-                         (service prometheus-pushgateway-service-type
-                                  (prometheus-pushgateway-configuration
-                                   (listen-address "0.0.0.0:9095")
-                                   (prometheus-pushgateway "/home/oleg/.nix-profile/bin/pushgateway")))
+         (service prometheus-pushgateway-service-type
+                  (prometheus-pushgateway-configuration
+                   (listen-address "0.0.0.0:9095")
+                   (prometheus-pushgateway "/home/oleg/.nix-profile/bin/pushgateway")))
 
-                         (service prometheus-dnsmasq-service-type
-                                  (prometheus-dnsmasq-configuration
-                                   (prometheus-dnsmasq "/home/oleg/.nix-profile/bin/dnsmasq_exporter")))
+         (service prometheus-dnsmasq-service-type
+                  (prometheus-dnsmasq-configuration
+                   (prometheus-dnsmasq "/home/oleg/.nix-profile/bin/dnsmasq_exporter")))
 
-                         (service openssh-service-type
-                                  (openssh-configuration
-                                   (authorized-keys
-                                    `(("jenkins" ,(local-file
-                                                   (string-append
-                                                    %distro-directory
-                                                    "/dotfiles/guixsd/ssh/id_rsa_jenkins.wugi.info.pub")))))
-                                   (x11-forwarding? #t)
-                                   (gateway-ports? 'client)
-                                   (permit-root-login 'prohibit-password)
-                                   (password-authentication? #f)
-                                   (use-pam? #f)
-                                   (extra-content "\
+         (service openssh-service-type
+                  (openssh-configuration
+                   (authorized-keys
+                    `(("jenkins" ,(local-file
+                                   (string-append
+                                    %distro-directory
+                                    "/dotfiles/guixsd/ssh/id_rsa_jenkins.wugi.info.pub")))))
+                   (x11-forwarding? #t)
+                   (gateway-ports? 'client)
+                   (permit-root-login 'prohibit-password)
+                   (password-authentication? #f)
+                   (use-pam? #f)
+                   (extra-content "\
 Match Address 127.0.0.1
 PasswordAuthentication yes")))
 
-                         (service nfs-service-type
-                                  (nfs-configuration
-                                   (exports
-                                    '(("/srv"
-                                       "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=0)")
-                                      ("/home/oleg/src"
-                                       "192.168.0.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=2)")
-                                      ("/srv/vagrant"
-                                       "192.168.0.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=3)")
-                                      ("/srv/lib/video"
-                                       "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=4)")))))
+         (service nfs-service-type
+                  (nfs-configuration
+                   (exports
+                    '(("/srv"
+                       "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=0)")
+                      ("/home/oleg/src"
+                       "192.168.0.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=2)")
+                      ("/srv/vagrant"
+                       "192.168.0.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=3)")
+                      ("/srv/lib/video"
+                       "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=4)")))))
 
-                         ;; (service (certbot-service-type-custom-nginx "192.168.0.144")
-                         ;;          (certbot-configuration
-                         ;;           (email "go.wigust@gmail.com")
-                         ;;           (certificates
-                         ;;            `(,@(map (lambda (host)
-                         ;;                       (certificate-configuration
-                         ;;                        (domains (list host))
-                         ;;                        (deploy-hook %nginx-deploy-hook)))
-                         ;;                     %certbot-hosts)))))
+         ;; (service (certbot-service-type-custom-nginx "192.168.0.144")
+         ;;          (certbot-configuration
+         ;;           (email "go.wigust@gmail.com")
+         ;;           (certificates
+         ;;            `(,@(map (lambda (host)
+         ;;                       (certificate-configuration
+         ;;                        (domains (list host))
+         ;;                        (deploy-hook %nginx-deploy-hook)))
+         ;;                     %certbot-hosts)))))
 
-                         (service nginx-service-type
-                                  (nginx-configuration
-                                   (global-directives
-                                    `((events . ()) ;default-value
-                                      (include . ,(run-with-store (open-connection)
-                                                    (lower-object
-                                                     (local-file
-                                                      (string-append %distro-directory "/dotfiles/guixsd/etc/nginx/stream.conf")))))))
-                                   (server-blocks %nginx-server-blocks)
-                                   (upstream-blocks
-                                    (list
-                                     (nginx-upstream-configuration
-                                      (name "docker-registry")
-                                      (servers '("127.0.0.1:5000")))
-                                     (nginx-upstream-configuration
-                                      (name "socat-ci-guix-gnu-onion")
-                                      (servers '("127.0.0.1:81")))
-                                     (nginx-upstream-configuration
-                                      (name "socat-mirror-sentries-org")
-                                      (servers '("127.0.0.1:82")))))
-                                   (extra-content "\
+         (service nginx-service-type
+                  (nginx-configuration
+                   (global-directives
+                    `((events . ()) ;default-value
+                      (include . ,(run-with-store (open-connection)
+                                    (lower-object
+                                     (local-file
+                                      (string-append %distro-directory "/dotfiles/guixsd/etc/nginx/stream.conf")))))))
+                   (server-blocks %nginx-server-blocks)
+                   (upstream-blocks
+                    (list
+                     (nginx-upstream-configuration
+                      (name "docker-registry")
+                      (servers '("127.0.0.1:5000")))
+                     (nginx-upstream-configuration
+                      (name "socat-ci-guix-gnu-onion")
+                      (servers '("127.0.0.1:81")))
+                     (nginx-upstream-configuration
+                      (name "socat-mirror-sentries-org")
+                      (servers '("127.0.0.1:82")))))
+                   (extra-content "\
   ## Set a variable to help us decide if we need to add the
   ## 'Docker-Distribution-Api-Version' header.
   ## The registry always sets this header.
@@ -1330,537 +1334,537 @@ PasswordAuthentication yes")))
   }
 ")))
 
-                         (service gitolite-service-type
-                                  (gitolite-configuration
-                                   (admin-pubkey
-                                    (local-file
-                                     (string-append
-                                      %distro-directory
-                                      "/dotfiles/guixsd/ssh/id_rsa_guixsd.pub")))))
+         (service gitolite-service-type
+                  (gitolite-configuration
+                   (admin-pubkey
+                    (local-file
+                     (string-append
+                      %distro-directory
+                      "/dotfiles/guixsd/ssh/id_rsa_guixsd.pub")))))
 
-                         (service cgit-service-type
-                                  (cgit-configuration
-                                   (branch-sort "age")
-                                   (enable-commit-graph? #t)
-                                   (enable-follow-links? #t)
-                                   (enable-index-links? #t)
-                                   (enable-log-filecount? #t)
-                                   (enable-log-linecount? #t)
-                                   (enable-remote-branches? #t)
-                                   (enable-subject-links? #t)
-                                   (remove-suffix? #t)
-                                   (enable-index-owner? #f)
-                                   (root-title "Personal Cgit")
-                                   (snapshots (list "tar.gz"))
-                                   (clone-prefix (list ;; "git://magnolia.local/~natsu"
-                                                  "https://cgit.duckdns.org/git"))
-                                   (nginx (list (nginx-server-configuration
-                                                 (inherit %cgit-configuration-nginx)
-                                                 (server-name '("cgit.wugi.info"
-                                                                "cgit.duckdns.org"
-                                                                "git.tld"))
-                                                 (locations
-                                                  (append (nginx-server-configuration-locations %cgit-configuration-nginx)
-                                                          (list (git-http-nginx-location-configuration
-                                                                 (git-http-configuration
-                                                                  (export-all? #t)))
-                                                                (nginx-location-configuration
-                                                                 (uri "/.well-known")
-                                                                 (body '("root /var/www;"))))))
-                                                 (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
-                                                 (ssl-certificate (letsencrypt-certificate "cgit.wugi.info"))
-                                                 (ssl-certificate-key (letsencrypt-key "cgit.wugi.info")))))))
+         (service cgit-service-type
+                  (cgit-configuration
+                   (branch-sort "age")
+                   (enable-commit-graph? #t)
+                   (enable-follow-links? #t)
+                   (enable-index-links? #t)
+                   (enable-log-filecount? #t)
+                   (enable-log-linecount? #t)
+                   (enable-remote-branches? #t)
+                   (enable-subject-links? #t)
+                   (remove-suffix? #t)
+                   (enable-index-owner? #f)
+                   (root-title "Personal Cgit")
+                   (snapshots (list "tar.gz"))
+                   (clone-prefix (list ;; "git://magnolia.local/~natsu"
+                                  "https://cgit.duckdns.org/git"))
+                   (nginx (list (nginx-server-configuration
+                                 (inherit %cgit-configuration-nginx)
+                                 (server-name '("cgit.wugi.info"
+                                                "cgit.duckdns.org"
+                                                "git.tld"))
+                                 (locations
+                                  (append (nginx-server-configuration-locations %cgit-configuration-nginx)
+                                          (list (git-http-nginx-location-configuration
+                                                 (git-http-configuration
+                                                  (export-all? #t)))
+                                                (nginx-location-configuration
+                                                 (uri "/.well-known")
+                                                 (body '("root /var/www;"))))))
+                                 (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
+                                 (ssl-certificate (letsencrypt-certificate "cgit.wugi.info"))
+                                 (ssl-certificate-key (letsencrypt-key "cgit.wugi.info")))))))
 
-                         (service bird-service-type
-                                  (bird-configuration
-                                   (config-file
-                                    (local-file
-                                     (string-append
-                                      %distro-directory
-                                      "/dotfiles/guixsd/bird-wugi.info.conf")))))
+         (service bird-service-type
+                  (bird-configuration
+                   (config-file
+                    (local-file
+                     (string-append
+                      %distro-directory
+                      "/dotfiles/guixsd/bird-wugi.info.conf")))))
 
-                         ;; TODO: Move those services.
+         ;; TODO: Move those services.
 
-                         ;; Jun 19 17:51:38 guixsd postgres[27613]: [1-1]
-                         ;; 2022-06-19 14:51:38.225 GMT [27613] FATAL:
-                         ;; database files are incompatible with server
-                         ;;
-                         ;; Jun 19 17:51:38 guixsd postgres[27613]: [1-2]
-                         ;; 2022-06-19 14:51:38.225 GMT [27613] DETAIL: The
-                         ;; data directory was initialized by PostgreSQL
-                         ;; version 13, which is not compatible with this
-                         ;; version 14.3.
-                         ;;
-                         ;; (postgresql-service
-                         ;;                           #:config-file (postgresql-config-file
-                         ;;                                          (hba-file
-                         ;;                                           (plain-file "pg_hba.conf"
-                         ;;                                                       "
-                         ;; local       all     all                     trust
-                         ;; host        all     all     127.0.0.1/32    trust
-                         ;; host        all     all     ::1/128         trust
-                         ;; host        all     all     172.16.0.0/12   trust
-                         ;; host        all     all     192.168.64.0/20   trust"))
-                         ;;                                          (extra-config
-                         ;;                                           `(("listen_addresses"
-                         ;;                                              ,(string-join '("127.0.0.1"
-                         ;;                                                              "192.168.0.144"
-                         ;;                                                              "172.18.0.1")
-                         ;;                                                            ","))))))
+         ;; Jun 19 17:51:38 guixsd postgres[27613]: [1-1]
+         ;; 2022-06-19 14:51:38.225 GMT [27613] FATAL:
+         ;; database files are incompatible with server
+         ;;
+         ;; Jun 19 17:51:38 guixsd postgres[27613]: [1-2]
+         ;; 2022-06-19 14:51:38.225 GMT [27613] DETAIL: The
+         ;; data directory was initialized by PostgreSQL
+         ;; version 13, which is not compatible with this
+         ;; version 14.3.
+         ;;
+         ;; (postgresql-service
+         ;;                           #:config-file (postgresql-config-file
+         ;;                                          (hba-file
+         ;;                                           (plain-file "pg_hba.conf"
+         ;;                                                       "
+         ;; local       all     all                     trust
+         ;; host        all     all     127.0.0.1/32    trust
+         ;; host        all     all     ::1/128         trust
+         ;; host        all     all     172.16.0.0/12   trust
+         ;; host        all     all     192.168.64.0/20   trust"))
+         ;;                                          (extra-config
+         ;;                                           `(("listen_addresses"
+         ;;                                              ,(string-join '("127.0.0.1"
+         ;;                                                              "192.168.0.144"
+         ;;                                                              "172.18.0.1")
+         ;;                                                            ","))))))
 
-                         ;; (service mongodb-service-type)
+         ;; (service mongodb-service-type)
 
-                         (service php-fpm-service-type
-                                  (php-fpm-configuration
-                                   (timezone "Europe/Moscow")))
+         (service php-fpm-service-type
+                  (php-fpm-configuration
+                   (timezone "Europe/Moscow")))
 
-                         (service jenkins-service-type %jenkins-config)
+         (service jenkins-service-type %jenkins-config)
 
-                         ;; (service docker-compose-service-type
-                         ;;          (docker-compose-configuration
-                         ;;           (project-name "registry")
-                         ;;           (compose-file
-                         ;;            (computed-file
-                         ;;             "docker-compose-registry.json"
-                         ;;             (with-extensions (list guile-json-4)
-                         ;;               (with-imported-modules (source-module-closure '((json builder)))
-                         ;;                 #~(begin
-                         ;;                     (use-modules (json builder))
-                         ;;                     (with-output-to-file #$output
-                         ;;                       (lambda ()
-                         ;;                         (scm->json
-                         ;;                          `(("version" . "2.1")
-                         ;;                            ("services"
-                         ;;                             ("registry"
-                         ;;                              ("volumes" . #("/srv/lib/docker/registry:/var/lib/registry"))
-                         ;;                              ("network_mode" . "host")
-                         ;;                              ("image" . "registry:2")
-                         ;;                              ("container_name" . "registry"))))))))))))))
+         ;; (service docker-compose-service-type
+         ;;          (docker-compose-configuration
+         ;;           (project-name "registry")
+         ;;           (compose-file
+         ;;            (computed-file
+         ;;             "docker-compose-registry.json"
+         ;;             (with-extensions (list guile-json-4)
+         ;;               (with-imported-modules (source-module-closure '((json builder)))
+         ;;                 #~(begin
+         ;;                     (use-modules (json builder))
+         ;;                     (with-output-to-file #$output
+         ;;                       (lambda ()
+         ;;                         (scm->json
+         ;;                          `(("version" . "2.1")
+         ;;                            ("services"
+         ;;                             ("registry"
+         ;;                              ("volumes" . #("/srv/lib/docker/registry:/var/lib/registry"))
+         ;;                              ("network_mode" . "host")
+         ;;                              ("image" . "registry:2")
+         ;;                              ("container_name" . "registry"))))))))))))))
 
-                         ;; (service docker-compose-service-type
-                         ;;          (docker-compose-configuration
-                         ;;           (project-name "bittorrent")
-                         ;;           (compose-file
-                         ;;            (computed-file
-                         ;;             "docker-compose-bittorrent.json"
-                         ;;             (with-extensions (list guile-json-4)
-                         ;;               (with-imported-modules (source-module-closure '((json builder)))
-                         ;;                 #~(begin
-                         ;;                     (use-modules (json builder))
-                         ;;                     (with-output-to-file #$output
-                         ;;                       (lambda ()
-                         ;;                         (scm->json
-                         ;;                          `(("version" . "2.1")
-                         ;;                            ("services"
-                         ;;                             #$docker-compose-radarr-service
-                         ;;                             #$docker-compose-jackett-service))))))))))))
+         ;; (service docker-compose-service-type
+         ;;          (docker-compose-configuration
+         ;;           (project-name "bittorrent")
+         ;;           (compose-file
+         ;;            (computed-file
+         ;;             "docker-compose-bittorrent.json"
+         ;;             (with-extensions (list guile-json-4)
+         ;;               (with-imported-modules (source-module-closure '((json builder)))
+         ;;                 #~(begin
+         ;;                     (use-modules (json builder))
+         ;;                     (with-output-to-file #$output
+         ;;                       (lambda ()
+         ;;                         (scm->json
+         ;;                          `(("version" . "2.1")
+         ;;                            ("services"
+         ;;                             #$docker-compose-radarr-service
+         ;;                             #$docker-compose-jackett-service))))))))))))
 
-                         ;; (service restic-rest-service-type
-                         ;;          (restic-rest-configuration
-                         ;;           (restic-rest "/home/oleg/.nix-profile/bin/rest-server")
-                         ;;           (listen-address "127.0.0.1:6050")
-                         ;;           (data-path "/srv/restic")
-                         ;;           (authentication? #f)
-                         ;;           (prometheus? #t)))
+         ;; (service restic-rest-service-type
+         ;;          (restic-rest-configuration
+         ;;           (restic-rest "/home/oleg/.nix-profile/bin/rest-server")
+         ;;           (listen-address "127.0.0.1:6050")
+         ;;           (data-path "/srv/restic")
+         ;;           (authentication? #f)
+         ;;           (prometheus? #t)))
 
-                         (simple-service
-                          'socat-ci-guix-gnu-org shepherd-root-service-type
-                          (list (shepherd-service
-                                 (provision '(socat-ci-guix-gnu-org))
-                                 (requirement '())
-                                 (start #~(make-forkexec-constructor
-                                           (list #$(file-append socat "/bin/socat")
-                                                 "tcp4-LISTEN:81,reuseaddr,fork,keepalive,bind=127.0.0.1"
-                                                 "SOCKS4A:tor.home:4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion:443,socksport=9150")))
-                                 (respawn? #f))))
+         (simple-service
+          'socat-ci-guix-gnu-org shepherd-root-service-type
+          (list (shepherd-service
+                 (provision '(socat-ci-guix-gnu-org))
+                 (requirement '())
+                 (start #~(make-forkexec-constructor
+                           (list #$(file-append socat "/bin/socat")
+                                 "tcp4-LISTEN:81,reuseaddr,fork,keepalive,bind=127.0.0.1"
+                                 "SOCKS4A:tor.home:4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion:443,socksport=9150")))
+                 (respawn? #f))))
 
-                         (simple-service
-                          'socat-mirror-sentries-org shepherd-root-service-type
-                          (list (shepherd-service
-                                 (provision '(socat-mirror-sentries-org))
-                                 (requirement '())
-                                 (start #~(make-forkexec-constructor
-                                           (list #$(file-append socat "/bin/socat")
-                                                 "tcp4-LISTEN:82,reuseaddr,fork,keepalive,bind=127.0.0.1"
-                                                 "SOCKS4A:10.0.0.101:mirror.sentries.org:443,socksport=9050")))
-                                 (respawn? #f))))
+         (simple-service
+          'socat-mirror-sentries-org shepherd-root-service-type
+          (list (shepherd-service
+                 (provision '(socat-mirror-sentries-org))
+                 (requirement '())
+                 (start #~(make-forkexec-constructor
+                           (list #$(file-append socat "/bin/socat")
+                                 "tcp4-LISTEN:82,reuseaddr,fork,keepalive,bind=127.0.0.1"
+                                 "SOCKS4A:10.0.0.101:mirror.sentries.org:443,socksport=9050")))
+                 (respawn? #f))))
 
-                         (service syncthing-service-type
-                                  (syncthing-configuration (user "oleg")))
+         (service syncthing-service-type
+                  (syncthing-configuration (user "oleg")))
 
-                         (service containerd-service-type)
-                         ;; docker-kiwiirc-service
+         (service containerd-service-type)
+         ;; docker-kiwiirc-service
 
-                         ;; (service docker-compose-service-type
-                         ;;          (docker-compose-configuration
-                         ;;           (project-name "opensearch")
-                         ;;           (requirement '(openvpn-majordomo.ru))
-                         ;;           (respawn? #t) ;TODO: Fix OpenVPN race condition.
-                         ;;           (compose-file
-                         ;;            (computed-file
-                         ;;             "docker-compose-opensearch.json"
-                         ;;             (with-extensions (list guile-json-4)
-                         ;;               (with-imported-modules (source-module-closure '((json builder)))
-                         ;;                 #~(begin
-                         ;;                     (use-modules (json builder)
-                         ;;                                  (ice-9 rdelim))
-                         ;;                     (define filebeat-config
-                         ;;                       #$(plain-file "filebeat.json"
-                         ;;                          (scm->json-string
-                         ;;                           `(("filebeat"
-                         ;;                              ("modules" .
-                         ;;                               #((("module" . "nginx")
-                         ;;                                  ("error"
-                         ;;                                   ("var.paths" . #("/mnt/log/nginx/error.log"))
-                         ;;                                   ("enabled" . #t))
-                         ;;                                  ("access"
-                         ;;                                   ("var.paths" . #("/mnt/log/nginx/access.log"))
-                         ;;                                   ("enabled" . #t)))
-                         ;;                                 (("syslog"
-                         ;;                                   ("var.paths" . #("/mnt/log/messages"))
-                         ;;                                   ("var.convert_timezone" . #t)
-                         ;;                                   ("enabled" . #t))
-                         ;;                                  ("module" . "system")
-                         ;;                                  ("auth"
-                         ;;                                   ("var.paths" . #("/mnt/log/secure"))
-                         ;;                                   ("enabled" . #t)))))
-                         ;;                              ("inputs" .
-                         ;;                               #((("type" . "log")
-                         ;;                                  ("paths" . #("/mnt/log/**/*.log"))
-                         ;;                                  ("enabled" . #t))
-                         ;;                                 (("type" . "log")
-                         ;;                                  ("paths" . #("/home/oleg/.local/var/log/*.log"))
-                         ;;                                  ("enabled" . #t))
-                         ;;                                 (("type" . "log")
-                         ;;                                  ("paths" . #("/home/oleg/.local/var/log/**/*.log"))
-                         ;;                                  ("enabled" . #t))
-                         ;;                                 (("type" . "log")
-                         ;;                                  ("paths" . #("/home/oleg/.local/share/qBittorrent/logs/qbittorrent.log"))
-                         ;;                                  ("enabled" . #t))
-                         ;;                                 (("type" . "log")
-                         ;;                                  ("paths" . #("/var/lib/docker/containers/**/*.log"))
-                         ;;                                  ("enabled" . #t)))))
-                         ;;                             ("output"
-                         ;;                              ("elasticsearch"
-                         ;;                               ("hosts" . #("https://node-0.example.com:9200"))
-                         ;;                               ("allow_older_versions" . #t)
-                         ;;                               ("ssl"
-                         ;;                                ("certificate_authorities" . #("/etc/client/ca.pem"))
-                         ;;                                ("certificate" . "/etc/client/cert.pem")
-                         ;;                                ("key" . "/etc/client/cert.key"))))))))
-                         ;;                     (with-output-to-file #$output
-                         ;;                       (lambda ()
-                         ;;                         (scm->json
-                         ;;                          `(("version" . "3")
-                         ;;                            ("services"
-                         ;;                             ("opensearch-node1"
-                         ;;                              ("volumes" . #("/var/lib/opensearch:/usr/share/opensearch/data"
-                         ;;                                             "/etc/opensearch:/usr/share/opensearch/config"
-                         ;;                                             ;; "/etc/opensearch/pki/root-ca.pem:/usr/share/opensearch/config/root-ca.pem:ro"
-                         ;;                                             ;; "/etc/opensearch/pki/node1.pem:/usr/share/opensearch/config/esnode.pem:ro"
-                         ;;                                             ;; "/etc/opensearch/pki/node1-key.pem:/usr/share/opensearch/config/esnode-key.pem:ro"
-                         ;;                                             ;; "/etc/opensearch/pki/admin.pem:/usr/share/opensearch/config/kirk.pem:ro"
-                         ;;                                             ;; "/etc/opensearch/pki/admin-key.pem:/usr/share/opensearch/config/kirk-key.pem:ro"
-                         ;;                                             ;; "/etc/opensearch/pki/opensearch.keystore:/usr/share/opensearch/config/opensearch.keystore:ro"
-                         ;;                                             ))
-                         ;;                              ("ulimits"
-                         ;;                               ("nofile"
-                         ;;                                ("soft" . 65536)
-                         ;;                                ("hard" . 65536))
-                         ;;                               ("memlock"
-                         ;;                                ("soft" . -1)
-                         ;;                                ("hard" . -1)))
-                         ;;                              ("ports" . #("192.168.25.3:9200:9200"
-                         ;;                                           "192.168.25.3:9600:9600"))
-                         ;;                              ("image" . "opensearchproject/opensearch:1.2.4")
-                         ;;                              ("environment" . #("cluster.name=opensearch-cluster"
-                         ;;                                                 "node.name=opensearch-node1"
-                         ;;                                                 "discovery.seed_hosts=opensearch-node1"
-                         ;;                                                 "cluster.initial_master_nodes=opensearch-node1"
-                         ;;                                                 "bootstrap.memory_lock=true"
-                         ;;                                                 "OPENSEARCH_JAVA_OPTS=-Xms2048m -Xmx2048m"
-                         ;;                                                 "compatibility.override_main_response_version=true"))
-                         ;;                              ("container_name" . "opensearch-node1"))
-                         ;;                             ("opensearch-dashboards"
-                         ;;                              ("ports" . #("127.0.0.1:5601:5601"))
-                         ;;                              ("image" . "opensearchproject/opensearch-dashboards:1.2.0")
-                         ;;                              ("expose" . #("5601"))
-                         ;;                              ("environment"
-                         ;;                               ("OPENSEARCH_HOSTS" . "[\"https://opensearch-node1:9200\"]"))
-                         ;;                              ("container_name" . "opensearch-dashboards"))
-                         ;;                             ("filebeat"
-                         ;;                              ("volumes"
-                         ;;                               .
-                         ;;                               ,(vector (string-append filebeat-config ":/usr/share/filebeat/filebeat.yml:ro")
-                         ;;                                        "/var/log:/mnt/log:ro"
-                         ;;                                        "/home/oleg/.local/var/log:/home/oleg/.local/var/log:ro"
-                         ;;                                        "/home/oleg/.local/share/qBittorrent/logs:/home/oleg/.local/share/qBittorrent/logs:ro"
-                         ;;                                        "/var/lib/docker/containers:/var/lib/docker/containers:ro"
-                         ;;                                        "/etc/localtime:/etc/localtime:ro"
-                         ;;                                        "/etc/opensearch/root-ca.pem:/etc/client/ca.pem:ro"
-                         ;;                                        "/etc/opensearch/kirk.pem:/etc/client/cert.pem:ro"
-                         ;;                                        "/etc/opensearch/kirk-key.pem:/etc/client/cert.key:ro"))
-                         ;;                              ("image" . "docker-registry.wugi.info/monitoring/filebeat-oss:7.12.1")
-                         ;;                              ("hostname" . "guixsd")
-                         ;;                              ("network_mode" . "host")
-                         ;;                              ("environment"
-                         ;;                               ("name" . "guixsd"))
-                         ;;                              ("user" . "0:0")
-                         ;;                              ("depends_on" . #("opensearch-node1"))
-                         ;;                              ("command" . "filebeat -e -strict.perms=false"))))))))))))))
+         ;; (service docker-compose-service-type
+         ;;          (docker-compose-configuration
+         ;;           (project-name "opensearch")
+         ;;           (requirement '(openvpn-majordomo.ru))
+         ;;           (respawn? #t) ;TODO: Fix OpenVPN race condition.
+         ;;           (compose-file
+         ;;            (computed-file
+         ;;             "docker-compose-opensearch.json"
+         ;;             (with-extensions (list guile-json-4)
+         ;;               (with-imported-modules (source-module-closure '((json builder)))
+         ;;                 #~(begin
+         ;;                     (use-modules (json builder)
+         ;;                                  (ice-9 rdelim))
+         ;;                     (define filebeat-config
+         ;;                       #$(plain-file "filebeat.json"
+         ;;                          (scm->json-string
+         ;;                           `(("filebeat"
+         ;;                              ("modules" .
+         ;;                               #((("module" . "nginx")
+         ;;                                  ("error"
+         ;;                                   ("var.paths" . #("/mnt/log/nginx/error.log"))
+         ;;                                   ("enabled" . #t))
+         ;;                                  ("access"
+         ;;                                   ("var.paths" . #("/mnt/log/nginx/access.log"))
+         ;;                                   ("enabled" . #t)))
+         ;;                                 (("syslog"
+         ;;                                   ("var.paths" . #("/mnt/log/messages"))
+         ;;                                   ("var.convert_timezone" . #t)
+         ;;                                   ("enabled" . #t))
+         ;;                                  ("module" . "system")
+         ;;                                  ("auth"
+         ;;                                   ("var.paths" . #("/mnt/log/secure"))
+         ;;                                   ("enabled" . #t)))))
+         ;;                              ("inputs" .
+         ;;                               #((("type" . "log")
+         ;;                                  ("paths" . #("/mnt/log/**/*.log"))
+         ;;                                  ("enabled" . #t))
+         ;;                                 (("type" . "log")
+         ;;                                  ("paths" . #("/home/oleg/.local/var/log/*.log"))
+         ;;                                  ("enabled" . #t))
+         ;;                                 (("type" . "log")
+         ;;                                  ("paths" . #("/home/oleg/.local/var/log/**/*.log"))
+         ;;                                  ("enabled" . #t))
+         ;;                                 (("type" . "log")
+         ;;                                  ("paths" . #("/home/oleg/.local/share/qBittorrent/logs/qbittorrent.log"))
+         ;;                                  ("enabled" . #t))
+         ;;                                 (("type" . "log")
+         ;;                                  ("paths" . #("/var/lib/docker/containers/**/*.log"))
+         ;;                                  ("enabled" . #t)))))
+         ;;                             ("output"
+         ;;                              ("elasticsearch"
+         ;;                               ("hosts" . #("https://node-0.example.com:9200"))
+         ;;                               ("allow_older_versions" . #t)
+         ;;                               ("ssl"
+         ;;                                ("certificate_authorities" . #("/etc/client/ca.pem"))
+         ;;                                ("certificate" . "/etc/client/cert.pem")
+         ;;                                ("key" . "/etc/client/cert.key"))))))))
+         ;;                     (with-output-to-file #$output
+         ;;                       (lambda ()
+         ;;                         (scm->json
+         ;;                          `(("version" . "3")
+         ;;                            ("services"
+         ;;                             ("opensearch-node1"
+         ;;                              ("volumes" . #("/var/lib/opensearch:/usr/share/opensearch/data"
+         ;;                                             "/etc/opensearch:/usr/share/opensearch/config"
+         ;;                                             ;; "/etc/opensearch/pki/root-ca.pem:/usr/share/opensearch/config/root-ca.pem:ro"
+         ;;                                             ;; "/etc/opensearch/pki/node1.pem:/usr/share/opensearch/config/esnode.pem:ro"
+         ;;                                             ;; "/etc/opensearch/pki/node1-key.pem:/usr/share/opensearch/config/esnode-key.pem:ro"
+         ;;                                             ;; "/etc/opensearch/pki/admin.pem:/usr/share/opensearch/config/kirk.pem:ro"
+         ;;                                             ;; "/etc/opensearch/pki/admin-key.pem:/usr/share/opensearch/config/kirk-key.pem:ro"
+         ;;                                             ;; "/etc/opensearch/pki/opensearch.keystore:/usr/share/opensearch/config/opensearch.keystore:ro"
+         ;;                                             ))
+         ;;                              ("ulimits"
+         ;;                               ("nofile"
+         ;;                                ("soft" . 65536)
+         ;;                                ("hard" . 65536))
+         ;;                               ("memlock"
+         ;;                                ("soft" . -1)
+         ;;                                ("hard" . -1)))
+         ;;                              ("ports" . #("192.168.25.3:9200:9200"
+         ;;                                           "192.168.25.3:9600:9600"))
+         ;;                              ("image" . "opensearchproject/opensearch:1.2.4")
+         ;;                              ("environment" . #("cluster.name=opensearch-cluster"
+         ;;                                                 "node.name=opensearch-node1"
+         ;;                                                 "discovery.seed_hosts=opensearch-node1"
+         ;;                                                 "cluster.initial_master_nodes=opensearch-node1"
+         ;;                                                 "bootstrap.memory_lock=true"
+         ;;                                                 "OPENSEARCH_JAVA_OPTS=-Xms2048m -Xmx2048m"
+         ;;                                                 "compatibility.override_main_response_version=true"))
+         ;;                              ("container_name" . "opensearch-node1"))
+         ;;                             ("opensearch-dashboards"
+         ;;                              ("ports" . #("127.0.0.1:5601:5601"))
+         ;;                              ("image" . "opensearchproject/opensearch-dashboards:1.2.0")
+         ;;                              ("expose" . #("5601"))
+         ;;                              ("environment"
+         ;;                               ("OPENSEARCH_HOSTS" . "[\"https://opensearch-node1:9200\"]"))
+         ;;                              ("container_name" . "opensearch-dashboards"))
+         ;;                             ("filebeat"
+         ;;                              ("volumes"
+         ;;                               .
+         ;;                               ,(vector (string-append filebeat-config ":/usr/share/filebeat/filebeat.yml:ro")
+         ;;                                        "/var/log:/mnt/log:ro"
+         ;;                                        "/home/oleg/.local/var/log:/home/oleg/.local/var/log:ro"
+         ;;                                        "/home/oleg/.local/share/qBittorrent/logs:/home/oleg/.local/share/qBittorrent/logs:ro"
+         ;;                                        "/var/lib/docker/containers:/var/lib/docker/containers:ro"
+         ;;                                        "/etc/localtime:/etc/localtime:ro"
+         ;;                                        "/etc/opensearch/root-ca.pem:/etc/client/ca.pem:ro"
+         ;;                                        "/etc/opensearch/kirk.pem:/etc/client/cert.pem:ro"
+         ;;                                        "/etc/opensearch/kirk-key.pem:/etc/client/cert.key:ro"))
+         ;;                              ("image" . "docker-registry.wugi.info/monitoring/filebeat-oss:7.12.1")
+         ;;                              ("hostname" . "guixsd")
+         ;;                              ("network_mode" . "host")
+         ;;                              ("environment"
+         ;;                               ("name" . "guixsd"))
+         ;;                              ("user" . "0:0")
+         ;;                              ("depends_on" . #("opensearch-node1"))
+         ;;                              ("command" . "filebeat -e -strict.perms=false"))))))))))))))
 
-                         ;; (service fatrace-service-type
-                         ;;          (fatrace-configuration
-                         ;;           (arguments '("--current-mount"))
-                         ;;           (directory "/srv")))
+         ;; (service fatrace-service-type
+         ;;          (fatrace-configuration
+         ;;           (arguments '("--current-mount"))
+         ;;           (directory "/srv")))
 
-                         ;; (service docker-compose-service-type
-                         ;;          (docker-compose-configuration
-                         ;;           (project-name "samba")
-                         ;;           (compose-file
-                         ;;            (computed-file
-                         ;;             "docker-compose-samba.json"
-                         ;;             (with-extensions (list guile-json-4)
-                         ;;               (with-imported-modules (source-module-closure '((json builder)))
-                         ;;                 #~(begin
-                         ;;                     (use-modules (json builder)
-                         ;;                                  (ice-9 rdelim))
-                         ;;                     (define password
-                         ;;                       (string-trim-right
-                         ;;                        #$(if (= (getuid) 0)
-                         ;;                              (with-input-from-file "/etc/guix/secrets/smb"
-                         ;;                                read-string)
-                         ;;                              "skipping /etc/guix/secrets/smb")))
-                         ;;                     (with-output-to-file #$output
-                         ;;                       (lambda ()
-                         ;;                         (scm->json
-                         ;;                          `(("services"
-                         ;;                             ("samba"
-                         ;;                              ("volumes" . #("/srv/lib:/public"))
-                         ;;                              ("ports"
-                         ;;                               .
-                         ;;                               #("192.168.154.1:139:139"
-                         ;;                                 "192.168.154.1:445:445"))
-                         ;;                              ("image" . "dperson/samba")
-                         ;;                              ("environment"
-                         ;;                               .
-                         ;;                               #("TZ=Europe/Moscow"
-                         ;;                                 "WORKGROUP=workgroup"
-                         ;;                                 "USERID=1000"
-                         ;;                                 "GROUPID=998"))
-                         ;;                              ("container_name" . "samba")
-                         ;;                              ("command"
-                         ;;                               .
-                         ;;                               ,(string-append
-                         ;;                                 "-u \"vagrant;"
-                         ;;                                 password
-                         ;;                                 "\" -s \"media;/share;yes;no;no;workgroup\" -s \"public;/public;yes;no;yes\""
-                         ;;                                 " -g \"acl allow execute always = True\"")))))))))))))))
+         ;; (service docker-compose-service-type
+         ;;          (docker-compose-configuration
+         ;;           (project-name "samba")
+         ;;           (compose-file
+         ;;            (computed-file
+         ;;             "docker-compose-samba.json"
+         ;;             (with-extensions (list guile-json-4)
+         ;;               (with-imported-modules (source-module-closure '((json builder)))
+         ;;                 #~(begin
+         ;;                     (use-modules (json builder)
+         ;;                                  (ice-9 rdelim))
+         ;;                     (define password
+         ;;                       (string-trim-right
+         ;;                        #$(if (= (getuid) 0)
+         ;;                              (with-input-from-file "/etc/guix/secrets/smb"
+         ;;                                read-string)
+         ;;                              "skipping /etc/guix/secrets/smb")))
+         ;;                     (with-output-to-file #$output
+         ;;                       (lambda ()
+         ;;                         (scm->json
+         ;;                          `(("services"
+         ;;                             ("samba"
+         ;;                              ("volumes" . #("/srv/lib:/public"))
+         ;;                              ("ports"
+         ;;                               .
+         ;;                               #("192.168.154.1:139:139"
+         ;;                                 "192.168.154.1:445:445"))
+         ;;                              ("image" . "dperson/samba")
+         ;;                              ("environment"
+         ;;                               .
+         ;;                               #("TZ=Europe/Moscow"
+         ;;                                 "WORKGROUP=workgroup"
+         ;;                                 "USERID=1000"
+         ;;                                 "GROUPID=998"))
+         ;;                              ("container_name" . "samba")
+         ;;                              ("command"
+         ;;                               .
+         ;;                               ,(string-append
+         ;;                                 "-u \"vagrant;"
+         ;;                                 password
+         ;;                                 "\" -s \"media;/share;yes;no;no;workgroup\" -s \"public;/public;yes;no;yes\""
+         ;;                                 " -g \"acl allow execute always = True\"")))))))))))))))
 
-                         (service kubelet-service-type
-                                  (kubelet-configuration
-                                   (kubelet "/nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet")
-                                   (arguments
-                                    '("--address=192.168.0.144"
-                                      "--node-ip=192.168.0.144"
-                                      "--authentication-token-webhook"
-                                      "--authentication-token-webhook-cache-ttl=10s"
-                                      "--authorization-mode=Webhook"
-                                      "--client-ca-file=/etc/kubernetes/pki/ca.pem"
-                                      "--cluster-dns=10.8.255.254"
-                                      "--cluster-domain=cluster.local"
-                                      "--hairpin-mode=hairpin-veth"
-                                      "--healthz-bind-address=127.0.0.1"
-                                      "--healthz-port=10248"
-                                      "--hostname-override=kube1"
-                                      "--kubeconfig=/home/oleg/.local/share/chezmoi/dotfiles/kubernetes/kubeconfig"
-                                      "--pod-infra-container-image=pause"
-                                      "--port=10250"
-                                      "--register-node=true"
-                                      "--register-with-taints=unschedulable=true:NoSchedule"
-                                      "--root-dir=/var/lib/kubelet"
-                                      "--tls-cert-file=/etc/kubernetes/pki/kubelet-client-kube1.pem"
-                                      "--tls-private-key-file=/etc/kubernetes/pki/kubelet-client-kube1-key.pem"
-                                      "--container-runtime=remote"
-                                      "--container-runtime-endpoint=unix:///run/containerd/containerd.sock"
-                                      "--fail-swap-on=false"
-                                      "--eviction-hard=nodefs.available<10Gi,nodefs.inodesFree<1000000,imagefs.available<10Gi,imagefs.inodesFree<1000000"
-                                      "--image-gc-high-threshold=95"
-                                      "--image-gc-low-threshold=90"
-                                      "--pod-manifest-path=/etc/kubernetes/manifests"
-                                      "--max-pods=200"))
-                                   (drbd? #t)
-                                   (hpvolumes? #t)
-                                   (cilium? #t)
-                                   (flux? #t)
-                                   (kubevirt? #t)))
+         (service kubelet-service-type
+                  (kubelet-configuration
+                   (kubelet "/nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet")
+                   (arguments
+                    '("--address=192.168.0.144"
+                      "--node-ip=192.168.0.144"
+                      "--authentication-token-webhook"
+                      "--authentication-token-webhook-cache-ttl=10s"
+                      "--authorization-mode=Webhook"
+                      "--client-ca-file=/etc/kubernetes/pki/ca.pem"
+                      "--cluster-dns=10.8.255.254"
+                      "--cluster-domain=cluster.local"
+                      "--hairpin-mode=hairpin-veth"
+                      "--healthz-bind-address=127.0.0.1"
+                      "--healthz-port=10248"
+                      "--hostname-override=kube1"
+                      "--kubeconfig=/home/oleg/.local/share/chezmoi/dotfiles/kubernetes/kubeconfig"
+                      "--pod-infra-container-image=pause"
+                      "--port=10250"
+                      "--register-node=true"
+                      "--register-with-taints=unschedulable=true:NoSchedule"
+                      "--root-dir=/var/lib/kubelet"
+                      "--tls-cert-file=/etc/kubernetes/pki/kubelet-client-kube1.pem"
+                      "--tls-private-key-file=/etc/kubernetes/pki/kubelet-client-kube1-key.pem"
+                      "--container-runtime=remote"
+                      "--container-runtime-endpoint=unix:///run/containerd/containerd.sock"
+                      "--fail-swap-on=false"
+                      "--eviction-hard=nodefs.available<10Gi,nodefs.inodesFree<1000000,imagefs.available<10Gi,imagefs.inodesFree<1000000"
+                      "--image-gc-high-threshold=95"
+                      "--image-gc-low-threshold=90"
+                      "--pod-manifest-path=/etc/kubernetes/manifests"
+                      "--max-pods=200"))
+                   (drbd? #t)
+                   (hpvolumes? #t)
+                   (cilium? #t)
+                   (flux? #t)
+                   (kubevirt? #t)))
 
-                         ;; (service prometheus-node-exporter-service-type
-                         ;;          (prometheus-node-exporter-configuration
-                         ;;           (web-listen-address "127.0.0.1:9100")
-                         ;;           (textfile-directory "/var/lib/prometheus-node-exporter")
-                         ;;           (extra-options '("--collector.processes"))))
+         ;; (service prometheus-node-exporter-service-type
+         ;;          (prometheus-node-exporter-configuration
+         ;;           (web-listen-address "127.0.0.1:9100")
+         ;;           (textfile-directory "/var/lib/prometheus-node-exporter")
+         ;;           (extra-options '("--collector.processes"))))
 
-                         ;; (service runc-service-type
-                         ;;          (runc-configuration
-                         ;;           (name "guix-builder")
-                         ;;           (directory "/srv/runc/guix-builder")))
+         ;; (service runc-service-type
+         ;;          (runc-configuration
+         ;;           (name "guix-builder")
+         ;;           (directory "/srv/runc/guix-builder")))
 
-                         ;; (service runc-service-type
-                         ;;          (runc-configuration
-                         ;;           (name "nix-builder")
-                         ;;           (directory "/srv/runc/nix-builder")))
+         ;; (service runc-service-type
+         ;;          (runc-configuration
+         ;;           (name "nix-builder")
+         ;;           (directory "/srv/runc/nix-builder")))
 
-                         (dovecot-service
-                          #:config (dovecot-configuration
-                                    (listen (list "127.0.0.1" %private-ip-address))
-                                    (disable-plaintext-auth? #f)
-                                    (mail-location
-                                     (string-append "maildir:~/Maildir"
-                                                    ":INBOX=~/Maildir/INBOX"
-                                                    ":LAYOUT=fs"))))
+         (dovecot-service
+          #:config (dovecot-configuration
+                    (listen (list "127.0.0.1" %private-ip-address))
+                    (disable-plaintext-auth? #f)
+                    (mail-location
+                     (string-append "maildir:~/Maildir"
+                                    ":INBOX=~/Maildir/INBOX"
+                                    ":LAYOUT=fs"))))
 
-                         (service guix-publish-service-type
-                                  (guix-publish-configuration
-                                   (host "0.0.0.0")
-                                   (port 5556)
-                                   (ttl (* 90 24 3600))))
+         (service guix-publish-service-type
+                  (guix-publish-configuration
+                   (host "0.0.0.0")
+                   (port 5556)
+                   (ttl (* 90 24 3600))))
 
-                         (service webssh-service-type
-                                  (webssh-configuration (address "127.0.0.1")
-                                                        (port 8888)
-                                                        (policy 'reject)
-                                                        (known-hosts '("\
+         (service webssh-service-type
+                  (webssh-configuration (address "127.0.0.1")
+                                        (port 8888)
+                                        (policy 'reject)
+                                        (known-hosts '("\
 localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="
-                                                                       "\
+                                                       "\
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="))))
 
-                         (service kernel-module-loader-service-type
-                                  '(;; "vfio-pci"
-                                    ;; "amdgpu"
-                                    "dm-snapshot"
-                                    "dm-thin-pool"
-                                    "br_netfilter" ;kube-dns
-                                    ;; "drbd9"
-                                    ;; "ddcci_backlight"
+         (service kernel-module-loader-service-type
+                  '(;; "vfio-pci"
+                    ;; "amdgpu"
+                    "dm-snapshot"
+                    "dm-thin-pool"
+                    "br_netfilter" ;kube-dns
+                    ;; "drbd9"
+                    ;; "ddcci_backlight"
 
-                                    ;; Required for Cilium CNI.
-                                    "ip_tables"
-                                    "xt_socket"
-                                    "iptable_nat"
-                                    "iptable_mangle"
-                                    "iptable_raw"
-                                    "iptable_filter"))
+                    ;; Required for Cilium CNI.
+                    "ip_tables"
+                    "xt_socket"
+                    "iptable_nat"
+                    "iptable_mangle"
+                    "iptable_raw"
+                    "iptable_filter"))
 
-                         ;; (service vault-service-type
-                         ;;          (vault-configuration
-                         ;;           (config-file
-                         ;;            (computed-file
-                         ;;             "vault.json"
-                         ;;             (with-extensions (list guile-json-4)
-                         ;;               (with-imported-modules (source-module-closure '((json builder)))
-                         ;;                 #~(begin
-                         ;;                     (use-modules (json builder))
-                         ;;                     (with-output-to-file #$output
-                         ;;                       (lambda ()
-                         ;;                         (scm->json
-                         ;;                          '(("ui" . #t)
-                         ;;                            ("telemetry"
-                         ;;                             .
-                         ;;                             #((("prometheus_retention_time" . "30s")
-                         ;;                                ("disable_hostname" . #t))))
-                         ;;                            ("storage"
-                         ;;                             ("raft"
-                         ;;                              ;; ("retry_join"
-                         ;;                              ;;  .
-                         ;;                              ;;  #((("leader_api_addr" . "http://vault2:8220"))
-                         ;;                              ;;    (("leader_api_addr" . "http://vault3:8230"))))
-                         ;;                              ("path" . "/var/lib/vault/data")
-                         ;;                              ("node_id" . "vault1")))
-                         ;;                            ("listener"
-                         ;;                             ("tcp"
-                         ;;                              ("tls_disable" . #t)
-                         ;;                              ("telemetry"
-                         ;;                               ("unauthenticated_metrics_access" . #t))
-                         ;;                              ("address" . "127.0.0.1:8210")))
-                         ;;                            ("disable_mlock" . #t)
-                         ;;                            ("cluster_addr" . "http://vault1:8211")
-                         ;;                            ("api_addr" . "http://vault1:8210"))))))))))))
+         ;; (service vault-service-type
+         ;;          (vault-configuration
+         ;;           (config-file
+         ;;            (computed-file
+         ;;             "vault.json"
+         ;;             (with-extensions (list guile-json-4)
+         ;;               (with-imported-modules (source-module-closure '((json builder)))
+         ;;                 #~(begin
+         ;;                     (use-modules (json builder))
+         ;;                     (with-output-to-file #$output
+         ;;                       (lambda ()
+         ;;                         (scm->json
+         ;;                          '(("ui" . #t)
+         ;;                            ("telemetry"
+         ;;                             .
+         ;;                             #((("prometheus_retention_time" . "30s")
+         ;;                                ("disable_hostname" . #t))))
+         ;;                            ("storage"
+         ;;                             ("raft"
+         ;;                              ;; ("retry_join"
+         ;;                              ;;  .
+         ;;                              ;;  #((("leader_api_addr" . "http://vault2:8220"))
+         ;;                              ;;    (("leader_api_addr" . "http://vault3:8230"))))
+         ;;                              ("path" . "/var/lib/vault/data")
+         ;;                              ("node_id" . "vault1")))
+         ;;                            ("listener"
+         ;;                             ("tcp"
+         ;;                              ("tls_disable" . #t)
+         ;;                              ("telemetry"
+         ;;                               ("unauthenticated_metrics_access" . #t))
+         ;;                              ("address" . "127.0.0.1:8210")))
+         ;;                            ("disable_mlock" . #t)
+         ;;                            ("cluster_addr" . "http://vault1:8211")
+         ;;                            ("api_addr" . "http://vault1:8210"))))))))))))
 
-                         %firewall-service
+         %firewall-service
 
-                         ;; Bring eth0 up and pass it to the networking bridge.
-                         (service static-networking-service-type
-                                  (list
-                                   (static-networking
-                                    (provision '(eth0))
-                                    (addresses (list
-                                                (network-address
-                                                 (device "eth0")
-                                                 (value "127.0.0.2/8")))))
-                                   (static-networking
-                                    (provision '(br0-link))
-                                    (links (list
-                                            (network-link
-                                             (name "br0")
-                                             (type 'bridge)
-                                             (arguments '()))))
-                                    (addresses '()))
-                                   (static-networking
-                                    (provision '(br0))
-                                    (requirement '(br0-link))
-                                    (addresses (list
-                                                (network-address
-                                                 (device "br0")
-                                                 (value "192.168.0.144/24"))))
-                                    (routes
-                                     (list (network-route
-                                            (destination "default")
-                                            (gateway "192.168.0.1"))))
-                                    (name-servers '("192.168.0.144"
+         ;; Bring eth0 up and pass it to the networking bridge.
+         (service static-networking-service-type
+                  (list
+                   (static-networking
+                    (provision '(eth0))
+                    (addresses (list
+                                (network-address
+                                 (device "eth0")
+                                 (value "127.0.0.2/8")))))
+                   (static-networking
+                    (provision '(br0-link))
+                    (links (list
+                            (network-link
+                             (name "br0")
+                             (type 'bridge)
+                             (arguments '()))))
+                    (addresses '()))
+                   (static-networking
+                    (provision '(br0))
+                    (requirement '(br0-link))
+                    (addresses (list
+                                (network-address
+                                 (device "br0")
+                                 (value "192.168.0.144/24"))))
+                    (routes
+                     (list (network-route
+                            (destination "default")
+                            (gateway "192.168.0.1"))))
+                    (name-servers '("192.168.0.144"
 
-                                                    ;; local Docker
-                                                    ;; "172.17.0.1"
+                                    ;; local Docker
+                                    ;; "172.17.0.1"
 
-                                                    ;; Google
-                                                    ;; "8.8.8.8"
-                                                    ;; "8.8.4.4"
-                                                    )))
-                                   (static-networking
-                                    (provision '(networking))
-                                    (requirement '(eth0 br0))
-                                    (links (list
-                                            (network-link
-                                             (name "eth0")
-                                             (arguments '((master . "br0"))))))
-                                    (addresses '()))))
+                                    ;; Google
+                                    ;; "8.8.8.8"
+                                    ;; "8.8.4.4"
+                                    )))
+                   (static-networking
+                    (provision '(networking))
+                    (requirement '(eth0 br0))
+                    (links (list
+                            (network-link
+                             (name "eth0")
+                             (arguments '((master . "br0"))))))
+                    (addresses '()))))
 
-                         ;; %dnsmasq-lo
+         ;; %dnsmasq-lo
 
-                         ;; %dnsmasq-br154
+         ;; %dnsmasq-br154
 
-                         ;; TODO: Use system service after adding all required flags.
-                         ;; (service dnsmasq-service-type
-                         ;;          (dnsmasq-configuration
-                         ;;           (listen-addresses '("192.168.154.1"))
-                         ;;           ;; TODO: Replace port with --bind-interfaces
-                         ;;           (port 0)))
+         ;; TODO: Use system service after adding all required flags.
+         ;; (service dnsmasq-service-type
+         ;;          (dnsmasq-configuration
+         ;;           (listen-addresses '("192.168.154.1"))
+         ;;           ;; TODO: Replace port with --bind-interfaces
+         ;;           (port 0)))
 
-                         ;; %dnsmasq-br156
+         ;; %dnsmasq-br156
 
-                         (service avahi-service-type)
+         (service avahi-service-type)
 
-                         (service libvirt-service-type
-                                  (libvirt-configuration
-                                   (listen-addr %private-ip-address)
-                                   (listen-tcp? #t)
-                                   (auth-tcp "none")))
-                         (simple-service 'libvirt-qemu-config activation-service-type
-                                         #~(begin
-                                             (when (file-exists? "/etc/libvirt")
-                                               (with-output-to-file "/etc/libvirt/qemu.conf"
-                                                 (lambda ()
-                                                   (display "\
+         (service libvirt-service-type
+                  (libvirt-configuration
+                   (listen-addr %private-ip-address)
+                   (listen-tcp? #t)
+                   (auth-tcp "none")))
+         (simple-service 'libvirt-qemu-config activation-service-type
+                         #~(begin
+                             (when (file-exists? "/etc/libvirt")
+                               (with-output-to-file "/etc/libvirt/qemu.conf"
+                                 (lambda ()
+                                   (display "\
 user = \"oleg\"
 
 nvram = [
@@ -1870,66 +1874,66 @@ nvram = [
 namespaces = [ ]
 "))))))
 
-                         (service virtlog-service-type
-                                  (virtlog-configuration
-                                   (max-clients 1000)))
+         (service virtlog-service-type
+                  (virtlog-configuration
+                   (max-clients 1000)))
 
-                         ;; (service virtual-machine-service-type
-                         ;;          (virtual-machine
-                         ;;           (name "win10")))
+         ;; (service virtual-machine-service-type
+         ;;          (virtual-machine
+         ;;           (name "win10")))
 
-                         ;; (service virtual-machine-service-type
-                         ;;          (virtual-machine
-                         ;;           (name "win2022")))
+         ;; (service virtual-machine-service-type
+         ;;          (virtual-machine
+         ;;           (name "win2022")))
 
-                         (service ipset-service-type)
+         (service ipset-service-type)
 
-                         (bluetooth-service #:auto-enable? #t)
+         (bluetooth-service #:auto-enable? #t)
 
-                         seatd-service
+         seatd-service
 
-                         (simple-service 'container-guix-networking-avahi shepherd-root-service-type
-                                         (list
-                                          (shepherd-service
-                                           (provision '(container-guix-networking-avahi))
-                                           (auto-start? #f)
-                                           (documentation "Configure networking for avahi.")
-                                           (requirement '())
-                                           (start #~(make-forkexec-constructor
-                                                     (list #$container-guix-networking-avahi-program)))
-                                           (respawn? #f)
-                                           (stop #~(make-kill-destructor)))))
+         (simple-service 'container-guix-networking-avahi shepherd-root-service-type
+                         (list
+                          (shepherd-service
+                           (provision '(container-guix-networking-avahi))
+                           (auto-start? #f)
+                           (documentation "Configure networking for avahi.")
+                           (requirement '())
+                           (start #~(make-forkexec-constructor
+                                     (list #$container-guix-networking-avahi-program)))
+                           (respawn? #f)
+                           (stop #~(make-kill-destructor)))))
 
-                         (udisks-service)
-                         (service accountsservice-service-type)
-                         (service colord-service-type)
-                         (geoclue-service)
-                         (service polkit-service-type)
-                         (dbus-service #:services (list avahi))
-                         (elogind-service)
-                         (service ntp-service-type))
+         (udisks-service)
+         (service accountsservice-service-type)
+         (service colord-service-type)
+         (geoclue-service)
+         (service polkit-service-type)
+         (dbus-service #:services (list avahi))
+         (elogind-service)
+         (service ntp-service-type))
 
-                        (modify-services (operating-system-user-services base-system)
-                          (guix-service-type config => (guix-configuration
-                                                        (inherit %guix-daemon-config)
-                                                        (substitute-urls '("http://10.8.19.125:5556" ;TODO: Replace with domain name.
-                                                                           "https://bordeaux.guix.gnu.org"
-                                                                           "https://substitutes.nonguix.org"
-                                                                           "http://ci.guix.trop.in"))
-                                                        (extra-options '("--cache-failures"))))
-                          (sysctl-service-type _ =>
-                                               (sysctl-configuration
-                                                (settings (append '(("net.bridge.bridge-nf-call-iptables" . "0")
-                                                                    ;; Allow to forward ingress traffic from public to 127.0.0.0/8 via DNAT.
-                                                                    ("net.ipv4.conf.all.route_localnet" . "1")
-                                                                    ;; Allow to bind services to sockets while address on a network interface is not available.
-                                                                    ("net.ipv4.ip_nonlocal_bind" . "1")
-                                                                    ;; opensearch requirement
-                                                                    ("vm.max_map_count" . "262144")
-                                                                    ;; piraeus piraeus-op-ns-node requirement
-                                                                    ("fs.inotify.max_user_watches" . "100000")
-                                                                    ("fs.inotify.max_user_instances" . "100000"))
-                                                                  %default-sysctl-settings)))))))
+        (modify-services (operating-system-user-services base-system)
+          (guix-service-type config => (guix-configuration
+                                        (inherit %guix-daemon-config)
+                                        (substitute-urls '("http://10.8.19.125:5556" ;TODO: Replace with domain name.
+                                                           "https://bordeaux.guix.gnu.org"
+                                                           "https://substitutes.nonguix.org"
+                                                           "http://ci.guix.trop.in"))
+                                        (extra-options '("--cache-failures"))))
+          (sysctl-service-type _ =>
+                               (sysctl-configuration
+                                (settings (append '(("net.bridge.bridge-nf-call-iptables" . "0")
+                                                    ;; Allow to forward ingress traffic from public to 127.0.0.0/8 via DNAT.
+                                                    ("net.ipv4.conf.all.route_localnet" . "1")
+                                                    ;; Allow to bind services to sockets while address on a network interface is not available.
+                                                    ("net.ipv4.ip_nonlocal_bind" . "1")
+                                                    ;; opensearch requirement
+                                                    ("vm.max_map_count" . "262144")
+                                                    ;; piraeus piraeus-op-ns-node requirement
+                                                    ("fs.inotify.max_user_watches" . "100000")
+                                                    ("fs.inotify.max_user_instances" . "100000"))
+                                                  %default-sysctl-settings)))))))
 
       (setuid-programs %my-setuid-programs)
 
