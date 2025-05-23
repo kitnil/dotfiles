@@ -41,6 +41,8 @@ spec:
           value: "998"
         - name: RUNC_GUILE
           value: /run/current-system/profile/bin/guile
+        - name: RUNC_USER
+          value: oleg
         resources:
           limits:
             cpu: 14000m
