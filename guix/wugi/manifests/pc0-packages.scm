@@ -5,7 +5,6 @@
 ;; See the "Replicating Guix" section in the manual.
 
 (define-module (wugi manifests pc0-packages)
-  #:use-module (guix profiles)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages base)
   #:use-module (gnu packages bittorrent)
@@ -13,8 +12,8 @@
   #:use-module (gnu packages dictionaries)
   #:use-module (gnu packages games)
   #:use-module (gnu packages gnupg)
-  #:use-module (gnu packages hardware)
   #:use-module (gnu packages golang-web)
+  #:use-module (gnu packages hardware)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages ncdu)
   #:use-module (gnu packages ncurses)
@@ -37,6 +36,7 @@
   #:use-module (gnu packages vnc)
   #:use-module (gnu packages web)
   #:use-module (gnu packages xdisorg)
+  #:use-module (guix profiles)
   #:use-module (wigust packages vnc)
 
   #:export (%pc0-packages-manifest))
