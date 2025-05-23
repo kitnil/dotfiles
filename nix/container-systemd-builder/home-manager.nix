@@ -63,6 +63,10 @@
       Host gitlab.corp1.majordomo.ru
       User git
       IdentityFile /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
+
+      Host guixsd
+      User git
+      IdentityFile /home/oleg/.ssh/id_ed25519
     '';
   };
 
