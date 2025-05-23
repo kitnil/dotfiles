@@ -1318,46 +1318,17 @@ location / {
                            (system? #t))
                %base-groups))
 
-      (users (cons* (user-account
-                     (name "oleg")
-                     (uid 1000)
-                     (comment "Oleg Pykhalov")
-                     (group "users")
-                     (supplementary-groups '("wheel" "adbusers" "audio" "video" "kvm" "input" "libvirt"))
-                     (home-directory "/home/oleg"))
-                    (user-account
-                     (name "postfix")
-                     (uid 13)
-                     (group "postfix")
-                     (supplementary-groups '("postdrop"))
-                     (comment "Postfix privilege separation user")
-                     (home-directory "/opt/postfix")
-                     (shell "/run/current-system/profile/sbin/nologin")
-                     (system? #t))
-                    (append #;((lambda* (count #:key
-                     (group "nixbld")
-                     (first-uid 30101)
-                     (shadow shadow))
-                     (unfold (cut > <> count)
-                     (lambda (n)
-                     (user-account
-                     (name (format #f "nixbld~a" n))
-                     (system? #t)
-                     (uid (+ first-uid n -1))
-                     (group group)
-
-                     ;; guix-daemon expects GROUP to be listed as a
-                     ;; supplementary group too:
-                     ;; <http://lists.gnu.org/archive/html/bug-guix/2013-01/msg00239.html>.
-                     (supplementary-groups (list group "kvm"))
-
-                     (comment (format #f "Nix Build User ~a" n))
-                     (home-directory "/var/empty")
-                     (shell (file-append shadow "/sbin/nologin"))))
-                     1+
-                     1))
-                     9)
-                     %base-user-accounts)))
+      (users
+       (append
+        (list (user-account
+               (name "oleg")
+               (uid 1000)
+               (comment "Oleg Pykhalov")
+               (group "users")
+               (supplementary-groups
+                '("wheel" "adbusers" "audio" "video" "kvm" "input" "libvirt"))
+               (home-directory "/home/oleg")))
+        %base-user-accounts))
 
       (hosts-file
        (generate-hosts-file
