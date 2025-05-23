@@ -65,7 +65,7 @@ code is non-zero; otherwise return #t."
      (invoke "/usr/bin/env")
      (and=> (getenv "HOME")
             (lambda (home)
-              (let* ((commit (getenv "GIT_COMMIT"))
+              (let* ((commit ,(getenv "GIT_COMMIT"))
                      (checkouts
                       (string-append home "/.cache/wigust/checkouts"))
                      (workdir
@@ -110,7 +110,6 @@ code is non-zero; otherwise return #t."
               "runc" "exec"
               "--user" (string-append
                         ,(getenv "RUNC_UID") ":" ,(getenv "RUNC_GID"))
-              "--env" (string-append "GIT_COMMIT=" ,(getenv "GIT_COMMIT"))
               "--env" (string-append "RUNC_MAKE_TARGET="
                                      ,(getenv "RUNC_MAKE_TARGET"))
               "--env" (string-append "RUNC_GUILE=" ,(getenv "RUNC_GUILE"))
