@@ -409,10 +409,10 @@ location / {
           (proxy "prometheus.wugi.info" 9090 #:listen %private-ip-address)
           (proxy "guix.wugi.info" 5556 #:ssl? #t #:ssl-key? #t)
           ((lambda* (host #:key
-                          (ssl? #f)
-                          (ssl-target? #f)
-                          (target #f)
-                          (sub-domains? #f))
+                     (ssl? #f)
+                     (ssl-target? #f)
+                     (target #f)
+                     (sub-domains? #f))
              (nginx-server-configuration
               (server-name (if sub-domains?
                                (list (string-append sub-domains?
