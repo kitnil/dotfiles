@@ -22,6 +22,9 @@
         gitlab.corp1.majordomo.ru ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJw9vd+rL+MwVdVKSKW32+k6irAULLUFv5dmRUve2nUW
         gitlab.corp1.majordomo.ru ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIpKca//ukVhXODbccv/mv4oG74h8jyNQmF7ZbWd/qaolkBv0ptb/ocPc47+btv+FQTx3Fj/cPyi83kwf3ow7C8=
         gitlab.intr ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJw9vd+rL+MwVdVKSKW32+k6irAULLUFv5dmRUve2nUW
+        guixsd ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDaa8s3t+VdVXSbltQyNkn1rnIg8NoXrH1HoYNgqN9xar9jD2A5zkgpiS0iwW/bDWEx5nuwKoGZpUbJ1zn3IAXMVZEHyV0Toji/CpJghECT9G3ocxBoE3Fqx74sWvbWxVMSSvvUkNZAYOIgN8Ud9tUWw8jr+gy4ZKPQvs23BUBMIKZe9LMta4Y42aIK3ofCMsqZbEOsBIbiq7LoCoaKYCiNXshD3UEN4h1vrulokYt7sXNLl1UIJl0uwI1HiBKHjyfbQXCRUCLwwvi/EcFseAaq4jG8kSYkKu+5KalNP7BlYcui0Hi36RnPf3UjQGbjheDtZs/Xv5apgD1Q9CUXVXKl
+        guixsd ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks=
+       guixsd ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMRy+enQECs2CsjrbSIfnNHExcUwzHFa7KUnhwDIeWOV
       '';
     };
     ".gitconfig" = {
