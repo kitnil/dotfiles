@@ -50,7 +50,7 @@
     grabKeyboardAndMouse = false;
     extraConfig = ''
       allow-preset-passphrase
-    ''
+    '';
   };
 
   programs.ssh = {
