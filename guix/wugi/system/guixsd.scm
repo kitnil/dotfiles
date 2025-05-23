@@ -76,7 +76,6 @@
   #:use-module (wugi services bird)
   #:use-module (wugi services bittorrent)
   #:use-module (wugi services certbot)
-  #:use-module (wugi services ddc)
   #:use-module (wugi services desktop)
   #:use-module (wugi services docker)
   #:use-module (wugi services ipset)
@@ -1017,8 +1016,6 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
 
          (service openvpn-service-type %openvpn-configuration-majordomo.ru)
          (service openvpn-service-type %openvpn-configuration-wugi.info)
-
-         (service ddcutil-daemon-service-type)
 
          ;; TODO:
          ;; (openvpn-client-service
