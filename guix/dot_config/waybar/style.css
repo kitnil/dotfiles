@@ -294,8 +294,8 @@ label:focus {
 }
 
 #keyboard-state {
-    background: #97e1ad;
-    color: #000000;
+    /* background: #97e1ad; */
+    color: #ffffff;
     padding: 0 0px;
     margin: 0 5px;
     min-width: 16px;
