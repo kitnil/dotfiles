@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: guix-system-build
+  name: invoke-runc
 spec:
   template:
     spec:
