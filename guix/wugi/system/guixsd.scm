@@ -837,32 +837,35 @@ location / {
       ;;                                   (label "netboot.xyz")
       ;;                                   (linux netboot.xyz))))))
 
-      (file-systems (append (list (file-system
-                                    (device (file-system-label "data18"))
-                                    (mount-point "/srv")
-                                    (options
-                                     (string-join (list "compress=zstd:15"
-                                                        "nossd")
-                                                  ","))
-                                    (mount? #f) ;requires decryption
-                                    (type "btrfs"))
-                                  (file-system
-                                    (device (file-system-label "hpvolumes"))
-                                    (mount-point "/var/hpvolumes")
-                                    (mount? #f) ;requires decryption
-                                    (type "ext4")))
-                            (map (lambda (subvolume)
-                                   (file-system
-                                     (device (file-system-label "btrfs1"))
-                                     (mount-point (string-append "/home/oleg/" subvolume))
-                                     (options (string-join (list (string-append "subvol=" subvolume)
-                                                                 "compress=zstd:15"
-                                                                 "ssd")
-                                                           ","))
-                                     (mount? #f) ;requires decryption
-                                     (type "btrfs")))
-                                 '("archive" "phone" "src" "Maildir"))
-                            (operating-system-file-systems base-system)))
+      (file-systems
+       (append
+        (list (file-system
+                (device (file-system-label "data18"))
+                (mount-point "/srv")
+                (options
+                 (string-join (list "compress=zstd:15"
+                                    "nossd")
+                              ","))
+                (mount? #f) ;requires decryption
+                (type "btrfs"))
+              (file-system
+                (device (file-system-label "hpvolumes"))
+                (mount-point "/var/hpvolumes")
+                (mount? #f) ;requires decryption
+                (type "ext4")))
+        (map (lambda (subvolume)
+               (file-system
+                 (device (file-system-label "btrfs1"))
+                 (mount-point (string-append "/home/oleg/" subvolume))
+                 (options
+                  (string-join (list (string-append "subvol=" subvolume)
+                                     "compress=zstd:15"
+                                     "ssd")
+                               ","))
+                 (mount? #f) ;requires decryption
+                 (type "btrfs")))
+             '("archive" "phone" "src" "Maildir"))
+        (operating-system-file-systems base-system)))
 
       ;; (swap-devices (list (swap-space
       ;;                      (target "/dev/disk/by-label/nvme-swap"))))
