@@ -93,6 +93,165 @@
   #:use-module (wugi utils package)
   #:export (%guixsd))
 
+(define (%firewall-program)
+  (program-file
+   "firewall"
+   #~(begin
+       (define (ovs-vsctl . cmd)
+         ;; (apply invoke/quiet
+         ;;        #$(file-append openvswitch "/bin/ovs-vsctl")
+         ;;        (string-tokenize cmd))
+         #t)
+       (define (ip . cmd)
+         ;; (apply system*
+         ;;        #$(file-append iproute "/sbin/ip")
+         ;;        (string-tokenize cmd))
+         #t)
+       (define (iptables . cmd)
+         (apply system*
+                #$(file-append iptables "/sbin/iptables")
+                cmd))
+       (define (ip6tables . cmd)
+         (apply system*
+                #$(file-append iptables "/sbin/ip6tables")
+                cmd))
+       (and
+        ;; Set default chain policies.
+        (iptables "-P" "INPUT" "DROP")
+        (iptables "-P" "FORWARD" "DROP")
+        (ip6tables "-P" "INPUT" "DROP")
+        (ip6tables "-P" "FORWARD" "DROP")
+
+        ;; Accept egress from Kubernetes network,
+        ;; so flux, cdi and other pods can run.
+        (iptables "-I" "INPUT" "-s" "10.0.0.0/14" "-j" "ACCEPT")
+
+        ;; Deny all ingress connections.
+        (iptables "-A" "INPUT" "-i" "br0" "-d" "192.168.0.144/32" "-j" "DROP")
+        (iptables "-A" "INPUT" "-i" "eth0" "-d" "192.168.0.144/32" "-j" "DROP")
+        ;; Accept HTTP traffic.
+        (iptables "-I" "INPUT" "-i" "br0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "80" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "eth0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "80" "-j" "ACCEPT")
+        ;; Accept HTTPS traffic.
+        (iptables "-I" "INPUT" "-i" "br0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "443" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "eth0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "443" "-j" "ACCEPT")
+        ;; Accept SSH traffic.
+        (iptables "-I" "INPUT" "-i" "br0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "22" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "eth0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "22" "-j" "ACCEPT")
+        ;; Accept DC++ traffic.
+        (iptables "-I" "INPUT" "-i" "br0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "3001" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "eth0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "3001" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "br0" "-d" "192.168.0.144/32" "-p" "udp" "--dport" "3001" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "eth0" "-d" "192.168.0.144/32" "-p" "udp" "--dport" "3001" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "br0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "3002" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "eth0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "3002" "-j" "ACCEPT")
+        ;; DC++ DHC.
+        (iptables "-I" "INPUT" "-i" "br0" "-d" "192.168.0.144/32" "-p" "udp" "--dport" "6250" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "eth0" "-d" "192.168.0.144/32" "-p" "udp" "--dport" "6250" "-j" "ACCEPT")
+        ;; Accept VNC traffic.
+        (iptables "-I" "INPUT" "-i" "br0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "5900" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "eth0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "5900" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "br0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "5901" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "eth0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "5901" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "br0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "5902" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "eth0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "5902" "-j" "ACCEPT")
+        ;; Accept OpenVPN traffic.
+        (iptables "-I" "INPUT" "-i" "br0" "-d" "192.168.0.144/32" "-p" "udp" "--dport" "1195" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "eth0" "-d" "192.168.0.144/32" "-p" "udp" "--dport" "1195" "-j" "ACCEPT")
+        ;; Accept Diablo 2 traffic.
+        (iptables "-I" "INPUT" "-i" "br0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "4000" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-i" "eth0" "-d" "192.168.0.144/32" "-p" "tcp" "--dport" "4000" "-j" "ACCEPT")
+        ;; Accept qBittorrent API traffic.
+        (iptables "-I" "INPUT" "-p" "tcp" "--destination" #$(string-append %private-ip-address "/32") "--dport" "9091" "-j" "ACCEPT")
+        ;; Accept DNS traffic, which is required for Docker containers.
+        (iptables "-I" "INPUT" "-p" "tcp" "--destination" #$(string-append %private-ip-address "/32") "--dport" "53" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-p" "udp" "--destination" #$(string-append %private-ip-address "/32") "--dport" "53" "-j" "ACCEPT")
+        ;; Accept traffic which originated from current computer.
+        (iptables "-I" "INPUT" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")
+        (ip6tables "-I" "INPUT" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")
+        ;; Accept everything from specific networks.
+        (iptables "-I" "INPUT" "-s" "192.168.0.0/24" "-j" "ACCEPT")
+        (iptables "-I" "INPUT" "-s" "127.0.0.0/8" "-j" "ACCEPT")
+
+        ;; Accept everything on br154.154 interface, so
+        ;; DHCP can give addresses to virtual machines.
+        (iptables "-I" "INPUT" "-i" "br154.154" "-j" "ACCEPT")
+
+        ;; Transparent proxy connections to
+        ;; ci.guix.gnu.org via Tor network.
+        ;;
+        ;; From current machine:
+        (iptables "-t" "nat" "-I" "OUTPUT" "-d" "141.80.181.40/32" "-p" "tcp" "-j" "REDIRECT" "--to-ports" "889")
+        ;;
+        ;; From other machines:
+        (iptables "-t" "nat" "-I" "PREROUTING" "-p" "tcp" "--destination" "141.80.181.40/32" "--dport" "443" "-j" "DNAT" "--to-destination" "127.0.0.1:889")
+
+        ;; Forward connections from %private-ip-address:6443 to
+        ;; 192.168.154.1:6443 for Kubernetes API on
+        ;; Kubenav (Android application).
+        ;;
+        ;; https://serverfault.com/questions/586486/how-to-do-the-port-forwarding-from-one-ip-to-another-ip-in-same-network
+        ;; linux - How to do the port forwarding from one
+        ;; ip to another ip in same network? - Server
+        ;; Fault
+        (iptables "-t" "nat" "-A" "PREROUTING" "-p" "tcp" #$(format #f "--destination ~a" %private-ip-address) "--dport" "6443" "-j" "DNAT" "--to-destination" "192.168.154.1:6443")
+        (iptables "-t" "nat" "-A" "POSTROUTING" "-p" "tcp" "-d" "192.168.154.1" "--dport" "6443" "-j" "SNAT" "--to-source" #$%private-ip-address)
+
+        ;; VLAN 154 provides:
+        ;; - Network via Whonix
+        (ovs-vsctl "--may-exist" "add-br" "br154")
+        (ovs-vsctl "--may-exist" "add-br" "br154-vlan154" "br154" "154")
+        (ip "link" "add" "link" "br154" "name" "br154.154" "type" "vlan" "id" "154")
+        (iptables "-t" "nat" "-A" "POSTROUTING" "-o" "br0" "-j" "MASQUERADE")
+        (iptables "-t" "nat" "-A" "POSTROUTING" "-o" "eth0" "-j" "MASQUERADE")
+        (iptables "-A" "FORWARD" "-i" "br0" "-o" "br154.154" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")
+        (iptables "-A" "FORWARD" "-i" "eth0" "-o" "br154.154" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")
+        (iptables "-A" "FORWARD" "-i" "br154.154" "-o" "br0" "-j" "ACCEPT")
+        (iptables "-A" "FORWARD" "-i" "br154.154" "-o" "eth0" "-j" "ACCEPT")
+        ;; NAT 192.168.0.0/24 -> 192.168.154.0/24
+        (iptables "-t" "nat" "-A" "POSTROUTING" "-o" "br154.154" "-j" "MASQUERADE")
+        (iptables "-A" "FORWARD" "-i" "br154.154" "-o" "br0" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")
+        (iptables "-A" "FORWARD" "-i" "br154.154" "-o" "eth0" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")
+        (iptables "-A" "FORWARD" "-i" "br0" "-o" "br154.154" "-j" "ACCEPT")
+        (iptables "-A" "FORWARD" "-i" "eth0" "-o" "br154.154" "-j" "ACCEPT")
+        ;; OpenVPN NAT
+        (iptables "-t" "nat" "-A" "POSTROUTING" "-o" "tapvpn" "-j" "MASQUERADE")
+        (iptables "-A" "FORWARD" "-i" "tapvpn" "-o" "br154.154" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")
+        (iptables "-A" "FORWARD" "-i" "br154.154" "-o" "tapvpn" "-j" "ACCEPT")
+        (iptables "-A" "FORWARD" "-i" "br0" "-o" "tapvpn" "-j" "ACCEPT")
+        (iptables "-A" "FORWARD" "-i" "eth0" "-o" "tapvpn" "-j" "ACCEPT")
+        (iptables "-A" "FORWARD" "-i" "tapvpn" "-o" "br0" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")
+        (iptables "-A" "FORWARD" "-i" "tapvpn" "-o" "eth0" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")
+
+        ;; access ci.guix.gnu.org via oracle on 192.168.154.2-154
+        (iptables "-A" "FORWARD" "-i" "br154.154" "-o" "tapvpn1" "-j" "ACCEPT")
+        (iptables "-A" "FORWARD" "-i" "tapvpn1" "-o" "br154.154" "-j" "ACCEPT")
+
+        ;; Allow to use current machine as a default
+        ;; gateway on other machines.
+        (iptables "-A" "FORWARD" "-i" "br0" "-o" "br0" "-j" "ACCEPT")
+        (iptables "-A" "FORWARD" "-i" "eth0" "-o" "eth0" "-j" "ACCEPT")
+
+        ;; VLAN 155 provides:
+        ;; - DHCP with a PXE by netboot.xyz.
+        ;; - NAT for the Internet.
+        ;; - NAT for OpenVPN to a work.
+        (ovs-vsctl "--may-exist" "add-br" "br155")
+        (ovs-vsctl "--may-exist" "add-br" "br155-vlan155" "br155" "155")
+        ;; vlan 156
+        (ovs-vsctl "--may-exist" "add-br" "br156")
+        (ovs-vsctl "--may-exist" "add-br" "br156-vlan156" "br156" "156")
+
+        ;; VLAN 156 provides:
+        ;; - DHCP with a PXE by netboot.xyz.
+        ;; - NAT for the Internet.
+        (ip "link" "add" "link" "br156" "name" "br156.156" "type" "vlan" "id" "156")
+
+        ;; Drop all ingress and egress traffic related to
+        ;; vm3.wugi.info.
+        (iptables "-I" "INPUT" "-s" "185.105.108.96/32" "-j" "DROP")
+        (iptables "-I" "OUTPUT" "-d" "185.105.108.96/32" "-j" "DROP")))))
+
 (define (%guixsd)
   (define %home
     (passwd:dir (getpw "oleg")))
@@ -654,578 +813,7 @@ location / {
      'firewall shepherd-root-service-type
      (list (shepherd-service
             (provision '(firewall))
-            (start #~(begin
-                       (lambda ()
-                         (define (ovs-vsctl cmd)
-                           ;; (apply invoke/quiet
-                           ;;        #$(file-append openvswitch "/bin/ovs-vsctl")
-                           ;;        (string-tokenize cmd))
-                           #t)
-                         (define (ip cmd)
-                           ;; (apply system*
-                           ;;        #$(file-append iproute "/sbin/ip")
-                           ;;        (string-tokenize cmd))
-                           #t)
-                         (define (iptables cmd)
-                           (apply system*
-                                  #$(file-append iptables "/sbin/iptables")
-                                  (string-tokenize cmd)))
-                         (define (ip6tables cmd)
-                           (apply system*
-                                  #$(file-append iptables "/sbin/ip6tables")
-                                  (string-tokenize cmd)))
-                         (and ;; Set default chain policies.
-                          (iptables
-                           (string-join
-                            '("-P" "INPUT" "DROP")))
-                          (iptables
-                           (string-join
-                            '("-P" "FORWARD" "DROP")))
-                          (ip6tables
-                           (string-join
-                            '("-P" "INPUT" "DROP")))
-                          (ip6tables
-                           (string-join
-                            '("-P" "FORWARD" "DROP")))
-
-                          ;; Accept egress from Kubernetes network,
-                          ;; so flux, cdi and other pods can run.
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-s" "10.0.0.0/14"
-                              "-j" "ACCEPT")))
-
-                          ;; Deny all ingress connections.
-                          (iptables
-                           (string-join
-                            '("-A" "INPUT"
-                              "-i" "br0"
-                              "-d" "192.168.0.144/32"
-                              "-j" "DROP")))
-                          (iptables
-                           (string-join
-                            '("-A" "INPUT"
-                              "-i" "eth0"
-                              "-d" "192.168.0.144/32"
-                              "-j" "DROP")))
-                          ;; Accept HTTP traffic.
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "br0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "80"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "eth0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "80"
-                              "-j" "ACCEPT")))
-                          ;; Accept HTTPS traffic.
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "br0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "443"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "eth0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "443"
-                              "-j" "ACCEPT")))
-                          ;; Accept SSH traffic.
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "br0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "22"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "eth0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "22"
-                              "-j" "ACCEPT")))
-                          ;; Accept DC++ traffic.
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "br0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "3001"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "eth0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "3001"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "br0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "udp"
-                              "--dport" "3001"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "eth0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "udp"
-                              "--dport" "3001"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "br0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "3002"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "eth0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "3002"
-                              "-j" "ACCEPT")))
-                          ;; DC++ DHC.
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "br0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "udp"
-                              "--dport" "6250"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "eth0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "udp"
-                              "--dport" "6250"
-                              "-j" "ACCEPT")))
-                          ;; Accept VNC traffic.
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "br0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "5900"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "eth0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "5900"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "br0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "5901"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "eth0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "5901"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "br0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "5902"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "eth0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "5902"
-                              "-j" "ACCEPT")))
-                          ;; Accept OpenVPN traffic.
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "br0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "udp"
-                              "--dport" "1195"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "eth0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "udp"
-                              "--dport" "1195"
-                              "-j" "ACCEPT")))
-                          ;; Accept Diablo 2 traffic.
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "br0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "4000"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "eth0"
-                              "-d" "192.168.0.144/32"
-                              "-p" "tcp"
-                              "--dport" "4000"
-                              "-j" "ACCEPT")))
-                          ;; Accept qBittorrent API traffic.
-                          (iptables
-                           (string-join
-                            (list "-I" "INPUT"
-                                  "-p" "tcp"
-                                  "--destination" #$(string-append %private-ip-address "/32")
-                                  "--dport" "9091"
-                                  "-j" "ACCEPT")))
-                          ;; Accept DNS traffic, which is required for
-                          ;; Docker containers.
-                          (iptables
-                           (string-join
-                            (list "-I" "INPUT"
-                                  "-p" "tcp"
-                                  "--destination" #$(string-append %private-ip-address "/32")
-                                  "--dport" "53"
-                                  "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            (list "-I" "INPUT"
-                                  "-p" "udp"
-                                  "--destination" #$(string-append %private-ip-address "/32")
-                                  "--dport" "53"
-                                  "-j" "ACCEPT")))
-                          ;; Accept traffic which originated from current computer.
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-m" "state"
-                              "--state" "RELATED,ESTABLISHED"
-                              "-j" "ACCEPT")))
-                          (ip6tables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-m" "state"
-                              "--state" "RELATED,ESTABLISHED"
-                              "-j" "ACCEPT")))
-                          ;; Accept everything from specific networks.
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-s" "192.168.0.0/24"
-                              "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-s" "127.0.0.0/8"
-                              "-j" "ACCEPT")))
-
-                          ;; Accept everything on br154.154 interface, so
-                          ;; DHCP can give addresses to virtual machines.
-                          (iptables
-                           (string-join
-                            '("-I" "INPUT"
-                              "-i" "br154.154"
-                              "-j" "ACCEPT")))
-
-                          ;; Transparent proxy connections to
-                          ;; ci.guix.gnu.org via Tor network.
-                          ;;
-                          ;; From current machine:
-                          (iptables
-                           (string-join
-                            '("-t" "nat"
-                              "-I" "OUTPUT"
-                              "-d" "141.80.181.40/32"
-                              "-p" "tcp"
-                              "-j" "REDIRECT"
-                              "--to-ports" "889")))
-                          ;;
-                          ;; From other machines:
-                          (iptables
-                           (string-join
-                            '("-t" "nat"
-                              "-I" "PREROUTING"
-                              "-p" "tcp"
-                              "--destination" "141.80.181.40/32"
-                              "--dport" "443"
-                              "-j" "DNAT"
-                              "--to-destination" "127.0.0.1:889")))
-
-                          ;; Forward connections from %private-ip-address:6443 to
-                          ;; 192.168.154.1:6443 for Kubernetes API on
-                          ;; Kubenav (Android application).
-                          ;;
-                          ;; https://serverfault.com/questions/586486/how-to-do-the-port-forwarding-from-one-ip-to-another-ip-in-same-network
-                          ;; linux - How to do the port forwarding from one
-                          ;; ip to another ip in same network? - Server
-                          ;; Fault
-                          (iptables
-                           (string-join
-                            (list "-t" "nat"
-                                  "-A" "PREROUTING"
-                                  "-p" "tcp"
-                                  #$(format #f "--destination ~a" %private-ip-address)
-                                  "--dport" "6443"
-                                  "-j" "DNAT"
-                                  "--to-destination" "192.168.154.1:6443")))
-                          (iptables
-                           (string-join
-                            (list "-t" "nat"
-                                  "-A" "POSTROUTING"
-                                  "-p" "tcp"
-                                  "-d" "192.168.154.1"
-                                  "--dport" "6443"
-                                  "-j" "SNAT"
-                                  "--to-source" #$%private-ip-address)))
-
-                          ;; VLAN 154 provides:
-                          ;; - Network via Whonix
-                          (ovs-vsctl
-                           (string-join
-                            (list "--may-exist" "add-br" "br154")))
-                          (ovs-vsctl
-                           (string-join
-                            (list "--may-exist" "add-br" "br154-vlan154" "br154" "154")))
-                          (ip
-                           (string-join
-                            (list "link" "add" "link" "br154"
-                                  "name" "br154.154"
-                                  "type" "vlan"
-                                  "id" "154")))
-                          (iptables
-                           (string-join
-                            (list "-t" "nat"
-                                  "-A" "POSTROUTING"
-                                  "-o" "br0"
-                                  "-j" "MASQUERADE")))
-                          (iptables
-                           (string-join
-                            (list "-t" "nat"
-                                  "-A" "POSTROUTING"
-                                  "-o" "eth0"
-                                  "-j" "MASQUERADE")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "br0"
-                                  "-o" "br154.154"
-                                  "-m" "state"
-                                  "--state" "RELATED,ESTABLISHED"
-                                  "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "eth0"
-                                  "-o" "br154.154"
-                                  "-m" "state"
-                                  "--state" "RELATED,ESTABLISHED"
-                                  "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "br154.154"
-                                  "-o" "br0"
-                                  "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "br154.154"
-                                  "-o" "eth0"
-                                  "-j" "ACCEPT")))
-                          ;; NAT 192.168.0.0/24 -> 192.168.154.0/24
-                          (iptables
-                           (string-join
-                            (list "-t" "nat"
-                                  "-A" "POSTROUTING"
-                                  "-o" "br154.154"
-                                  "-j" "MASQUERADE")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "br154.154"
-                                  "-o" "br0"
-                                  "-m" "state"
-                                  "--state" "RELATED,ESTABLISHED"
-                                  "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "br154.154"
-                                  "-o" "eth0"
-                                  "-m" "state"
-                                  "--state" "RELATED,ESTABLISHED"
-                                  "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "br0"
-                                  "-o" "br154.154"
-                                  "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "eth0"
-                                  "-o" "br154.154"
-                                  "-j" "ACCEPT")))
-                          ;; OpenVPN NAT
-                          (iptables
-                           (string-join
-                            (list "-t" "nat"
-                                  "-A" "POSTROUTING"
-                                  "-o" "tapvpn"
-                                  "-j" "MASQUERADE")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "tapvpn"
-                                  "-o" "br154.154"
-                                  "-m" "state"
-                                  "--state" "RELATED,ESTABLISHED"
-                                  "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "br154.154"
-                                  "-o" "tapvpn"
-                                  "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "br0"
-                                  "-o" "tapvpn"
-                                  "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "eth0"
-                                  "-o" "tapvpn"
-                                  "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "tapvpn"
-                                  "-o" "br0"
-                                  "-m" "state"
-                                  "--state" "RELATED,ESTABLISHED"
-                                  "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "tapvpn"
-                                  "-o" "eth0"
-                                  "-m" "state"
-                                  "--state" "RELATED,ESTABLISHED"
-                                  "-j" "ACCEPT")))
-
-                          ;; access ci.guix.gnu.org via oracle on 192.168.154.2-154
-                          (iptables
-                           (string-join
-                            (list
-                             "-A" "FORWARD"
-                             "-i" "br154.154"
-                             "-o" "tapvpn1"
-                             "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "tapvpn1"
-                                  "-o" "br154.154"
-                                  "-j" "ACCEPT")))
-
-                          ;; Allow to use current machine as a default
-                          ;; gateway on other machines.
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "br0"
-                                  "-o" "br0"
-                                  "-j" "ACCEPT")))
-                          (iptables
-                           (string-join
-                            (list "-A" "FORWARD"
-                                  "-i" "eth0"
-                                  "-o" "eth0"
-                                  "-j" "ACCEPT")))
-
-                          ;; VLAN 155 provides:
-                          ;; - DHCP with a PXE by netboot.xyz.
-                          ;; - NAT for the Internet.
-                          ;; - NAT for OpenVPN to a work.
-                          (ovs-vsctl
-                           (string-join
-                            (list "--may-exist" "add-br" "br155")))
-                          (ovs-vsctl
-                           (string-join
-                            (list "--may-exist" "add-br" "br155-vlan155" "br155" "155")))
-                          ;; vlan 156
-                          (ovs-vsctl
-                           (string-join
-                            (list "--may-exist" "add-br" "br156")))
-                          (ovs-vsctl
-                           (string-join
-                            (list "--may-exist" "add-br" "br156-vlan156" "br156" "156")))
-
-                          ;; VLAN 156 provides:
-                          ;; - DHCP with a PXE by netboot.xyz.
-                          ;; - NAT for the Internet.
-                          (ip
-                           (string-join
-                            (list "link" "add" "link" "br156"
-                                  "name" "br156.156"
-                                  "type" "vlan"
-                                  "id" "156")))
-
-                          ;; Drop all ingress and egress traffic related to
-                          ;; vm3.wugi.info.
-                          (iptables
-                           (string-join
-                            (list "-I" "INPUT"
-                                  "-s" "185.105.108.96/32"
-                                  "-j" "DROP")))
-                          (iptables
-                           (string-join
-                            (list "-I" "OUTPUT"
-                                  "-d" "185.105.108.96/32"
-                                  "-j" "DROP")))))))
+            (start (%firewall-program))
             (respawn? #f)))))
 
   ;; Avahi in workstation Pod
