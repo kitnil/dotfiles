@@ -1307,16 +1307,14 @@ location / {
                                    restic-pc0-win10-init))
                         %my-system-packages))
 
-      (groups (cons* ;; (user-group (name "nixbld")
-               ;;             (id 30100))
-               (user-group (name "uinput"))
-               (user-group (name "postfix")
-                           (id 13)
-                           (system? #t))
-               (user-group (name "postdrop")
-                           (id 118)
-                           (system? #t))
-               %base-groups))
+      (groups (append (list (user-group (name "uinput"))
+                            (user-group (name "postfix")
+                                        (id 13)
+                                        (system? #t))
+                            (user-group (name "postdrop")
+                                        (id 118)
+                                        (system? #t)))
+                      %base-groups))
 
       (users
        (append
