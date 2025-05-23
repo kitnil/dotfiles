@@ -60,25 +60,8 @@ code is non-zero; otherwise return #t."
            (error (format #f "program ~s exited with non-zero code" program)
                   status))
          #t))
-     (define (invoke-environment . args)
-       (apply invoke
-              (append (let ((package-manager
-                             ,(getenv "RUNC_ENVIRONMENT_MANAGEMENT_PACKAGE")))
-                        (cond
-                         ((string= package-manager "guix")
-                          `("guix" "shell"
-                            ,@'("autoconf" "automake" "make"
-                                "git" "skopeo")
-                            "--"))
-                         ((string= package-manager "nix")
-                          `("nix" "shell"
-                            ,@(map (cut string-append "nixpkgs#" <>)
-                                   '("autoconf" "automake" "gnumake"
-                                     "skopeo" "git"))
-                            "--command"))))
-                      args)))
      (define (git . args)
-       (apply invoke-environment (append '("git") args)))
+       (apply invoke (append '("git") args)))
      (invoke "/usr/bin/env")
      (and=> (getenv "HOME")
             (lambda (home)
@@ -104,9 +87,9 @@ code is non-zero; otherwise return #t."
                  (git "submodule" "add" ,%git-password-store-url "dotfiles")
                  (chdir "..")
 
-                 (invoke-environment "./bootstrap")
-                 (invoke-environment "./configure")
-                 (invoke-environment
+                 (invoke "./bootstrap")
+                 (invoke "./configure")
+                 (invoke
                   "make" (string-append "PASSWORD_STORE=" password-store)
                   ,(getenv "RUNC_MAKE_TARGET"))))))))
 

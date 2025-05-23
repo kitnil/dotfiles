@@ -41,8 +41,6 @@ spec:
           value: "998"
         - name: RUNC_GUILE
           value: /run/current-system/profile/bin/guile
-        - name: RUNC_ENVIRONMENT_MANAGEMENT_PACKAGE
-          value: guix
         resources:
           limits:
             cpu: 14000m
