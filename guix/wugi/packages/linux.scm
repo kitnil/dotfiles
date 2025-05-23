@@ -43,8 +43,23 @@
 (define make-linux-libre*
   (@@ (gnu packages linux) make-linux-libre*))
 
-(define kernel-config
-  (@@ (gnu packages linux) kernel-config))
+(define* (kernel-config arch #:key variant)
+  "Return a file-like object of the Linux-Libre build configuration file for
+ARCH and optionally VARIANT, or #f if there is no such configuration."
+  (define %auxiliary-files-path
+    (make-parameter
+     (map (cut string-append <> "/wugi/packages/aux-files")
+          %load-path)))
+
+  (define (search-auxiliary-file file-name)
+    "Search the auxiliary FILE-NAME.  Return #f if not found."
+    (search-path (%auxiliary-files-path) file-name))
+
+  (let* ((name (string-append (if variant (string-append variant "-") "")
+                              (if (string=? "i386" arch) "i686" arch) ".conf"))
+         (file (string-append "linux-libre/" name))
+         (config (search-auxiliary-file file)))
+    (and config (local-file config))))
 
 (define-public linux-libre-5.13-version "5.13.16")
 (define-public linux-libre-5.13-gnu-revision "gnu1")
