@@ -12,3 +12,6 @@ nixos-systemd-builder:
 dotfiles-home-manager:
 	nix flake lock --update-input dotfiles-home-manager
 	git commit -m 'flake.lock: Update dotfiles-home-manager input.' flake.lock
+
+nixos-rebuild-switch-flake:
+	sudo nixos-rebuild switch --flake .#nixos-systemd-builder

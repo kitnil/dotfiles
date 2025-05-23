@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: invoke-runc
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: kube1
+      containers:
+      - name: nsenter
+        env:
+        - name: GIT_COMMIT
+          value: dff7bba794533963b2471bd3f6d9d006fc0efe82
+        - name: RUNC_MAKE_TARGET
+          value: "runc-nix-builder-nixos-rebuild-switch-flake"
+        - name: RUNC_CONTAINER_ID
+          value: nix-builder
+        - name: KUBERNETES_POD_NAME
+          value: runc-kube1-nix-builder
+        - name: KUBERNETES_NAMESPACE
+          value: nix
+        - name: RUNC_GUILE
+          value: /nix/store/g4xbhkf97vi6ahas661kf0jd6yskr12d-guile-3.0.10/bin/guile

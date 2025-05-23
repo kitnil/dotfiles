@@ -301,3 +301,6 @@ archlinux:
 .PHONY: known_hosts
 known_hosts:
 	guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
+
+runc-nix-builder-nixos-rebuild-switch-flake:
+	$(MAKE) -C nix/container-systemd-builder nixos-rebuild-switch-flake

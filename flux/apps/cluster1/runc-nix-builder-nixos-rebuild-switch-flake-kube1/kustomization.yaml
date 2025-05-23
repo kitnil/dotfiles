@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: nix
+nameSuffix: -runc-nix-builder-nixos-rebuild-switch-flake-kube1
+resources:
+- ../../base/invoke-runc
+patchesStrategicMerge:
+- job.yaml
