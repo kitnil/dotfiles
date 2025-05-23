@@ -2366,11 +2366,7 @@ namespaces = [ ]
                                 (string-join `("Defaults:root runcwd=*"
                                                "root ALL=(ALL) ALL"
                                                "%wheel ALL=(ALL) ALL"
-                                               "oleg ALL=(ALL) NOPASSWD:ALL"
-                                               ,(format #f "majordomo-ssh-tunnel ALL=(root) NOPASSWD: ~a~%"
-                                                        (string-join '("/run/current-system/profile/bin/herd * vncserver2"
-                                                                       "/run/current-system/profile/bin/herd * vncserver10")
-                                                                     ",")))
+                                               "oleg ALL=(ALL) NOPASSWD:ALL")
                                              "\n")))
 
       ;; Allow resolution of '.local' host names with mDNS.
