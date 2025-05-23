@@ -45,7 +45,7 @@
     defaultCacheTtlSsh = 172800;
     maxCacheTtl = 172800;
     maxCacheTtlSsh = 172800;
-    pinentry.package = pinentry-tty;
+    pinentry.package = pkgs.pinentry-tty;
     pinentry.program = "pinentry";
     grabKeyboardAndMouse = false;
     extraConfig = ''
