@@ -11,6 +11,6 @@ spec:
       - name: nsenter
         env:
         - name: GIT_COMMIT
-          value: cf88a58a688dc8f1bedb524fd70bb152f92904a5
+          value: ef4d4ad7019fffce231dfa6698c177fb73a898c5
         - name: RUNC_MAKE_TARGET
           value: "guix-time-machine-system-build-guixsd"
