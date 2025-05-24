@@ -977,8 +977,6 @@ location / {
 
          (udev-rules-service 'kmonad kmonad)
 
-         ;; (service singularity-service-type)
-
          ;; TODO: Fix substituters
          (service nix-service-type
                   (nix-configuration
