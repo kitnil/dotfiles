@@ -1441,28 +1441,6 @@ PasswordAuthentication yes")))
          ;;           (authentication? #f)
          ;;           (prometheus? #t)))
 
-         (simple-service
-          'socat-ci-guix-gnu-org shepherd-root-service-type
-          (list (shepherd-service
-                 (provision '(socat-ci-guix-gnu-org))
-                 (requirement '())
-                 (start #~(make-forkexec-constructor
-                           (list #$(file-append socat "/bin/socat")
-                                 "tcp4-LISTEN:81,reuseaddr,fork,keepalive,bind=127.0.0.1"
-                                 "SOCKS4A:tor.home:4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion:443,socksport=9150")))
-                 (respawn? #f))))
-
-         (simple-service
-          'socat-mirror-sentries-org shepherd-root-service-type
-          (list (shepherd-service
-                 (provision '(socat-mirror-sentries-org))
-                 (requirement '())
-                 (start #~(make-forkexec-constructor
-                           (list #$(file-append socat "/bin/socat")
-                                 "tcp4-LISTEN:82,reuseaddr,fork,keepalive,bind=127.0.0.1"
-                                 "SOCKS4A:10.0.0.101:mirror.sentries.org:443,socksport=9050")))
-                 (respawn? #f))))
-
          (service syncthing-service-type
                   (syncthing-configuration (user "oleg")))
 
