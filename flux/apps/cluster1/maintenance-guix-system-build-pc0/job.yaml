@@ -14,3 +14,5 @@ spec:
           value: 0d2145a16e36d2e3bba961fe2d702740bae6b505
         - name: RUNC_MAKE_TARGET
           value: "guix-time-machine-system-build-pc0"
+        - name: RUNC_ENVIRONMENT
+          value: guix
