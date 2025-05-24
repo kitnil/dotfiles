@@ -229,3 +229,38 @@ monitoring, and analytics.")
     (synopsis "")
     (description "")
     (license #f)))
+
+(define-public yamlfmt
+  (package
+    (name "yamlfmt")
+    (version "0.16.0")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/google/yamlfmt/releases/download/v"
+                                  version "/yamlfmt_"
+                                  version "_Linux_x86_64.tar.gz"))
+              (sha256
+               (base32
+                "0cw054rc66dxgbgswisqvpkxfjbii5cbs36k16826kcrgrygl6bq"))))
+    (build-system trivial-build-system)
+    (inputs (list gzip tar))
+    (native-inputs `(("source" ,source)))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (setenv "PATH"
+                  (string-append
+                   #$(this-package-input "gzip") "/bin"
+                   ":" #$(this-package-input "tar") "/bin"))
+          (invoke "tar" "-xf" #$(this-package-native-input "source"))
+          (mkdir-p (string-append #$output "/bin"))
+          (copy-file "yamlfmt"
+                     (string-append #$output "/bin/yamlfmt")))))
+    (home-page "https://github.com/google/yamlfmt")
+    (synopsis "Extensible command line tool or library to format yaml files")
+    (description
+     "yamlfmt is an extensible command line tool or library to format yaml files.")
+    (license license:asl2.0)))
