@@ -25,6 +25,7 @@
   #:use-module (gnu packages package-management)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages tls)
+  #:use-module (gnu packages virtualization)
   #:use-module (gnu packages web)
   #:use-module (guix build-system gnu)
   #:use-module (guix build utils)
@@ -56,6 +57,7 @@
     (inherit dotfiles)
     (inputs
      (append
-      `(("yq" ,yq)
+      `(("skopeo" ,skopeo)
+        ("yq" ,yq)
         ("yamlfmt" ,yamlfmt))
       (package-inputs dotfiles)))))
