@@ -115,6 +115,7 @@ code is non-zero; otherwise return #t."
               "--env" (string-append "RUNC_GUILE=" ,(getenv "RUNC_GUILE"))
               "--env" (string-append "COLUMNS=" ,(number->string 200))
               "--env" (string-append "USER=" ,(getenv "RUNC_USER"))
+              "--env" (string-append "GIT_COMMIT=" ,(getenv "GIT_COMMIT"))
               ;; Add to `docker' group in nix-builder.
               "--additional-gids" ,(number->string 131)
               ,(getenv "RUNC_CONTAINER_ID")
