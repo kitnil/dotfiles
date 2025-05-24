@@ -71,11 +71,11 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1748110635,
-        "narHash": "sha256-ytRvjb09VPJMdehWvXXFnfgmRX7l+diHacaNp4BmIK4=",
+        "lastModified": 1748113734,
+        "narHash": "sha256-wSvMDaNO8I0x6JNcefjaxFT4StoDB6uVg81xJaMqqPs=",
         "ref": "refs/heads/master",
-        "rev": "5f156d2f6c8085547b20aa5083f58ebf54fab69c",
-        "revCount": 14719,
+        "rev": "53dcb383ba343512cf043371872a10a344578099",
+        "revCount": 14723,
         "type": "git",
         "url": "https://cgit.wugi.info/git/wigust/dotfiles"
       },
@@ -1068,8 +1068,8 @@
     "nixpkgs_9": {
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-KUICKs/Cn4n88UeMA0hecTffqmnd2aWiHHPZQicxuS8=",
-        "path": "/nix/store/yy0g7bl5b16ycj03k8vbidnh8ncawxap-nixos-25.05.20250319.2a725d4/nixos",
+        "narHash": "sha256-PixrlEYBKu1+f+Aby+mz4hpVMR3HIg4m2/rgKqoinUo=",
+        "path": "/nix/store/md3533cv5gg8rd8y148c3kv1q0y999f0-nixos-25.05.19700101.dirty/nixos",
         "type": "path"
       },
       "original": {
@@ -1105,11 +1105,11 @@
       },
       "locked": {
         "dir": "nix/container-systemd",
-        "lastModified": 1748113734,
-        "narHash": "sha256-wSvMDaNO8I0x6JNcefjaxFT4StoDB6uVg81xJaMqqPs=",
+        "lastModified": 1748113959,
+        "narHash": "sha256-3Y3+vrQrV908lG2CL1jX4Nu8Dm8I41Yh1b0dYZrUo7E=",
         "ref": "refs/heads/master",
-        "rev": "53dcb383ba343512cf043371872a10a344578099",
-        "revCount": 14723,
+        "rev": "c65f2a573dcb32c5988ac10127c9dc7106189ef3",
+        "revCount": 14726,
         "type": "git",
         "url": "https://cgit.wugi.info/git/wigust/dotfiles"
       },
