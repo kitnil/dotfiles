@@ -100,18 +100,18 @@ code is non-zero; otherwise return #t."
                  (chdir "..")
 
                  (guile-with-guix-environment
-                  (and=> (string->symbol ,(getenv "RUNC_ENVIRONMENT"))
-                         (lambda (environment)
-                           (case environment
-                             ((guix)
-                              `(begin
+                  `(and=> (string->symbol ,(getenv "RUNC_ENVIRONMENT"))
+                          (lambda (environment)
+                            (case environment
+                              ((guix)
+                               (begin
                                  (invoke "./bootstrap")
                                  (invoke "./configure")
                                  (invoke
                                   "make" ,(string-append "PASSWORD_STORE=" password-store)
                                   ,,(getenv "RUNC_MAKE_TARGET"))))
-                             (else
-                              `(begin
+                              (else
+                               (begin
                                  (invoke "./bootstrap")
                                  (invoke "./configure")
                                  (invoke
