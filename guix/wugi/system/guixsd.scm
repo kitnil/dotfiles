@@ -979,11 +979,6 @@ location / {
 
          ;; (service singularity-service-type)
 
-         (service ladspa-service-type
-                  (ladspa-configuration (plugins (list swh-plugins))))
-
-         (service alsa-service-type)
-
          ;; TODO: Fix substituters
          (service nix-service-type
                   (nix-configuration
