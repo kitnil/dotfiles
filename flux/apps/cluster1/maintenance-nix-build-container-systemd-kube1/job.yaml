@@ -11,7 +11,7 @@ spec:
       - name: nsenter
         env:
         - name: GIT_COMMIT
-          value: c91bfd8fef2d796f21fdface5da44c60dadf33e7
+          value: a3cd24d02f4248a442897552c0297eec4a0f6a01
         - name: RUNC_MAKE_TARGET
           value: "container-systemd-taskexecutor"
         - name: RUNC_CONTAINER_ID
