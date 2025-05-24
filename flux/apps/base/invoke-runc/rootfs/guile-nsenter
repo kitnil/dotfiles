@@ -65,7 +65,11 @@ code is non-zero; otherwise return #t."
      (define (guile-with-guix-environment expression)
        (execl "guix"
               "guix" "shell" "--load-path=guix" "--development"
-              "--expression=(@ (wugi packages dotfiles) dotfiles-extra)"
+              (string-append
+               "--expression="
+               (with-output-to-string
+                 (lambda ()
+                   (write '(@ (wugi packages dotfiles) dotfiles-extra)))))
               "--" "guile" "--no-auto-compile"
               "-c" (with-output-to-string
                      (lambda ()
