@@ -98,6 +98,7 @@ in {
                 multi-account-containers
                 snaplinksplus
                 ublock-origin
+                redirector
               ];
           };
         };
@@ -145,6 +146,16 @@ in {
                 url = "https://wiki.nixos.org/";
               }
             ];
+          };
+          extensions = {
+            packages =
+              fold
+                (extension: extensions: extensions ++ [extension])
+                firefoxBaseProfile.extensions.packages
+                (with packages; with packages.nur.repos.rycee.firefox-addons; [
+                  auto-tab-discard
+                  hello-goodbye
+                ]);
           };
         };
         twitch = firefoxBaseProfile // {
