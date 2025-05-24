@@ -272,11 +272,6 @@ ansible_host()
     ansible --inventory "$1", "$1" --become --ask-become-pass "${@:2}"
 }
 
-yq()
-{
-    command yq --width "$(tput cols)" "$@"
-}
-
 jc()
 {
     if [[ $# -eq 0 ]]
