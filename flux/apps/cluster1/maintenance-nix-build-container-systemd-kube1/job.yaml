@@ -22,3 +22,5 @@ spec:
           value: nix
         - name: RUNC_GUILE
           value: /etc/profiles/per-user/oleg/bin/guile
+        - name: RUNC_ENVIRONMENT
+          value: nix
