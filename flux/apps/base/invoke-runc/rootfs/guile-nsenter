@@ -70,10 +70,16 @@ code is non-zero; otherwise return #t."
                 (with-output-to-string
                   (lambda ()
                     (write '(@ (wugi packages dotfiles) dotfiles-extra)))))
-               "--" "guile" "--no-auto-compile"
-               "-c" (with-output-to-string
-                      (lambda ()
-                        (write expression)))))
+               "--"
+               "guile" "--no-auto-compile" "-c" (with-output-to-string
+                                                  (lambda ()
+                                                    (write expression)))))
+     (define (guile-with-nix-environment expression)
+       (invoke "nix" "shell" "nix"
+               "--command"
+               "guile" "--no-auto-compile" "-c" (with-output-to-string
+                                                  (lambda ()
+                                                    (write expression)))))
      (invoke "/usr/bin/env")
      (and=> (getenv "HOME")
             (lambda (home)
@@ -118,13 +124,22 @@ code is non-zero; otherwise return #t."
                                  (invoke
                                   "make" ,(string-append "PASSWORD_STORE=" password-store)
                                   ,,(getenv "RUNC_MAKE_TARGET")))))
-                            (else
-                             (setenv "ACLOCAL_PATH" "nix/m4")
-                             (invoke "./bootstrap")
-                             (invoke "./configure")
-                             (invoke
-                              "make" (string-append "PASSWORD_STORE=" password-store)
-                              ,(getenv "RUNC_MAKE_TARGET"))))))))))))
+                            ((nix)
+                             (guile-with-nix-environment
+                              `(begin
+                                 (define (invoke program . args)
+                                   "Invoke PROGRAM with the given ARGS.  Raise an error if the exit
+code is non-zero; otherwise return #t."
+                                   (let ((status (apply system* program args)))
+                                     (unless (zero? status)
+                                       (error (format #f "program ~s exited with non-zero code" program)
+                                              status))
+                                     #t))
+                                 (invoke "./bootstrap")
+                                 (invoke "./configure")
+                                 (invoke
+                                  "make" (string-append "PASSWORD_STORE=" password-store)
+                                  ,(getenv "RUNC_MAKE_TARGET"))))))))))))))
 
 (define kubectl
   "/home/oleg/.guix-profile")

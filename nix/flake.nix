@@ -159,9 +159,11 @@
         in
           mkShell {
             buildInputs = with pkgs; [
-              nix
+              guile
+              guile.dev
               mozilla-addons-to-nix
-              deploy-rs.outputs.packages.${system}.deploy-rs
+              nix
+              pkg-config
             ];
           };
       packages.${system} = let
