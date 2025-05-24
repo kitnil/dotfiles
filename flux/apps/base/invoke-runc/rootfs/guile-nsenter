@@ -138,8 +138,8 @@ code is non-zero; otherwise return #t."
                                  (invoke "./bootstrap")
                                  (invoke "./configure")
                                  (invoke
-                                  "make" (string-append "PASSWORD_STORE=" password-store)
-                                  ,(getenv "RUNC_MAKE_TARGET"))))))))))))))
+                                  "make" ,(string-append "PASSWORD_STORE=" password-store)
+                                  ,,(getenv "RUNC_MAKE_TARGET"))))))))))))))
 
 (define kubectl
   "/home/oleg/.guix-profile")
