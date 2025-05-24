@@ -43,6 +43,9 @@ fi
 AC_PATH_PROG([SKOPEO], [skopeo])
 AC_SUBST([SKOPEO])
 
+AC_PATH_PROG([YAMLFMT], [yamlfmt])
+AC_SUBST([YAMLFMT])
+
 AC_PATH_PROG([YQ], [yq])
 AC_SUBST([YQ])
 

@@ -1,7 +1,8 @@
 #!@GUILE@ --no-auto-compile -e main -s
 !#
 
-(use-modules (ice-9 format))
+(use-modules (ice-9 format)
+             (wugi utils))
 
 (define %flux-kustomizations
   '(maintenance-guix-system-build-guixsd
@@ -36,6 +37,10 @@ code is non-zero; otherwise return #t."
                                 "nsenter"
                                 "GIT_COMMIT"
                                 (getenv "GIT_COMMIT"))
+                        job-file)
+                (invoke "@YAMLFMT@"
+                        "-conf" (string-append %distro-directory
+                                               "/dotfiles/dot_yamlfmt")
                         job-file)))
             %flux-kustomizations))
 
