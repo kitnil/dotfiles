@@ -20,8 +20,6 @@ in {
 
     tmux
 
-    nekoray
-
     gnumake
 
     strace

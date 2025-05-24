@@ -239,8 +239,6 @@
 
     sunshine
 
-    nekoray
-
     ddcutil
   ];
 

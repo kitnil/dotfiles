@@ -189,11 +189,6 @@
                 exec -a "$0" ${firefox-esr-52}/bin/firefox --new-instance --profile "$test_directory" --private-window "$@"
               '') { };
 
-          nekoray = let
-            inherit (nixpkgs-idea-community.legacyPackages.${system})
-              libsForQt5;
-          in libsForQt5.callPackage ./pkgs/nekoray { };
-
           jenkins = with pkgs;
             let
               pluginCmds = lib.attrsets.mapAttrsToList (n: v:
