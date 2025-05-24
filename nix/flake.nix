@@ -311,6 +311,7 @@
                 git
                 guile
                 guile.dev
+                nix
                 pkg-config
                 skopeo
                 yamlfmt
