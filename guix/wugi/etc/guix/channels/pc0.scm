@@ -1,6 +1,6 @@
 (define-module (wugi etc guix channels pc0)
   #:use-module (guix channels)
-  #:export (%channels-current-local-file))
+  #:export (%channels-pc0))
 
 (define %channels-pc0
   (list (channel
