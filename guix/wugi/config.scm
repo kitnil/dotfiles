@@ -8,6 +8,7 @@
   #:use-module (gnu packages cryptsetup)
   #:use-module (gnu packages docker)
   #:use-module (gnu packages file)
+  #:use-module (gnu packages firmware)
   #:use-module (gnu packages fonts)
   #:use-module (gnu packages fontutils)
   #:use-module (gnu packages freedesktop)
