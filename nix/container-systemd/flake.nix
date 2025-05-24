@@ -7,19 +7,7 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, dotfiles-home-manager, ... } @ inputs:
-    flake-utils.lib.eachDefaultSystem (system: {
-      devShell = with nixpkgs.legacyPackages."${system}"; mkShell {
-        buildInputs = [
-          nixStable
-          nixos-install-tools
-        ];
-        shellHook = ''
-          . ${nixStable}/share/bash-completion/completions/nix
-          export LANG=C
-        '';
-      };
-    })
-    // (let
+    let
       system = "x86_64-linux";
     in
       {
@@ -80,5 +68,5 @@
             ];
           };
         };
-      });
+      };
 }
