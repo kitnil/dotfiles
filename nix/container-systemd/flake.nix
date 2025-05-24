@@ -2,12 +2,24 @@
   description = "";
 
   inputs = {
-    dotfiles-home-manager.url = "git+https://cgit.wugi.info/git/wigust/dotfiles?dir=nix";
+    dotfiles-home-manager.url = "git+https://cgit.wugi.info/git/wigust/dotfiles?dir=dotfiles/nix";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs = { self, nixpkgs, flake-utils, dotfiles-home-manager, ... } @ inputs:
-    let
+    flake-utils.lib.eachDefaultSystem (system: {
+      devShell = with nixpkgs.legacyPackages."${system}"; mkShell {
+        buildInputs = [
+          nixStable
+          nixos-install-tools
+        ];
+        shellHook = ''
+          . ${nixStable}/share/bash-completion/completions/nix
+          export LANG=C
+        '';
+      };
+    })
+    // (let
       system = "x86_64-linux";
     in
       {
@@ -22,7 +34,7 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.users.oleg =  inputs.dotfiles-home-manager.outPath + "/pc0/home-manager.nix";
+                home-manager.users.oleg =  inputs.dotfiles-home-manager.outPath + "../../../dotfiles/nix/pc0/home-manager.nix";
                 home-manager.sharedModules = [
                   inputs.dotfiles-home-manager.nixosModules.home-manager-firefox
                   inputs.dotfiles-home-manager.nixosModules.home-manager-foot
@@ -68,5 +80,5 @@
             ];
           };
         };
-      };
+      });
 }

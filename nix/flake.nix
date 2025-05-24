@@ -65,6 +65,7 @@
     override.url = "nixpkgs";
     nixos.url = "nixpkgs/nixos-unstable";
     darwin.url = "github:LnL7/nix-darwin";
+    bbuscarino-env.url = "github:wigust/env";
 
     kamadorueda-alejandra.url = "github:kamadorueda/alejandra/1.1.0";
   };
@@ -78,7 +79,7 @@
     , github-com-tsoding-boomer
     , nixpkgs-idea, nixpkgs-idea-community, nixpkgs-ddcutil
     , nixpkgs-nixd, nixpkgs-copyq, nixpkgs-chatterino2
-    , nixpkgs-phpactor, kamadorueda-alejandra, flake-utils-plus
+    , nixpkgs-phpactor, bbuscarino-env, kamadorueda-alejandra, flake-utils-plus
     , ... }:
     let
       system = "x86_64-linux";
@@ -143,13 +144,24 @@
       devShell.${system} =
         let
           pkgs = import nixpkgs {
+            overlays = [
+              (final: prev: {
+                inherit (import
+                  (rycee-nur-expressions.outPath + "/default.nix") {
+                    pkgs = prev;
+                  })
+                  mozilla-addons-to-nix;
+              })
+            ];
             inherit system;
           };
           inherit (pkgs) mkShell;
         in
           mkShell {
             buildInputs = with pkgs; [
-              nixVersions.git
+              nix
+              mozilla-addons-to-nix
+              deploy-rs.outputs.packages.${system}.deploy-rs
             ];
           };
       packages.${system} = let
@@ -187,6 +199,11 @@
                 trap 'chmod -Rf +w "$test_directory"; rm -rf "$test_directory"' EXIT
                 exec -a "$0" ${firefox-esr-52}/bin/firefox --new-instance --profile "$test_directory" --private-window "$@"
               '') { };
+
+          nekoray = let
+            inherit (nixpkgs-idea-community.legacyPackages.${system})
+              libsForQt5;
+          in libsForQt5.callPackage ./pkgs/nekoray { };
 
           jenkins = with pkgs;
             let
@@ -269,7 +286,6 @@
             inherit system;
             config = { allowUnfree = true; };
           };
-          inherit (pkgs) callPackage;
         in {
           inherit (pkgs) discord google-chrome;
           chromium-wrapper = with pkgs;
@@ -285,6 +301,14 @@
               }) { };
         })
 
+        {
+          eve-online = pkgs.writeScriptBin "eve-online" ''
+            #!${pkgs.runtimeShell}
+            DRI_PRIME=1 ${self.packages.${system}.nixGLIntel}/bin/nixGLIntel ${
+              bbuscarino-env.legacyPackages.${system}.eve-online
+            }/bin/eve-online
+          '';
+        }
         {
           jenkins-job-builder = pkgs.callPackage
             ({ stdenv, bash, jenkins-job-builder }:
