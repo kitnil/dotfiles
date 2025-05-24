@@ -149,7 +149,7 @@
         in
           mkShell {
             buildInputs = with pkgs; [
-              nix
+              nixVersions.git
             ];
           };
       packages.${system} = let
