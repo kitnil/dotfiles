@@ -67,6 +67,7 @@
   #:use-module (wugi packages certs)
   #:use-module (wugi system hardware guixsd)
   #:use-module (wugi packages linux)
+  #:use-module (wugi packages linux-modules)
   #:use-module (wugi packages monitoring)
   #:use-module (wugi packages netboot)
   #:use-module (wugi services admin)
