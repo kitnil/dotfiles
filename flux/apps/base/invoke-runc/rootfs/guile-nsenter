@@ -118,6 +118,7 @@ code is non-zero; otherwise return #t."
                                  "make" ,(string-append "PASSWORD_STORE=" password-store)
                                  ,,(getenv "RUNC_MAKE_TARGET"))))
                             (else
+                             (setenv "ACLOCAL_PATH" "nix/m4")
                              (invoke "./bootstrap")
                              (invoke "./configure")
                              (invoke
