@@ -44,7 +44,6 @@
   #:use-module (nongnu system linux-initrd)
   #:use-module (wugi bootloader grub)
   #:use-module (wugi config)
-  #:use-module (wugi etc guix channels pc0)
   #:use-module ((wugi packages linux) #:select (kvmfr-linux-module))
   #:use-module (wugi services backup)
   #:use-module (wugi services kubernetes)
@@ -465,10 +464,6 @@ cgroup_device_acl = [
                       (modify-services %base-services
                         (guix-service-type config =>
                                            (guix-configuration
-                                            (channels (%channels-pc0))
-                                            (guix
-                                             (guix-for-channels
-                                              (%channels-pc0)))
                                             (authorized-keys
                                              (let ((substitute-file
                                                     (cut string-append %distro-directory "/wugi/etc/substitutes/" <>)))
