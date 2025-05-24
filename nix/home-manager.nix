@@ -207,7 +207,6 @@
     deploy-rs
     discord
     elktail
-    # eve-online
     firefox-52-wrapper
     mozilla-addons-to-nix
     fx_cast_bridge
