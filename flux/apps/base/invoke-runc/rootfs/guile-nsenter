@@ -103,20 +103,21 @@ code is non-zero; otherwise return #t."
                         (lambda (environment)
                           (case environment
                             ((guix)
-                             `(begin
-                                (define (invoke program . args)
-                                  "Invoke PROGRAM with the given ARGS.  Raise an error if the exit
+                             (guile-with-guix-environment
+                              `(begin
+                                 (define (invoke program . args)
+                                   "Invoke PROGRAM with the given ARGS.  Raise an error if the exit
 code is non-zero; otherwise return #t."
-                                  (let ((status (apply system* program args)))
-                                    (unless (zero? status)
-                                      (error (format #f "program ~s exited with non-zero code" program)
-                                             status))
-                                    #t))
-                                (invoke "./bootstrap")
-                                (invoke "./configure")
-                                (invoke
-                                 "make" ,(string-append "PASSWORD_STORE=" password-store)
-                                 ,,(getenv "RUNC_MAKE_TARGET"))))
+                                   (let ((status (apply system* program args)))
+                                     (unless (zero? status)
+                                       (error (format #f "program ~s exited with non-zero code" program)
+                                              status))
+                                     #t))
+                                 (invoke "./bootstrap")
+                                 (invoke "./configure")
+                                 (invoke
+                                  "make" ,(string-append "PASSWORD_STORE=" password-store)
+                                  ,,(getenv "RUNC_MAKE_TARGET")))))
                             (else
                              (setenv "ACLOCAL_PATH" "nix/m4")
                              (invoke "./bootstrap")
