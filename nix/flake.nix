@@ -283,36 +283,6 @@
                   ln -s ${google-chrome}/bin/google-chrome-stable $out/bin/chromium
                 '';
               }) { };
-          dotfiles = callPackage (
-            { stdenv
-            , autoconf
-            , automake
-            , git
-            , nixVersions
-            , guile
-            , pkg-config
-            , skopeo
-            , yamlfmt
-            , yq
-            }:
-            stdenv.mkDerivation {
-              pname = "dotfiles";
-              version = "0.0.1";
-              src = false;
-              dontUnpack = true;
-              buildInputs = [
-                autoconf
-                automake
-                git
-                guile
-                guile.dev
-                nixVersions.git
-                pkg-config
-                skopeo
-                yamlfmt
-                yq
-              ];
-            }) { };
         })
 
         {
