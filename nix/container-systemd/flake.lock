@@ -641,8 +641,8 @@
     "nixpkgs_9": {
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-KUICKs/Cn4n88UeMA0hecTffqmnd2aWiHHPZQicxuS8=",
-        "path": "/nix/store/yy0g7bl5b16ycj03k8vbidnh8ncawxap-nixos-25.05.20250319.2a725d4/nixos",
+        "narHash": "sha256-PixrlEYBKu1+f+Aby+mz4hpVMR3HIg4m2/rgKqoinUo=",
+        "path": "/nix/store/md3533cv5gg8rd8y148c3kv1q0y999f0-nixos-25.05.19700101.dirty/nixos",
         "type": "path"
       },
       "original": {
