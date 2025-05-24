@@ -904,7 +904,7 @@ location / {
                (comment "Oleg Pykhalov")
                (group "users")
                (supplementary-groups
-                '("wheel" "adbusers" "audio" "video" "kvm" "input" "libvirt"))
+                '("wheel" "audio" "video" "kvm" "input" "libvirt"))
                (home-directory "/home/oleg")))
         %base-user-accounts))
 
@@ -958,10 +958,6 @@ location / {
          (extra-special-file "/bin/bash"
                              (file-append bash "/bin/bash"))
          ;; (extra-special-file "/bin/setquota")
-
-         ;; “adb” and “fastboot” without root privileges
-         (udev-rules-service 'android android-udev-rules
-                             #:groups '("adbusers"))
 
          (udev-rules-service 'kvm
                              (udev-rule
