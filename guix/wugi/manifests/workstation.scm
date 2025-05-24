@@ -12,6 +12,7 @@
   #:use-module (wugi manifests emacs)
   #:use-module (wugi manifests guile)
   #:use-module (wugi manifests icons)
+  #:use-module (wugi manifests kubernetes)
   #:use-module (wugi manifests majordomo)
   #:use-module (wugi manifests mqtt)
   #:use-module (wugi manifests notebook-packages)
@@ -36,6 +37,7 @@
          (%ai-manifest)
          (%guile-manifest)
          (%mqtt-manifest)
+         (%kubernetes-manifest)
          (%wm-manifest))))
 
 (%workstation-manifest)
