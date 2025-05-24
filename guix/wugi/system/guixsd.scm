@@ -878,12 +878,7 @@ location / {
       ;; (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
       ;;                         (operating-system-initrd-modules base-system)))
 
-      (packages (append (list ovmf
-                              cifs-utils
-                              btrfs-progs
-                              lvm2
-                              smartmontools)
-                        (map package-from-program-file
+      (packages (append (map package-from-program-file
                              (list restic-system-backup
                                    restic-guix-backup
                                    restic-win10-backup

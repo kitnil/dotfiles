@@ -157,6 +157,8 @@ EndSection\n")
   (list
    binutils
    bridge-utils
+   btrfs-progs
+   cifs-utils
    cryptsetup
    dtach
    file
@@ -171,6 +173,7 @@ EndSection\n")
    ncurses
    net-tools
    openssh ;autofs
+   ovmf
    rsync
    smartmontools
    sshfs ;autofs
@@ -212,14 +215,8 @@ EndSection\n")
         singularity))
 
 (define %my-system-packages
-  (append %container-packages
-          %android-packages
-          %admin-packages
+  (append %admin-packages
           %cert-packages
-          %audio-packages
-          %font-packages
-          %theme-packages
-          %xorg-packages
           %base-packages))
 
 (define %notebook-packages
