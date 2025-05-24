@@ -71,18 +71,18 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1748113734,
-        "narHash": "sha256-wSvMDaNO8I0x6JNcefjaxFT4StoDB6uVg81xJaMqqPs=",
+        "lastModified": 1748115369,
+        "narHash": "sha256-ezgId13Kexgaf/HlgN7/OhjNpdRfQDjciBUl57c7qgs=",
         "ref": "refs/heads/master",
-        "rev": "53dcb383ba343512cf043371872a10a344578099",
-        "revCount": 14723,
+        "rev": "9e8f2aa3a7a71173c1722df54b67bf28a2210e4e",
+        "revCount": 14734,
         "type": "git",
-        "url": "https://cgit.wugi.info/git/wigust/dotfiles"
+        "url": "https://cgit.wugi.info/git/wigust/dotfiles?dir=nix"
       },
       "original": {
         "dir": "nix",
         "type": "git",
-        "url": "https://cgit.wugi.info/git/wigust/dotfiles"
+        "url": "https://cgit.wugi.info/git/wigust/dotfiles?dir=nix"
       }
     },
     "flake-compat": {
@@ -701,12 +701,12 @@
         "rev": "c6734fa6a82294b57927748b94a98b108e1daab7",
         "revCount": 4316,
         "type": "git",
-        "url": "https://gitlab.com/rycee/nur-expressions"
+        "url": "https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons"
       },
       "original": {
         "dir": "pkgs/firefox-addons",
         "type": "git",
-        "url": "https://gitlab.com/rycee/nur-expressions"
+        "url": "https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons"
       }
     },
     "systems": {
