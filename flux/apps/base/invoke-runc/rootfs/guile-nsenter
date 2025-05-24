@@ -100,18 +100,25 @@ code is non-zero; otherwise return #t."
                  (chdir "..")
 
                  (guile-with-guix-environment
-                  `(and=> (string->symbol ,,(getenv "RUNC_ENVIRONMENT"))
-                          (lambda (environment)
-                            (case environment
-                              ((guix)
-                               (begin
+                  `(begin
+                     (define (invoke program . args)
+                       "Invoke PROGRAM with the given ARGS.  Raise an error if the exit
+code is non-zero; otherwise return #t."
+                       (let ((status (apply system* program args)))
+                         (unless (zero? status)
+                           (error (format #f "program ~s exited with non-zero code" program)
+                                  status))
+                         #t))
+                     (and=> (string->symbol ,,(getenv "RUNC_ENVIRONMENT"))
+                            (lambda (environment)
+                              (case environment
+                                ((guix)
                                  (invoke "./bootstrap")
                                  (invoke "./configure")
                                  (invoke
                                   "make" ,(string-append "PASSWORD_STORE=" password-store)
-                                  ,,(getenv "RUNC_MAKE_TARGET"))))
-                              (else
-                               (begin
+                                  ,,(getenv "RUNC_MAKE_TARGET")))
+                                (else
                                  (invoke "./bootstrap")
                                  (invoke "./configure")
                                  (invoke
