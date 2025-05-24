@@ -23,6 +23,7 @@
   #:use-module (gnu packages pulseaudio)
   #:use-module (gnu packages readline)
   #:use-module (gnu packages rsync)
+  #:use-module (gnu packages samba)
   #:use-module (gnu packages screen)
   #:use-module (gnu packages ssh)
   #:use-module (gnu packages suckless)
