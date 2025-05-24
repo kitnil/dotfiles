@@ -975,8 +975,6 @@ location / {
                                         "NAME==\"enp*\""
                                         (format #f "RUN+=\"~a/sbin/ethtool -s $name wol g\"~%" #$ethtool))))))
 
-         (udev-rules-service 'kmonad kmonad)
-
          ;; TODO: Fix substituters
          (service nix-service-type
                   (nix-configuration

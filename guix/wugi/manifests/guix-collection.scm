@@ -161,8 +161,6 @@
   (packages->manifest
    (append (list guile-bash
 
-                 kmonad
-
                  feh sxiv    ; Image viewers
                  perl-image-exiftool
 
