@@ -893,13 +893,7 @@ location / {
                                    restic-pc0-win10-init))
                         %my-system-packages))
 
-      (groups (append (list (user-group (name "uinput"))
-                            (user-group (name "postfix")
-                                        (id 13)
-                                        (system? #t))
-                            (user-group (name "postdrop")
-                                        (id 118)
-                                        (system? #t)))
+      (groups (append (list (user-group (name "uinput")))
                       %base-groups))
 
       (users
