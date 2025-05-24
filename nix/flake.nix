@@ -289,7 +289,7 @@
             , autoconf
             , automake
             , git
-            , nix
+            , nixVersions
             , guile
             , pkg-config
             , skopeo
@@ -307,7 +307,7 @@
                 git
                 guile
                 guile.dev
-                nix
+                nixVersions.git
                 pkg-config
                 skopeo
                 yamlfmt
