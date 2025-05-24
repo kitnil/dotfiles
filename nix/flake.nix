@@ -294,6 +294,7 @@
             , autoconf
             , automake
             , git
+            , nix
             , guile
             , pkg-config
             , skopeo
