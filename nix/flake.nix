@@ -144,26 +144,13 @@
       devShell.${system} =
         let
           pkgs = import nixpkgs {
-            overlays = [
-              (final: prev: {
-                inherit (import
-                  (rycee-nur-expressions.outPath + "/default.nix") {
-                    pkgs = prev;
-                  })
-                  mozilla-addons-to-nix;
-              })
-            ];
             inherit system;
           };
           inherit (pkgs) mkShell;
         in
           mkShell {
             buildInputs = with pkgs; [
-              guile
-              guile.dev
-              mozilla-addons-to-nix
               nix
-              pkg-config
             ];
           };
       packages.${system} = let
