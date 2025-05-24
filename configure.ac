@@ -6,6 +6,22 @@ if test "x$GIT" = "x"; then
 fi
 AC_SUBST([GIT])
 
+dnl We require pkg.m4 (from pkg-config) and guile.m4 (from Guile.)
+dnl Make sure they are available.
+m4_pattern_forbid([PKG_CHECK_MODULES])
+m4_pattern_forbid([GUILE_MODULE_AVAILABLE])
+m4_pattern_forbid([^GUILE_P])
+m4_pattern_allow([^GUILE_PKG_ERRORS])
+m4_pattern_forbid([^GUIX_])
+
+dnl Search for 'guile' and 'guild'.  This macro defines
+dnl 'GUILE_EFFECTIVE_VERSION'.
+GUILE_PKG([3.0])
+GUILE_PROGS
+if test "x$GUILD" = "x"; then
+AC_MSG_ERROR(['guild' binary not found; please check your Guile installation.])
+fi
+
 AC_PATH_PROG([GUIX], [guix])
 AC_SUBST([GUIX])
 
