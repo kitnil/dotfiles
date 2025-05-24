@@ -25,6 +25,7 @@
   #:use-module (gnu packages package-management)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages tls)
+  #:use-module (gnu packages web)
   #:use-module (guix build-system gnu)
   #:use-module (guix build utils)
   #:use-module (guix gexp)
@@ -55,5 +56,6 @@
     (inherit dotfiles)
     (inputs
      (append
-      `(("yamlfmt" ,yamlfmt))
+      `(("yq" ,yq)
+        ("yamlfmt" ,yamlfmt))
       (package-inputs dotfiles)))))
