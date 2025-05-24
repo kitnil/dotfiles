@@ -275,6 +275,7 @@
             inherit system;
             config = { allowUnfree = true; };
           };
+          inherit (pkgs) callPackage;
         in {
           inherit (pkgs) discord google-chrome;
           chromium-wrapper = with pkgs;
@@ -288,14 +289,42 @@
                   ln -s ${google-chrome}/bin/google-chrome-stable $out/bin/chromium
                 '';
               }) { };
+          dotfiles = callPackage (
+            { stdenv
+            , autoconf
+            , automake
+            , git
+            , guile
+            , pkg-config
+            , skopeo
+            , yamlfmt
+            , yq
+            }:
+            stdenv.mkDerivation {
+              pname = "dotfiles";
+              version = "0.0.1";
+              src = false;
+              dontUnpack = true;
+              buildInputs = [
+                autoconf
+                automake
+                git
+                guile
+                guile.dev
+                pkg-config
+                skopeo
+                yamlfmt
+                yq
+              ];
+            }) { };
         })
 
         {
           eve-online = pkgs.writeScriptBin "eve-online" ''
-            #!${pkgs.runtimeShell}
+                #!${pkgs.runtimeShell}
             DRI_PRIME=1 ${self.packages.${system}.nixGLIntel}/bin/nixGLIntel ${
-              bbuscarino-env.legacyPackages.${system}.eve-online
-            }/bin/eve-online
+                    bbuscarino-env.legacyPackages.${system}.eve-online
+                  }/bin/eve-online
           '';
         }
         {

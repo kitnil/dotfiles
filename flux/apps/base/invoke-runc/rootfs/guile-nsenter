@@ -75,7 +75,7 @@ code is non-zero; otherwise return #t."
                                                   (lambda ()
                                                     (write expression)))))
      (define (guile-with-nix-environment expression)
-       (invoke "nix" "shell" "nix"
+       (invoke "nix" "develop" "./nix#dotfiles"
                "--command"
                "guile" "--no-auto-compile" "-c" (with-output-to-string
                                                   (lambda ()
