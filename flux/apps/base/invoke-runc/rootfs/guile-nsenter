@@ -43,15 +43,6 @@
                           (lambda ()
                             (write expression))))))))))
 
-(define (guile-with-guix-environment expression)
-  `(execl "guix"
-          "guix" "shell" "--load-path=guix" "--development"
-          "--expression=(@ (wugi packages dotfiles) dotfiles-extra)"
-          "--" (getenv "RUNC_GUILE") "--no-auto-compile"
-          "-c" ,(with-output-to-string
-                  (lambda ()
-                    (write expression)))))
-
 (define %git-origin
   "https://cgit.wugi.info/git/wigust/dotfiles")
 
@@ -71,6 +62,14 @@ code is non-zero; otherwise return #t."
          #t))
      (define (git . args)
        (apply invoke (append '("git") args)))
+     (define (guile-with-guix-environment expression)
+       (execl "guix"
+              "guix" "shell" "--load-path=guix" "--development"
+              "--expression=(@ (wugi packages dotfiles) dotfiles-extra)"
+              "--" (getenv "RUNC_GUILE") "--no-auto-compile"
+              "-c" (with-output-to-string
+                     (lambda ()
+                       (write expression)))))
      (invoke "/usr/bin/env")
      (and=> (getenv "HOME")
             (lambda (home)
@@ -96,11 +95,24 @@ code is non-zero; otherwise return #t."
                  (git "submodule" "add" ,%git-password-store-url "dotfiles")
                  (chdir "..")
 
-                 (invoke "./bootstrap")
-                 (invoke "./configure")
-                 (invoke
-                  "make" (string-append "PASSWORD_STORE=" password-store)
-                  ,(getenv "RUNC_MAKE_TARGET"))))))))
+                 (guile-with-guix-environment
+                  (and=> (string->symbol ,(getenv "RUNC_ENVIRONMENT"))
+                         (lambda (environment)
+                           (case environment
+                             ((guix)
+                              `(begin
+                                 (invoke "./bootstrap")
+                                 (invoke "./configure")
+                                 (invoke
+                                  "make" ,(string-append "PASSWORD_STORE=" password-store)
+                                  ,,(getenv "RUNC_MAKE_TARGET"))))
+                             (else
+                              `(begin
+                                 (invoke "./bootstrap")
+                                 (invoke "./configure")
+                                 (invoke
+                                  "make" ,(string-append "PASSWORD_STORE=" password-store)
+                                  ,,(getenv "RUNC_MAKE_TARGET"))))))))))))))
 
 (define kubectl
   "/home/oleg/.guix-profile")
@@ -137,21 +149,10 @@ code is non-zero; otherwise return #t."
              "--additional-gids" ,(number->string 131)
              ,(getenv "RUNC_CONTAINER_ID")
              ,(getenv "RUNC_GUILE") "--no-auto-compile"
-             "-c" ,(and=> (string->symbol (getenv "RUNC_ENVIRONMENT"))
-                          (lambda (environment)
-                            (case environment
-                              ((guix)
-                               (with-output-to-string
-                                 (lambda ()
-                                   (write
-                                    (guile-with-environment
-                                     (guile-with-guix-environment
-                                      (runc-code)))))))
-                              (else (with-output-to-string
-                                      (lambda ()
-                                        (write
-                                         (guile-with-environment
-                                          (runc-code))))))))))))
+             "-c" ,(with-output-to-string
+                     (lambda ()
+                       (write
+                        (guile-with-environment (runc-code))))))))
 
 (define (main args)
   (define opts
