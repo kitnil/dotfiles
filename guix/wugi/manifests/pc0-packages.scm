@@ -87,4 +87,5 @@
          tmux
          translate-shell
          v4l-utils
-         wl-clipboard)))
+         wl-clipboard
+         yq)))
