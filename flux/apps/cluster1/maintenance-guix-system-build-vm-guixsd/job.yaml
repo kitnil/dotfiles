@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: invoke-runc
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: kube1
+      containers:
+      - name: nsenter
+        env:
+        - name: GIT_COMMIT
+          value: 550926becba59f0a1cdf5a4b16f4f601c7ae6115
+        - name: RUNC_MAKE_TARGET
+          value: "guix-time-machine-system-build-vm-guixsd"
+        - name: RUNC_ENVIRONMENT
+          value: guix
