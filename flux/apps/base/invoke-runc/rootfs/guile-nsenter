@@ -102,28 +102,36 @@ code is non-zero; otherwise return #t."
 (define (kubectl-program)
   ;; TODO: Use Kubernetes HTTP API without kubectl.
   `(begin
+     (define (invoke program . args)
+       "Invoke PROGRAM with the given ARGS.  Raise an error if the exit
+code is non-zero; otherwise return #t."
+       (let ((status (apply system* program args)))
+         (unless (zero? status)
+           (error (format #f "program ~s exited with non-zero code" program)
+                  status))
+         #t))
      (setenv "KUBECONFIG" ,kubeconfig)
-     (system* ,(string-append kubectl "/bin/kubectl")
-              (string-append "--namespace=" ,(getenv "KUBERNETES_NAMESPACE"))
-              "exec" "--stdin=true"
-              (string-append "pod/" ,(getenv "KUBERNETES_POD_NAME")) "--"
-              "runc" "exec"
-              "--user" (string-append
-                        ,(getenv "RUNC_UID") ":" ,(getenv "RUNC_GID"))
-              "--env" (string-append "RUNC_MAKE_TARGET="
-                                     ,(getenv "RUNC_MAKE_TARGET"))
-              "--env" (string-append "RUNC_GUILE=" ,(getenv "RUNC_GUILE"))
-              "--env" (string-append "COLUMNS=" ,(number->string 200))
-              "--env" (string-append "USER=" ,(getenv "RUNC_USER"))
-              "--env" (string-append "GIT_COMMIT=" ,(getenv "GIT_COMMIT"))
-              ;; Add to `docker' group in nix-builder.
-              "--additional-gids" ,(number->string 131)
-              ,(getenv "RUNC_CONTAINER_ID")
-              ,(getenv "RUNC_GUILE") "--no-auto-compile"
-              "-c" ,(with-output-to-string
-                      (lambda ()
-                        (write
-                         (guile-with-environment (runc-code))))))))
+     (invoke ,(string-append kubectl "/bin/kubectl")
+             (string-append "--namespace=" ,(getenv "KUBERNETES_NAMESPACE"))
+             "exec" "--stdin=true"
+             (string-append "pod/" ,(getenv "KUBERNETES_POD_NAME")) "--"
+             "runc" "exec"
+             "--user" (string-append
+                       ,(getenv "RUNC_UID") ":" ,(getenv "RUNC_GID"))
+             "--env" (string-append "RUNC_MAKE_TARGET="
+                                    ,(getenv "RUNC_MAKE_TARGET"))
+             "--env" (string-append "RUNC_GUILE=" ,(getenv "RUNC_GUILE"))
+             "--env" (string-append "COLUMNS=" ,(number->string 200))
+             "--env" (string-append "USER=" ,(getenv "RUNC_USER"))
+             "--env" (string-append "GIT_COMMIT=" ,(getenv "GIT_COMMIT"))
+             ;; Add to `docker' group in nix-builder.
+             "--additional-gids" ,(number->string 131)
+             ,(getenv "RUNC_CONTAINER_ID")
+             ,(getenv "RUNC_GUILE") "--no-auto-compile"
+             "-c" ,(with-output-to-string
+                     (lambda ()
+                       (write
+                        (guile-with-environment (runc-code))))))))
 
 (define (main args)
   (define opts
@@ -134,7 +142,15 @@ code is non-zero; otherwise return #t."
                (lambda (op loads)
                  (cons op loads))
                %default-options))
-  (apply system*
+  (define (invoke program . args)
+    "Invoke PROGRAM with the given ARGS.  Raise an error if the exit
+code is non-zero; otherwise return #t."
+    (let ((status (apply system* program args)))
+      (unless (zero? status)
+        (error (format #f "program ~s exited with non-zero code" program)
+               status))
+      #t))
+  (apply invoke
          `("nsenter"
            ,(string-append "--target=" (number->string 1))
            "--mount"
