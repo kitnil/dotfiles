@@ -36,3 +36,4 @@
 /configure
 /install-sh
 /src/emacs/benchmark/benchmark.el
+/src/guile/format-yaml/format-yaml

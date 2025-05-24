@@ -1,0 +1,41 @@
+#!@GUILE@ --no-auto-compile -e main -s
+!#
+
+(use-modules (ice-9 format))
+
+(define %flux-kustomizations
+  '(maintenance-guix-system-build-guixsd
+    maintenance-guix-system-build-notebook
+    maintenance-guix-system-build-pc0
+    maintenance-guix-system-build-vm1
+    maintenance-guix-system-build-vm2
+    maintenance-guix-system-build-workstation
+    maintenance-guix-system-reconfigure-kube1
+    maintenance-guix-system-reconfigure-kube2
+    maintenance-guix-system-reconfigure-kube3
+    maintenance-nix-build-container-systemd-kube1
+    runc-nix-builder-nixos-rebuild-switch-flake-kube1))
+
+(define (invoke program . args)
+  "Invoke PROGRAM with the given ARGS.  Raise an error if the exit
+code is non-zero; otherwise return #t."
+  (let ((status (apply system* program args)))
+    (unless (zero? status)
+      (error (format #f "program ~s exited with non-zero code" program)
+             status))
+    #t))
+
+(define (main . args)
+  (for-each (lambda (kustomization)
+              (let ((job-file (string-append "flux/apps/cluster1/"
+                                             (symbol->string kustomization)
+                                             "/job.yaml")))
+                (invoke "yq"
+                        "-i"
+                        (format #f ".spec.template.spec.containers[] |= (select(.name == ~s)).env[] |= (select(.name == ~s).value = ~s)"
+                                "nsenter"
+                                "GIT_COMMIT"
+                                (getenv "GIT_COMMIT"))
+                        job-file)))
+            %flux-kustomizations))
+

@@ -20,6 +20,9 @@ GUILE_PKG([3.0])
 GUILE_PROGS
 if test "x$GUILD" = "x"; then
 AC_MSG_ERROR(['guild' binary not found; please check your Guile installation.])
+else
+AC_SUBST([GUILE])
+AC_CONFIG_FILES([src/guile/format-yaml/format-yaml], [chmod +x src/guile/format-yaml/format-yaml])
 fi
 
 AC_PATH_PROG([GUIX], [guix])
