@@ -14,6 +14,7 @@
   #:use-module (wugi manifests guile)
   #:use-module (wugi manifests icons)
   #:use-module (wugi manifests majordomo)
+  #:use-module (wugi manifests mqtt)
   #:use-module (wugi manifests notebook-packages)
   #:use-module (wugi manifests obs)
   #:use-module (wugi manifests pc0-packages)
@@ -36,6 +37,7 @@
          (%obs-manifest)
          (%ai-manifest)
          (%guile-manifest)
+         (%mqtt-manifest)
          (%wm-manifest))))
 
 (%workstation-manifest)
