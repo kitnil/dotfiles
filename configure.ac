@@ -43,6 +43,9 @@ fi
 AC_PATH_PROG([SKOPEO], [skopeo])
 AC_SUBST([SKOPEO])
 
+AC_PATH_PROG([YQ], [yq])
+AC_SUBST([YQ])
+
 AM_INIT_AUTOMAKE([1.14 -Woverride -Wno-portability])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

@@ -30,7 +30,7 @@ code is non-zero; otherwise return #t."
               (let ((job-file (string-append "flux/apps/cluster1/"
                                              (symbol->string kustomization)
                                              "/job.yaml")))
-                (invoke "yq"
+                (invoke "@YQ@"
                         "-i"
                         (format #f ".spec.template.spec.containers[] |= (select(.name == ~s)).env[] |= (select(.name == ~s).value = ~s)"
                                 "nsenter"
