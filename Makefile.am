@@ -100,6 +100,7 @@ GUIX_SYSTEM_CONFIGURATIONS =			\
   pc0						\
   vm1						\
   vm2						\
+  vm-guixsd					\
   workstation
 
 define guix-time-machine
