@@ -28,8 +28,9 @@
   #:use-module (guix build-system gnu)
   #:use-module (guix build utils)
   #:use-module (guix gexp)
+  #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
-  #:use-module ((guix licenses) #:prefix license:))
+  #:use-module (wugi packages admin))
 
 (define-public dotfiles
   (package
@@ -48,3 +49,11 @@
     (description
      "This package provides dotfiles")
     (license license:gpl3+)))
+
+(define-public dotfiles-extra
+  (package
+    (inherit dotfiles)
+    (inputs
+     (append
+      `(("yamlfmt" ,yamlfmt))
+      (package-inputs dotfiles)))))
