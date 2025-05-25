@@ -5,6 +5,9 @@
   #:use-module (gnu packages compression)
   #:use-module (gnu packages cpio)
   #:use-module (gnu packages curl)
+  #:use-module (gnu packages flex)
+  #:use-module (gnu packages patchutils)
+  #:use-module (gnu packages python)
   #:use-module (gnu packages version-control)
   #:use-module (guix build-system copy)
   #:use-module (guix build-system gnu)
@@ -23,7 +26,7 @@
 (define-public drbd-module
   (package
     (name "drbd-module")
-    (version "9.1.7")
+    (version "9.2.13")
     (source
      (origin
        (method url-fetch)
@@ -31,12 +34,16 @@
                            version ".tar.gz"))
        (sha256
         (base32
-         "1iak07vpynimbyh4lhpf8xpn6vhgxnn3jmckm28r09m3a5adyrj1"))))
+         "0njhcpry0hr4ibclfv3xva21gzp7vsd876qmnvcyhr6mvc2xmjrc"))))
     (build-system linux-module-build-system)
     (inputs
-     `(("bash" ,bash)))
+     `(("bash" ,bash)
+       ("coccinelle" ,coccinelle)
+       ("flex" ,flex)
+       ("python" ,python)))
     (arguments
      (list
+      #:make-flags #~(list "--debug" "SPAAS=false")
       #:tests? #f ;there are none.
       #:source-directory "drbd"
       #:phases
