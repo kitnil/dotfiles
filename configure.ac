@@ -23,7 +23,7 @@ AC_MSG_ERROR(['guild' binary not found; please check your Guile installation.])
 else
 AC_SUBST([GUILE])
 AC_CONFIG_FILES([src/guile/format-yaml/format-yaml], [chmod +x src/guile/format-yaml/format-yaml])
-AC_CONFIG_FILES([src/guile/guix-shell-guild/guix-shell-guild], [chmod +x src/guile/guix-shell-guild/guix-shell-guild])
+AC_CONFIG_FILES([src/guile/guix-guile-next-compile-file/guix-guile-next-compile-file], [chmod +x src/guile/guix-guile-next-compile-file/guix-guile-next-compile-file])
 fi
 
 AC_PATH_PROG([GUIX], [guix])

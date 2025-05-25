@@ -2,7 +2,7 @@
 
 set -o nounset -o errexit -o pipefail
 
-mapfile -t modules < <(src/guile/guix-shell-guild/guix-shell-guild compile -W3 "$1" |& awk '/warning: unused module/' | cut -d: -f 5 | sed 's/ unused module //')
+mapfile -t modules < <(src/guile/guix-guile-next-compile-file/guix-guile-next-compile-file compile -W3 "$1" |& awk '/warning: unused module/' | cut -d: -f 5 | sed 's/ unused module //')
 
 for module in "${modules[@]}"
 do

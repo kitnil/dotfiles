@@ -20,7 +20,7 @@
                     (alist-cons 'compile-file arg result)))
           (option '(#\h "help") #f #f
                   (display-and-exit-proc
-                   "Usage: guix-shell-guild ...\n")))))
+                   "Usage: guix-guile-next-compile-file ...\n")))))
 
 (define %default-options
   '())
