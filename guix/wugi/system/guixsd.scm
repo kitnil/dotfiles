@@ -662,12 +662,6 @@ location / {
                                "/dev/null")
                          read-string)))))))
 
-  (define (create-openvswitch-internal-port bridge port)
-    #~(invoke/quiet #$(file-append openvswitch "/bin/ovs-vsctl")
-                    "--may-exist" "add-port" #$bridge #$port
-                    "vlan_mode=native-untagged"
-                    "--" "set" "Interface" #$port "type=internal"))
-
   ;; Add interface to VLAN 154:
   ;;
   ;; <interface type='bridge'>
