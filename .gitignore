@@ -37,3 +37,4 @@
 /install-sh
 /src/emacs/benchmark/benchmark.el
 /src/guile/format-yaml/format-yaml
+/src/guile/guix-shell-guild/guix-shell-guild

@@ -1,0 +1,21 @@
+#!@GUILE@ \
+--no-auto-compile -e main -s
+!#
+
+(use-modules (ice-9 popen))
+
+(define (main args)
+  (let ((port (open-pipe* OPEN_WRITE "guix" "shell" "guile-next" "--" "guile")))
+    (write
+     `(begin
+        (define (invoke program . args)
+          "Invoke PROGRAM with the given ARGS.  Raise an error if the exit
+code is non-zero; otherwise return #t."
+          (let ((status (apply system* program args)))
+            (unless (zero? status)
+              (error (format #f "program ~s exited with non-zero code" program)
+                     status))
+            #t))
+        (invoke "guild" ,@(cdr args)))
+     port)
+    (close-port port)))
