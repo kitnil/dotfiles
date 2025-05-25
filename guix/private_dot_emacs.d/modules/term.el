@@ -142,3 +142,14 @@
     (kill-buffer-and-frame)))
 
 (add-hook 'eat-exit-hook #'kill-buffer-on-process-exit-status-0)
+
+(defun wi-eat-prettify-symbols ()
+  (set (make-local-variable 'prettify-symbols-alist)
+       `(("&&" . ?∧)
+         ("||" . ?∨)
+         ("++" . ?⧺)
+         ("<=" . ?≤)
+         (">=" . ?≥)
+         ("->" . ?→))))
+
+(add-hook 'eat-mode-hook 'wi-eat-prettify-symbols)
