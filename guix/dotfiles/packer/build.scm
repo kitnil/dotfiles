@@ -53,7 +53,7 @@
                         (("type" . "shell")
                          ("max_retries" . 3)
                          ("inline" . #("set -x"
-                                       "guix system init --substitute-urls=\"https://guix.wugi.info https://bordeaux.guix.gnu.org\" /mnt/etc/config.scm /mnt")))
+                                       "guix system init --substitute-urls=\"https://bordeaux.guix.gnu.org\" /mnt/etc/config.scm /mnt")))
                         (("type" . "shell")
                          ("inline" . #("set -x"
                                        "reboot"))
