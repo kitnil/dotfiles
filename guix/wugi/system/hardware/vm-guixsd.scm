@@ -1,6 +1,7 @@
 (define-module (wugi system hardware vm-guixsd)
   #:use-module (gnu)
   #:use-module (gnu packages certs)
+  #:use-module (gnu packages linux)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages ratpoison)
   #:use-module (gnu services desktop)
@@ -8,7 +9,6 @@
   #:use-module (gnu services xorg)
   #:use-module (nongnu system linux-initrd)
   #:use-module (wugi bootloader grub)
-  #:use-module (wugi packages linux)
   #:export (%vm-guixsd-hardware))
 
 (define (%vm-guixsd-hardware)
@@ -50,9 +50,7 @@
                            (options "mode=1777,size=50%"))
                          %base-file-systems))
 
-    (kernel linux-5.13-with-bpf)
-    (firmware (append (list (@ (wugi packages linux) linux-firmware))
-                      %base-firmware))
+    (kernel linux-libre-5.15-with-bpf)
 
     (kernel-arguments '("net.ifnames=0"
                         "biosdevname=0"

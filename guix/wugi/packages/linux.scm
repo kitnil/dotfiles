@@ -232,6 +232,28 @@ System on hardware which requires nonfree software to function.")))
   ((@ (nongnu packages linux) corrupt-linux)
    (@ (gnu packages linux) linux-libre-5.15)))
 
+(define-public linux-libre-5.15-with-bpf
+  (let ((base-linux-libre
+         (make-linux-libre*
+          linux-libre-5.15-version
+          linux-libre-5.15-gnu-revision
+          linux-libre-5.15-source
+          '("x86_64-linux" "i686-linux" "armhf-linux"
+            "aarch64-linux" "powerpc64le-linux" "riscv64-linux")
+          #:extra-version "bpf"
+          #:configuration-file kernel-config
+          #:extra-options
+          (append %bpf-extra-linux-options
+                  %my-extra-linux-options
+                  %default-extra-linux-options))))
+    (package
+      (inherit base-linux-libre)
+      (inputs (modify-inputs (package-inputs base-linux-libre)
+                (prepend cpio)))
+      (synopsis "Linux-libre with BPF support")
+      (description "This package provides GNU Linux-Libre with support
+for @acronym{BPF, the Berkeley Packet Filter}."))))
+
 (define-public linux-firmware
   (package
     (name "linux-firmware")
