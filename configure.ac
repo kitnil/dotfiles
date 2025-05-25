@@ -50,6 +50,8 @@ AC_SUBST([YAMLFMT])
 AC_PATH_PROG([YQ], [yq])
 AC_SUBST([YQ])
 
+AC_CONFIG_FILES([src/bash/guile-clean-modules/guile-clean-modules.sh], [chmod +x src/bash/guile-clean-modules/guile-clean-modules.sh])
+
 AM_INIT_AUTOMAKE([1.14 -Woverride -Wno-portability])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

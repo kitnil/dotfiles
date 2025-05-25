@@ -1,0 +1,10 @@
+#!@SHELL@
+
+set -o nounset -o errexit -o pipefail
+
+mapfile -t modules < <(src/guile/guix-shell-guild/guix-shell-guild compile -W3 "$1" |& awk '/warning: unused module/' | cut -d: -f 5 | sed 's/ unused module //')
+
+for module in "${modules[@]}"
+do
+    sed -i "/$module/d" "$1"
+done
