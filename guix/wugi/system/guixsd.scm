@@ -662,10 +662,6 @@ location / {
                                "/dev/null")
                          read-string)))))))
 
-  (define backup-job
-    #~(job '(next-hour '(3))
-           #$(restic-command)))
-
   (define (create-openvswitch-internal-port bridge port)
     #~(invoke/quiet #$(file-append openvswitch "/bin/ovs-vsctl")
                     "--may-exist" "add-port" #$bridge #$port
