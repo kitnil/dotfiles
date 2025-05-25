@@ -2,20 +2,75 @@
 --no-auto-compile -e main -s
 !#
 
-(use-modules (ice-9 popen))
+(use-modules (ice-9 match)
+             (ice-9 popen)
+             (ice-9 rdelim)
+             (srfi srfi-1)
+             (srfi srfi-37))
+
+(define %options
+  (let ((display-and-exit-proc (lambda (msg)
+                                 (lambda (opt name arg loads)
+                                   (display msg) (quit)))))
+    (list (option '(#\C "channels") #t #f
+                  (lambda (opt name arg result)
+                    (alist-cons 'channel-file arg result)))
+          (option '(#\f "file") #t #f
+                  (lambda (opt name arg result)
+                    (alist-cons 'compile-file arg result)))
+          (option '(#\h "help") #f #f
+                  (display-and-exit-proc
+                   "Usage: guix-shell-guild ...\n")))))
+
+(define %default-options
+  '())
+
+(define* (load-path #:key channel-file)
+  (define pipe
+    (apply open-pipe* OPEN_BOTH "guix"
+           (append '("time-machine")
+                   (if channel-file
+                       (list (string-append "--channels=" channel-file))
+                       '())
+                   '("--" "repl" "--type=machine"))))
+  (write `(write `(list ,@%load-path)) pipe)
+  (let ((load-path
+         (let loop ()
+           (match (read pipe)
+             ((? eof-object?)
+              #f)
+             (('list load-path ...)
+              load-path)
+             (_
+              (force-output pipe)
+              (loop))))))
+    (close-pipe pipe)
+    load-path))
 
 (define (main args)
-  (let ((port (open-pipe* OPEN_WRITE "guix" "shell" "guile-next" "--" "guile")))
-    (write
-     `(begin
-        (define (invoke program . args)
-          "Invoke PROGRAM with the given ARGS.  Raise an error if the exit
-code is non-zero; otherwise return #t."
-          (let ((status (apply system* program args)))
-            (unless (zero? status)
-              (error (format #f "program ~s exited with non-zero code" program)
-                     status))
-            #t))
-        (invoke "guild" ,@(cdr args)))
-     port)
-    (close-port port)))
+  (define opts
+    (args-fold (cdr (program-arguments))
+               %options
+               (lambda (opt name arg loads)
+                 (error "Unrecognized option `~A'" name))
+               (lambda (op loads)
+                 (cons op loads))
+               %default-options))
+  (define channel-file
+    (assoc-ref opts 'channel-file))
+  (define compile-file
+    (assoc-ref opts 'compile-file))
+  (let* ((port (open-pipe* OPEN_READ "guix" "shell" "guile-next"
+                           "--" "guile" "-c"
+                           (with-output-to-string
+                             (lambda ()
+                               (write
+                                `(begin
+                                   (set! %load-path
+                                         ',(load-path #:channel-file channel-file))
+                                   (compile-file ,compile-file
+                                                 #:warning-level 3)))))))
+         (output (read-string port)))
+    (close-port port)
+    (display (string-trim-right output #\newline))
+    (newline)))
