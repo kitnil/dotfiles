@@ -11,7 +11,7 @@ spec:
       - name: nsenter
         env:
         - name: GIT_COMMIT
-          value: fcbe4840b1700adcc6c1436d061612ad3291fa16
+          value: 53ce1734cf1cefed142cccd85d0317a9de6101eb
         - name: RUNC_MAKE_TARGET
           value: "guix-image-workstation"
         - name: RUNC_ENVIRONMENT
