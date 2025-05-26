@@ -1,14 +1,10 @@
 (define-module (wugi packages netboot)
-  #:use-module (ice-9 popen)
-  #:use-module (ice-9 rdelim)
   #:use-module (guix build utils)
   #:use-module (guix packages)
   #:use-module (guix gexp)
   #:use-module (guix download)
   #:use-module (guix build-system copy)
-  #:use-module ((guix licenses) #:prefix license:)
-  #:use-module (gnu packages base)
-  #:use-module (gnu packages compression))
+  #:use-module ((guix licenses) #:prefix license:))
 
 (define-public netboot-xyz-efi
   (package

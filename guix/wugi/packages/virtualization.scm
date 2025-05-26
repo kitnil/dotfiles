@@ -1,8 +1,7 @@
 (define-module (wugi packages virtualization)
   #:use-module (gnu packages)
   #:use-module (gnu packages virtualization)
-  #:use-module (guix packages)
-  #:use-module (srfi srfi-1))
+  #:use-module (guix packages))
 
 (define-public qemu-evdev
   (package

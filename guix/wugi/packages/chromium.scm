@@ -1,11 +1,6 @@
 (define-module (wugi packages chromium)
   #:use-module (gnu packages)
-  #:use-module (gnu packages base)
-  #:use-module (gnu packages bash)
-  #:use-module (gnu packages video)
   #:use-module (nongnu packages chromium)
-  #:use-module (guix build-system cmake)
-  #:use-module (nonguix build-system binary)
   #:use-module (guix download)
   #:use-module (guix gexp)
   #:use-module (guix git-download)
@@ -15,8 +10,6 @@
   #:use-module (guix svn-download)
   #:use-module (guix utils)
   #:use-module (ice-9 match)
-  #:use-module (srfi srfi-1)
-  #:use-module ((srfi srfi-1) #:hide (zip))
   #:use-module (srfi srfi-26))
 
 (define-public chromium-embedded-framework-117

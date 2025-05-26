@@ -3,9 +3,7 @@
   #:use-module (gnu packages)
   #:use-module (guix build-system trivial)
   #:use-module (guix gexp)
-  #:use-module (guix packages)
-  #:use-module (ice-9 format)
-  #:use-module (srfi srfi-1))
+  #:use-module (guix packages))
 
 (define %home
   (and=> (getenv "HOME")

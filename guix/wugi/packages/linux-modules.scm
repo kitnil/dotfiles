@@ -1,15 +1,9 @@
 (define-module (wugi packages linux-modules)
   #:use-module (gnu packages)
-  #:use-module (gnu packages base)
   #:use-module (gnu packages bash)
-  #:use-module (gnu packages compression)
-  #:use-module (gnu packages cpio)
-  #:use-module (gnu packages curl)
   #:use-module (gnu packages version-control)
-  #:use-module (guix build-system copy)
   #:use-module (guix build-system gnu)
   #:use-module (guix build-system linux-module)
-  #:use-module (guix build-system trivial)
   #:use-module (guix download)
   #:use-module (guix gexp)
   #:use-module (guix git-download)
@@ -17,7 +11,6 @@
   #:use-module (guix packages)
   #:use-module (guix utils)
   #:use-module (ice-9 match)
-  #:use-module (nonguix licenses)
   #:use-module (srfi srfi-26))
 
 (define-public drbd-module

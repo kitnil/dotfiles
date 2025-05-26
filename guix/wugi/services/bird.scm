@@ -17,13 +17,11 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (wugi services bird)
-  #:use-module (gnu packages networking)
   #:use-module (gnu services)
   #:use-module (gnu services admin)
   #:use-module (gnu services shepherd)
   #:use-module (guix gexp)
   #:use-module (guix records)
-  #:use-module (srfi srfi-1)
   #:export (bird-configuration
             bird-service-type))
 

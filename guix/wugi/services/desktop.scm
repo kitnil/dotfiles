@@ -21,7 +21,6 @@
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
   #:use-module (guix gexp)
-  #:use-module (srfi srfi-1)
   #:export (seatd-service))
 
 ;;; Commentary:

@@ -28,7 +28,6 @@
   #:use-module (gnu system shadow)
   #:use-module (guix gexp)
   #:use-module (guix records)
-  #:use-module (srfi srfi-1)
   #:export (restic-rest-configuration
             restic-rest-service-type
 

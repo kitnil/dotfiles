@@ -3,9 +3,7 @@
   #:use-module (guix build-system go)
   #:use-module (guix gexp)
   #:use-module (guix git-download)
-  #:use-module (guix packages)
-  #:use-module (ice-9 popen)
-  #:use-module (ice-9 rdelim))
+  #:use-module (guix packages))
 
 (define-public ddcutil-daemon
   (package

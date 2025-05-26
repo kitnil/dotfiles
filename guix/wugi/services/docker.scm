@@ -25,7 +25,6 @@
   #:use-module (guix gexp)
   #:use-module (guix records)
   #:use-module (ice-9 match)
-  #:use-module (srfi srfi-1)
   #:export (docker-kiwiirc-service
 
             docker-compose-configuration

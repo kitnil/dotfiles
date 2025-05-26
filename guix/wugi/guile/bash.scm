@@ -1,7 +1,6 @@
 (define-module (wugi guile bash)
   #:use-module (guix build utils)
   #:use-module (guix ui)
-  #:use-module (ice-9 format)
   #:use-module (ice-9 pretty-print)
   #:use-module (ice-9 rdelim)
   #:use-module (json)

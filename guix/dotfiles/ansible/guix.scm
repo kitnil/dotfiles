@@ -1,6 +1,5 @@
 (use-modules (guix build utils)
              (guix gexp)
-             (guix modules)
              (guix monads)
              (guix packages)
              (guix profiles)
@@ -8,7 +7,6 @@
              (guix store)
              (ice-9 match)
              (json builder)
-             (srfi srfi-1)
              (gnu)
              (gnu machine))
 

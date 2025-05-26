@@ -1,6 +1,4 @@
 (define-module (wugi manifests misc)
-  #:use-module (wigust packages databases)
-  #:use-module (wigust packages ruby)
   #:use-module (gnu packages chromium)
   #:export (%misc-manifest))
 

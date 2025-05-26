@@ -20,10 +20,6 @@
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
   #:use-module (guix gexp)
-  #:use-module (gnu packages bittorrent)
-  #:use-module (srfi srfi-1)
-  #:use-module (ice-9 popen)
-  #:use-module (ice-9 rdelim)
   #:export (intel-vaapi-service))
 
 ;;; Commentary:

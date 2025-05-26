@@ -2,7 +2,6 @@
 ;; setup, so it has barely any services at all.
 
 (use-modules (gnu)
-             (gnu packages base)
              (gnu packages bash)
              (gnu services networking))
 

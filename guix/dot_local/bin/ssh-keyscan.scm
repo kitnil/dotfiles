@@ -3,11 +3,9 @@
 
 ;; ssh-keyscan.scm example1.org example2org
 
-(use-modules (ice-9 format)
-             (ice-9 match)
+(use-modules (ice-9 match)
              (ice-9 popen)
              (ice-9 rdelim)
-             (json)
              (srfi srfi-1))
 
 (define (main . args)

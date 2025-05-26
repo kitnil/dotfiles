@@ -1,7 +1,6 @@
 (define-module (wugi utils)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
-  #:use-module ((guix ui) #:select (make-user-module))
   #:use-module (guix profiles)
   #:export (combined-manifest-from-files
             %distro-directory))

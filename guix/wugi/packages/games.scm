@@ -1,20 +1,15 @@
 (define-module (wugi packages games)
-  #:use-module (ice-9 popen)
-  #:use-module (ice-9 rdelim)
   #:use-module (guix build utils)
   #:use-module (guix packages)
   #:use-module (guix gexp)
   #:use-module (guix git-download)
   #:use-module (guix download)
-  #:use-module (guix build-system python)
   #:use-module (guix build-system trivial)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages base)
-  #:use-module (gnu packages bash)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages elf)
-  #:use-module (gnu packages linux)
-  #:use-module (gnu packages python-xyz))
+  #:use-module (gnu packages linux))
 
 (define-public yuzu
   (package

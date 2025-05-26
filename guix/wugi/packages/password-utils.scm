@@ -18,15 +18,8 @@
 
 (define-module (wugi packages password-utils)
   #:use-module ((guix licenses) #:prefix license:)
-  #:use-module (gnu packages autotools)
-  #:use-module (gnu packages bash)
-  #:use-module (gnu packages gnupg)
   #:use-module (gnu packages guile)
-  #:use-module (gnu packages package-management)
   #:use-module (gnu packages pkg-config)
-  #:use-module (gnu packages python)
-  #:use-module (gnu packages python-xyz)
-  #:use-module (gnu packages ssh)
   #:use-module (gnu packages tls)
   #:use-module (guix build utils)
   #:use-module (guix build-system gnu)
@@ -35,9 +28,7 @@
   #:use-module (guix gexp)
   #:use-module (guix download)
   #:use-module (guix git-download)
-  #:use-module (guix packages)
-  #:use-module (ice-9 popen)
-  #:use-module (ice-9 rdelim))
+  #:use-module (guix packages))
 
 (define-public vault
   (package

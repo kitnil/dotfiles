@@ -9,7 +9,6 @@
              (ice-9 rdelim)
              (json)
              (srfi srfi-1)
-             (ice-9 pretty-print)
              (guix build utils))
 
 (define gitlab-url
