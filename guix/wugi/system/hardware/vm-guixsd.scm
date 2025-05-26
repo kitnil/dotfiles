@@ -17,16 +17,6 @@
                  (bootloader grub-efi-bootloader)
                  (targets '("/boot/efi"))))
 
-    (mapped-devices (list (mapped-device
-                           (source
-                            (list "/dev/sda2" "/dev/sdc2" "/dev/sdd2"))
-                           (target "/dev/md0")
-                           (type raid-device-mapping))
-                          (mapped-device
-                           (source (uuid "0c0175eb-64ae-46f7-9a54-43d4b65b0818"))
-                           (target "guix-root")
-                           (type luks-device-mapping))))
-
     (file-systems (cons* (file-system
                            (device (file-system-label "guix-root"))
                            (mount-point "/")
@@ -35,7 +25,7 @@
                            (dependencies mapped-devices))
                          (file-system
                            (device (file-system-label "boot"))
-                           (mount-point "/boot1/efi")
+                           (mount-point "/boot/efi")
                            (type "vfat"))
                          (file-system
                            (device "tmpfs")
