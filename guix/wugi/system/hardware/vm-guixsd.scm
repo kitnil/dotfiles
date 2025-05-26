@@ -17,24 +17,24 @@
                  (bootloader grub-efi-bootloader)
                  (targets '("/boot/efi"))))
 
-    (file-systems (cons* (file-system
-                           (device (file-system-label "guix-root"))
-                           (mount-point "/")
-                           (type "ext4")
-                           (flags '(shared))
-                           (dependencies mapped-devices))
-                         (file-system
-                           (device (file-system-label "boot"))
-                           (mount-point "/boot/efi")
-                           (type "vfat"))
-                         (file-system
-                           (device "tmpfs")
-                           (mount-point "/tmp")
-                           (type "tmpfs")
-                           (check? #f)
-                           (flags '(no-dev))
-                           (options "mode=1777,size=50%"))
-                         %base-file-systems))
+    (file-systems (append (list (file-system
+                                  (device (file-system-label "guix-root"))
+                                  (mount-point "/")
+                                  (type "ext4")
+                                  (flags '(shared))
+                                  (dependencies mapped-devices))
+                                (file-system
+                                  (device (file-system-label "boot"))
+                                  (mount-point "/boot/efi")
+                                  (type "vfat"))
+                                (file-system
+                                  (device "tmpfs")
+                                  (mount-point "/tmp")
+                                  (type "tmpfs")
+                                  (check? #f)
+                                  (flags '(no-dev))
+                                  (options "mode=1777,size=50%")))
+                          %base-file-systems))
 
     (kernel linux-libre-with-bpf)
 
