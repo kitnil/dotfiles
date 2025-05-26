@@ -23,6 +23,7 @@
   #:use-module (guix records)
   #:use-module (ice-9 match)
   #:use-module (gnu packages base)
+  #:use-module (gnu packages vnc)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages linux)
   #:export (vncserver-configuration
