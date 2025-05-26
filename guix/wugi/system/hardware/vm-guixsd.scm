@@ -56,10 +56,9 @@
                           (supplementary-groups '("wheel"))
                           (home-directory "/home/oleg")))
                    %base-user-accounts))
-    (sudoers-file (plain-file "sudoers"
-                              (string-join '("root ALL=(ALL) ALL"
-                                             "%wheel ALL=(ALL) ALL"
-                                             "oleg ALL=(ALL) NOPASSWD:ALL")
-                                           "\n")))
+    (sudoers-file (plain-file "sudoers" "\
+root ALL=(ALL) ALL
+%wheel ALL=(ALL) ALL
+oleg ALL=(ALL) NOPASSWD:ALL"))
     (packages %base-packages)
     (services %base-services)))
