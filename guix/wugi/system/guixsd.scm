@@ -678,12 +678,12 @@ location / {
   ;;   <address type='pci' domain='0x0000' bus='0x01' slot='0x01' function='0x0'/>
   ;; </interface>
 
-  (define tftp-root
-    #~(begin
-        (mkdir #$output)
-        (symlink (string-append #$netboot-xyz-efi
-                                "/share/netboot-xyz/netboot-xyz.efi")
-                 (string-append #$output "/netboot.xyz.efi"))))
+  ;; (define tftp-root
+  ;;   #~(begin
+  ;;       (mkdir #$output)
+  ;;       (symlink (string-append #$netboot-xyz-efi
+  ;;                               "/share/netboot-xyz/netboot-xyz.efi")
+  ;;                (string-append #$output "/netboot.xyz.efi"))))
 
   (define %dnsmasq-br154
     (simple-service
@@ -709,9 +709,9 @@ location / {
                             "--except-interface=enp34s0"
                             "--except-interface=lo"
                             "--dhcp-boot=netboot.xyz.efi"
-                            (string-append "--tftp-root="
-                                           #$(run-with-store (open-connection)
-                                               (gexp->derivation "tftp-root" tftp-root)))
+                            ;; (string-append "--tftp-root="
+                            ;;                #$(run-with-store (open-connection)
+                            ;;                    (gexp->derivation "tftp-root" tftp-root)))
                             "--enable-tftp"
                             #$(string-append "--server=" %guixsd-private-ip-address)
                             "--no-resolv"
