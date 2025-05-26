@@ -27,7 +27,7 @@
   #:use-module (guix gexp)
   #:use-module (guix download)
   #:use-module (guix git-download)
-  #:use-module (guix packages)
+  #:use-module (guix packages))
 
 (define-public majordomo-ca
   (package
