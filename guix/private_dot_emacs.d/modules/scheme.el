@@ -30,7 +30,8 @@ Non-interactively, this uses the optional second argument PURE."
 
 (with-eval-after-load 'geiser
   (setq geiser-active-implementations '(guile))
-  (setq geiser-default-implementation 'guile))
+  (setq geiser-default-implementation 'guile)
+  (add-hook 'geiser-repl-mode (lambda () (setq-local scroll-conservatively 101))))
 
 (with-eval-after-load 'geiser-guile
   ;; (add-to-list 'geiser-guile-load-path (expand-file-name "/home/oleg/src/git.savannah.gnu.org/git/guix"))
