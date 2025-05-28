@@ -685,61 +685,61 @@ location / {
   ;;                               "/share/netboot-xyz/netboot-xyz.efi")
   ;;                (string-append #$output "/netboot.xyz.efi"))))
 
-  (define %dnsmasq-br154
-    (simple-service
-     'dnsmasq-br154 shepherd-root-service-type
-     (list (shepherd-service
-            (provision '(dnsmasq-br154))
-            (requirement '(networking vswitchd))
-            (start #~(make-forkexec-constructor
-                      (list #$(file-append dnsmasq "/sbin/dnsmasq")
-                            "--keep-in-foreground"
-                            "--pid-file=/run/dnsmasq.pid"
-                            "--local-service"
-                            "--cache-size=150"
-                            "--dhcp-range" "192.168.154.52,192.168.154.148,12h"
-                            "--dhcp-host=52:54:00:f1:75:45,192.168.154.129" ;web99
-                            "--dhcp-host=52:54:00:7a:62:8d,192.168.154.130" ;nginx99
-                            "--dhcp-host=52:54:00:23:17:ff,192.168.154.119" ;ubuntu
-                            "--dhcp-host=52:54:00:51:3e:ad,192.168.154.131" ;kube1
-                            "--bind-interfaces"
-                            "--interface=br154.154"
-                            "--except-interface=br0"
-                            "--except-interface=br156.br156"
-                            "--except-interface=enp34s0"
-                            "--except-interface=lo"
-                            "--dhcp-boot=netboot.xyz.efi"
-                            ;; (string-append "--tftp-root="
-                            ;;                #$(run-with-store (open-connection)
-                            ;;                    (gexp->derivation "tftp-root" tftp-root)))
-                            "--enable-tftp"
-                            #$(string-append "--server=" %guixsd-private-ip-address)
-                            "--no-resolv"
-                            "--dhcp-option=option:domain-search,intr")))
-            (respawn? #f)))))
+  ;; (define %dnsmasq-br154
+  ;;   (simple-service
+  ;;    'dnsmasq-br154 shepherd-root-service-type
+  ;;    (list (shepherd-service
+  ;;           (provision '(dnsmasq-br154))
+  ;;           (requirement '(networking vswitchd))
+  ;;           (start #~(make-forkexec-constructor
+  ;;                     (list #$(file-append dnsmasq "/sbin/dnsmasq")
+  ;;                           "--keep-in-foreground"
+  ;;                           "--pid-file=/run/dnsmasq.pid"
+  ;;                           "--local-service"
+  ;;                           "--cache-size=150"
+  ;;                           "--dhcp-range" "192.168.154.52,192.168.154.148,12h"
+  ;;                           "--dhcp-host=52:54:00:f1:75:45,192.168.154.129" ;web99
+  ;;                           "--dhcp-host=52:54:00:7a:62:8d,192.168.154.130" ;nginx99
+  ;;                           "--dhcp-host=52:54:00:23:17:ff,192.168.154.119" ;ubuntu
+  ;;                           "--dhcp-host=52:54:00:51:3e:ad,192.168.154.131" ;kube1
+  ;;                           "--bind-interfaces"
+  ;;                           "--interface=br154.154"
+  ;;                           "--except-interface=br0"
+  ;;                           "--except-interface=br156.br156"
+  ;;                           "--except-interface=enp34s0"
+  ;;                           "--except-interface=lo"
+  ;;                           "--dhcp-boot=netboot.xyz.efi"
+  ;;                           ;; (string-append "--tftp-root="
+  ;;                           ;;                #$(run-with-store (open-connection)
+  ;;                           ;;                    (gexp->derivation "tftp-root" tftp-root)))
+  ;;                           "--enable-tftp"
+  ;;                           #$(string-append "--server=" %guixsd-private-ip-address)
+  ;;                           "--no-resolv"
+  ;;                           "--dhcp-option=option:domain-search,intr")))
+  ;;           (respawn? #f)))))
 
-  (define %dnsmasq-br156
-    (simple-service
-     'dnsmasq-br156 shepherd-root-service-type
-     (list (shepherd-service
-            (provision '(dnsmasq-br156))
-            (requirement '(networking vswitchd))
-            (start #~(make-forkexec-constructor
-                      (list #$(file-append dnsmasq "/sbin/dnsmasq")
-                            "--keep-in-foreground"
-                            "--pid-file=/run/dnsmasq-vlan156.pid"
-                            "--local-service"
-                            "--cache-size=150"
-                            "--dhcp-range" "192.168.156.52,192.168.156.148,12h"
-                            "--bind-interfaces"
-                            "--interface=br156.156"
-                            "--except-interface=br0"
-                            "--except-interface=br154.br154"
-                            "--except-interface=enp34s0"
-                            "--except-interface=lo"
-                            "--no-resolv"
-                            "--server=192.168.156.1")))
-            (respawn? #f)))))
+  ;; (define %dnsmasq-br156
+  ;;   (simple-service
+  ;;    'dnsmasq-br156 shepherd-root-service-type
+  ;;    (list (shepherd-service
+  ;;           (provision '(dnsmasq-br156))
+  ;;           (requirement '(networking vswitchd))
+  ;;           (start #~(make-forkexec-constructor
+  ;;                     (list #$(file-append dnsmasq "/sbin/dnsmasq")
+  ;;                           "--keep-in-foreground"
+  ;;                           "--pid-file=/run/dnsmasq-vlan156.pid"
+  ;;                           "--local-service"
+  ;;                           "--cache-size=150"
+  ;;                           "--dhcp-range" "192.168.156.52,192.168.156.148,12h"
+  ;;                           "--bind-interfaces"
+  ;;                           "--interface=br156.156"
+  ;;                           "--except-interface=br0"
+  ;;                           "--except-interface=br154.br154"
+  ;;                           "--except-interface=enp34s0"
+  ;;                           "--except-interface=lo"
+  ;;                           "--no-resolv"
+  ;;                           "--server=192.168.156.1")))
+  ;;           (respawn? #f)))))
 
   ;; (define %dnsmasq-lo
   ;;   (simple-service
