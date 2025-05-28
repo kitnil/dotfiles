@@ -12,8 +12,8 @@
   #:use-module (guix git-download)
   #:use-module (guix licenses)
   #:use-module (guix packages)
-  #:use-module (guix utils)
   #:use-module (guix ui)
+  #:use-module (guix utils)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-26))
 
