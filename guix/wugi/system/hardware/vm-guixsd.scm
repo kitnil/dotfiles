@@ -21,8 +21,7 @@
                                   (device (file-system-label "guix-root"))
                                   (mount-point "/")
                                   (type "ext4")
-                                  (flags '(shared))
-                                  (dependencies mapped-devices))
+                                  (flags '(shared)))
                                 (file-system
                                   (device (file-system-label "boot"))
                                   (mount-point "/boot/efi")
