@@ -3,8 +3,8 @@
   #:use-module (gnu bootloader)
   #:use-module (gnu bootloader grub)
   #:use-module (gnu packages certs)
-  #:use-module (gnu packages linux)
   #:use-module (gnu services networking)
+  #:use-module (wugi packages linux)
   #:export (%vm-guixsd-hardware))
 
 (define (%vm-guixsd-hardware)
@@ -35,7 +35,7 @@
                                   (options "mode=1777,size=50%")))
                           %base-file-systems))
 
-    (kernel linux-libre-with-bpf)
+    (kernel linux-5.15-with-bpf)
 
     (kernel-arguments '("net.ifnames=0"
                         "biosdevname=0"
