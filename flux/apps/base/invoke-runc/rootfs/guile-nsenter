@@ -96,7 +96,7 @@ code is non-zero; otherwise return #t."
                 (and
                  (git "init")
                  (git "remote" "add" "origin" ,%git-origin)
-                 (git "fetch" "--depth" (number->string 1) "origin" commit)
+                 (git "fetch" "origin" commit)
                  (git "checkout" commit)
 
                  (invoke "mkdir" "-p" ".password-store")
