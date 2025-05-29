@@ -4,6 +4,7 @@
   #:use-module (guix inferior)
   #:use-module (guix profiles)
   #:use-module (guix store)
+  #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (wugi etc guix channels current-local-file)
   #:use-module (wugi utils)
