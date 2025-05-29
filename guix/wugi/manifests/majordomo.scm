@@ -20,7 +20,15 @@
             "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
         (channel
          (name 'guix-majordomo)
-         (url "https://cgit.wugi.info/git/guix/guix-majordomo.git"))))
+         (url "https://cgit.wugi.info/git/guix/guix-majordomo.git")
+         (branch "master")
+         (commit
+          "f8dd95eff628421b726cc4d387996080a0ab6465")
+         (introduction
+          (make-channel-introduction
+           "f8dd95eff628421b726cc4d387996080a0ab6465"
+           (openpgp-fingerprint
+            "7238 7123 8EAC EB63 4548  5857 167F 8EA5 001A FA9C"))))))
 
 (define (%majordomo-manifest)
   (define inferior
