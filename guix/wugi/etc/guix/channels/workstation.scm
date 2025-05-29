@@ -15,12 +15,6 @@
            (openpgp-fingerprint
             "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
         (channel
-         (name 'guix-wigust)
-         (url "https://cgit.wugi.info/git/guix/guix-wigust")
-         (branch "master")
-         (commit
-          "ec542755f860e050f2355c0b305cafc386496abf"))
-        (channel
          (name 'nonguix)
          (url "https://cgit.wugi.info/git/guix/nonguix")
          (branch "master")
