@@ -708,7 +708,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-guixsd
-  suspend: true
+  suspend: false
   prune: true
   sourceRef:
     kind: GitRepository
@@ -722,7 +722,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-vm-guixsd
-  suspend: true
+  suspend: false
   prune: true
   sourceRef:
     kind: GitRepository
@@ -736,7 +736,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-notebook
-  suspend: true
+  suspend: false
   prune: true
   sourceRef:
     kind: GitRepository
@@ -750,7 +750,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-pc0
-  suspend: true
+  suspend: false
   prune: true
   sourceRef:
     kind: GitRepository
@@ -764,7 +764,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-vm1
-  suspend: true
+  suspend: false
   prune: true
   sourceRef:
     kind: GitRepository
@@ -778,7 +778,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-vm2
-  suspend: true
+  suspend: false
   prune: true
   sourceRef:
     kind: GitRepository
@@ -792,7 +792,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-workstation
-  suspend: true
+  suspend: false
   prune: true
   sourceRef:
     kind: GitRepository
@@ -1031,7 +1031,7 @@ spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-nix-build-container-systemd-kube1
   prune: true
-  suspend: true
+  suspend: false
   sourceRef:
     kind: GitRepository
     name: flux-system
