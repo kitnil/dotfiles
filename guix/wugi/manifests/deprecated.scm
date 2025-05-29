@@ -12,12 +12,7 @@
          (name 'guix)
          (url "https://cgit.wugi.info/git/guix/guix")
          (commit "f7e14782025bf87aaef694a21f34010b1a95f7f6") ;v1.0.1
-         (introduction (@@ (guix channels) %guix-channel-introduction)))
-        (channel
-         (name 'guix-wigust)
-         (url "https://github.com/kitnil/guix-wigust")
-         (branch "master")
-         (commit "68340baa8cdc1af1b8a8982c2607ff1dda195ee7"))))
+         (introduction (@@ (guix channels) %guix-channel-introduction)))))
 
 (define (inferior)
   (inferior-for-channels channels))
