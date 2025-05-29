@@ -19,6 +19,7 @@
 /guix/dot_config/wayvnc/config
 /guix/dot_config/wayvnc/tls_cert.pem
 /guix/dot_config/wayvnc/tls_key.pem
+/guix/dotfiles/etc/ssl/ca.pem
 /guix/dotfiles/etc/yggdrasil-private.conf
 /guix/dotfiles/guixsd/exim/
 /guix/dotfiles/mjru/intr.json
