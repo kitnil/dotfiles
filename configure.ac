@@ -50,9 +50,6 @@ AC_SUBST([YAMLFMT])
 AC_PATH_PROG([YQ], [yq])
 AC_SUBST([YQ])
 
-AC_SUBST([abs_top_srcdir])
-AC_CONFIG_FILES([guix/wugi/etc/guix/channels/current-local-file.scm])
-
 AC_CONFIG_FILES([src/bash/guile-clean-modules/guile-clean-modules.sh], [chmod +x src/bash/guile-clean-modules/guile-clean-modules.sh])
 
 AM_INIT_AUTOMAKE([1.14 -Woverride -Wno-portability])

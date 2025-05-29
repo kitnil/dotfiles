@@ -13,28 +13,43 @@
   (define inferior
     (inferior-for-channels %channels-current-local-file))
 
-  (define %obs-package-names
-    (list "obs-with-cef"
-          "obs-pipewire-audio-capture"
-          "obs-wlrobs"
-          "obs-looking-glass"
-          "obs-ndi"
+  (define inferior-packages
+    (inferior-eval `(begin
+                      (add-to-load-path ,%distro-directory)
+                      (use-modules (gnu packages video)
+                                   (nongnu packages video)
+                                   (srfi srfi-1)
+                                   (wigust packages video))
+                      (fold (lambda (package result)
+                              (let ((id (object-address package)))
+                                (hashv-set! %package-table id package)
+                                (cons (list (package-name package)
+                                            (package-version package)
+                                            id)
+                                      result)))
+                            '()
+                            (list obs-with-cef
+                                  ;; plugins
+                                  obs-advanced-masks
+                                  obs-composite-blur
+                                  obs-exporter
+                                  obs-gradient-source
+                                  obs-looking-glass
+                                  obs-move-transition
+                                  obs-multi-rtmp
+                                  obs-ndi
+                                  obs-pipewire-audio-capture
+                                  obs-scale-to-sound
+                                  obs-shaderfilter
+                                  obs-source-clone
+                                  obs-source-record
+                                  obs-stroke-glow-shadow
+                                  obs-waveform
+                                  obs-wlrobs)))
+                   inferior))
 
-          "obs-advanced-masks"
-          "obs-composite-blur"
-          "obs-gradient-source"
-          "obs-move-transition"
-          "obs-multi-rtmp"
-          "obs-scale-to-sound"
-          "obs-shaderfilter"
-          "obs-stroke-glow-shadow"
-          "obs-waveform"
-
-          "obs-exporter"
-          "obs-source-clone"
-          "obs-source-record"))
-
-  (packages->manifest (map (lambda (package-name)
-                             (first
-                              (lookup-inferior-packages inferior package-name)))
-                           %obs-package-names)))
+  (packages->manifest (map (match-lambda
+                             ((name version id)
+                              ((@@ (guix inferior)inferior-package)
+                               inferior name version id)))
+                           inferior-packages)))
