@@ -129,9 +129,9 @@
         (list
          ;; Raise the maximum number of open file descriptors
          ;; that can be used.
-         (pam-limits-service
-          (list
-           (pam-limits-entry "*" 'both 'nofile 100000)))
+         (service pam-limits-service-type
+                  (list
+                   (pam-limits-entry "*" 'both 'nofile 100000)))
 
          (extra-special-file "/usr/bin/env"
                              (file-append coreutils "/bin/env"))
