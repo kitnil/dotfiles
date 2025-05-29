@@ -2,16 +2,16 @@
 !#
 
 ;;;; youtube-scm --- SYNOPSIS
-;;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Copyright © 2020, 2025 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;; Released under the GNU GPLv3 or any later version.
 
-(define-module (youtube-scm)
-  #:use-module (srfi srfi-37)
+(define-module (guix wugi scripts youtube)
   #:use-module (ice-9 match)
   #:use-module (ice-9 popen)
-  #:use-module (ice-9 rdelim)
   #:use-module (ice-9 pretty-print)
+  #:use-module (ice-9 rdelim)
   #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-37)
   #:export (main))
 
 ;;; Commentary:

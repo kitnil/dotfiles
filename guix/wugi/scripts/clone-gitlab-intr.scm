@@ -1,12 +1,14 @@
 #!/usr/bin/env -S guile --no-auto-compile -e main -s
 !#
 
-(use-modules (ice-9 format)
-             (ice-9 match)
-             (ice-9 popen)
-             (ice-9 rdelim)
-             (json)
-             (srfi srfi-1))
+(define-module (wugi scripts clone-gitlab-intr)
+  #:use-module (ice-9 format)
+  #:use-module (ice-9 match)
+  #:use-module (ice-9 popen)
+  #:use-module (ice-9 rdelim)
+  #:use-module (json)
+  #:use-module (srfi srfi-1)
+  #:export (main))
 
 (define gitlab-url
   (and=> (getenv "GITLAB_URL")

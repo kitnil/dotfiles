@@ -2,14 +2,14 @@
 --no-auto-compile -e (src-import) -s
 !#
 
-(define-module (src-import)
-  #:use-module (ice-9 ftw)
-  #:use-module (srfi srfi-1)
-  #:use-module (ice-9 match)
-  #:use-module (ice-9 string-fun)
-  #:use-module (srfi srfi-26)
+(define-module (guix wugi scripts src-import)
   #:use-module (guix records)
+  #:use-module (ice-9 ftw)
+  #:use-module (ice-9 match)
   #:use-module (ice-9 pretty-print)
+  #:use-module (ice-9 string-fun)
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-26)
   #:export (main))
 
 (define (project-directories basedir)

@@ -3,10 +3,11 @@
 
 ;; ssh-keyscan.scm example1.org example2org
 
-(use-modules (ice-9 match)
-             (ice-9 popen)
-             (ice-9 rdelim)
-             (srfi srfi-1))
+(define-module (guix wugi scripts ssh-keyscan)
+  #:use-module (ice-9 match)
+  #:use-module (ice-9 popen)
+  #:use-module (ice-9 rdelim)
+  #:use-module (srfi srfi-1))
 
 (define (main . args)
   (match (first args)

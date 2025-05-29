@@ -2,9 +2,9 @@
 --no-auto-compile -e (twitch) -s
 !#
 
-(define-module (twitch)
-  #:use-module (guix records)
+(define-module (guix wugi scripts twitch)
   #:use-module (guix discovery)
+  #:use-module (guix records)
   #:use-module (ice-9 format)
   #:use-module (srfi srfi-41)
   #:export (main))

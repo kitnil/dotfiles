@@ -56,6 +56,16 @@
                                    #:recursive? #t)))
                    (map (lambda (program)
                           `(,(string-append ".local/bin/" program)
+                            ,(local-file (string-append %distro-directory "/guix/wugi/scripts/" program)
+                                         #:recursive? #t)))
+                        '("clone-gitlab-intr.scm"
+                          "clone-gitlab-swh.scm"
+                          "src-import.scm"
+                          "ssh-keyscan.scm"
+                          "twitch.scm"
+                          "youtube.scm"))
+                   (map (lambda (program)
+                          `(,(string-append ".local/bin/" program)
                             ,(local-file (string-append %distro-directory "/dot_local/bin/" program)
                                          #:recursive? #t)))
                         '("alerta-close"
@@ -69,7 +79,6 @@
                           "cerb"
                           "checkssl.sh"
                           "chroot-games.sh"
-                          "clone-gitlab.intr.scm"
                           "color-converter"
                           "connect"
                           "convert-music"
@@ -212,8 +221,6 @@
                           "shop"
                           "shutdown"
                           "src-clean"
-                          "src-import.scm"
-                          "ssh-keyscan.scm"
                           "ssh-aliases"
                           "ssh-sudo"
                           "ssh-vm"
@@ -223,7 +230,6 @@
                           "toggle-input-method.sh"
                           "tome4-docker"
                           "mjru-hms-migrate-web-account"
-                          "twitch.scm"
                           "ubuntu"
                           "vault"
                           "vfio.sh"
@@ -245,7 +251,6 @@
                           "youtube-build"
                           "youtube-dl-json"
                           "youtube-dl-music-play-url"
-                          "youtube-scm"
                           "yt"
                           "waybar-1.sh"
                           "windows")))))
