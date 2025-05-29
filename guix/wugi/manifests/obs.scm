@@ -7,7 +7,6 @@
   #:use-module (srfi srfi-1)
   #:use-module (wugi etc guix channels current-local-file)
   #:use-module (wugi utils)
-  #:use-module (wigust packages video)
   #:export (%obs-manifest))
 
 (define (%obs-manifest)
@@ -19,23 +18,23 @@
           "obs-pipewire-audio-capture"
           "obs-wlrobs"
           "obs-looking-glass"
+          "obs-ndi"
 
+          "obs-advanced-masks"
+          "obs-composite-blur"
+          "obs-gradient-source"
+          "obs-move-transition"
+          "obs-multi-rtmp"
+          "obs-scale-to-sound"
+          "obs-shaderfilter"
+          "obs-stroke-glow-shadow"
+          "obs-waveform"
+
+          "obs-exporter"
+          "obs-source-clone"
           "obs-source-record"))
 
-  (packages->manifest
-   (append (map (lambda (package-name)
-                  (first
-                   (lookup-inferior-packages inferior package-name)))
-                %obs-package-names)
-           (list obs-advanced-masks obs-advanced-masks
-                 obs-composite-blur
-                 obs-exporter
-                 obs-gradient-source
-                 obs-move-transition
-                 obs-multi-rtmp
-                 obs-ndi
-                 obs-scale-to-sound
-                 obs-shaderfilter
-                 obs-source-clone
-                 obs-stroke-glow-shadow
-                 obs-waveform))))
+  (packages->manifest (map (lambda (package-name)
+                             (first
+                              (lookup-inferior-packages inferior package-name)))
+                           %obs-package-names)))

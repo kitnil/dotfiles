@@ -24,6 +24,7 @@
 /guix/dotfiles/guixsd/exim/
 /guix/dotfiles/mjru/intr.json
 /guix/private_dot_emacs.d/modules/mjru-network.el
+/guix/wugi/etc/guix/channels/current-local-file.scm
 /guix/wugi/etc/mjru/
 /guix/wugi/home/config/openssh.scm
 /nix/yggdrasil/yggdrasil.conf
