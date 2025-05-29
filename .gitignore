@@ -16,6 +16,9 @@
 *.tfstate.backup
 /guix/dot_config/espanso/user/censor.yml
 /guix/dot_config/transmission/
+/guix/dot_config/wayvnc/config
+/guix/dot_config/wayvnc/tls_cert.pem
+/guix/dot_config/wayvnc/tls_key.pem
 /guix/dotfiles/etc/yggdrasil-private.conf
 /guix/dotfiles/guixsd/exim/
 /guix/dotfiles/mjru/intr.json
