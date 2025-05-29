@@ -1,0 +1,21 @@
+--- a/haunt/reader.scm	2020-08-06 11:56:32.209142957 +0300
++++ b/haunt/reader.scm	2020-08-06 11:56:42.337301686 +0300
+@@ -103,10 +103,15 @@
+                    (values (alist-delete 'content contents eq?)
+                            (assq-ref contents 'content))))))
+ 
+-(define (read-html-post port)
++(define (read-html-post-prime port)
+   (values (read-metadata-headers port)
+-          (match (xml->sxml port)
+-            (('*TOP* sxml) sxml))))
++          (let loop ((ret '()))
++            (catch 'parser-error
++              (lambda ()
++                (match (xml->sxml port)
++                  (('*TOP* sxml) (loop (cons sxml ret)))))
++              (lambda (key . parameters)
++                (reverse ret))))))
+ 
+ (define html-reader
+   (make-reader (make-file-extension-matcher "html")

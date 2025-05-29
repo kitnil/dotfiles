@@ -1,0 +1,26 @@
+From fb361218cdbceb8acaffa7f7049c41e1e892ca6e Mon Sep 17 00:00:00 2001
+From: Oleg Pykhalov <go.wigust@gmail.com>
+Date: Thu, 1 Feb 2018 10:25:00 +0300
+Subject: [PATCH] maint: find git worktree
+
+* VC.pm (new): Find .git file instead of directory.
+---
+ VC.pm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/VC.pm b/VC.pm
+index 4252c61..1eca5b8 100644
+--- a/VC.pm
++++ b/VC.pm
+@@ -132,7 +132,7 @@ sub new($%)
+ 	  }
+ 	}
+ 
+-      if (-d "$d/.git/objects") {
++      if ((-d "$d/.git/objects") || (-f "$d/.git")) {
+ 	$self->{name} = GIT;
+       } elsif (-d "$d/.bzr/repository") {
+ 	$self->{name} = BZR;
+-- 
+2.15.1
+

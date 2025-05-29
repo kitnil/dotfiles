@@ -1,0 +1,27 @@
+Copyright © 2018 Oleg Pykhalov <go.wigust@gmail.com>
+
+This patch adds a support for :which key.
+
+*** a/bind-key.el	1970-01-01 03:00:01.000000000 +0300
+--- b/bind-key.el	2018-02-11 00:23:34.858160456 +0300
+***************
+*** 217,222 ****
+--- 217,223 ----
+           (filter (plist-get args :filter))
+           (menu-name (plist-get args :menu-name))
+           (pkg (plist-get args :package))
++          (which (plist-get args :which))
+           (key-bindings (progn
+                           (while (keywordp (car args))
+                             (pop args)
+***************
+*** 254,259 ****
+--- 255,262 ----
+               ,@(if menu-name
+                     `((define-prefix-command ',prefix-map nil ,menu-name))
+                   `((define-prefix-command ',prefix-map)))
++              ,@(if which
++                    `((which-key-add-key-based-replacements ,prefix ',which)))
+               ,@(if (and map (not (eq map 'global-map)))
+                     (wrap map `((bind-key ,prefix ',prefix-map ,map ,filter)))
+                   `((bind-key ,prefix ',prefix-map nil ,filter)))))

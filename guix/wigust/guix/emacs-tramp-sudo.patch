@@ -1,0 +1,29 @@
+From 9ba8f39230d9325ea555e6b08cb075d9e0726321 Mon Sep 17 00:00:00 2001
+From: Oleg Pykhalov <go.wigust@gmail.com>
+Date: Sun, 12 May 2019 21:05:24 +0300
+Subject: [PATCH] tramp: Do not require search for a user in sudo method.
+
+* lisp/net/tramp.el (tramp-read-passwd): Do not require search for a
+user in sudo method.
+---
+ lisp/net/tramp.el | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/lisp/net/tramp.el b/lisp/net/tramp.el
+index 315e709947..44a2428ab7 100644
+--- a/lisp/net/tramp.el
++++ b/lisp/net/tramp.el
+@@ -4430,7 +4430,9 @@ tramp-read-passwd
+ 			     :port tramp-current-method
+ 			     :require
+ 			     (cons
+-			      :secret (and tramp-current-user '(:user))))
++			      :secret (and (not (string-equal tramp-current-method "sudo"))
++                                           tramp-current-user
++                                           '(:user))))
+ 			    auth-passwd (plist-get
+ 					 (nth 0 auth-info) :secret)
+ 			    auth-passwd (if (functionp auth-passwd)
+-- 
+2.21.0
+

@@ -1,0 +1,24 @@
+From 80f8825b029f7ff7b6dc0c4d5e9056a035f8ee71 Mon Sep 17 00:00:00 2001
+From: Oleg Pykhalov <go.wigust@gmail.com>
+Date: Mon, 12 Feb 2018 10:56:05 +0300
+Subject: [PATCH] haunt: asset: Follow symlinks.
+
+* haunt/asset.scm (directory-assets)[file-system-fold]: Add 'stat'
+  argument.
+---
+ haunt/asset.scm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/haunt/asset.scm b/haunt/asset.scm
+index 2d9e27b..a4c60cd 100644
+--- a/haunt/asset.scm
++++ b/haunt/asset.scm
+@@ -79,4 +79,4 @@ files in DIRECTORY that match KEEP?, recursively."
+   (define (err file-name stat errno memo)
+     (error "asset processing failed with errno: " file-name errno))
+ 
+-  (file-system-fold enter? leaf noop noop noop err '() directory))
++  (file-system-fold enter? leaf noop noop noop err '() directory stat))
+-- 
+2.15.1
+

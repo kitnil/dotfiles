@@ -1,0 +1,169 @@
+From f847126a0747ebb66214e7e85603e48d74950758 Mon Sep 17 00:00:00 2001
+From: Oleg Pykhalov <go.wigust@gmail.com>
+Date: Sun, 24 May 2020 20:30:27 +0300
+Subject: [PATCH] service: Add #:supplementary-groups.
+
+* modules/shepherd/service.scm (format-supplementary-groups): New procedure.
+(exec-command, fork+exec-command): Add '#:supplementary-groups'.
+* doc/shepherd.texi (Service De- and Constructors): Document this.
+---
+ doc/shepherd.texi            | 39 +++++++++++++++++++++---------------
+ modules/shepherd/service.scm | 12 ++++++++++-
+ 2 files changed, 34 insertions(+), 17 deletions(-)
+
+diff --git a/doc/shepherd.texi b/doc/shepherd.texi
+index 1de49af..18f1a4d 100644
+--- a/doc/shepherd.texi
++++ b/doc/shepherd.texi
+@@ -11,7 +11,8 @@
+ @copying
+ Copyright @copyright{} @value{OLD-YEARS} Wolfgang J@"ahrling@*
+ Copyright @copyright{} @value{NEW-YEARS} Ludovic Courtès@*
+-Copyright @copyright{} 2020 Brice Waegeneire
++Copyright @copyright{} 2020 Brice Waegeneire@*
++Copyright @copyright{} 2020 Oleg Pykhalov
+ 
+ Permission is granted to copy, distribute and/or modify this document
+ under the terms of the GNU Free Documentation License, Version 1.3 or
+@@ -893,21 +894,24 @@ execution of the @var{command} was successful, @code{#t} if not.
+ @deffn {procedure} make-forkexec-constructor @var{command} @
+   [#:user #f] @
+   [#:group #f] @
++  [#:supplementary-groups '()] @
+   [#:pid-file #f] [#:pid-file-timeout (default-pid-file-timeout)] @
+   [#:log-file #f] @
+   [#:directory (default-service-directory)] @
+   [#:file-creation-mask #f] @
+   [#:environment-variables (default-environment-variables)]
+ Return a procedure that forks a child process, closes all file
+-descriptors except the standard output and standard error descriptors, sets
+-the current directory to @var{directory}, sets the umask to
+-@var{file-creation-mask} unless it is @code{#f}, changes the environment to
+-@var{environment-variables} (using the @code{environ} procedure), sets the
+-current user to @var{user} and the current group to @var{group} unless they
+-are @code{#f}, and executes @var{command} (a list of strings.)  The result of
+-the procedure will be the PID of the child process.  Note that this will
+-not work as expected if the process ``daemonizes'' (forks); in that
+-case, you will need to pass @code{#:pid-file}, as explained below.
++descriptors except the standard output and standard error descriptors,
++sets the current directory to @var{directory}, sets the umask to
++@var{file-creation-mask} unless it is @code{#f}, changes the environment
++to @var{environment-variables} (using the @code{environ} procedure),
++sets the current user to @var{user} the current group to @var{group}
++unless they are @code{#f} and supplementary groups to
++@var{supplementary-groups} unless they are @code{'()}, and executes
++@var{command} (a list of strings.)  The result of the procedure will be
++the PID of the child process.  Note that this will not work as expected
++if the process ``daemonizes'' (forks); in that case, you will need to
++pass @code{#:pid-file}, as explained below.
+ 
+ When @var{pid-file} is true, it must be the name of a PID file
+ associated with the process being launched; the return value is the PID
+@@ -937,6 +941,7 @@ procedures.
+ @deffn {procedure} exec-command @var{command} @
+   [#:user #f] @
+   [#:group #f] @
++  [#:supplementary-groups '()] @
+   [#:log-file #f] @
+   [#:directory (default-service-directory)] @
+   [#:file-creation-mask #f] @
+@@ -944,6 +949,7 @@ procedures.
+ @deffnx {procedure} fork+exec-command @var{command} @
+   [#:user #f] @
+   [#:group #f] @
++  [#:supplementary-groups '()] @
+   [#:directory (default-service-directory)] @
+   [#:file-creation-mask #f] @
+   [#:environment-variables (default-environment-variables)]
+@@ -955,12 +961,13 @@ if it's true, whereas file descriptor 0
+ (standard input) points to @file{/dev/null}; all other file descriptors
+ are closed prior to yielding control to @var{command}.
+ 
+-By default, @var{command} is run as the current user.  If the
+-@var{user} keyword argument is present and not false, change to
+-@var{user} immediately before invoking @var{command}.  @var{user} may
+-be a string, indicating a user name, or a number, indicating a user
+-ID.  Likewise, @var{command} will be run under the current group,
+-unless the @var{group} keyword argument is present and not false.
++By default, @var{command} is run as the current user.  If the @var{user}
++keyword argument is present and not false, change to @var{user}
++immediately before invoking @var{command}.  @var{user} may be a string,
++indicating a user name, or a number, indicating a user ID.  Likewise,
++@var{command} will be run under the current group, unless the
++@var{group} keyword argument is present and not false, and
++supplementary-groups is not '().
+ 
+ @code{fork+exec-command} does the same as @code{exec-command}, but in
+ a separate process whose PID it returns.
+diff --git a/modules/shepherd/service.scm b/modules/shepherd/service.scm
+index 347b8cc..587ff68 100644
+--- a/modules/shepherd/service.scm
++++ b/modules/shepherd/service.scm
+@@ -6,6 +6,7 @@
+ ;; Copyright (C) 2018 Carlo Zancanaro <carlo@zancanaro.id.au>
+ ;; Copyright (C) 2019 Ricardo Wurmus <rekado@elephly.net>
+ ;; Copyright (C) 2020 Mathieu Othacehe <m.othacehe@gmail.com>
++;; Copyright (C) 2020 Oleg Pykhalov <go.wigust@gmail.com>
+ ;;
+ ;; This file is part of the GNU Shepherd.
+ ;;
+@@ -773,10 +774,15 @@ daemon writing FILE is running in a separate PID namespace."
+               (try-again)
+               (apply throw args)))))))
+ 
++(define (format-supplementary-groups supplementary-groups)
++  (list->vector (map (lambda (group) (group:gid (getgr group)))
++                     supplementary-groups)))
++
+ (define* (exec-command command
+                        #:key
+                        (user #f)
+                        (group #f)
++                       (supplementary-groups '())
+                        (log-file #f)
+                        (directory (default-service-directory))
+                        (file-creation-mask #f)
+@@ -832,7 +838,7 @@ false."
+        (catch #t
+          (lambda ()
+            ;; Clear supplementary groups.
+-           (setgroups #())
++           (setgroups (format-supplementary-groups supplementary-groups))
+            (setgid (group:gid (getgr group))))
+          (lambda (key . args)
+            (format (current-error-port)
+@@ -879,6 +885,7 @@ false."
+                             #:key
+                             (user #f)
+                             (group #f)
++                            (supplementary-groups '())
+                             (log-file #f)
+                             (directory (default-service-directory))
+                             (file-creation-mask #f)
+@@ -909,6 +916,7 @@ its PID."
+             (exec-command command
+                           #:user user
+                           #:group group
++                          #:supplementary-groups supplementary-groups
+                           #:log-file log-file
+                           #:directory directory
+                           #:file-creation-mask file-creation-mask
+@@ -919,6 +927,7 @@ its PID."
+                                     #:key
+                                     (user #f)
+                                     (group #f)
++                                    (supplementary-groups '())
+                                     (directory (default-service-directory))
+                                     (environment-variables
+                                      (default-environment-variables))
+@@ -956,6 +965,7 @@ start."
+     (let ((pid (fork+exec-command command
+                                   #:user user
+                                   #:group group
++                                  #:supplementary-groups supplementary-groups
+                                   #:log-file log-file
+                                   #:directory directory
+                                   #:file-creation-mask file-creation-mask
+-- 
+2.26.2
+

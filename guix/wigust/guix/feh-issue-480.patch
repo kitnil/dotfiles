@@ -1,0 +1,24 @@
+From 4e58a24244f25fcee89a8d7c6e2cc000032831af Mon Sep 17 00:00:00 2001
+From: Oleg Pykhalov <go.wigust@gmail.com>
+Date: Sun, 24 Nov 2019 07:44:13 +0300
+Subject: [PATCH] src: main: Apply issues/480
+
+---
+ src/main.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/main.c b/src/main.c
+index 31ab8f8..a141f07 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -121,6 +121,7 @@ int feh_main_iteration(int block)
+ 
+ 	if (first) {
+ 		/* Only need to set these up the first time */
++		init_slideshow_mode();
+ 		xfd = ConnectionNumber(disp);
+ 		fdsize = xfd + 1;
+ 		pt = feh_get_time();
+-- 
+2.24.0
+
