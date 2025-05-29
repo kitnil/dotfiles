@@ -267,7 +267,6 @@
           "jenkins.wugi.info"
           "monitor.wugi.info"
           "syncthing.wugi.info"
-          "webssh.wugi.info"
           "docker-registry.wugi.info"
           "iso.wugi.info"
           "githunt.wugi.info"))
@@ -536,27 +535,6 @@ location / {
 }
 ")))
 
-          (nginx-server-configuration
-           (inherit %webssh-configuration-nginx)
-           (server-name '("webssh.wugi.info"))
-           (listen '("192.168.0.144:443 ssl"))
-           (ssl-certificate (letsencrypt-certificate "webssh.wugi.info"))
-           (ssl-certificate-key (letsencrypt-key "webssh.wugi.info"))
-           (locations
-            (list (nginx-location-configuration
-                   (uri "/.well-known")
-                   (body '("root /var/www;")))
-                  (nginx-location-configuration
-                   (uri "/")
-                   (body '("proxy_pass http://127.0.0.1:8888;"
-                           "proxy_http_version 1.1;"
-                           "proxy_read_timeout 300;"
-                           "proxy_set_header Upgrade $http_upgrade;"
-                           "proxy_set_header Connection \"upgrade\";"
-                           "proxy_set_header Host $http_host;"
-                           "proxy_set_header X-Real-IP $remote_addr;"
-                           "proxy_set_header X-Real-PORT $remote_port;"
-                           "add_header Access-Control-Allow-Origin *;"))))))
           (proxy "cups.tld" 631)
           (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #f)
           (proxy "syncthing.wugi.info" 8384 #:ssl? #t #:ssl-key? #t #:mtls? #t
@@ -568,10 +546,10 @@ location / {
           (proxy "prometheus.wugi.info" 9090 #:listen %guixsd-private-ip-address)
           (proxy "guix.wugi.info" 5556 #:ssl? #t #:ssl-key? #t)
           ((lambda* (host #:key
-                          (ssl? #f)
-                          (ssl-target? #f)
-                          (target #f)
-                          (sub-domains? #f))
+                     (ssl? #f)
+                     (ssl-target? #f)
+                     (target #f)
+                     (sub-domains? #f))
              (nginx-server-configuration
               (server-name (if sub-domains?
                                (list (string-append sub-domains?
@@ -1671,15 +1649,6 @@ PasswordAuthentication yes")))
                    (host "0.0.0.0")
                    (port 5556)
                    (ttl (* 90 24 3600))))
-
-         (service webssh-service-type
-                  (webssh-configuration (address "127.0.0.1")
-                                        (port 8888)
-                                        (policy 'reject)
-                                        (known-hosts '("\
-localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="
-                                                       "\
-127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="))))
 
          (service kernel-module-loader-service-type
                   '(;; "vfio-pci"
