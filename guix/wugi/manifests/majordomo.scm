@@ -20,7 +20,7 @@
             "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
         (channel
          (name 'guix-majordomo)
-         (url "https://github.com/6d6a/package-management-guix-majordomo.git"))))
+         (url "https://cgit.wugi.info/git/guix/guix-majordomo.git"))))
 
 (define (%majordomo-manifest)
   (define inferior
