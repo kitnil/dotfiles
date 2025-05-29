@@ -95,6 +95,7 @@ code is non-zero; otherwise return #t."
                 (chdir workdir)
                 (and
                  (git "clone" ,%git-origin ".")
+                 (git "checkout" commit)
 
                  (invoke "mkdir" "-p" ".password-store")
                  (chdir password-store)
