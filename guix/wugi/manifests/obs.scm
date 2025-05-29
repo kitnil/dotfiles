@@ -21,6 +21,8 @@
                                    (nongnu packages video)
                                    (srfi srfi-1)
                                    (wigust packages video))
+                      (%patch-path (append (list ,%distro-directory)
+                                           (%patch-path)))
                       (fold (lambda (package result)
                               (let ((id (object-address package)))
                                 (hashv-set! %package-table id package)
