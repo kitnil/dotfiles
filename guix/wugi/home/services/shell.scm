@@ -30,11 +30,9 @@
                                 `(".local/share/bash-completion/completions/lexicon" ,(local-file (string-append %distro-directory "/dot_local/share/bash-completion/completions/lexicon")))
                                 `(".local/share/bash-completion/completions/herd" ,(local-file (string-append %distro-directory "/dot_local/share/bash-completion/completions/herd")))
                                 `(".local/share/bash-completion/completions/mail" ,(local-file (string-append %distro-directory "/dot_local/share/bash-completion/completions/mail")))
-                                `(".local/share/bash-completion/completions/connect" ,(local-file (string-append %distro-directory "/dot_local/share/bash-completion/completions/connect"))))
-                          (map (lambda (file-name)
-                                 `(,(string-append ".bash.d/" file-name) ,(local-file (string-append %distro-directory "/dot_bash.d/" file-name))))
-                               '("bash.scm"
-                                 "mjru.bash")))))
+                                `(".local/share/bash-completion/completions/connect" ,(local-file (string-append %distro-directory "/dot_local/share/bash-completion/completions/connect")))
+                                `(".bash.d/bash.scm" ,(local-file (string-append %distro-directory "/dot_bash.d/bash.tmpl")))
+                                `(".bash.d/mjru.bash" ,(local-file (string-append %distro-directory "/dot_bash.d/bash.bash")))))))
 
 (define home-inputrc-service
   (simple-service 'inputrc-config
