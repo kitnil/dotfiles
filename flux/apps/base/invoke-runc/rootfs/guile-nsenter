@@ -94,10 +94,7 @@ code is non-zero; otherwise return #t."
                      (password-store ".password-store"))
                 (chdir workdir)
                 (and
-                 (git "init")
-                 (git "remote" "add" "origin" ,%git-origin)
-                 (git "fetch" "origin" commit)
-                 (git "checkout" commit)
+                 (git "clone" ,%git-origin ".")
 
                  (invoke "mkdir" "-p" ".password-store")
                  (chdir password-store)
