@@ -70,7 +70,7 @@
                          %base-file-systems))
 
     (initrd microcode-initrd)
-    (kernel linux-5.13-with-bpf)
+    (kernel linux-5.15-with-bpf)
     (firmware (append (list (@ (wugi packages linux) linux-firmware))
                       %base-firmware))
 
