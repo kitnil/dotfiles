@@ -220,6 +220,7 @@ main()
     install_dlv
     install_pob
     install_wlvncc
+    aur install yandex-browser
 }
 
 main "$@"
