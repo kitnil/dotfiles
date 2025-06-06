@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socat
+spec:
+  template:
+    spec:
+      containers:
+      - name: socat
+        args:
+        - tcp4-LISTEN:443,reuseaddr,fork,keepalive,bind=0.0.0.0
+        - TCP4:mirrors.sjtug.sjtu.edu.cn:443

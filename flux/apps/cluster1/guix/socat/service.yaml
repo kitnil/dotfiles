@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: socat
+  labels:
+    app.kubernetes.io/name: socat
+    app.kubernetes.io/part-of: socat
+spec:
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 443
+    name: https
+  selector:
+    app.kubernetes.io/name: socat
+    app.kubernetes.io/part-of: socat
+  type: ClusterIP
