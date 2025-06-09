@@ -98,6 +98,7 @@ guix/dotfiles/packer/build.scm:
 
 GUIX_SYSTEM_CONFIGURATIONS =			\
   guixsd					\
+  libvirt					\
   notebook					\
   pc0						\
   vm1						\
