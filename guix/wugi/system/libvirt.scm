@@ -2,9 +2,9 @@
 ;; setup, so it has barely any services at all.
 
 (define-module (wugi system libvirt)
-  #:use-system (gnu)
-  #:use-system (gnu packages bash)
-  #:use-system (gnu services virtualization)
+  #:use-module (gnu)
+  #:use-module (gnu packages bash)
+  #:use-module (gnu services virtualization)
   #:export (%libvirt))
 
 (define (%libvirt)
