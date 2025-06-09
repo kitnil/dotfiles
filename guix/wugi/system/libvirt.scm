@@ -40,6 +40,12 @@
       (service special-files-service-type
                `(("/bin/sh" ,(file-append bash "/bin/sh"))
                  ("/usr/bin/env" ,(file-append coreutils "/bin/env"))))
+      (syslog-service-type
+       (syslog-configuration
+        (extra-options '("--rcfile=/etc/syslog.conf"
+                         "--no-forward"
+                         "--no-unixaf"
+                         "--no-klog"))))
       (service libvirt-service-type
                (libvirt-configuration
                 (listen-tcp? #t)
