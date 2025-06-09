@@ -4,6 +4,7 @@
 (define-module (wugi system libvirt)
   #:use-module (gnu)
   #:use-module (gnu packages bash)
+  #:use-module (gnu services base)
   #:use-module (gnu services virtualization)
   #:export (%libvirt))
 
