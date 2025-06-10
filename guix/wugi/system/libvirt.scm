@@ -65,6 +65,16 @@
       (service udev-service-type
                (udev-configuration
                 (rules (list lvm2))))
+      (service openssh-service-type
+               (openssh-configuration
+                (authorized-keys
+                 `(("root" ,(local-file
+                             (string-append
+                              %distro-directory
+                              "/dotfiles/guixsd/ssh/id_rsa_pc0.pub")))))
+                (permit-root-login 'prohibit-password)
+                (password-authentication? #f)
+                (use-pam? #f)))
       (service special-files-service-type
                `(("/bin/sh" ,(file-append bash "/bin/sh"))
                  ("/usr/bin/env" ,(file-append coreutils "/bin/env"))))
