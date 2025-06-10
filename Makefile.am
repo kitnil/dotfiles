@@ -114,9 +114,19 @@ define guix-build-expression
 build --load-path=$(LOAD_PATH) --substitute-urls=$(SUBSTITUTE_URLS) --expression="((@ (wugi system $(1)) %$(2)))"
 endef
 
+define guix-image-expression
+system image --load-path=$(LOAD_PATH) --substitute-urls=$(SUBSTITUTE_URLS) --max-layers=100 --image-type=docker --network --expression="((@ (wugi system $(1)) %$(2)))"
+endef
+
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-build-$(configuration)):
 	system=$(subst guix-system-build-,,$@); \
 	$(GUIX) $(call guix-build-expression,$$system,$$system)
+
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-image-$(configuration)):
+	system=$(subst guix-time-machine-system-image-,,$@); \
+	container=$$($(GUIX) $(call guix-image-expression,$$system,$$system))
+	IMG=$(container_registry)/library/$@:$$(echo $(GIT_COMMIT) | cut -c -8)-$$(date +%s)
+	$(SKOPEO) copy docker-archive\:$$container docker://$$IMG
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-build-$(configuration)):
 	system=$(subst guix-time-machine-system-build-,,$@); \
