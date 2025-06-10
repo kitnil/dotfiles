@@ -7,6 +7,7 @@
   #:use-module (gnu packages bash)
   #:use-module (gnu packages linux)
   #:use-module (gnu services base)
+  #:use-module (gnu services ssh)
   #:use-module (gnu services virtualization)
   #:export (%libvirt))
 
