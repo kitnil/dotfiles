@@ -5,6 +5,7 @@
   #:use-module (gnu)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages bash)
+  #:use-module (gnu packages linux)
   #:use-module (gnu services base)
   #:use-module (gnu services virtualization)
   #:export (%libvirt))
@@ -52,6 +53,9 @@
                           (device "does-not-matter")
                           (mount-point "/")
                           (type "does-not-matter"))))
+
+    (packages (append (list lvm2)
+                      %base-packages))
 
     (services
      (list
