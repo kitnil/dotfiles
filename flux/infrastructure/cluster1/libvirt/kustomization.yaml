@@ -7,5 +7,5 @@ patchesStrategicMerge:
 - daemonset.yaml
 images:
 - name: harbor.home.wugi.info/library/libvirt
-  newTag: 20b45da8-1749557427
+  newTag: 56699191-1749558705
 
