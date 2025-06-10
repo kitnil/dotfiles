@@ -41,6 +41,8 @@ spec:
         - mountPath: /run
           mountPropagation: Bidirectional
           name: guix-run
+        - mountPath: /etc/libvirt
+          name: etc-libvirt
       volumes:
       - hostPath:
           path: /dev/kvm
@@ -70,3 +72,7 @@ spec:
           medium: Memory
           sizeLimit: 1Gi
         name: guix-shm
+      - hostPath:
+          path: /opt/containers/libvirt/rootfs/etc/libvirt
+          type: Directory
+        name: etc-libvirt
