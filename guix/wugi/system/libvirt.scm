@@ -3,6 +3,7 @@
 
 (define-module (wugi system libvirt)
   #:use-module (gnu)
+  #:use-module (gnu packages admin)
   #:use-module (gnu packages bash)
   #:use-module (gnu services base)
   #:use-module (gnu services virtualization)
@@ -43,10 +44,18 @@
                  ("/usr/bin/env" ,(file-append coreutils "/bin/env"))))
       (service syslog-service-type
                (syslog-configuration
-                (extra-options '("--rcfile=/etc/syslog.conf"
-                                 "--no-forward"
-                                 "--no-unixaf"
-                                 "--no-klog"))))
+                (syslogd
+                 (program-file
+                  "syslogd"
+                  #~(begin
+                      (use-modules (srfi srfi-1))
+                      (let ((args (cdr (command-line)))
+                            (extra-options '("--rcfile=/etc/syslog.conf"
+                                             "--no-forward"
+                                             "--no-unixaf"
+                                             "--no-klog")))
+                        (execl #$(file-append inetutils "/libexec/syslogd")
+                               "syslogd" (append args extra-options))))))))
       (service libvirt-service-type
                (libvirt-configuration
                 (listen-tcp? #t)
