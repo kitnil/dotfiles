@@ -37,6 +37,8 @@ spec:
       name: guix-run
     - mountPath: /etc/libvirt
       name: etc-libvirt
+    - mountPath: /var/lib/libvirt
+      name: var-lib-libvirt
   volumes:
   - hostPath:
       path: /dev/kvm
@@ -70,3 +72,7 @@ spec:
       path: /opt/containers/libvirt/rootfs/etc/libvirt
       type: Directory
     name: etc-libvirt
+  - hostPath:
+      path: /opt/containers/libvirt/rootfs/var/lib/libvirt
+      type: Directory
+    name: var-lib-libvirt
