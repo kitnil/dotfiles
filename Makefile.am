@@ -125,7 +125,7 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-build-$(config
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-image-$(configuration)):
 	system=$(subst guix-time-machine-system-image-,,$@); \
 	container=$$($(GUIX) $(call guix-image-expression,$$system,$$system))
-	IMG=$(container_registry)/library/$@:$$(echo $(GIT_COMMIT) | cut -c -8)-$$(date +%s)
+	IMG=$(container_registry)/library/$$system:$$(echo $(GIT_COMMIT) | cut -c -8)-$$(date +%s)
 	$(SKOPEO) copy docker-archive\:$$container docker://$$IMG
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-build-$(configuration)):
