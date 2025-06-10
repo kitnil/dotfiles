@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: libvirt
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: libvirt.cluster.local/schedulable
+            operator: In
+            values:
+            - "true"
+  tolerations:
+  - key: "edge.cluster.local/not-schedulable"
+    operator: "Equal"
+    effect: "NoSchedule"
+  - key: "workstation.cluster.local"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"

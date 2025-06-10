@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: libvirt
+spec:
+  containers:
+  - image: harbor.home.wugi.info/library/libvirt:latest
+    name: libvirt
+    securityContext:
+      capabilities:
+        add:
+        - SYS_ADMIN
+      privileged: true
+    tty: true
+    volumeMounts:
+    - mountPath: /dev/kvm
+      name: dev-kvm
+    - mountPath: /etc/nsswitch.conf
+      name: nsswitch
+    - mountPath: /etc/services
+      name: services
+    - mountPath: /home
+      name: guix-home
+    - mountPath: /dev/shm
+      name: guix-shm
+    - mountPath: /tmp
+      name: guix-tmp
+    - mountPath: /var/log
+      name: guix-var-log
+    - mountPath: /run
+      mountPropagation: Bidirectional
+      name: guix-run
+    - mountPath: /etc/libvirt
+      name: etc-libvirt
+  volumes:
+  - hostPath:
+      path: /dev/kvm
+      type: CharDevice
+    name: dev-kvm
+  - hostPath:
+      path: /etc/nsswitch.conf
+      type: File
+    name: nsswitch
+  - hostPath:
+      path: /etc/services
+      type: File
+    name: services
+  - emptyDir:
+      sizeLimit: 1Gi
+    name: guix-tmp
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 512M
+    name: guix-run
+  - emptyDir:
+      sizeLimit: 512M
+    name: guix-var-log
+  - emptyDir: {}
+    name: guix-home
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 1Gi
+    name: guix-shm
+  - hostPath:
+      path: /opt/containers/libvirt/rootfs/etc/libvirt
+      type: Directory
+    name: etc-libvirt

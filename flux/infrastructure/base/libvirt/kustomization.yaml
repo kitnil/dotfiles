@@ -3,4 +3,3 @@ kind: Kustomization
 namespace: libvirt
 resources:
 - namespace.yaml
-- daemonset.yaml
