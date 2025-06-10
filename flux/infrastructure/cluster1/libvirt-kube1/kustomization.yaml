@@ -8,4 +8,4 @@ patchesStrategicMerge:
 - pod.yaml
 images:
 - name: harbor.home.wugi.info/library/libvirt
-  newTag: e4bce5af-1749559640
+  newTag: 4a19c80b-1749562227
