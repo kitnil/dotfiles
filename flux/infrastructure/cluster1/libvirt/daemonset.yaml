@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: libvirt
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: libvirt.cluster.local/schedulable
+                operator: In
+                values:
+                - "true"
+      tolerations:
+      - key: "edge.cluster.local/not-schedulable"
+        operator: "Equal"
+        effect: "NoSchedule"
+      - key: "workstation.cluster.local"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"

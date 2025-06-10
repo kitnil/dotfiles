@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: libvirt
+resources:
+- ../../base/libvirt
+patchesStrategicMerge:
+- daemonset.yaml
+images:
+- name: harbor.home.wugi.info/library/libvirt
+  newTag: 31eab4fb-1749554745
+
