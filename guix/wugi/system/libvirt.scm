@@ -10,6 +10,22 @@
   #:export (%libvirt))
 
 (define (%libvirt)
+  (define syslogd
+    (program-file
+     "syslogd"
+     #~(begin
+         (use-modules (srfi srfi-1))
+         (let ((args (cdr (command-line)))
+               (extra-options '("--rcfile=/etc/syslog.conf"
+                                "--no-forward"
+                                "--no-unixaf"
+                                "--no-klog")))
+           (apply execl
+                  (append (list #$(file-append inetutils "/libexec/syslogd")
+                                "syslogd")
+                          args
+                          extra-options))))))
+
   (operating-system
     (host-name "libvirt")
     (timezone "Europe/Moscow")
@@ -44,18 +60,7 @@
                  ("/usr/bin/env" ,(file-append coreutils "/bin/env"))))
       (service syslog-service-type
                (syslog-configuration
-                (syslogd
-                 (program-file
-                  "syslogd"
-                  #~(begin
-                      (use-modules (srfi srfi-1))
-                      (let ((args (cdr (command-line)))
-                            (extra-options '("--rcfile=/etc/syslog.conf"
-                                             "--no-forward"
-                                             "--no-unixaf"
-                                             "--no-klog")))
-                        (execl #$(file-append inetutils "/libexec/syslogd")
-                               "syslogd" (append args extra-options))))))))
+                (syslogd syslogd)))
       (service libvirt-service-type
                (libvirt-configuration
                 (listen-tcp? #t)
