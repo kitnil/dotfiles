@@ -59,6 +59,12 @@
 
     (services
      (list
+      ;; The LVM2 rules are needed as soon as LVM2 or the device-mapper is
+      ;; used, so enable them by default.  The FUSE and ALSA rules are
+      ;; less critical, but handy.
+      (service udev-service-type
+               (udev-configuration
+                (rules (list lvm2))))
       (service special-files-service-type
                `(("/bin/sh" ,(file-append bash "/bin/sh"))
                  ("/usr/bin/env" ,(file-append coreutils "/bin/env"))))
