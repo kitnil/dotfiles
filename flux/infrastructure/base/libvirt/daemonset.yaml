@@ -13,6 +13,7 @@ spec:
         app.kubernetes.io/name: libvirt
         app.kubernetes.io/part-of: libvirt
     spec:
+      hostNetwork: true
       containers:
       - image: harbor.home.wugi.info/library/libvirt:latest
         name: libvirt
