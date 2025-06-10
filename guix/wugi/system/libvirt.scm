@@ -9,6 +9,7 @@
   #:use-module (gnu services base)
   #:use-module (gnu services ssh)
   #:use-module (gnu services virtualization)
+  #:use-module (wugi utils)
   #:export (%libvirt))
 
 (define (%libvirt)
