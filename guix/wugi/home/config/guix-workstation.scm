@@ -47,7 +47,7 @@
   #:use-module (wugi home services web)
   #:use-module (wugi manifests workstation)
   #:use-module (wugi utils)
-  #:export (%workstation-home-environment))
+  #:export (%guix-workstation-home-environment))
 
 (define (manifest->packages manifest)
   "Return the list of packages in MANIFEST."

@@ -8,7 +8,7 @@ export PATH
 guix_workstation_id()
 {
     nerdctl -n k8s.io ps --format=json \
-        | jq --exit-status --raw-output '. | select (.Image | startswith("harbor.home.wugi.info/library/guix-image-workstation")) | .ID'
+        | jq --exit-status --raw-output '. | select (.Image | startswith("harbor.home.wugi.info/library/guix-workstation")) | .ID'
 }
 
 until guix_workstation_id

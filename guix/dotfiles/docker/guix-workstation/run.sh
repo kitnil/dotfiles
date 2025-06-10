@@ -20,4 +20,4 @@ do
     docker_args+=("--cap-add" "$capability")
 done
 
-docker run "${docker_args[@]}" "${CONTAINER_IMAGE:-harbor.home.wugi.info/library/guix-image-workstation:latest}" "$@"
+docker run "${docker_args[@]}" "${CONTAINER_IMAGE:-harbor.home.wugi.info/library/guix-workstation:latest}" "$@"

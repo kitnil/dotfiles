@@ -50,7 +50,7 @@
   #:use-module (wugi services docker)
   #:use-module (wugi services openvpn)
   #:use-module (wugi utils)
-  #:export (%workstation))
+  #:export (%guix-workstation))
 
 (define (%workstation)
   (define container-mingetty-service-type

@@ -1,8 +1,8 @@
 container_registry=harbor.home.wugi.info
 .ONESHELL:
-guix-image-workstation:
+guix-workstation:
 	set -o nounset -o errexit -o pipefail -o xtrace
-	IMG=harbor.home.wugi.info/library/guix-image-workstation:e5706265
+	IMG=harbor.home.wugi.info/library/guix-workstation:e5706265
 	export IMG
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
 	./build.sh

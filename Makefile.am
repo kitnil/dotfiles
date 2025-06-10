@@ -272,14 +272,6 @@ mumble:
 	$(SKOPEO) copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 .ONESHELL:
-guix-image-workstation: $(DECRYPT_TARGETS)
-	set -o nounset -o errexit -o pipefail -o xtrace
-	IMG=$(container_registry)/library/$@:$$(echo $(GIT_COMMIT) | cut -c -8)-$$(date +%s)
-	container=$$($(GUIX) time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm --substitute-urls=$(SUBSTITUTE_URLS) -- system image --load-path=$(LOAD_PATH) --substitute-urls=$(SUBSTITUTE_URLS) --max-layers=100 -t docker --network -e '((@ (wugi system workstation) %workstation))')
-	$(SKOPEO) copy docker-archive\:$$container docker://$$IMG
-	echo $$IMG
-
-.ONESHELL:
 pc0-manifest:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	$(GUIX) time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- build --load-path=$(LOAD_PATH) -m wugi/manifests/pc0.scm --substitute-urls="$(SUBSTITUTE_URLS)"

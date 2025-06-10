@@ -56,7 +56,7 @@
                                    '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-git-dotfiles-kube2/job.yaml")
                                    '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-git-dotfiles-kube3/job.yaml"
                                      "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-copy-kube3/job.yaml")
-                                   '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-image-workstation/job.yaml"
+                                   '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-workstation/job.yaml"
                                      "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-deploy-vm-guix-datavolume/job.yaml"
                                      "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-rde-image-workstation/job.yaml")
                                    '("/home/oleg/.local/share/chezmoi/apps/cluster1/build-workstation-controller-kube1/job.yaml")
