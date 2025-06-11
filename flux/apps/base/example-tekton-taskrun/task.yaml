@@ -7,7 +7,6 @@ spec:
   - name: step-0
     image: busybox
     securityContext:
-      hostPID: true
       privileged: true
     script: |
       echo hello from busybox
