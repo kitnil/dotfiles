@@ -5,5 +5,3 @@ metadata:
 spec:
   taskRef:
     name: example-tekton-task
-  podSpec:
-    hostPID: true

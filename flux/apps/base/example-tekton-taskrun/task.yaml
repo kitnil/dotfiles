@@ -6,6 +6,8 @@ spec:
   steps:
   - name: step-0
     image: busybox
+    securityContext:
+      privileged: true
     script: |
       echo hello from busybox
       ps axjfwwww
