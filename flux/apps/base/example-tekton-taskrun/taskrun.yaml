@@ -1,0 +1,9 @@
+kind: TaskRun
+apiVersion: tekton.dev/v1beta1
+metadata:
+  name: example-tekton-taskrun
+spec:
+  taskRef:
+    name: example-tekton-task
+  podTemplate:
+    hostPID: true

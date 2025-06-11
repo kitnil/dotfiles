@@ -1,0 +1,12 @@
+kind: Task
+apiVersion: tekton.dev/v1beta1
+metadata:
+  name: example-tekton-task
+spec:
+  steps:
+  - name: step-0
+    image: busybox
+    script: |
+      echo hello from busybox
+      ps axjfwwww
+      echo busybox finishe
