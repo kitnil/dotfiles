@@ -48,7 +48,9 @@
         };
         packages.${system} =
           let
-            pkgs = import original.inputs.nixpkgs { inherit system; };
+            pkgs = import original.inputs.dotfiles-home-manager.inputs.nixpkgs {
+              inherit system;
+            };
             inherit (pkgs) callPackage;
           in
             rec {
