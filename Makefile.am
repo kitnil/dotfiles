@@ -19,7 +19,7 @@ SUBSTITUTE_URLS='https://bordeaux.guix.gnu.org https://mirrors.sjtug.sjtu.edu.cn
 
 LOAD_PATH="$(abs_top_srcdir)/guix"
 
-PASSWORD_STORE=$(HOME)/.password-store
+PASSWORD_STORE="$(abs_top_srcdir)/.password-store"
 $(foreach secret,$(DECRYPT_TARGETS),$(secret)):
 	mkdir -p $$(dirname $@)
 	$(GPG) --output $@ --decrypt $(PASSWORD_STORE)/dotfiles/$@.gpg
