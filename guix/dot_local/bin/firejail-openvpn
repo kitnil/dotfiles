@@ -1,0 +1,151 @@
+#!/bin/sh
+
+# https://blog.jetbrains.com/platform/2024/07/wayland-support-preview-in-2024-2/
+# Wayland Support Preview In 2024.2 Maxim Kartashev July 8, 2024
+
+# We are delighted to announce that, starting with the 2024.2 Early Access
+# Program (EAP), IntelliJ-based IDEs will offer preliminary support for the
+# Wayland display server protocol on Linux, including Windows Subsystem for
+# Linux a.k.a. WSLg.  How To Opt In
+
+# On Linux, IntelliJ-based IDEs were using exclusively the X11 protocol and an
+# X server to show their user interface (UI), even if you were running a
+# Wayland-based desktop. All Wayland servers include an X server
+# implementation (XWayland) for backward compatibility with applications that
+# aren’t ready to work with Wayland directly.
+
+# Starting with the 2024.2 EAP, however, users can run IntelliJ-based IDEs on
+# Wayland natively by adding: -Dawt.toolkit.name=WLToolkit
+
+# to their VM options (Help | Edit Custom VM Options…). This will completely
+# bypass the XWayland compatibility layer and provide all the benefits that
+# Wayland has to offer.
+
+# This initial support aims to provide the foundational functionality
+# necessary for operating an IDE on Wayland. While we have made significant
+# progress, it’s important to note that there are features still in
+# development and known bugs yet to be fixed.  X11 or Wayland?
+
+# It’s not always possible to tell visually whether your IntelliJ-based IDE is
+# running through X11 or natively on Wayland. One way to be sure is by using
+# the About dialog (`Help | About`) to obtain full system information. Just
+# click on the Copy and Close button. Towards the top of the copied text the
+# toolkit’s name will be listed as follows:
+
+# Toolkit: sun.awt.wl.WLToolkit
+
+# WLToolkit means that the IDE is talking directly to the Wayland server,
+# while XToolkit – as the name would imply – means that the X11 protocol is
+# used.
+
+# The same information is also available in idea.log; for example:
+
+# INFO - #c.i.p.i.b.AppStarter - toolkit: sun.awt.wl.WLToolkit What’s Included
+
+# It goes without saying that this release includes the essential features
+# that make a graphic user interface functional like showing the UI, typing
+# text, moving the mouse pointer around, etc. Some features are worthy of
+# mention.  Sharp Picture
+
+# The top complaint about running IntelliJ-based IDEs on modern Wayland
+# desktops was the blurry picture you’d get when you scaled your desktop to a
+# fractional value, not an integer multiple of 100%, e.g. 150% or 215%. While
+# this wasn’t an inherent problem with X11, Wayland addresses fractional scale
+# in a more robust way, and our new graphical subsystem supports any desktop
+# scale, including fractional.
+
+# This area of Wayland is still under development, with improvements being
+# made both on the protocol side and in implementations (such as KWin, Mutter,
+# etc). We follow this work closely and will make the necessary updates to our
+# graphical subsystem as the situation evolves.  WSLg
+
+# On the WSLg side, switching to Wayland will mean no more unsightly window
+# decorations imposed by the X server (something many people complained
+# about), since the X server will no longer be involved in any stage of the
+# operations.  Responsive UI
+
+# The current implementation delivers a decent frames-per-second performance,
+# which is mainly visible upon scrolling or resizing, as that’s when the
+# window needs to be updated dozens or even hundreds of times per second. At
+# the same time, when things are quiet and only the cursor is blinking, the
+# graphical subsystem will not drain your battery by refreshing the entire
+# screen at 60 FPS. Wayland allows both high-performance screen updates and
+# slow pace periods to coexist in one application, and our graphical subsystem
+# takes full advantage of that.
+
+# The work in this area is far from over, and utilization of Vulkan is
+# expected to bring even better performance.  Better Multi-Monitor Support
+
+# Wayland generally handles window placement so that the application doesn’t
+# have to. This is a paradigm change for many graphical applications,
+# IntelliJ-based IDEs included. Among the positive effects of this change is
+# better handling of popups and other utility windows that should now appear
+# on the correct monitor and not cross the monitor boundary regardless of how
+# complex your setup is. This used to be a somewhat weak point with modern
+# systems that allowed different scales to be specified for each monitor and
+# that used to cause a lot of confusion when running through the XWayland
+# compatibility layer.  Work in Progress
+
+# Despite the advancements, full parity with X11 features has yet to be
+# achieved. There are several areas listed below that we focus on in the near
+# term.  Input Methods
+
+# Input methods are essential for developers who work with multiple languages
+# and scripts. They provide a standardized way to enter characters that aren’t
+# readily available on a standard keyboard.
+
+# In 2024.2 EAPs, no input methods are supported on Wayland. Since there is no
+# working around this limitation, this particular feature is at the very top
+# of our priorities list.
+
+# Note, however, that Wayland already supports languages that don’t quite
+# require the sophistication of input methods.  Native Window Decorations
+
+# There are still a few utility windows in IntelliJ-based IDEs that are
+# decorated by the OS, such as, for example, the About dialog or the
+# differences window. For the moment, when running on Wayland those
+# decorations (by which we essentially mean the window’s title bar and its
+# buttons) are painted by the JetBrains Runtime and do not adhere to the
+# desktop’s theme.
+
+# At a later date, we plan to implement native decoration support, similar to
+# what is available currently with X11. In the meantime, the decorations will
+# follow the overall desktop’s dark/light style, for those desktop
+# environments where such notifications are available.  Drag And Drop
+
+# In the 2024.2 release cycle, drag and drop within the IDE or between the IDE
+# and other applications will not be supported on Wayland. In many cases,
+# you’ll be able to just copy and paste as a work-around.  Stability
+
+# As with any major platform shift, there are bound to be some rough edges. We
+# review and prioritize incoming issues on a daily basis so that the most
+# important issues can be addressed as quickly as possible.  Feedback
+
+# We deeply appreciate our users’ patience and enthusiasm. Many have already
+# shared their feedback about IntelliJ-based IDEs on Wayland, and this has
+# been instrumental in delivering a robust preview with many “paper cuts”
+# having already been dealt with.
+
+# Your insights and experiences are invaluable to us. By reporting issues and
+# suggesting improvements, you can directly influence the development journey
+# and help us refine Wayland integration in IntelliJ-based IDEs. We encourage
+# you to create new issues on YouTrack and/or upvote the existing ones.
+
+# Get started with the 2024.2 EAP today and join us in shaping the future of
+# IntelliJ-based IDEs on Wayland!
+
+# Stay tuned for more updates and improvements in our upcoming releases.
+
+cat <<'EOF'
+sudo firejail --bind=/mnt/guix/run/user/1000,/run/user/1000 --bind=/mnt/guix/tmp,/tmp --deterministic-exit-code --blacklist=/var/run/nscd --noprofile --net=tapvpn --ip=172.16.103.243 --netmask=255.255.255.0 --dns=172.16.103.2 --defaultgw=172.16.103.1 bash
+
+XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-1 _JAVA_AWT_WM_NONREPARENTING=1 /nix/store/h389b2vblfw7fknqhj7md97hxxn999h7-pycharm-community-2024.3.1.1/bin/pycharm-community -Dawt.toolkit.name=WLToolkit
+
+sudo firejail --bind=/mnt/guix/run/user/1000,/run/user/1000 --bind=/mnt/guix/tmp,/tmp --deterministic-exit-code --blacklist=/var/run/nscd --noprofile --net=tapvpn --ip=172.16.103.243 --netmask=255.255.255.0 --dns=172.16.103.2 --defaultgw=172.16.103.1 --env=XDG_RUNTIME_DIR=/run/user/1000 --env=WAYLAND_DISPLAY=wayland-1 --env=_JAVA_AWT_WM_NONREPARENTING=1 sudo -u oleg --preserve-env=XDG_RUNTIME_DIR,WAYLAND_DISPLAY,_JAVA_AWT_WM_NONREPARENTING -i /nix/store/h389b2vblfw7fknqhj7md97hxxn999h7-pycharm-community-2024.3.1.1/bin/pycharm-community -Dawt.toolkit.name=WLToolkit
+
+
+# /run/systemd/system/docker.service.d/override.conf
+[Service]
+NetworkNamespacePath=/var/run/netns/firejail
+BindReadOnlyPaths=/etc/netns/firejail/resolv.conf:/etc/resolv.conf
+EOF
