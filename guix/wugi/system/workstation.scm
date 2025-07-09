@@ -40,8 +40,6 @@
   #:use-module (guix inferior)
   #:use-module (guix packages)
   #:use-module (guix profiles)
-  #:use-module (nongnu packages chrome)
-  #:use-module (nongnu packages mozilla)
   #:use-module (srfi srfi-1)
   #:use-module (wugi config)
   #:use-module (wugi etc guix channels workstation)
