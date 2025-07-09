@@ -833,7 +833,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/apps/cluster1/maintenance-guix-system-build-guix-workstation
-  suspend: true
+  suspend: false
   prune: true
   sourceRef:
     kind: GitRepository
