@@ -33,7 +33,7 @@
 (with-eval-after-load 'sendmail
   (setq smtpmail-debug-info t)
   (setq send-mail-function #'sendmail-send-it)
-  (setq sendmail-program "/home/oleg/.guix-profile/bin/msmtp")
+  (setq sendmail-program (locate-file "msmtp" exec-path))
   (setq mail-specify-envelope-from t)
   (setq message-sendmail-envelope-from 'header)
   (setq mail-envelope-from 'header))
