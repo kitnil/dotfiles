@@ -16,10 +16,10 @@
          (name 'johnlepikhin)
          (url "https://cgit.wugi.info/git/guix/johnlepikhin-guix-channel.git")
          (branch "master")
-         (commit "50ff4a5bba62fcaa0b9cbbcdd1bc94e81192d7ca")
+         (commit "d69046922cd4a9d924e08ac31ed49a412951f8d4")
          (introduction
           (make-channel-introduction
-           "2fbee0b655fdb9742cbafc2c4d457db06f8eaeeb"
+           "487be061769c7ffc7b28e886aa3d276f82d2c2cc"
            (openpgp-fingerprint
             "7238 7123 8EAC EB63 4548  5857 167F 8EA5 001A FA9C"))))))
 
