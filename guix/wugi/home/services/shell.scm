@@ -56,7 +56,7 @@
                                    #:recursive? #t)))
                    (map (lambda (program)
                           `(,(string-append ".local/bin/" program)
-                            ,(local-file (string-append %distro-directory "/guix/wugi/scripts/" program)
+                            ,(local-file (string-append %distro-directory "/wugi/scripts/" program)
                                          #:recursive? #t)))
                         '("clone-gitlab-intr.scm"
                           "clone-gitlab-swh.scm"
