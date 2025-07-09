@@ -13,6 +13,6 @@ spec:
         - name: GIT_COMMIT
           value: 0531d9076d78c32b7ae5fa27ade2f2f2dc027294
         - name: RUNC_MAKE_TARGET
-          value: "guix-workstation"
+          value: "guix-time-machine-system-build-workstation"
         - name: RUNC_ENVIRONMENT
           value: guix
