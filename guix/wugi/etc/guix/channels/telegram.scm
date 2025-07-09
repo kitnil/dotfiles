@@ -16,7 +16,7 @@
          (name 'johnlepikhin)
          (url "https://cgit.wugi.info/git/guix/johnlepikhin-guix-channel.git")
          (branch "master")
-         (commit "d254b40b5edb9130629dda43f4b7ae74b26fdc41")
+         (commit "50ff4a5bba62fcaa0b9cbbcdd1bc94e81192d7ca")
          (introduction
           (make-channel-introduction
            "2fbee0b655fdb9742cbafc2c4d457db06f8eaeeb"
