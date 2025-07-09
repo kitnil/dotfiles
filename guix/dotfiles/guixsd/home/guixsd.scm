@@ -724,9 +724,7 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
                           (and=> (getenv "HOME")
                                  (lambda (home)
                                    home)))
-                        (add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles"))
-                        (use-modules (ice-9 format)
-                                     (guile pass))
+                        (use-modules (ice-9 format))
                         (define msmtp-config
                           (string-append %home "/.msmtprc"))
                         (call-with-output-file msmtp-config
@@ -745,7 +743,7 @@ host           smtp.gmail.com
 port           587
 from           go.wigust@gmail.com
 user           go.wigust
-password       ~a
+passwordeval   \"gpg --quiet --for-your-eyes-only --no-tty --decrypt ~a/.password-store/myaccount.google.com/apppasswords/go.wigust.gpg\"
 
 # Majordomo
 account        majordomo-pyhalov
@@ -753,7 +751,7 @@ host           smtp.majordomo.ru
 port           587
 from           pyhalov@majordomo.ru
 user           pyhalov@majordomo.ru
-password       ~a
+passwordeval   \"gpg --quiet --for-your-eyes-only --no-tty --decrypt ~a/.password-store/majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru.gpg\"
 
 # Majordomo NOC
 account        majordomo-noc
@@ -761,15 +759,12 @@ host           smtp.majordomo.ru
 port           587
 from           noc@majordomo.ru
 user           noc@majordomo.ru
-password       ~a
+passwordeval   \"gpg --quiet --for-your-eyes-only --no-tty --decrypt ~a/.password-store/majordomo/private/router.majordomo.ru/noc@majordomo.ru.gpg\"
 
 # Set a default account
 account default : gmail
 "
-                                    %home
-                                    (pass "myaccount.google.com/apppasswords/go.wigust")
-                                    (pass "majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru")
-                                    (pass "majordomo/private/router.majordomo.ru/noc@majordomo.ru"))))
+                                    %home)))
                         (chmod msmtp-config #o600)))
 
     (simple-service 'netrc-config
