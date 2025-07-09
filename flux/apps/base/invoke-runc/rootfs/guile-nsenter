@@ -47,7 +47,7 @@
   "https://cgit.wugi.info/git/wigust/dotfiles")
 
 (define %git-password-store-url
-  "git@guixsd:wigust/password-store-dotfiles")
+  "git@cgit.wugi.info:wigust/password-store-dotfiles")
 
 (define (runc-code)
   `(begin
