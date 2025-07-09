@@ -23,7 +23,9 @@
             mbsync-config-file
             home-mbsync-service-type
 
-            home-mailcap-service))
+            home-mailcap-service
+
+            home-msmtp-service))
 
 (define-record-type* <goimapnotify-configuration>
   goimapnotify-configuration make-goimapnotify-configuration
@@ -352,3 +354,59 @@ that match the patterns. An example value would be @samp{'(\"INBOX\")}.")
   (simple-service 'mailcap-config
                   home-files-service-type
                   (list `(".mailcap" ,(local-file (string-append %distro-directory "/dot_mailcap"))))))
+
+
+;;;
+;;; msmtprc
+;;;
+
+(define home-msmtp-service
+  (simple-service 'msmtp-config
+                  home-activation-service-type
+                  #~(begin
+                      (define %home
+                        (and=> (getenv "HOME")
+                               (lambda (home)
+                                 home)))
+                      (use-modules (ice-9 format))
+                      (define msmtp-config
+                        (string-append %home "/.msmtprc"))
+                      (call-with-output-file msmtp-config
+                        (lambda (port)
+                          (format port "\
+# Set default values for all following accounts.
+defaults
+auth           on
+tls            on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile        ~a/.msmtp.log
+
+# Gmail
+account        gmail
+host           smtp.gmail.com
+port           587
+from           go.wigust@gmail.com
+user           go.wigust
+passwordeval   \"gpg --quiet --for-your-eyes-only --no-tty --decrypt ~a/.password-store/myaccount.google.com/apppasswords/go.wigust.gpg\"
+
+# Majordomo
+account        majordomo-pyhalov
+host           smtp.majordomo.ru
+port           587
+from           pyhalov@majordomo.ru
+user           pyhalov@majordomo.ru
+passwordeval   \"gpg --quiet --for-your-eyes-only --no-tty --decrypt ~a/.password-store/majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru.gpg\"
+
+# Majordomo NOC
+account        majordomo-noc
+host           smtp.majordomo.ru
+port           587
+from           noc@majordomo.ru
+user           noc@majordomo.ru
+passwordeval   \"gpg --quiet --for-your-eyes-only --no-tty --decrypt ~a/.password-store/majordomo/private/router.majordomo.ru/noc@majordomo.ru.gpg\"
+
+# Set a default account
+account default : gmail
+"
+                                  %home)))
+                      (chmod msmtp-config #o600))))
