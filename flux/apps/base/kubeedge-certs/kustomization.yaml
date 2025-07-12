@@ -3,3 +3,7 @@ kind: Kustomization
 namespace: kubeedge
 resources:
 - job.yaml
+configMapGenerator:
+- name: script
+  files:
+  - guile-script.scm=rootfs/guile-nsenter
