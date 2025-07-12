@@ -24,6 +24,9 @@ spec:
         - /usr/local/bin/guile-nsenter
         image: harbor.home.wugi.info/library/kubeedge-certs:59a3b55c
         name: nsenter
+        env:
+        - name: CLOUDCOREIPS
+          value: "192.168.0.137"
         resources:
           limits:
             cpu: 14000m
