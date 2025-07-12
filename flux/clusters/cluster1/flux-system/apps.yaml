@@ -1159,6 +1159,19 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
+  name: maintenance-runc-guix-builder-kubeedge-certs-kube1
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./flux/apps/cluster1/maintenance-runc-guix-builder-kubeedge-certs-kube1
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
   name: restic
   namespace: flux-system
 spec:
