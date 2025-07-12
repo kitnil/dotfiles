@@ -43,7 +43,7 @@ spec:
         - mountPath: /mnt/etc/kubernetes/pki/ca.crt
           name: kubernetes-pki-ca-cert
           readOnly: true
-        - mountPath: /mnt/etc/kubernetes/pki/ca.key
+        - mountPath: /mnt/etc/kubernetes/pki/ca-key.pem
           name: kubernetes-pki-ca-key
           readOnly: true
         - mountPath: /etc/kubeedge
@@ -61,7 +61,7 @@ spec:
           type: File
       - name: kubernetes-pki-ca-key
         hostPath:
-          path: /etc/kubernetes/pki/ca.key
+          path: /etc/kubernetes/pki/ca-key.pem
           type: File
       - name: kubeedge-certs
         hostPath:
