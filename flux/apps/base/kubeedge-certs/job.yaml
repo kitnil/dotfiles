@@ -32,10 +32,12 @@ spec:
             cpu: 50m
             memory: 8192Mi
         volumeMounts:
-        - mountPath: /usr/local/bin
+        - mountPath: /usr/local/bin/guile-nsenter
           name: script
-        - mountPath: /usr/local/bin
+          subPath: guile-nsenter
+        - mountPath: /usr/local/bin/certgen.sh
           name: kubeedge-certgen
+          subPath: certgen.sh
         - mountPath: /mnt/etc/kubernetes/pki/ca.crt
           name: kubernetes-pki-ca-cert
         - mountPath: /mnt/etc/kubernetes/pki/ca.key
