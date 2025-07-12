@@ -9,7 +9,6 @@ spec:
         kubernetes.io/hostname: kube1
       containers:
       - name: nsenter
-        image: harbor.home.wugi.info/library/kubeedge-certs:59a3b55c
         env:
         - name: GIT_COMMIT
           value: 59a3b55c82a8e4c8221ce4499b412cbddd278ed8

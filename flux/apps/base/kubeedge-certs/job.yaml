@@ -22,7 +22,7 @@ spec:
         - (guile-nsenter)
         - -s
         - /usr/local/bin/guile-nsenter
-        image: harbor.home.wugi.info/library/util-linux-with-udev:44cd2b5c
+        image: harbor.home.wugi.info/library/kubeedge-certs:59a3b55c
         name: nsenter
         resources:
           limits:
