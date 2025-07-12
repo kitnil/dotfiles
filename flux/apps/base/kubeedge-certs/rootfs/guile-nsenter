@@ -51,7 +51,6 @@ code is non-zero; otherwise return #t."
   (mkdir "/etc/kubernetes/pki")
   (copy-file "/mnt/etc/kubernetes/pki/ca.crt" "/etc/kubernetes/pki/ca.crt")
   (copy-file "/mnt/etc/kubernetes/pki/ca-key.pem" "/etc/kubernetes/pki/ca.key")
-  (mkdir "/etc/kubeedge")
   (invoke "/usr/local/bin/certgen.sh" "stream"))
 
 ;;; guile-nsenter ends here
