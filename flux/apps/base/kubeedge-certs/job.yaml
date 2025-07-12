@@ -37,7 +37,7 @@ spec:
           subPath: guile-nsenter
           readOnly: true
         - mountPath: /usr/local/bin/certgen.sh
-          name: kubeedge-certgen
+          name: certgen
           subPath: certgen.sh
           readOnly: true
         - mountPath: /mnt/etc/kubernetes/pki/ca.crt
