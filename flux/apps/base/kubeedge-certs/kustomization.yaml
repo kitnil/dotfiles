@@ -7,3 +7,6 @@ configMapGenerator:
 - name: script
   files:
   - guile-script.scm=rootfs/guile-nsenter
+- name: kubeedge-certgen
+  files:
+  - certgen.sh=rootfs/etc/kubeedge/certgen.sh
