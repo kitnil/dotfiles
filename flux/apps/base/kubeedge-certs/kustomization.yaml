@@ -4,9 +4,7 @@ namespace: kubeedge
 resources:
 - job.yaml
 configMapGenerator:
-- name: script
+- name: bin
   files:
-  - guile-script.scm=rootfs/guile-nsenter
-- name: kubeedge-certgen
-  files:
+  - guile-nsenter=rootfs/guile-nsenter
   - certgen.sh=rootfs/etc/kubeedge/certgen.sh
