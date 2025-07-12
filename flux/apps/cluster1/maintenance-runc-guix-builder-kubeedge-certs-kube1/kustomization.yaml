@@ -1,8 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: guix
-nameSuffix: -kube1
+nameSuffix: -kubeedge-certs
 resources:
-- ../../base/maintenance-runc-guix-builder-kubeedge-certs
+- ../../base/invoke-runc
 patchesStrategicMerge:
 - job.yaml
