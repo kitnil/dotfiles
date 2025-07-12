@@ -46,6 +46,6 @@ code is non-zero; otherwise return #t."
         (error (format #f "program ~s exited with non-zero code" program)
                status))
       #t))
-  (display "kubeedge-certs"))
+  (display "kubeedge-certs starting\n"))
 
 ;;; guile-nsenter ends here
