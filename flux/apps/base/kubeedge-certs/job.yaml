@@ -35,13 +35,17 @@ spec:
         - mountPath: /usr/local/bin/guile-nsenter
           name: script
           subPath: guile-nsenter
+          readOnly: true
         - mountPath: /usr/local/bin/certgen.sh
           name: kubeedge-certgen
           subPath: certgen.sh
+          readOnly: true
         - mountPath: /mnt/etc/kubernetes/pki/ca.crt
           name: kubernetes-pki-ca-cert
+          readOnly: true
         - mountPath: /mnt/etc/kubernetes/pki/ca.key
           name: kubernetes-pki-ca-key
+          readOnly: true
         - mountPath: /etc/kubeedge
           name: kubeedge-certs
       volumes:
@@ -54,12 +58,10 @@ spec:
       - name: kubernetes-pki-ca-cert
         hostPath:
           path: /etc/kubernetes/pki/ca.pem
-          readOnly: true
           type: File
       - name: kubernetes-pki-ca-key
         hostPath:
           path: /etc/kubernetes/pki/ca.key
-          readOnly: true
           type: File
       - name: kubeedge-certs
         hostPath:
