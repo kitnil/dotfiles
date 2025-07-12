@@ -251,6 +251,14 @@ runc:
 	$(GUIX) gc --delete $$container
 
 .ONESHELL:
+kubeedge-certs:
+	set -o nounset -o errexit -o pipefail -o xtrace
+	commit_8=$$(echo $(GIT_COMMIT) | cut -c -8)
+	container=$$($(GUIX) pack -f docker --load-path=$(LOAD_PATH) --max-layers=100 -S /bin=bin util-linux-with-udev bash coreutils guile openssl)
+	$(SKOPEO) copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+	$(GUIX) gc --delete $$container
+
+.ONESHELL:
 haproxy:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(echo $(GIT_COMMIT) | cut -c -8)
