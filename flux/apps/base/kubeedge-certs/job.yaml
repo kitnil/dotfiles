@@ -21,7 +21,7 @@ spec:
         - -e
         - (guile-nsenter)
         - -s
-        - /usr/local/bin/guile-script.scm
+        - /usr/local/bin/guile-nsenter
         image: harbor.home.wugi.info/library/util-linux-with-udev:44cd2b5c
         name: nsenter
         resources:
