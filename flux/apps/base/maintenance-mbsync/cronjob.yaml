@@ -50,6 +50,11 @@ spec:
               mbsync "$MBSYNC_IMAP_ACCOUNT"
             image: docker-registry.wugi.info/library/util-linux-with-udev
             name: mbsync
+            env:
+            - name: "HOME"
+              value: "/home/oleg"
+            - name: "USER"
+              value: "oleg"
             resources:
               limits:
                 cpu: 14000m
