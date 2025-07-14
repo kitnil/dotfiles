@@ -141,7 +141,7 @@ sudo firejail --bind=/mnt/guix/run/user/1000,/run/user/1000 --bind=/mnt/guix/tmp
 
 XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-1 _JAVA_AWT_WM_NONREPARENTING=1 /nix/store/h389b2vblfw7fknqhj7md97hxxn999h7-pycharm-community-2024.3.1.1/bin/pycharm-community -Dawt.toolkit.name=WLToolkit
 
-sudo firejail --bind=/mnt/guix/run/user/1000,/run/user/1000 --bind=/mnt/guix/tmp,/tmp --deterministic-exit-code --blacklist=/var/run/nscd --noprofile --net=tapvpn --ip=172.16.103.243 --netmask=255.255.255.0 --dns=172.16.103.2 --defaultgw=172.16.103.1 --env=XDG_RUNTIME_DIR=/run/user/1000 --env=WAYLAND_DISPLAY=wayland-1 --env=_JAVA_AWT_WM_NONREPARENTING=1 sudo -u oleg --preserve-env=XDG_RUNTIME_DIR,WAYLAND_DISPLAY,_JAVA_AWT_WM_NONREPARENTING -i /nix/store/h389b2vblfw7fknqhj7md97hxxn999h7-pycharm-community-2024.3.1.1/bin/pycharm-community -Dawt.toolkit.name=WLToolkit
+sudo firejail --bind=/mnt/guix/run/user/1000,/run/user/1000 --bind=/mnt/guix/tmp,/tmp --deterministic-exit-code --blacklist=/var/run/nscd --noprofile --net=tapvpn --ip=172.16.103.243 --netmask=255.255.255.0 --dns=172.16.103.2 --defaultgw=172.16.103.1 --env=XDG_RUNTIME_DIR=/run/user/1000 --env=WAYLAND_DISPLAY=wayland-1 --env=_JAVA_AWT_WM_NONREPARENTING=1 sudo -u oleg --preserve-env=XDG_RUNTIME_DIR,WAYLAND_DISPLAY,_JAVA_AWT_WM_NONREPARENTING -i /nix/store/h389b2vblfw7fknqhj7md97hxxn999h7-pycharm-community-2024.3.1.1/bin/pycharm-community -Dawt.toolkit.name=WLToolkit -Djava.net.preferIPv4Stack=true
 
 
 # /run/systemd/system/docker.service.d/override.conf
