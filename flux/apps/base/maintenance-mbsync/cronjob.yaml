@@ -45,6 +45,7 @@ spec:
               until [[ $(gpg-connect-agent 'keyinfo --list' /bye | awk '/2172063C653BABEFB3FF105A46DE07269E42DE0B/ { print $7 }') == 1 ]]
               do
                   echo "Waiting gpg unlocked."
+                  sleep 10
               done
               mbsync "$MBSYNC_IMAP_ACCOUNT"
             image: docker-registry.wugi.info/library/util-linux-with-udev
