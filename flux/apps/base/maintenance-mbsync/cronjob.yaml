@@ -42,7 +42,7 @@ spec:
               # keygrip exists in the agent cache:
               #     gpg --with-keygrip -k
               # If it appears with a 1, it's unlocked.
-              until [[ $(gpg-connect-agent 'keyinfo --list' /bye | awk '/687D29B3CC4790D8007075D333322A0633B5BC38 { print $7 }') == 1 ]]
+              until [[ $(gpg-connect-agent 'keyinfo --list' /bye | awk '/687D29B3CC4790D8007075D333322A0633B5BC38/ { print $7 }') == 1 ]]
               do
                   echo "Waiting gpg unlocked."
                   sleep 10
