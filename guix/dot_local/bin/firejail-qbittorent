@@ -1,0 +1,8 @@
+#!/bin/sh
+
+cat <<'EOF'
+socat TCP-LISTEN:9091,reuseaddr,fork UNIX-CONNECT:/tmp/qbittorent.sock
+socat UNIX-LISTEN:/tmp/qbittorent.sock,reuseaddr,fork TCP:127.0.0.1:9091
+
+firejail --deterministic-exit-code --blacklist=/var/run/nscd --noprofile --net=tapvpn1 --ip=192.168.25.2 --netmask=255.255.255.0 --dns=8.8.8.8 --defaultgw=192.168.25.1 --env=XDG_RUNTIME_DIR=/run/user/1000 --env=WAYLAND_DISPLAY=wayland-1 bash
+EOF
