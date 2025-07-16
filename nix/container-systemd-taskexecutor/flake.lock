@@ -1927,11 +1927,11 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1745587889,
-        "narHash": "sha256-VV/KEeGdTJVKC7A6QGxcu4CIDCDjFG8csr6o5WSEcZo=",
+        "lastModified": 1751031067,
+        "narHash": "sha256-/Y9kdtjBTECnedWJGRYRoWh7qUt/aRgJTfH2Zk3c6tw=",
         "ref": "refs/heads/master",
-        "rev": "132a30fd4e1f01ff2b67f909c4e8701bd58de3d1",
-        "revCount": 477,
+        "rev": "7ef7ac536f136f80a8de29d8d429833ba68283bc",
+        "revCount": 522,
         "type": "git",
         "url": "ssh://git@gitlab.corp1.majordomo.ru/office/ssl-certificates"
       },
