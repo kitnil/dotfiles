@@ -2,6 +2,7 @@
   description = "";
 
   inputs = {
+    nixpkgs.url = "nixpkgs/nixos-25.05";
     dotfiles-home-manager.url = "git+https://cgit.wugi.info/git/wigust/dotfiles?dir=nix";
     flake-utils.url = "github:numtide/flake-utils";
   };
@@ -9,7 +10,7 @@
   outputs = { self, nixpkgs, flake-utils, dotfiles-home-manager, ... } @ inputs:
     let
       system = "x86_64-linux";
-      pkgs = import inputs.dotfiles-home-manager.inputs.nixpkgs {
+      pkgs = import nixpkgs {
         inherit system;
       };
       inherit (pkgs) mkShell nixStable nixos-install-tools;
@@ -66,7 +67,7 @@
                     rec {
                       inherit (self) nixosConfigurations;
                       inherit inputs system;
-                      pkgs = import inputs.dotfiles-home-manager.inputs.nixpkgs-home-manager {
+                      pkgs = import nixpkgs {
                         inherit system;
                         config = {
                           allowUnfreePredicate = pkg:
