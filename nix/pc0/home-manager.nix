@@ -107,11 +107,13 @@ in {
           path = "pcaaxem9.default";
           isDefault = false;
           id = 0;
+          force = true;
         };
         nix = firefoxBaseProfile // {
           name = "nix";
           id = 1;
           isDefault = true;
+          force = true;
           bookmarks = {
             force = true;
             settings = [
@@ -159,6 +161,7 @@ in {
         twitch = firefoxBaseProfile // {
           name = "twitch";
           id = 2;
+          force = true;
           extensions = {
             packages =
               fold
@@ -184,16 +187,19 @@ in {
           name = "development";
           id = 3;
           isDefault = false;
+          force = true;
         };
         messaging = firefoxBaseProfile // {
           name = "messaging";
           isDefault = false;
           id = 4;
+          force = true;
         };
         tor = firefoxBaseProfile // {
           name = "tor";
           id = 5;
           isDefault = false;
+          force = true;
           settings = firefoxBaseProfile.settings // {
             "network.proxy.socks" = "example-tor-instance-tor-svc.tor-controller-instance";
             "network.proxy.socks_port" = 9050;
@@ -221,6 +227,7 @@ in {
           name = "work";
           id = 6;
           isDefault = false;
+          force = true;
         };
       };
   };
