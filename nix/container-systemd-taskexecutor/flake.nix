@@ -46,7 +46,29 @@
         homeConfigurations = {
           taskexecutor-home-manager = original.inputs.dotfiles-home-manager.inputs.home-manager.lib.homeManagerConfiguration {
             pkgs = original.inputs.dotfiles-home-manager.inputs.nixpkgs.legacyPackages.${system};
-            modules = [ self.nixosModules.taskexecutor-home-manager ];
+            modules = original.nixosConfigurations.nixos-systemd.extendModules {
+              modules = [
+                {
+                  home-manager = {
+                    users = {
+                      taskexecutor = self.nixosModules.taskexecutor-home-manager;
+                    };
+                    extraSpecialArgs = {
+                      python-taskexecutor = self.outputs.packages.${system}.python-with-te;
+                      python-taskexecutor-wrapper = self.outputs.packages.${system}.python-taskexecutor-wrapper;
+                    };
+                  };
+                }
+                self.nixosModules.taskexecutor-nginx
+                ./hosts/nixos-systemd.nix
+              ];
+              specialArgs = {
+                majordomo-tls = {
+                  certificate = ssl-certificates.outputs.lib.ssl."majordomo.ru.pem";
+                  key = ssl-certificates.outputs.lib.ssl."majordomo.ru.key";
+                };
+              };
+            };
             extraSpecialArgs = {
               python-taskexecutor = self.outputs.packages.${system}.python-with-te;
               python-taskexecutor-wrapper = self.outputs.packages.${system}.python-taskexecutor-wrapper;
