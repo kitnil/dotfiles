@@ -1234,11 +1234,11 @@
         "rev": "3e353d0400138563e62dfca946b013706277a843",
         "revCount": 15,
         "type": "git",
-        "url": "https://gitlab.intr/shared/http_errors.git"
+        "url": "https://gitlab.corp1.majordomo.ru/shared/http_errors"
       },
       "original": {
         "type": "git",
-        "url": "https://gitlab.intr/shared/http_errors.git"
+        "url": "https://gitlab.corp1.majordomo.ru/shared/http_errors"
       }
     },
     "ssl-certificates": {
