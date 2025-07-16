@@ -25,7 +25,7 @@
     python-taskexecutor-wrapper
   ];
 
-  # services.vendir.enable = true;
+  services.vendir.enable = true;
 
   # The home.stateVersion option no longer has a default value. It used to
   # default to “18.09”, which was the Home Manager version that introduced the
