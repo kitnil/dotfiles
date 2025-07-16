@@ -77,12 +77,12 @@
         "rev": "f41787f2bd688f0f37f528936b0f759d84faadd2",
         "revCount": 15085,
         "type": "git",
-        "url": "https://cgit.wugi.info/git/wigust/dotfiles"
+        "url": "https://cgit.wugi.info/git/wigust/dotfiles?dir=nix"
       },
       "original": {
         "dir": "nix",
         "type": "git",
-        "url": "https://cgit.wugi.info/git/wigust/dotfiles"
+        "url": "https://cgit.wugi.info/git/wigust/dotfiles?dir=nix"
       }
     },
     "flake-compat": {
@@ -701,12 +701,12 @@
         "rev": "a8e97c23cc97670e4ec9ab9fa43faf2585678de2",
         "revCount": 4377,
         "type": "git",
-        "url": "https://gitlab.com/rycee/nur-expressions"
+        "url": "https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons"
       },
       "original": {
         "dir": "pkgs/firefox-addons",
         "type": "git",
-        "url": "https://gitlab.com/rycee/nur-expressions"
+        "url": "https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons"
       }
     },
     "systems": {
