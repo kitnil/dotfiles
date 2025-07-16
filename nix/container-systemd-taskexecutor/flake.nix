@@ -4,7 +4,7 @@
   inputs = {
     original.url = "git+https://cgit.wugi.info/git/wigust/dotfiles?dir=nix/container-systemd";
     taskexecutor = {
-      url = "git+ssh://gitlab.corp1.majordomo.ru/hms/taskexecutor?ref=staging";
+      url = "git+ssh://gitlab.corp1.majordomo.ru/hms/taskexecutor";
       inputs.majordomo = {
         url = "git+https://gitlab.corp1.majordomo.ru/_ci/nixpkgs";
         inputs.shared-http-errors.url = "git+https://gitlab.corp1.majordomo.ru/shared/http_errors";
