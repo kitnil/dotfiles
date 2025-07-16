@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/proxy-body-size: 128m
     acme.cert-manager.io/http01-ingress-class: nginx
-    nginx.ingress.kubernetes.io/configuration-snippet: |
+    nginx.ingress.kubernetes.io/server-snippet: |
       proxy_set_header Host cgit.wugi.info;
 spec:
   ingressClassName: nginx
