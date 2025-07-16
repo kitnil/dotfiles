@@ -1393,13 +1393,16 @@
     },
     "nixpkgs_11": {
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-KUICKs/Cn4n88UeMA0hecTffqmnd2aWiHHPZQicxuS8=",
-        "path": "/nix/store/yy0g7bl5b16ycj03k8vbidnh8ncawxap-nixos-25.05.20250319.2a725d4/nixos",
-        "type": "path"
+        "lastModified": 1752436162,
+        "narHash": "sha256-Kt1UIPi7kZqkSc5HVj6UY5YLHHEzPBkgpNUByuyxtlw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "dfcd5b901dbab46c9c6e80b265648481aafb01f8",
+        "type": "github"
       },
       "original": {
         "id": "nixpkgs",
+        "ref": "nixos-25.05",
         "type": "indirect"
       }
     },
@@ -1728,11 +1731,11 @@
       },
       "locked": {
         "dir": "nix/container-systemd",
-        "lastModified": 1751994219,
-        "narHash": "sha256-h7t1yAvXpeoA3yCYVWl61fw6UNKyDmdu56VYCw3gOJ8=",
+        "lastModified": 1752670973,
+        "narHash": "sha256-CEbCPBtDPsIxYMhoEubfByn/rS41SJsuiRTGROUhmb4=",
         "ref": "refs/heads/master",
-        "rev": "1a1de59525d1ae9d517174d7d1e60b0cb5490330",
-        "revCount": 15020,
+        "rev": "f0ecd40761bc03b9f33d3ba3d05f91487260a940",
+        "revCount": 15101,
         "type": "git",
         "url": "https://cgit.wugi.info/git/wigust/dotfiles?dir=nix/container-systemd"
       },
