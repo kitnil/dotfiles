@@ -24,7 +24,7 @@
               {
                 home-manager = {
                   users = {
-                    taskexecutor = self.nixosModules.taskexecutor-home-manager;
+                    taskexecutor = ./home-manager.nix;
                   };
                   extraSpecialArgs = {
                     python-taskexecutor = self.outputs.packages.${system}.python-with-te;
@@ -43,40 +43,7 @@
             };
           };
         };
-        homeConfigurations = {
-          taskexecutor-home-manager = original.inputs.dotfiles-home-manager.inputs.home-manager.lib.homeManagerConfiguration {
-            pkgs = original.inputs.dotfiles-home-manager.inputs.nixpkgs.legacyPackages.${system};
-            modules = original.nixosConfigurations.nixos-systemd.extendModules {
-              modules = [
-                {
-                  home-manager = {
-                    users = {
-                      taskexecutor = self.nixosModules.taskexecutor-home-manager;
-                    };
-                    extraSpecialArgs = {
-                      python-taskexecutor = self.outputs.packages.${system}.python-with-te;
-                      python-taskexecutor-wrapper = self.outputs.packages.${system}.python-taskexecutor-wrapper;
-                    };
-                  };
-                }
-                self.nixosModules.taskexecutor-nginx
-                ./hosts/nixos-systemd.nix
-              ];
-              specialArgs = {
-                majordomo-tls = {
-                  certificate = ssl-certificates.outputs.lib.ssl."majordomo.ru.pem";
-                  key = ssl-certificates.outputs.lib.ssl."majordomo.ru.key";
-                };
-              };
-            };
-            extraSpecialArgs = {
-              python-taskexecutor = self.outputs.packages.${system}.python-with-te;
-              python-taskexecutor-wrapper = self.outputs.packages.${system}.python-taskexecutor-wrapper;
-            };
-          };
-        };
         nixosModules = {
-          taskexecutor-home-manager = import ./home-manager.nix;
           taskexecutor-nginx = import ./modules/services/taskexecutor-nginx.nix;
         };
         packages.${system} =
@@ -87,7 +54,6 @@
             inherit (pkgs) callPackage;
           in
             rec {
-              inherit (original.inputs.dotfiles-home-manager.inputs.home-manager.packages.${system}) home-manager;
               python-with-te =
                 let
                   pkgs = import taskexecutor.inputs.nixpkgs-19-09 {
