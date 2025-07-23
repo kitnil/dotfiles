@@ -299,8 +299,8 @@ command was called, go to its unstaged changes section."
 ;; Origin <https://github.com/alphapapa/unpackaged.el>
 (when (macrop #'defhydra)
   (defhydra unpackaged/smerge-hydra
-	    (:color pink :hint nil :post (smerge-auto-leave))
-	    "
+    (:color pink :hint nil :post (smerge-auto-leave))
+    "
 ^Move^       ^Keep^               ^Diff^                 ^Other^
 ^^-----------^^-------------------^^---------------------^^-------
 _n_ext       _b_ase               _<_: upper/base        _C_ombine
@@ -309,28 +309,28 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ^^           _a_ll                _R_efine
 ^^           _RET_: current       _E_diff
 "
-	    ("n" smerge-next)
-	    ("p" smerge-prev)
-	    ("b" smerge-keep-base)
-	    ("u" smerge-keep-upper)
-	    ("l" smerge-keep-lower)
-	    ("a" smerge-keep-all)
-	    ("RET" smerge-keep-current)
-	    ("\C-m" smerge-keep-current)
-	    ("<" smerge-diff-base-upper)
-	    ("=" smerge-diff-upper-lower)
-	    (">" smerge-diff-base-lower)
-	    ("R" smerge-refine)
-	    ("E" smerge-ediff)
-	    ("C" smerge-combine-with-next)
-	    ("r" smerge-resolve)
-	    ("k" smerge-kill-current)
-	    ("ZZ" (lambda ()
-		    (interactive)
-		    (save-buffer)
-		    (bury-buffer))
-	     "Save and bury buffer" :color blue)
-	    ("q" nil "cancel" :color blue)))
+    ("n" smerge-next)
+    ("p" smerge-prev)
+    ("b" smerge-keep-base)
+    ("u" smerge-keep-upper)
+    ("l" smerge-keep-lower)
+    ("a" smerge-keep-all)
+    ("RET" smerge-keep-current)
+    ("\C-m" smerge-keep-current)
+    ("<" smerge-diff-base-upper)
+    ("=" smerge-diff-upper-lower)
+    (">" smerge-diff-base-lower)
+    ("R" smerge-refine)
+    ("E" smerge-ediff)
+    ("C" smerge-combine-with-next)
+    ("r" smerge-resolve)
+    ("k" smerge-kill-current)
+    ("ZZ" (lambda ()
+            (interactive)
+            (save-buffer)
+            (bury-buffer))
+     "Save and bury buffer" :color blue)
+    ("q" nil "cancel" :color blue)))
 
 (defun wi-magit-init (directory group)
   "Call `magit-init' and create GitLab repository in project DIRECTORY for GROUP."
@@ -339,8 +339,8 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   (let ((name (file-name-nondirectory (directory-file-name directory)))
         (buffer (get-buffer-create "*wi-magit-init*")))
     (call-process "gitlab" nil buffer nil "create_project" name
-                   (format "{visibility: public, namespace_id: %s}"
-                           group))
+                  (format "{visibility: public, namespace_id: %s}"
+                          group))
     (call-process "git" nil buffer nil "remote" "add" "origin"
                   (format "git@gitlab:~s/~s.git"
                           group name))))
