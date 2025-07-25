@@ -38,6 +38,19 @@ do
              --header "content-type:application/json" \
              --data '{"attributes": {"title": "logstash*", "timeFieldName": "@timestamp"}}'
     fi
+    if index_pattern 'security-auditlog-*'
+    then
+        echo "index-pattern 'security-auditlog-*' exists, skipping creation." >&2
+    else
+        curl --user "$user_and_password" \
+             --silent \
+             --verbose \
+             --request POST \
+             "${opensearch_dashboards_url}/api/saved_objects/index-pattern/security-auditlog-*" \
+             --header "osd-xsrf:true" \
+             --header "content-type:application/json" \
+             --data '{"attributes": {"title": "security-auditlog-*", "timeFieldName": "@timestamp"}}'
+    fi
     # sampleSize
     # The number of rows to show in the table
     # Default: 500
