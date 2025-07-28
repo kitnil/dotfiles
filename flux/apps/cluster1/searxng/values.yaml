@@ -8,7 +8,7 @@ ingress:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/proxy-body-size: 128m
   hosts:
-  - searxng.home.wugi.info
+  - host: searxng.home.wugi.info
   tls:
   - hosts:
     - "searxng.home.wugi.info"
