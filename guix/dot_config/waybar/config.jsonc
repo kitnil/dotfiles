@@ -98,9 +98,9 @@
         "icon-theme": "Adwaita",
         "tooltip-format": "Switch output on DP-1",
         // hdmi-2
-        "on-click": "sudo /gnu/store/q411x5sr49f7nbdamf5zjkbkzs67544b-ddcutil-2.1.4/bin/ddcutil --bus=7 setvcp xF4 x0091 --i2c-source-addr=x50 --noverify",
+        "on-click": "sudo ddcutil --bus=7 setvcp xF4 x0091 --i2c-source-addr=x50 --noverify",
         // dp-1
-        "on-click-right": "sudo /gnu/store/q411x5sr49f7nbdamf5zjkbkzs67544b-ddcutil-2.1.4/bin/ddcutil --bus=7 setvcp xF4 x00d0 --i2c-source-addr=x50 --noverify",
+        "on-click-right": "sudo ddcutil --bus=7 setvcp xF4 x00d0 --i2c-source-addr=x50 --noverify",
     },
     "sway/language": {
         "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
