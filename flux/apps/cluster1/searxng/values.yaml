@@ -10,6 +10,5 @@ ingress:
   hosts:
   - searxng.home.wugi.info
   tls:
-  - hosts:
-    - searxng.home.wugi.info
+  - searxng.home.wugi.info
     secretName: searxng-home-wugi-info-ingress-certs
