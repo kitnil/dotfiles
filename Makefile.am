@@ -15,7 +15,7 @@ DECRYPT_TARGETS =					\
 .PHONY: all
 all: $(foreach secret,$(DECRYPT_TARGETS),$(secret))
 
-SUBSTITUTE_URLS='https://bordeaux.guix.gnu.org https://mirrors.sjtug.sjtu.edu.cn/guix'
+SUBSTITUTE_URLS='https://mirror.yandex.ru/mirrors/guix https://bordeaux.guix.gnu.org https://mirrors.sjtug.sjtu.edu.cn/guix'
 
 LOAD_PATH="$(abs_top_srcdir)/guix"
 
