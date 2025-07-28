@@ -1557,7 +1557,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./flux/apps/base/searxng
+  path: ./flux/apps/cluster1/searxng
   prune: true
   sourceRef:
     kind: GitRepository
