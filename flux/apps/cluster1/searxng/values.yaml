@@ -9,6 +9,8 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: 128m
   hosts:
   - host: searxng.home.wugi.info
+    paths:
+    - path: /
   tls:
   - hosts:
     - "searxng.home.wugi.info"
