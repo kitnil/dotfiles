@@ -1,0 +1,10 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: searxng
+spec:
+  valuesFrom:
+  - kind: ConfigMap
+    name: searxng-values
+  - kind: ConfigMap
+    name: searxng-values-cluster1
