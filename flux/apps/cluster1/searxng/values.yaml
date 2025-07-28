@@ -11,6 +11,7 @@ ingress:
   - host: searxng.home.wugi.info
     paths:
     - path: /
+      pathType: ImplementationSpecific
   tls:
   - hosts:
     - "searxng.home.wugi.info"
