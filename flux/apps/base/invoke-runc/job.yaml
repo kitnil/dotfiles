@@ -54,8 +54,8 @@ spec:
           privileged: true
         volumeMounts:
         - mountPath: /usr/local/bin
-          name: script
+          name: guile-nsenter
       volumes:
-      - name: script
+      - name: guile-nsenter
         configMap:
-          name: script
+          name: guile-nsenter

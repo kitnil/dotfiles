@@ -4,6 +4,8 @@ namespace: guix
 resources:
 - job.yaml
 configMapGenerator:
-- name: script
+- name: guile-nsenter
+  options:
+    disableNameSuffixHash: true
   files:
   - guile-script.scm=rootfs/guile-nsenter
