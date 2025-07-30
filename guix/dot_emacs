@@ -164,6 +164,9 @@
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
    '((eval progn
+           (setq-local geiser-repl-add-project-paths nil)
+           (aggressive-indent-mode))
+     (eval progn
            (setq-local geiser-guile-load-path
                        (append
                         (list
@@ -556,15 +559,7 @@
  '(vterm-color-black ((t (:background "gray15" :foreground "gray15"))))
  '(vterm-color-blue ((t (:background "steel blue" :foreground "steel blue"))))
  '(whitespace-indentation ((t (:foreground "firebrick"))))
- '(whitespace-space ((((class color) (background dark))
-                      :foreground "gray20")
-                     (((class color) (background light))
-                      :foreground "gray15")
-                     (t :inverse-video t)))
+ '(whitespace-space ((((class color) (background dark)) :foreground "grey20") (((class color) (background light)) :foreground "lightgray") (t :inverse-video t)))
  '(whitespace-space-before-tab ((t (:foreground "firebrick"))))
- '(whitespace-tab ((((class color) (background dark))
-                      :foreground "gray20")
-                     (((class color) (background light))
-                      :foreground "gray15")
-                     (t :inverse-video t))))
+ '(whitespace-tab ((((class color) (background dark)) :foreground "darkgray") (((class color) (background light)) :foreground "lightgray") (t :inverse-video t))))
 
