@@ -86,7 +86,7 @@ code is non-zero; otherwise return #t."
      (define (gpg-connect-agent . args)
        (let* ((port (apply open-pipe* OPEN_READ "gpg-connect-agent" args))
               (output (read-string port)))
-         (close-port port)
+         (close-pipe port)
          (string-trim-right output #\newline)))
      (define keyid
        "5A94D8BBE59992C24C7FBDD8BDA3A2DB1EB725C8")
