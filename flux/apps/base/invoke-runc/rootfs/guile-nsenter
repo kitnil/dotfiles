@@ -123,10 +123,12 @@ code is non-zero; otherwise return #t."
                  (git "submodule" "add" ,%git-password-store-url "dotfiles")
                  (chdir "..")
 
-                 (while (not (gpg-unlocked?))
-                   (display "Waiting for GPG unlock.")
-                   (newline)
-                   (sleep 5))
+                 (begin
+                   (while (not (gpg-unlocked?))
+                     (display "Waiting for GPG unlock.")
+                     (newline)
+                     (sleep 5))
+                   #t)
 
                  (and=> (string->symbol ,(getenv "RUNC_ENVIRONMENT"))
                         (lambda (environment)
