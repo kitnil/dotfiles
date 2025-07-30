@@ -136,20 +136,6 @@ program.")))
                                                        "--no-forward"
                                                        "--no-unixaf"
                                                        "--no-klog"))))
-                            (simple-service 'firewall shepherd-root-service-type
-                                            (list
-                                             (shepherd-service
-                                              (provision '(firewall))
-                                              (auto-start? #t)
-                                              (one-shot? #t)
-                                              (documentation "nftables firewall.")
-                                              (requirement '())
-                                              (start #~(make-forkexec-constructor
-                                                        (list #$(file-append nftables "/sbin/nft")
-                                                              "-f"
-                                                              #$(local-file (string-append %distro-directory
-                                                                                           "/dotfiles/nftables/nftables")))))
-                                              (respawn? #f))))
                             (service openvpn-service-type %openvpn-configuration-majordomo.ru)
                             (service openvpn-service-type %openvpn-configuration-wugi.info))
                       (modify-services %base-services
