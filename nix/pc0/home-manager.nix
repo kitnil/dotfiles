@@ -145,6 +145,48 @@ in {
               }
             ];
           };
+          engines = {
+            "SearxNG" = {
+              urls = [
+                {
+                  template =
+                    "https://searxng.home.wugi.info"
+                    + "/search?q={searchTerms}&categories=general";
+                }
+              ];
+            };
+            "MyNixOS" = {
+              urls = [ { template = "https://mynixos.com/search?q={searchTerms}"; } ];
+              definedAliases = [ "@nix" ];
+            };
+            "Nixpkgs" = {
+              urls = [ { template = "https://search.nixos.org/packages?&query={searchTerms}"; } ];
+              definedAliases = [ "@pkg" ];
+            };
+            "Nixpkgs Pulls" = {
+              urls = [
+                { template = "https://github.com/NixOS/nixpkgs/pulls?q=is%3Apr+is%3Aopen+{searchTerms}"; }
+              ];
+              definedAliases = [ "@npp" ];
+            };
+            "GitHub Repos" = {
+              urls = [ { template = "https://github.com/search?q={searchTerms}&type=repositories"; } ];
+              definedAliases = [ "@gh" ];
+            };
+            "GitHub Code" = {
+              urls = [ { template = "https://github.com/search?q={searchTerms}&type=code"; } ];
+              definedAliases = [ "@gc" ];
+            };
+            "Karakeep" = {
+              urls = [ { template = "https://karakeep.louis-thevenet.fr/dashboard/search?q={searchTerms}"; } ];
+              definedAliases = [ "@kr" ];
+            };
+            bing.metaData.hidden = true;
+            "amazondotcom-us".metaData.hidden = true;
+            wikipedia.metaData.hidden = true;
+            "google".metaData.hidden = true;
+            "ddg".metaData.hidden = true;
+          };
           extensions = {
             packages =
               fold
