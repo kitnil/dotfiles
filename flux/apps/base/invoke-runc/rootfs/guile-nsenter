@@ -91,13 +91,15 @@ code is non-zero; otherwise return #t."
      (define keyid
        "5A94D8BBE59992C24C7FBDD8BDA3A2DB1EB725C8")
      (define (gpg-unlocked?)
-       (null? (filter (match-lambda
-                        (("S" "KEYINFO" keyid "D" "-" "-" "1" "P" "-" "-" "-") #t)
-                        (_ #f))
-                      (map (lambda (keyinfo)
-                             (string-split keyinfo #\space))
-                           (string-split (gpg-connect-agent "keyinfo --list" "/bye")
-                                         #\newline)))))
+       (not
+        (null?
+         (filter (match-lambda
+                   (("S" "KEYINFO" keyid "D" "-" "-" "1" "P" "-" "-" "-") #t)
+                   (_ #f))
+                 (map (lambda (keyinfo)
+                        (string-split keyinfo #\space))
+                      (string-split (gpg-connect-agent "keyinfo --list" "/bye")
+                                    #\newline))))))
      (invoke "/usr/bin/env")
      (and=> (getenv "HOME")
             (lambda (home)
@@ -121,8 +123,8 @@ code is non-zero; otherwise return #t."
                  (git "submodule" "add" ,%git-password-store-url "dotfiles")
                  (chdir "..")
 
+                 (display "Waiting for GPG unlock.")
                  (while (not (gpg-unlocked?))
-                   (display "Waiting for GPG unlock.")
                    (newline)
                    (sleep 5))
 
