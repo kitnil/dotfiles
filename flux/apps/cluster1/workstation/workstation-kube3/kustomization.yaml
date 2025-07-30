@@ -9,4 +9,4 @@ images:
 - name: harbor.home.wugi.info/library/nixos-systemd-taskexecutor
   newTag: HEAD-e33332a2-1752685160
 - name: harbor.home.wugi.info/library/archlinux-systemd
-  newTag: 4309f8ae
+  newTag: 51fb5ec4
