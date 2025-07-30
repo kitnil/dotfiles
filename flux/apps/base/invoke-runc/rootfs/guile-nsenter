@@ -123,8 +123,8 @@ code is non-zero; otherwise return #t."
                  (git "submodule" "add" ,%git-password-store-url "dotfiles")
                  (chdir "..")
 
-                 (display "Waiting for GPG unlock.")
                  (while (not (gpg-unlocked?))
+                   (display "Waiting for GPG unlock.")
                    (newline)
                    (sleep 5))
 
