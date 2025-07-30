@@ -89,7 +89,7 @@ code is non-zero; otherwise return #t."
          (close-port port)
          (string-trim-right output #\newline)))
      (define keyid
-       "687D29B3CC4790D8007075D333322A0633B5BC38")
+       "5A94D8BBE59992C24C7FBDD8BDA3A2DB1EB725C8")
      (define (gpg-unlocked?)
        (null? (filter (match-lambda
                         (("S" "KEYINFO" keyid "D" "-" "-" "1" "P" "-" "-" "-") #t)
