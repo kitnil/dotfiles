@@ -5,6 +5,7 @@
 (use-modules (ice-9 format)
              (ice-9 popen)
              (ice-9 rdelim)
+             (srfi srfi-1)
              (wugi utils))
 
 (define %flux-kustomizations
@@ -37,20 +38,29 @@ newspace."
     (string-trim-right output #\newline)))
 
 (define (main . args)
+  (define commit-hash
+    (or (getenv "GIT_COMMIT")
+        (git-output "rev-parse" "HEAD")))
   (for-each (lambda (kustomization)
               (let ((job-file (string-append "flux/apps/cluster1/"
                                              (symbol->string kustomization)
                                              "/job.yaml")))
-                (invoke "@YQ@"
-                        "-i"
-                        (format #f ".spec.template.spec.containers[] |= (select(.name == ~s)).env[] |= (select(.name == ~s).value = ~s)"
-                                "nsenter"
-                                "GIT_COMMIT"
-                                (or (getenv "GIT_COMMIT")
-                                    (git-output "rev-parse" "HEAD")))
-                        job-file)
-                (invoke "@YAMLFMT@"
-                        "-conf" (string-append %distro-directory
-                                               "/dotfiles/dot_yamlfmt")
-                        job-file)))
+                (when (file-exists? job-file)
+                  (invoke "@YQ@"
+                          "-i"
+                          (format #f ".spec.template.spec.containers[] |= (select(.name == ~s)).env[] |= (select(.name == ~s).value = ~s)"
+                                  "nsenter"
+                                  "GIT_COMMIT"
+                                  commit-hash)
+                          job-file)
+                  (invoke "@YAMLFMT@"
+                          "-conf" (string-append %distro-directory
+                                                 "/dotfiles/dot_yamlfmt")
+                          job-file)
+                  (system* "@GIT@"
+                           "commit"
+                           (format #f "--message=~a"
+                                   (string-append (string-join (string-split job-file #\/) ": ")
+                                                  ": Update to " (list->string (take (string->list commit-hash) 8)) "."))
+                           job-file))))
             %flux-kustomizations))
