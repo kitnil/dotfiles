@@ -32,6 +32,9 @@ AC_SUBST([GUIX])
 AC_PATH_PROG([GPG], [gpg])
 AC_SUBST([GPG])
 
+AC_PATH_PROG([GIT], [git])
+AC_SUBST([GIT])
+
 dnl Emacs (optional), for 'src/emacs/benchmark/benchmark.el'.
 AC_PATH_PROG([EMACS], [emacs])
 if test "x$EMACS" = x; then
