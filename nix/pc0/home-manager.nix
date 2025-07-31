@@ -25,6 +25,7 @@ in {
     strace
 
     wlvncc
+    zenity
   ];
 
   home.file = {
