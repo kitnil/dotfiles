@@ -21,6 +21,10 @@
   networking.firewall.enable = false;
   networking.resolvconf.enable = false;
 
+  programs.firejail = {
+    enable = true;
+  };
+
   virtualisation.docker = {
     enable = true;
   };
