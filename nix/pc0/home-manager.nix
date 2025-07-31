@@ -156,11 +156,6 @@ in {
                 }
               ];
             };
-            bing.metaData.hidden = true;
-            "amazondotcom-us".metaData.hidden = true;
-            wikipedia.metaData.hidden = true;
-            "google".metaData.hidden = true;
-            "ddg".metaData.hidden = true;
           };
           extensions = {
             packages =
