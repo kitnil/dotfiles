@@ -267,6 +267,10 @@ in {
       };
   };
 
+  programs.firejail = {
+    enable = true;
+  };
+
   programs.k9s = {
     enable = true;
     settings = {
