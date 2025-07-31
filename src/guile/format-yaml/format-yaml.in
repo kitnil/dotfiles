@@ -17,6 +17,7 @@
     maintenance-guix-system-reconfigure-kube1
     maintenance-guix-system-reconfigure-kube2
     maintenance-guix-system-reconfigure-kube3
+    maintenance-guix-time-machine-system-image-workstation
     maintenance-nix-build-container-systemd-kube1
     runc-nix-builder-nixos-rebuild-switch-flake-kube1))
 
