@@ -6,8 +6,7 @@
              (wugi utils))
 
 (define %flux-kustomizations
-  '(maintenance-guix-home-build-workstation
-    maintenance-guix-system-build-guixsd
+  '(maintenance-guix-system-build-guixsd
     maintenance-guix-system-build-notebook
     maintenance-guix-system-build-pc0
     maintenance-guix-system-build-vm1
