@@ -13,7 +13,6 @@
     maintenance-guix-system-build-pc0
     maintenance-guix-system-build-vm1
     maintenance-guix-system-build-vm2
-    maintenance-guix-system-build-workstation
     maintenance-guix-system-reconfigure-kube1
     maintenance-guix-system-reconfigure-kube2
     maintenance-guix-system-reconfigure-kube3
