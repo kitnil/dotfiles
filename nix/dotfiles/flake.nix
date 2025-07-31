@@ -1,6 +1,9 @@
 {
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+  };
   outputs = { self, nixpkgs, ... }: {
-    packages.x86_64-linux = {
+    packages.x86_64-linux = rec {
       dotfiles = nixpkgs.legacyPackages.x86_64-linux.callPackage (
         { stdenv
         , autoconf
@@ -31,6 +34,7 @@
             yq
           ];
         }) { };
+      default = dotfiles;
     };
   };
 }
