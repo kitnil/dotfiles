@@ -199,7 +199,6 @@
           fontconfig))
 
   (packages->manifest (append fonts
-                              menus
-                              terminals)))
+                              menus)))
 
 (%desktop-manifest)
