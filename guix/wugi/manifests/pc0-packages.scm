@@ -86,4 +86,5 @@
          tmux
          translate-shell
          v4l-utils
+         virt-manager
          wl-clipboard)))
