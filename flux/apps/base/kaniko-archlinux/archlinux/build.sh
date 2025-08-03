@@ -117,13 +117,14 @@ EOF
 
 install_socialstream()
 {
-    curl -o /tmp/socialstream-linux-AppImage.zip https://iso.wugi.info/socialstream-0.3.46-linux-AppImage.zip
-
-    cd /usr/local/bin
-    unzip /tmp/socialstream-linux-AppImage.zip
-    rm /tmp/socialstream-linux-AppImage.zip
-    mv socialstream-0.3.46-x86_64.AppImage socialstream
-    chmod 555 socialstream
+    sudo -u oleg -i bash <<'EOF'
+    git clone https://aur.archlinux.org/socialstreamninja.git
+    cd socialstreamninja
+    sed 's/\r//g' PKGBUILD
+    makepkg --noconfirm
+EOF
+    pacman -U /home/oleg/socialstreamninja/socialstreamninja-0.3.43-1-x86_64.pkg.tar.zst
+    rm -rf /home/oleg/socialstreamninja
 }
 
 install_aura()

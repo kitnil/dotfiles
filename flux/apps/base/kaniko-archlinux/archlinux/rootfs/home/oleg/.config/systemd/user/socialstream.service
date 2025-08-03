@@ -4,7 +4,7 @@ WantedBy=default.target
 [Service]
 Environment="XDG_RUNTIME_DIR=/mnt/guix/run/user/1000"
 Environment="WAYLAND_DISPLAY=wayland-1"
-ExecStart=/usr/local/bin/socialstream --ozone-platform=wayland
+ExecStart=/usr/bin/socialstreamninja --ozone-platform=wayland
 Type=simple
 
 [Unit]
