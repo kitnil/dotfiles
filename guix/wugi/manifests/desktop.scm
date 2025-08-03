@@ -14,9 +14,6 @@
   #:export (%desktop-manifest))
 
 (define (%desktop-manifest)
-  (define terminals
-    (list alacritty))
-
   (define menus
     (list dmenu wofi))
 

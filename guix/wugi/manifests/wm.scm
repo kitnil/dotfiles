@@ -10,9 +10,6 @@
   #:export (%wm-manifest))
 
 (define (%wm-manifest)
-  (define terminals
-    (list alacritty))
-
   (define wm
     (list sway))
 
