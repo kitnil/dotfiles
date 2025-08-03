@@ -63,7 +63,7 @@ sleep 0.4
 nerdctl_nixos_exec /run/current-system/sw/bin/systemctl --user start firefox@messaging
 sleep 3
 
-nerdctl -n k8s.io exec "$container_id_nixos" /run/current-system/sw/bin/machinectl shell oleg@ /bin/sh -lc 'export XDG_RUNTIME_DIR=/mnt/guix/run/user/1000; export WAYLAND_DISPLAY=wayland-1; export QT_QPA_PLATFORM=wayland; exec chatterino' &
+nerdctl_nixos_exec /run/current-system/sw/bin/systemctl --user start chatterino
 sleep 0.4
 
 nerdctl_guix_exec /bin/sh -l <<'EOF'

@@ -463,6 +463,7 @@ in {
     '';
   };
 
+  services.chatterino.enable = true;
   services.foot.enable = true;
   services.google-chrome.enable = true;
   services.pycharm-community.enable = true;

@@ -333,6 +333,7 @@
       ];
 
       nixosModules = {
+        home-manager-chatterino = import ./modules/services/chatterino.nix;
         home-manager-firefox = import ./modules/services/firefox.nix;
         home-manager-foot = import ./modules/services/foot.nix;
         home-manager-google-chrome = import ./modules/services/google-chrome.nix;

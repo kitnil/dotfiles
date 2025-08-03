@@ -39,6 +39,7 @@
                 home-manager.useUserPackages = true;
                 home-manager.users.oleg =  inputs.dotfiles-home-manager.outPath + "/pc0/home-manager.nix";
                 home-manager.sharedModules = [
+                  inputs.dotfiles-home-manager.nixosModules.home-manager-chatterino
                   inputs.dotfiles-home-manager.nixosModules.home-manager-firefox
                   inputs.dotfiles-home-manager.nixosModules.home-manager-foot
                   inputs.dotfiles-home-manager.nixosModules.home-manager-google-chrome
