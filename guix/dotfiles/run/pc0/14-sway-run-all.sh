@@ -138,7 +138,7 @@ EOF
 nerdctl_nixos_exec /run/current-system/sw/bin/systemctl --user start firefox@pcaaxem9.default
 sleep 0.4
 
-nerdctl_archlinux_exec /bin/sh -lc 'export XDG_RUNTIME_DIR=/mnt/guix/run/user/1000; export DISPLAY=:0; exec socialstream' &
+nerdctl_archlinux_exec /usr/bin/systemctl --user start socialstream
 sleep 1
 
 nerdctl_guix_exec /bin/sh -l <<'EOF'
