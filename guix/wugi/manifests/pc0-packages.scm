@@ -53,6 +53,7 @@
          dtach
          fd
          freerdp
+         firejail-disable-sandbox-check
          git
          gnu-make
          gnupg
