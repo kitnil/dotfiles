@@ -7,7 +7,7 @@ then
     sudo mv /run/setuid-programs/mount.nfs /run/setuid-programs/mount.nfs.1
 fi
 
-sudo rm /var/lib/kubelet/.maintenance
+sudo rm -f /var/lib/kubelet/.maintenance
 sudo herd restart kubelet
 
 mapfile -t pods < <(kubectl get -o name --namespace=openebs pods)
