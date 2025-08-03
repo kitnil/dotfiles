@@ -137,7 +137,18 @@ program.")))
                                                        "--no-unixaf"
                                                        "--no-klog"))))
                             (service openvpn-service-type %openvpn-configuration-majordomo.ru)
-                            (service openvpn-service-type %openvpn-configuration-wugi.info))
+                            (service openvpn-service-type %openvpn-configuration-wugi.info)
+
+                            (service bluetooth-service-type
+                                     (bluetooth-configuration
+                                      (auto-enable? #t)
+                                      (just-works-repairing 'confirm)
+                                      (controller-mode 'dual)
+                                      (min-connection-interval 7)
+                                      (max-connection-interval 9)
+                                      (connection-latency 0)
+                                      (privacy 'device)))
+                            udev-rules-service-xbox)
                       (modify-services %base-services
                         (guix-service-type config =>
                                            (guix-configuration
