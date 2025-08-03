@@ -117,12 +117,12 @@ EOF
 
 install_socialstream()
 {
-    curl -o /tmp/socialstream-linux-AppImage.zip https://iso.wugi.info/socialstream-0.1.52-linux-AppImage.zip
+    curl -o /tmp/socialstream-linux-AppImage.zip https://iso.wugi.info/socialstream-0.3.46-linux-AppImage.zip
 
     cd /usr/local/bin
     unzip /tmp/socialstream-linux-AppImage.zip
     rm /tmp/socialstream-linux-AppImage.zip
-    mv socialstream-0.1.52-x86_64.AppImage socialstream
+    mv socialstream-0.3.46-x86_64.AppImage socialstream
     chmod 555 socialstream
 }
 
