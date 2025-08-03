@@ -96,7 +96,7 @@ spec:
         image: gcr.io/kaniko-project/executor:v1.23.2
         args:
         - "--push-retry=10"
-        - "--destination=harbor.home.wugi.info/library/archlinux-systemd:db7800fc" # git rev-parse HEAD | cut -c -8
+        - "--destination=harbor.home.wugi.info/library/archlinux-systemd:ca8b86ac" # git rev-parse HEAD | cut -c -8
         volumeMounts:
         - name: kaniko-secret
           mountPath: /kaniko/.docker
