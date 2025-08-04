@@ -202,6 +202,8 @@ install_pob()
 
 main()
 {
+    echo 'Server=https://archive.archlinux.org/repos/2025/06/06/$repo/os/$arch' > /etc/pacman.d/mirrorlist
+
     sed -i '/NoExtract/d' /etc/pacman.conf
     configure_locales
     pacman --noconfirm -Syu
