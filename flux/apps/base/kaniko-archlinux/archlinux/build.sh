@@ -159,11 +159,6 @@ install_vscodium()
     aur install vscodium-bin
 }
 
-install_wlvncc()
-{
-    aur install wlvncc-git
-}
-
 install_vscodium_extensions()
 {
     sudo -u oleg -i bash <<'EOF'
@@ -223,7 +218,6 @@ main()
     install_kind
     install_dlv
     install_pob
-    install_wlvncc
     aur install yandex-browser
 }
 
