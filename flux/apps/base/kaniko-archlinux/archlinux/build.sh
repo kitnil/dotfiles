@@ -118,10 +118,11 @@ EOF
 install_socialstream()
 {
     sudo -u oleg -i bash <<'EOF'
-    git clone https://aur.archlinux.org/socialstreamninja.git
-    cd socialstreamninja
-    sed -i 's/\r//g' PKGBUILD
-    makepkg --noconfirm
+set -o nounset -o errexit -o pipefail -o xtrace
+git clone https://aur.archlinux.org/socialstreamninja.git
+cd socialstreamninja || exit 1
+sed -i 's/\r//g' PKGBUILD
+makepkg --noconfirm
 EOF
     pacman -U /home/oleg/socialstreamninja/socialstreamninja-0.3.43-1-x86_64.pkg.tar.zst
     rm -rf /home/oleg/socialstreamninja
