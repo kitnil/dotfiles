@@ -8,16 +8,10 @@
   #:use-module (wugi home config)
   #:use-module (wugi utils)
   #:use-module (wugi utils package)
-  #:export (home-alacritty-service
+  #:export (home-alacritty-service-type
             home-screen-service
             home-qterminal-service
             home-kitty-service))
-
-(define home-alacritty-service
-  (simple-service 'alacritty-config
-                  home-files-service-type
-                  (list `(".config/alacritty/themes/xterm.toml" ,(local-file (string-append %distro-directory "/dot_config/alacritty/themes/xterm.toml")))
-                        `(".config/alacritty/alacritty.toml" ,(local-file (string-append %distro-directory "/dot_config/alacritty/alacritty.toml"))))))
 
 (define alacritty-theme-xterm-light
   (plain-file "xterm.toml" "\

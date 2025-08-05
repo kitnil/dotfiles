@@ -114,6 +114,7 @@
                    (service home-scream-service-type
                             (scream-configuration
                              (port 16400)))
+                   (service home-alacritty-service-type)
                    (simple-service 'gnupg-config
                                    home-files-service-type
                                    (list `(".gnupg/gpg.conf"
