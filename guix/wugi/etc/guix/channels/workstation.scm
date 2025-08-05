@@ -19,7 +19,7 @@
          (url "https://cgit.wugi.info/git/guix/nonguix")
          (branch "master")
          (commit
-          "b5f43404ef9c79220b355e835481749587751512")
+          "7376837a0fdc1a2f98b223da23c3a693af9bdfe8")
          (introduction
           (make-channel-introduction
            "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
