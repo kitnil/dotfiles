@@ -8,7 +8,7 @@
          (url "https://cgit.wugi.info/git/guix/guix")
          (branch "master")
          (commit
-          "795069e4d2bb5bd95623c606b3db9fb1da6828f6")
+          "736cd155e1f3777e8de24bf8ca11b876e816d9a0")
          (introduction
           (make-channel-introduction
            "9edb3f66fd807b096b48283debdcddccfea34bad"
