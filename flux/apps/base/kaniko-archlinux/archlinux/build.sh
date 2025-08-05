@@ -124,7 +124,7 @@ cd socialstreamninja || exit 1
 sed -i 's/\r//g' PKGBUILD
 makepkg --noconfirm
 EOF
-    pacman -U /home/oleg/socialstreamninja/socialstreamninja-0.3.43-1-x86_64.pkg.tar.zst
+    pacman --noconfirm -U /home/oleg/socialstreamninja/socialstreamninja-0.3.43-1-x86_64.pkg.tar.zst
     rm -rf /home/oleg/socialstreamninja
 }
 
