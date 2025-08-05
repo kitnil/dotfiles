@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2025 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2017, 2018, 2019, 2020, 2021, 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -77,7 +77,6 @@
   #:use-module (gnu packages fontutils)
   #:use-module (gnu packages ocaml)
   #:use-module (gnu packages emacs)
-  #:use-module (gnu packages emacs-build)
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages haskell-xyz)
