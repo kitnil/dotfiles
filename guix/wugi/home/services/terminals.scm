@@ -120,6 +120,7 @@ live_config_reload = false"))
                          (lambda (config)
                            (list `(".config/alacritty/alacritty.toml"
                                    ,alacritty-config-file))))))
+    (default-value '())
     (description "Configure Alacritty, terminal emulator.")))
 
 (define home-screen-service
