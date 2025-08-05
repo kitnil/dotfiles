@@ -246,7 +246,7 @@
    home-tmux-service
    home-top-service
    home-nix-service
-   home-alacritty-service
+   (service home-alacritty-service-type)
    home-qterminal-service
    home-gtk-service
    home-gtkrc-service

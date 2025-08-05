@@ -195,7 +195,6 @@ allow-preset-passphrase"))))
                    tmuxifier-service
                    home-top-service
                    home-nix-service
-                   home-alacritty-service
                    home-qterminal-service
                    home-gtk-service
                    home-gtkrc-service
