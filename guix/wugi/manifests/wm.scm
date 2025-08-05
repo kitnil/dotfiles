@@ -28,7 +28,6 @@
           xdg-desktop-portal-wlr))
 
   (packages->manifest (append clipboard
-                              terminals
                               wm
                               sway-utils
                               wayland-utils)))
