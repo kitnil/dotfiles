@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: runc-bootstrap-container-guix
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: kube3
+      containers:
+      - name: bootstrap
+        volumeMounts:
+        - mountPath: /srv/runc/guix-workstation
+          name: runc-bootstrap-container-directory
+        env:
+        - name: RUNC_BOOTSTRAP_CONTAINER_DIRECTORY
+          value: /srv/runc/guix-workstation
+      volumes:
+      - name: runc-bootstrap-container-directory
+        hostPath:
+          path: /srv/runc/guix-workstation
+          type: Directory
