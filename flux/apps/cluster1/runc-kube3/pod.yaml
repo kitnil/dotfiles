@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: runc
+spec:
+  containers:
+  - name: runc
+    volumeMounts:
+    - mountPath: /home/oleg/.local/share/chezmoi
+      name: dotfiles
+    - mountPath: /home/oleg/src
+      name: src
+  volumes:
+  - name: dotfiles
+    hostPath:
+      path: /home/oleg/.local/share/chezmoi
+      type: Directory
+  - name: src
+    hostPath:
+      path: /home/oleg/src
+      type: Directory
