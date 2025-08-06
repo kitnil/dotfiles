@@ -8,6 +8,11 @@ metadata:
 spec:
   nodeSelector:
     kubernetes.io/hostname: kube3
+  tolerations:
+  - key: workstation.cluster.local
+    operator: Equal
+    value: 'true'
+    effect: NoSchedule
   containers:
   - name: runc
     env:
