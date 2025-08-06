@@ -26,9 +26,9 @@ spec:
               exit 0
           fi
           cd "$RUNC_BOOTSTRAP_CONTAINER_DIRECTORY" || exit 1
-          skopeo copy "docker://${RUNC_BOOTSTRAP_CONTAINER_IMAGE}" oci:image.tar
-          umoci raw unpack --image image.tar rootfs
-          umoci raw runtime-config --image image.tar --rootfs rootfs config.json
+          skopeo copy "docker://${RUNC_BOOTSTRAP_CONTAINER_IMAGE}" oci:rootfs.tar
+          umoci raw unpack --image rootfs.tar rootfs
+          umoci raw runtime-config --image rootfs.tar --rootfs rootfs config.json
         image: harbor.home.wugi.info/library/skopeo-umoci:49152285
         name: bootstrap
         env:
