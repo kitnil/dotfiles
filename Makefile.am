@@ -97,6 +97,7 @@ guix/dotfiles/packer/build.scm:
 	sh -c 'cd guix/dotfiles/packer; $(GUIX) build -f build.scm'
 
 GUIX_SYSTEM_CONFIGURATIONS =			\
+  docker-image					\
   guixsd					\
   libvirt					\
   notebook					\
