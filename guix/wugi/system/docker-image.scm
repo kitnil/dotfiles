@@ -78,65 +78,73 @@
                           (type "does-not-matter"))))
 
     ;; Guix is all you need!
-    (services (append (list (service guix-service-type)
-                            (service nginx-service-type
-                                     (nginx-configuration
-                                       (server-blocks
-                                        (list
-                                         (nginx-server-configuration
-                                           (server-name '("guix.localhost"))
-                                           (listen '("*:80"))
-                                           (locations
-                                            (list
-                                             (nginx-location-configuration
-                                               (uri "/")
-                                               (body
-                                                '("resolver 80.80.80.80 ipv6=off;"
-                                                  "proxy_pass https://mirrors.sjtug.sjtu.edu.cn/guix/;"
-                                                  "proxy_set_header Host mirrors.sjtug.sjtu.edu.cn;"
-                                                  "proxy_ssl_server_name on;"
-                                                  "client_max_body_size 0;"
-                                                  "proxy_busy_buffers_size 512k;"
-                                                  "proxy_buffers 4 512k;"
-                                                  "proxy_buffer_size 256k;"
-                                                  "add_header Access-Control-Allow-Origin *;"))))))
-                                         (nginx-server-configuration
-                                           (server-name '("nonguix.localhost"))
-                                           (listen '("*:80"))
-                                           (locations
-                                            (list
-                                             (nginx-location-configuration
-                                               (uri "/")
-                                               (body
-                                                '("resolver 80.80.80.80 ipv6=off;"
-                                                  "proxy_pass https://nonguix-proxy.ditigal.xyz/;"
-                                                  "proxy_set_header Host nonguix-proxy.ditigal.xyz;"
-                                                  "proxy_ssl_server_name on;"
-                                                  "client_max_body_size 0;"
-                                                  "proxy_busy_buffers_size 512k;"
-                                                  "proxy_buffers 4 512k;"
-                                                  "proxy_buffer_size 256k;"
-                                                  "add_header Access-Control-Allow-Origin *;"))))))))))
-                            (elogind-service))
-                      (modify-services %base-services
-                        (guix-service-type config =>
-                                           (guix-configuration
-                                             (channels %channels-docker-image)
-                                             (guix (guix-for-channels %channels-docker-image))
-                                             (authorized-keys (append (list (local-file "/etc/substitutes/guix.wugi.info.pub")
-                                                                            (local-file "/etc/substitutes/vm1.wugi.info.pub")
-                                                                            (local-file "/etc/substitutes/vm2.wugi.info.pub")
-                                                                            (local-file "/etc/substitutes/mirror.brielmaier.net.pub")
-                                                                            (local-file "/etc/substitutes/substitutes.nonguix.org.pub")
-                                                                            (local-file "/etc/substitutes/bordeaux.guix.gnu.org.pub"))
-                                                                      %default-authorized-guix-keys))
-                                             (substitute-urls '("https://bordeaux.guix.gnu.org"))))
-                        (syslog-service-type config =>
-                                             (syslog-configuration
-                                               (extra-options '("--rcfile=/etc/syslog.conf"
-                                                                "--no-forward"
-                                                                "--no-unixaf"
-                                                                "--no-klog")))))))
+    (services
+     (append
+      (list
+       (service nginx-service-type
+                (nginx-configuration
+                  (server-blocks
+                   (list
+                    (nginx-server-configuration
+                      (server-name '("guix.localhost"))
+                      (listen '("*:80"))
+                      (locations
+                       (list
+                        (nginx-location-configuration
+                          (uri "/")
+                          (body
+                           '("resolver 80.80.80.80 ipv6=off;"
+                             "proxy_pass https://mirrors.sjtug.sjtu.edu.cn/guix/;"
+                             "proxy_set_header Host mirrors.sjtug.sjtu.edu.cn;"
+                             "proxy_ssl_server_name on;"
+                             "client_max_body_size 0;"
+                             "proxy_busy_buffers_size 512k;"
+                             "proxy_buffers 4 512k;"
+                             "proxy_buffer_size 256k;"
+                             "add_header Access-Control-Allow-Origin *;"))))))
+                    (nginx-server-configuration
+                      (server-name '("nonguix.localhost"))
+                      (listen '("*:80"))
+                      (locations
+                       (list
+                        (nginx-location-configuration
+                          (uri "/")
+                          (body
+                           '("resolver 80.80.80.80 ipv6=off;"
+                             "proxy_pass https://nonguix-proxy.ditigal.xyz/;"
+                             "proxy_set_header Host nonguix-proxy.ditigal.xyz;"
+                             "proxy_ssl_server_name on;"
+                             "client_max_body_size 0;"
+                             "proxy_busy_buffers_size 512k;"
+                             "proxy_buffers 4 512k;"
+                             "proxy_buffer_size 256k;"
+                             "add_header Access-Control-Allow-Origin *;"))))))))))
+       (elogind-service))
+      (modify-services %base-services
+        (guix-service-type
+         config =>
+         (guix-configuration
+           (channels %channels-docker-image)
+           (guix (guix-for-channels %channels-docker-image))
+           (authorized-keys
+            (append
+             (list
+              (local-file "/etc/substitutes/guix.wugi.info.pub")
+              (local-file "/etc/substitutes/vm1.wugi.info.pub")
+              (local-file "/etc/substitutes/vm2.wugi.info.pub")
+              (local-file "/etc/substitutes/mirror.brielmaier.net.pub")
+              (local-file "/etc/substitutes/substitutes.nonguix.org.pub")
+              (local-file "/etc/substitutes/bordeaux.guix.gnu.org.pub"))
+             %default-authorized-guix-keys))
+           (substitute-urls '("http://guix.localhost"
+                              "http://nonguix.localhost"))))
+        (syslog-service-type
+         config =>
+         (syslog-configuration
+           (extra-options '("--rcfile=/etc/syslog.conf"
+                            "--no-forward"
+                            "--no-unixaf"
+                            "--no-klog")))))))
 
     (sudoers-file (plain-file "sudoers"
                               (string-join `("Defaults:root runcwd=*"
