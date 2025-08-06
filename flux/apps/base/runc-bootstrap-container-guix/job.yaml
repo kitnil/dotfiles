@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: runc-bootstrap-container
+spec:
+  template:
+    spec:
+      containers:
+      - name: bootstrap
+        env:
+        - name: RUNC_BOOTSTRAP_CONTAINER_IMAGE
+          value: harbor.home.wugi.info/library/docker-image:da808788-1754470209
