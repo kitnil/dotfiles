@@ -11,7 +11,7 @@ spec:
       - name: nsenter
         env:
         - name: GIT_COMMIT
-          value: 6410a8bcfbed248fd95b0f1278a93893acc4d549
+          value: 9fc666258a81b331f06add6f8371a8de55829a38
         - name: RUNC_MAKE_TARGET
           value: "guix-time-machine-system-image-docker-image"
         - name: RUNC_ENVIRONMENT
