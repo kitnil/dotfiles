@@ -26,6 +26,7 @@
   #:use-module (guix profiles)
   #:use-module (guix ui)
   #:use-module (srfi srfi-1)
+  #:use-module (wugi etc guix channels docker-image)
   #:export (%docker-image))
 
 (define (%docker-image)
@@ -120,8 +121,8 @@
                       (modify-services %base-services
                         (guix-service-type config =>
                                            (guix-configuration
-                                             (channels my-channels)
-                                             (guix (guix-for-channels my-channels))
+                                             (channels %channels-docker-image)
+                                             (guix (guix-for-channels %channels-docker-image))
                                              (authorized-keys (append (list (local-file "/etc/substitutes/guix.wugi.info.pub")
                                                                             (local-file "/etc/substitutes/vm1.wugi.info.pub")
                                                                             (local-file "/etc/substitutes/vm2.wugi.info.pub")
