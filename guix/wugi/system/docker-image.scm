@@ -27,6 +27,7 @@
   #:use-module (guix ui)
   #:use-module (srfi srfi-1)
   #:use-module (wugi etc guix channels docker-image)
+  #:use-module (wugi utils)
   #:export (%docker-image))
 
 (define (%docker-image)
