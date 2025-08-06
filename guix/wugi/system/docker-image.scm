@@ -128,15 +128,20 @@
            (guix (guix-for-channels %channels-docker-image))
            (authorized-keys
             (append
-             (list
-              (local-file "/etc/substitutes/guix.wugi.info.pub")
-              (local-file "/etc/substitutes/vm1.wugi.info.pub")
-              (local-file "/etc/substitutes/vm2.wugi.info.pub")
-              (local-file "/etc/substitutes/mirror.brielmaier.net.pub")
-              (local-file "/etc/substitutes/substitutes.nonguix.org.pub")
-              (local-file "/etc/substitutes/bordeaux.guix.gnu.org.pub"))
+             (map (lambda (file-name)
+                    (local-file
+                     (string-append %distro-directory
+                                    "/wugi/etc/substitutes/" file-name)))
+                  '("bordeaux.guix.gnu.org.pub"
+                    "guix-builder.pub"
+                    "guix.wugi.info.pub"
+                    "mirror.brielmaier.net.pub"
+                    "substitutes.nonguix.org.pub"
+                    "vm1.wugi.info.pub"
+                    "vm2.wugi.info.pub"))
              %default-authorized-guix-keys))
-           (substitute-urls '("http://guix.localhost"
+           (substitute-urls '("http://runc-kube1-guix-builder.guix:5556"
+                              "http://guix.localhost"
                               "http://nonguix.localhost"))))
         (syslog-service-type
          config =>
