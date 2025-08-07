@@ -59,6 +59,7 @@
     (inputs
      (append
       `(("git" ,git)
+        ("gnupg" ,gnupg)
         ("skopeo" ,skopeo)
         ("yq" ,yq)
         ("yamlfmt" ,yamlfmt))
