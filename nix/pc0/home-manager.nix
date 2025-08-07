@@ -146,18 +146,6 @@ in {
               }
             ];
           };
-          search = {
-            searxng = {
-              name = "SearxNG";
-              urls = [
-                {
-                  template =
-                    "https://searxng.home.wugi.info"
-                    + "/search?q={searchTerms}&categories=general";
-                }
-              ];
-            };
-          };
           extensions = {
             packages =
               fold
@@ -463,7 +451,6 @@ in {
     '';
   };
 
-  services.chatterino.enable = true;
   services.foot.enable = true;
   services.google-chrome.enable = true;
   services.pycharm-community.enable = true;

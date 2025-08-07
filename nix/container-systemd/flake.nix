@@ -3,8 +3,9 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-25.05";
-    dotfiles-home-manager.url = "git+https://cgit.wugi.info/git/wigust/dotfiles?dir=nix";
+    dotfiles-home-manager.url = "path:/home/oleg/src/cgit.wugi.info/wigust/dotfiles/nix";
     flake-utils.url = "github:numtide/flake-utils";
+    firejail-disable-sandbox-check.url = "github:wigust/nixpkgs?ref=firejail-disable-sandbox-check";
   };
 
   outputs = { self, nixpkgs, flake-utils, dotfiles-home-manager, ... } @ inputs:
@@ -39,7 +40,6 @@
                 home-manager.useUserPackages = true;
                 home-manager.users.oleg =  inputs.dotfiles-home-manager.outPath + "/pc0/home-manager.nix";
                 home-manager.sharedModules = [
-                  inputs.dotfiles-home-manager.nixosModules.home-manager-chatterino
                   inputs.dotfiles-home-manager.nixosModules.home-manager-firefox
                   inputs.dotfiles-home-manager.nixosModules.home-manager-foot
                   inputs.dotfiles-home-manager.nixosModules.home-manager-google-chrome
@@ -76,6 +76,8 @@
                         };
                       } // {
                         inherit (packages) google-chrome;
+                        inherit (inputs.firejail-disable-sandbox-check.legacyPackages.${system})
+                          firejail-disable-sandbox-check;
                       };
                       inherit packages;
                     };

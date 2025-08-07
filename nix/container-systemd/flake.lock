@@ -70,19 +70,14 @@
         "utils": "utils_2"
       },
       "locked": {
-        "dir": "nix",
-        "lastModified": 1753923568,
-        "narHash": "sha256-Q9hwLewL1kIysodtdQc0m3AZarWBW5gCnCoNdDIZ4tY=",
-        "ref": "refs/heads/master",
-        "rev": "ba9be995da34c346374b2d4783f7d75db0247803",
-        "revCount": 15173,
-        "type": "git",
-        "url": "https://cgit.wugi.info/git/wigust/dotfiles"
+        "lastModified": 1754550264,
+        "narHash": "sha256-X3Deh7CIJuMQcly8KcparoFZPHw+T4tmTU21AH/64aI=",
+        "path": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/nix",
+        "type": "path"
       },
       "original": {
-        "dir": "nix",
-        "type": "git",
-        "url": "https://cgit.wugi.info/git/wigust/dotfiles"
+        "path": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/nix",
+        "type": "path"
       }
     },
     "fenix": {
@@ -105,6 +100,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "fenix",
+        "type": "github"
+      }
+    },
+    "firejail-disable-sandbox-check": {
+      "locked": {
+        "lastModified": 1754254098,
+        "narHash": "sha256-zY6T9F71OrNKhyz2gE0lApkIO2hRxjBxJlrzHoPXuBY=",
+        "owner": "wigust",
+        "repo": "nixpkgs",
+        "rev": "351baca3de7fe6f47759f19c8be9ac868e8025b7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "wigust",
+        "ref": "firejail-disable-sandbox-check",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -716,6 +727,7 @@
     "root": {
       "inputs": {
         "dotfiles-home-manager": "dotfiles-home-manager",
+        "firejail-disable-sandbox-check": "firejail-disable-sandbox-check",
         "flake-utils": "flake-utils_2",
         "nixpkgs": "nixpkgs_9"
       }
