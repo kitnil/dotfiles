@@ -1,0 +1,9 @@
+configure /etc/resolv.conf
+configure /etc/services
+configure /etc/hosts
+configure /etc/nsswitch.conf
+
+install /home/oleg/bin/waybar-1.sh
+install /home/oleg/bin/waybar-2.sh
+
+install /home/oleg/bin/icecat
