@@ -28,6 +28,7 @@ spec:
       name: rootfs
     - mountPath: /mnt/guix/run
       name: run
+      mountPropagation: HostToContainer
     - mountPath: /mnt/guix/tmp
       name: tmp
   restartPolicy: Never
