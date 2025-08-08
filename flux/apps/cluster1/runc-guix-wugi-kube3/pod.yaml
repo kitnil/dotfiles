@@ -25,7 +25,10 @@ spec:
       mkdir put_old
       pivot_root . put_old
 
-      read
+      until [[ -e /continue ]]
+      do
+          echo ''
+      done
 
       exec /gnu/store/mppp9hwxizx9g9pikwcvvshb2ffxyq7p-coreutils-9.1/bin/chroot . /gnu/store/fnfh4fqwla2s1f5v152aa3rmacp93hah-boot-program /gnu/store/4yfss9a96ijfp02xymdvxscrd44cb5vw-system
     image: harbor.home.wugi.info/library/runc:c72aa8bb
