@@ -20,6 +20,8 @@ spec:
 
       cd /mnt/rootfs || exit 1
 
+      sleep 10
+
       mkdir put_old
       pivot_root . put_old
       exec chroot . /gnu/store/fnfh4fqwla2s1f5v152aa3rmacp93hah-boot-program /gnu/store/4yfss9a96ijfp02xymdvxscrd44cb5vw-system
