@@ -41,7 +41,7 @@ spec:
       /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/touch /etc/resolv.conf
       /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --move put_old/etc/resolv.conf /etc/resolv.conf
 
-      exec /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/chroot . /bin/sh -c '/gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/umount --recursive put_old; /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/rmdir put_old; exec /gnu/store/fnfh4fqwla2s1f5v152aa3rmacp93hah-boot-program /gnu/store/4yfss9a96ijfp02xymdvxscrd44cb5vw-system'
+      exec /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/chroot . /bin/sh -c '/gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/umount --recursive put_old; /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/rmdir put_old; exec /init'
     image: harbor.home.wugi.info/library/runc:c72aa8bb
     name: runc
     securityContext:
