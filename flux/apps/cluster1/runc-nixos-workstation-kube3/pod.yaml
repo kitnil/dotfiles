@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kustomize.toolkit.fluxcd.io/force: enabled
+  name: runc-nixos-workstation-kube3
+spec:
+  automountServiceAccountToken: false
+  containers:
+  - command:
+    - /bin/bash
+    - -c
+    - |
+      set -o nounset -o errexit -o pipefail -o xtrace
+
+      cd /mnt/rootfs || exit 1
+
+      mkdir put_old
+      pivot_root . put_old
+
+      exec /entrypoint
+    image: harbor.home.wugi.info/library/runc:c72aa8bb
+    name: runc
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /mnt/rootfs
+      name: rootfs
+    - mountPath: /mnt/guix/run
+      name: run
+    - mountPath: /mnt/guix/tmp
+      name: tmp
+  restartPolicy: Never
+  tolerations:
+  - effect: NoSchedule
+    key: edge.cluster.local/not-schedulable
+    operator: Equal
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+  - effect: NoSchedule
+    key: node.kubernetes.io/disk-pressure
+    operator: Exists
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+  - effect: NoSchedule
+    key: node.kubernetes.io/pid-pressure
+    operator: Exists
+  - effect: NoSchedule
+    key: node.kubernetes.io/unschedulable
+    operator: Exists
+  - key: workstation.cluster.local
+    operator: Equal
+    value: 'true'
+    effect: NoSchedule
+  volumes:
+  - hostPath:
+      path: /srv/runc/nixos-workstation/rootfs
+      type: Directory
+    name: rootfs
+  - hostPath:
+      path: /mnt/guix-workstation/run
+      type: Directory
+    name: run
+  - hostPath:
+      path: /mnt/guix-workstation/tmp
+      type: Directory
+    name: tmp
