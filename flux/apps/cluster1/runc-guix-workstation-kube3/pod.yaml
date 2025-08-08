@@ -1,37 +1,83 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: runc
-  labels:
-    app.kubernetes.io/name: runc-kube3-guix-workstation
-    app.kubernetes.io/part-of: guix
+  annotations:
+    kustomize.toolkit.fluxcd.io/force: enabled
+  name: runc-guix-workstation-kube3
 spec:
-  nodeSelector:
-    kubernetes.io/hostname: kube3
+  automountServiceAccountToken: false
+  containers:
+  - command:
+    - /bin/bash
+    - -c
+    - |
+      set -o nounset -o errexit -o pipefail -o xtrace
+
+      mount -o remount,rw /sys
+
+      umount /sys/fs/cgroup
+      mount -t cgroup2 -o rw,relatime,nsdelegate,memory_recursiveprot cgroup2 /sys/fs/cgroup
+
+      cd /mnt/rootfs || exit 1
+
+      mkdir put_old
+      pivot_root . put_old
+
+      /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/mkdir -p /dev
+      /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --move put_old/dev /dev
+
+      /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/mkdir -p /proc
+      /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --move put_old/proc /proc
+
+      /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/mkdir -p /sys
+      /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --move put_old/sys /sys
+
+      /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/touch /etc/hosts
+      /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --move put_old/etc/hosts /etc/hosts
+
+      /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/touch /etc/hostname
+      /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --move put_old/etc/hostname /etc/hostname
+
+      /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/touch /etc/resolv.conf
+      /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --move put_old/etc/resolv.conf /etc/resolv.conf
+
+      exec /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/chroot . /bin/sh -c '/gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/umount --recursive put_old; /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/rmdir put_old; exec /gnu/store/fnfh4fqwla2s1f5v152aa3rmacp93hah-boot-program /gnu/store/4yfss9a96ijfp02xymdvxscrd44cb5vw-system'
+    image: harbor.home.wugi.info/library/runc:c72aa8bb
+    name: runc
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /mnt/rootfs
+      name: rootfs
+  restartPolicy: Never
   tolerations:
+  - effect: NoSchedule
+    key: edge.cluster.local/not-schedulable
+    operator: Equal
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+  - effect: NoSchedule
+    key: node.kubernetes.io/disk-pressure
+    operator: Exists
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+  - effect: NoSchedule
+    key: node.kubernetes.io/pid-pressure
+    operator: Exists
+  - effect: NoSchedule
+    key: node.kubernetes.io/unschedulable
+    operator: Exists
   - key: workstation.cluster.local
     operator: Equal
     value: 'true'
     effect: NoSchedule
-  containers:
-  - name: runc
-    env:
-    - name: RUNC_BUNDLE
-      value: /srv/runc/guix-workstation
-    - name: RUNC_CONTAINER_ID
-      value: guix-workstation
-    ports:
-    - containerPort: 5556
-      name: guix
-      protocol: TCP
-    - containerPort: 22
-      name: ssh
-      protocol: TCP
-    volumeMounts:
-    - mountPath: /srv/runc/guix-workstation
-      name: runc-guix-workstation
   volumes:
-  - name: runc-guix-workstation
-    hostPath:
-      path: /srv/runc/guix-workstation
+  - hostPath:
+      path: /srv/runc/guix-workstation/rootfs
       type: Directory
+    name: rootfs
