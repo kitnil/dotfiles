@@ -28,8 +28,10 @@ spec:
       name: rootfs
     - mountPath: /mnt/run
       name: run
+      mountPropagation: Bidirectional
     - mountPath: /mnt/tmp
       name: tmp
+      mountPropagation: Bidirectional
   restartPolicy: Never
   tolerations:
   - effect: NoSchedule
