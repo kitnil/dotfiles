@@ -1,21 +1,10 @@
-;; upgrade shepherd services
-
-;; oleg@workstation ~/src/dotfiles/guix$ sudo guix repl -L .
-;; Consider installing the 'guile-readline' package for
-;; convenient interactive line editing and input history.
-
-;; Consider installing the 'guile-colorized' package
-;; for a colorful Guile experience.
-
-;; GNU Guile 3.0.9
-;; Copyright (C) 1995-2023 Free Software Foundation, Inc.
-
-;; Guile comes with ABSOLUTELY NO WARRANTY; for details type `,show w'.
-;; This program is free software, and you are welcome to redistribute it
-;; under certain conditions; type `,show c' for details.
-
-;; Enter `,help' for help.
-;; scheme@(guix-user)> (load "run.scm")
+;; Switch to a system:
+;;     sudo -i /gnu/store/4qy1pq6qbkgpvhiknwyjmyy882h00kd4-switch-to-system.scm
+;;
+;; Upgrade shepherd services:
+;;
+;;     oleg@workstation ~/src/dotfiles/guix$ sudo guix repl -L .
+;;     sudo guix repl -L guix <<< '(load "guix/dot_local/bin/docker-image-shepherd-upgrade-services.scm")'
 
 (use-modules ((gnu services) #:select (sexp->system-provenance))
              ((guix inferior) #:select (inferior-exception? inferior-exception-arguments))
@@ -49,6 +38,28 @@
              (srfi srfi-35)
              (srfi srfi-9)
              (wugi system docker-image))
+
+(define-syntax-rule (save-load-path-excursion body ...)
+  "Save the current values of '%load-path' and '%load-compiled-path', run
+BODY..., and restore them."
+  (let ((path %load-path)
+       (cpath %load-compiled-path))
+    (dynamic-wind
+       (const #t)
+       (λ ()
+         body ...)
+       (λ ()
+         (set! %load-path path)
+         (set! %load-compiled-path cpath)))))
+
+(define (local-eval exp)
+  "Evaluate EXP, a G-Expression, in-place."
+  (mlet* %store-monad ((lowered (lower-gexp exp))
+                      (_ (built-derivations (lowered-gexp-inputs lowered))))
+        (save-load-path-excursion
+         (set! %load-path (lowered-gexp-load-path lowered))
+         (set! %load-compiled-path (lowered-gexp-load-compiled-path lowered))
+         (return (primitive-eval (lowered-gexp-sexp lowered))))))
 
 (run-with-store (open-connection)
   (mlet %store-monad ((a (upgrade-shepherd-services local-eval (%docker-image))))
