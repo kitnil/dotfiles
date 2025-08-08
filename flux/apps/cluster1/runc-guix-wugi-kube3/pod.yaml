@@ -24,7 +24,7 @@ spec:
 
       mkdir put_old
       pivot_root . put_old
-      exec chroot . /gnu/store/fnfh4fqwla2s1f5v152aa3rmacp93hah-boot-program /gnu/store/4yfss9a96ijfp02xymdvxscrd44cb5vw-system
+      exec "$(type -p chroot)" . /gnu/store/fnfh4fqwla2s1f5v152aa3rmacp93hah-boot-program /gnu/store/4yfss9a96ijfp02xymdvxscrd44cb5vw-system
     image: harbor.home.wugi.info/library/runc:c72aa8bb
     name: runc
     securityContext:
