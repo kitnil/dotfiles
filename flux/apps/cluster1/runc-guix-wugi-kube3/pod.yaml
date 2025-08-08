@@ -26,18 +26,16 @@ spec:
       pivot_root . put_old
 
       /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/mkdir -p /dev
-      /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --rbind put_old/dev /dev
+      /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --make-rslave --rbind put_old/dev /dev
 
       /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/mkdir -p /proc
-      /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --rbind put_old/proc /proc
+      /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --make-rslave --rbind put_old/proc /proc
 
       /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/mkdir -p /sys
-      /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --rbind put_old/sys /sys
+      /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --make-rslave --rbind put_old/sys /sys
 
       /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/mkdir -p /foo
-      /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --rbind put_old/foo /foo
-
-      cd .
+      /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/mount --make-rslave --rbind put_old/foo /foo
 
       /gnu/store/mc9ks5c1cawknx6rh4xkkg5yk4c5p8lj-util-linux-2.37.4/bin/umount --recursive put_old
       /gnu/store/24yxzfsk36xyj39aavw98pb74xggwlck-coreutils-9.1/bin/rmdir put_old
