@@ -20,8 +20,6 @@ spec:
 
       cd /mnt/rootfs || exit 1
 
-      sleep 10
-
       mkdir put_old
       pivot_root . put_old
 
