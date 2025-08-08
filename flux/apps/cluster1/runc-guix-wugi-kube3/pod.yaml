@@ -48,7 +48,6 @@ spec:
     volumeMounts:
     - mountPath: /mnt/rootfs
       name: rootfs
-    volumeMounts:
     - mountPath: /foo
       name: /foo
   restartPolicy: Never
