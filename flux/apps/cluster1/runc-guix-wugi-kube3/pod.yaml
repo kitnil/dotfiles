@@ -33,7 +33,7 @@ spec:
     volumeMounts:
     - mountPath: /mnt/rootfs
       name: rootfs
-  restartPolicy: Always
+  restartPolicy: Never
   tolerations:
   - effect: NoSchedule
     key: edge.cluster.local/not-schedulable
