@@ -12,14 +12,8 @@ spec:
     - -c
     - |
       set -o nounset -o errexit -o pipefail -o xtrace
-
-      cd /mnt/rootfs || exit 1
-
-      mkdir put_old
-      pivot_root . put_old
-
-      exec /entrypoint
-    image: harbor.home.wugi.info/library/runc:c72aa8bb
+      exec ip netns exec guix-workstation /entrypoint.sh
+    image: harbor.home.wugi.info/library/guix-entrypoint:3f227497
     name: runc
     hostNetwork: true
     securityContext:
@@ -32,6 +26,8 @@ spec:
       mountPropagation: HostToContainer
     - mountPath: /mnt/guix-workstation/tmp
       name: guix-workstation-tmp
+    - mountPath: /var/run/netns
+      name: var-run-netns
   restartPolicy: Never
   tolerations:
   - effect: NoSchedule
@@ -72,3 +68,7 @@ spec:
       path: /mnt/guix-workstation/tmp
       type: Directory
     name: guix-workstation-tmp
+  - hostPath:
+      path: /var/run/netns
+      type: Directory
+    name: var-run-netns
