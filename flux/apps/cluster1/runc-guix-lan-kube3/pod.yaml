@@ -28,6 +28,10 @@ spec:
       name: guix-workstation-tmp
     - mountPath: /var/run/netns
       name: var-run-netns
+    - mountPath: /dev/tty0
+      name: dev-tty9
+    - mountPath: /dev/tty9
+      name: dev-tty9
   restartPolicy: Never
   tolerations:
   - effect: NoSchedule
@@ -72,3 +76,11 @@ spec:
       path: /var/run/netns
       type: Directory
     name: var-run-netns
+  - hostPath:
+      path: /dev/tty9
+      type: CharDevice
+    name: dev-tty9
+  - hostPath:
+      path: /dev/tty2
+      type: CharDevice
+    name: dev-tty2
