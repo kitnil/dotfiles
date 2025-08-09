@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   annotations:
     kustomize.toolkit.fluxcd.io/force: enabled
-  name: runc-guix-workstation-kube3
+  name: runc-guix-lan-kube3
 spec:
   automountServiceAccountToken: false
   containers:
