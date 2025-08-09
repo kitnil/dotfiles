@@ -252,6 +252,14 @@ runc:
 	$(GUIX) gc --delete $$container
 
 .ONESHELL:
+guix-entrypoint:
+	set -o nounset -o errexit -o pipefail -o xtrace
+	commit_8=$$(echo $(GIT_COMMIT) | cut -c -8)
+	container=$$($(GUIX) pack -f docker --load-path=$(LOAD_PATH) --max-layers=100 -S /bin=bin -S /sbin=sbin util-linux-with-udev bash coreutils iproute2)
+	$(SKOPEO) copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+	$(GUIX) gc --delete $$container
+
+.ONESHELL:
 kubeedge-certs:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(echo $(GIT_COMMIT) | cut -c -8)
