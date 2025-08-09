@@ -12,7 +12,7 @@ spec:
     - -c
     - |
       set -o nounset -o errexit -o pipefail -o xtrace
-      exec ip netns exec guix-workstation /entrypoint.sh
+      exec ip netns exec guix-workstation /mnt/rootfs/entrypoint.sh
     image: harbor.home.wugi.info/library/guix-entrypoint:3f227497
     name: runc
     hostNetwork: true
@@ -57,7 +57,7 @@ spec:
     effect: NoSchedule
   volumes:
   - hostPath:
-      path: /srv/runc/guix-workstation/rootfs
+      path: /srv/runc/guix-lan/rootfs
       type: Directory
     name: rootfs
   - hostPath:
