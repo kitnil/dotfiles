@@ -33,6 +33,7 @@ spec:
     - mountPath: /dev/tty9
       name: dev-tty9
   restartPolicy: Never
+  tty: true
   tolerations:
   - effect: NoSchedule
     key: edge.cluster.local/not-schedulable
