@@ -111,6 +111,7 @@ in {
                 copy-as-org-mode
                 multi-account-containers
                 snaplinksplus
+                soundfixer
                 ublock-origin
                 redirector
               ];
@@ -186,7 +187,6 @@ in {
                   hide-twitch-chat-users
                   metube-downloader
                   night-video-tuner
-                  soundfixer
                   tab-reloader
                   twitch-error-autorefresher
                   visited-link-enabler
