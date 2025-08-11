@@ -14,12 +14,17 @@
 
   time.timeZone = "Europe/Moscow";
 
-  networking.hostName = ""; # empty
-  networking.useDHCP = false;
-  networking.useNetworkd = false;
-  networking.useHostResolvConf = false;
-  networking.firewall.enable = false;
-  networking.resolvconf.enable = false;
+  networking = {
+    hostName = ""; # empty
+    useDHCP = false;
+    useNetworkd = false;
+    useHostResolvConf = false;
+    firewall.enable = false;
+    resolvconf.enable = false;
+    extraHosts = ''
+      192.168.0.148 example-tor-instance-tor-svc.tor-controller-instance
+    '';
+  };
 
   programs.firejail = {
     enable = true;
