@@ -83,7 +83,20 @@ in {
           };
           search = {
             force = true;
-            default = "ddg";
+            default = "searxng";
+            engines = {
+              searxng = {
+                name = "SearxNG";
+                urls = [
+                  {
+                    template =
+                      "https://searxng.home.wugi.info"
+                      + "/search?q={searchTerms}&categories=general";
+                  }
+                ];
+                definedAliases = [ "@sng" ];
+              };
+            };
           };
         };
         firefoxBaseProfileWithExtensions = firefoxBaseProfile // {
