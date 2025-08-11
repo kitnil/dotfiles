@@ -156,6 +156,12 @@ in {
                 url = "https://nixos.org/";
               }
               {
+                name = "home-searxng";
+                tags = [ "search" "self-hosting" ];
+                keyword = "searxng";
+                url = "https://searxng.home.wugi.info";
+              }
+              {
                 name = "nix-wiki";
                 tags = [ "wiki" "nix" ];
                 url = "https://wiki.nixos.org/";
