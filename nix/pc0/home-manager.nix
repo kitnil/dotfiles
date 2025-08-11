@@ -134,19 +134,19 @@ in {
             settings = [
               {
                 name = "home-karma";
-                tags = [ "monitoring" "kubernetes" ];
+                tags = [ "monitoring" "kubernetes" "self-hosting" ];
                 keyword = "karma";
                 url = "https://karma.home.wugi.info";
               }
               {
                 name = "home-grafana";
-                tags = [ "monitoring" "kubernetes" ];
+                tags = [ "monitoring" "kubernetes" "self-hosting" ];
                 keyword = "grafana";
                 url = "https://grafana.home.wugi.info";
               }
               {
                 name = "home-harbor";
-                tags = [ "containers" "kubernetes" ];
+                tags = [ "containers" "kubernetes" "self-hosting" ];
                 keyword = "karma";
                 url = "https://harbor.home.wugi.info";
               }
