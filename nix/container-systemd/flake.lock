@@ -70,8 +70,8 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1754931303,
-        "narHash": "sha256-RiiNIq/Kg3qdGZoLMZnoUaQI8la0qY/WPYbuI5jmfbU=",
+        "lastModified": 1754931558,
+        "narHash": "sha256-a2bgaYXSDMLFUIXrMjxlWzfj6EhwI84yulNUmXAr1Ds=",
         "path": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/nix",
         "type": "path"
       },
