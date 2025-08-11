@@ -85,6 +85,8 @@ in {
             force = true;
             default = "ddg";
           };
+        };
+        firefoxBaseProfileWithExtensions = firefoxBaseProfile // {
           extensions = {
             packages =
               with packages;
@@ -109,7 +111,7 @@ in {
           isDefault = false;
           id = 0;
         };
-        nix = firefoxBaseProfile // {
+        nix = firefoxBaseProfileWithExtensions // {
           name = "nix";
           id = 1;
           isDefault = true;
@@ -150,21 +152,21 @@ in {
             packages =
               fold
                 (extension: extensions: extensions ++ [extension])
-                firefoxBaseProfile.extensions.packages
+                firefoxBaseProfileWithExtensions.extensions.packages
                 (with packages; with packages.nur.repos.rycee.firefox-addons; [
                   auto-tab-discard
                   hello-goodbye
                 ]);
           };
         };
-        twitch = firefoxBaseProfile // {
+        twitch = firefoxBaseProfileWithExtensions // {
           name = "twitch";
           id = 2;
           extensions = {
             packages =
               fold
                 (extension: extensions: extensions ++ [extension])
-                firefoxBaseProfile.extensions.packages
+                firefoxBaseProfileWithExtensions.extensions.packages
                 (with packages; with packages.nur.repos.rycee.firefox-addons; [
                   return-youtube-dislikes
                   sponsorblock
@@ -181,21 +183,21 @@ in {
             ;
           };
         };
-        development = firefoxBaseProfile // {
+        development = firefoxBaseProfileWithExtensions // {
           name = "development";
           id = 3;
           isDefault = false;
         };
-        messaging = firefoxBaseProfile // {
+        messaging = firefoxBaseProfileWithExtensions // {
           name = "messaging";
           isDefault = false;
           id = 4;
         };
-        tor = firefoxBaseProfile // {
+        tor = firefoxBaseProfileWithExtensions // {
           name = "tor";
           id = 5;
           isDefault = false;
-          settings = firefoxBaseProfile.settings // {
+          settings = firefoxBaseProfileWithExtensions.settings // {
             "network.proxy.socks" = "example-tor-instance-tor-svc.tor-controller-instance";
             "network.proxy.socks_port" = 9050;
             "network.proxy.type" = 1;
@@ -218,7 +220,7 @@ in {
             ];
           };
         };
-        work = firefoxBaseProfile // {
+        work = firefoxBaseProfileWithExtensions // {
           name = "work";
           id = 6;
           isDefault = false;
