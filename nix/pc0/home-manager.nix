@@ -238,6 +238,9 @@ in {
               }
             ];
           };
+          search = {
+            default = "ddg";
+          };
         };
         work = firefoxBaseProfileWithExtensions // {
           name = "work";
