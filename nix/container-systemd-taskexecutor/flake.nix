@@ -2,7 +2,7 @@
   description = "";
 
   inputs = {
-    original.url = "git+https://cgit.wugi.info/git/wigust/dotfiles?dir=nix/container-systemd";
+    original.url = "git+file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles?dir=nix/container-systemd";
     taskexecutor = {
       url = "git+ssh://gitlab.corp1.majordomo.ru/hms/taskexecutor";
       inputs.majordomo = {
