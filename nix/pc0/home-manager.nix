@@ -22,6 +22,8 @@ in {
 
     gnumake
 
+    emacs
+
     strace
 
     wlvncc
