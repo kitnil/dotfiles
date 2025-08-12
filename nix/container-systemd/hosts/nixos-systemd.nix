@@ -40,6 +40,40 @@
     PermitRootLogin = "prohibit-password";
   };
 
+  services.openvpn.servers = {
+    client = {
+      config =
+        let
+          mjuh-utils-openvpn = pkgs.fetchFromGitHub {
+            owner = "mjuh";
+            repo = "utils-openvpn";
+            rev = "901b406f27035c641683f8e869919b9e0eb28153";
+            hash = "sha256-6cV7uPJbA5YHGgOu/xuKldUCSaiguzPc2nWQFsws3z8=";
+          };
+          caFile = "${mjuh-utils-openvpn}/etc/openvpn/majordomo-ca.cert";
+        in ''
+          client
+          proto udp
+          dev tapvpn
+          verb 3
+
+          remote 78.108.87.250 1194 udp
+          cipher AES-256-GCM
+          data-ciphers AES-256-GCM
+
+          remote-cert-tls server
+          ca "${caFile}"
+          auth SHA1
+          script-security 3
+          auth-nocache
+          auth-retry nointeract
+          ping 5
+          ping-restart 10
+          auth-user-pass /etc/openvpn/login.conf
+        '';
+    };
+  };
+
   services.journald.console = "/dev/tty";
   services.journald.extraConfig = "SystemMaxUse=100M";
 
