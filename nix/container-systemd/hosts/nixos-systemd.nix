@@ -23,6 +23,7 @@
     resolvconf.enable = false;
     extraHosts = ''
       192.168.0.148 example-tor-instance-tor-svc.tor-controller-instance
+      192.168.0.196 workstation-kube1.workstation
     '';
   };
 
