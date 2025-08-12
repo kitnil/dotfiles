@@ -80,6 +80,12 @@
     };
   };
 
+  systemd.services.openvpn-client = {
+    unitConfig = {
+      ConditionPathExists = [ "/etc/openvpn/login.conf" ];
+    };
+  };
+
   services.journald.console = "/dev/tty";
   services.journald.extraConfig = "SystemMaxUse=100M";
 
