@@ -6,4 +6,5 @@
      (projectile-project-install-cmd . "make install")
      (eval . (progn
                (setq-local geiser-repl-add-project-paths nil)
-               (aggressive-indent-mode))))))
+               (when (functionp #'aggressive-indent-mode)
+		 (aggressive-indent-mode)))))))
