@@ -20,22 +20,6 @@
     };
   };
 
-  programs.ssh = {
-    extraConfig = ''
-      Host gitlab.intr
-      User git
-      IdentityFile /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
-
-      Host gitlab.corp1.majordomo.ru
-      User git
-      IdentityFile /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
-
-      Host *.intr
-      User root
-      IdentityFile /home/oleg/.ssh/id_rsa_majordomo_eng
-    '';
-  };
-
   home.packages = with pkgs; [
     python-taskexecutor
     python-taskexecutor-wrapper

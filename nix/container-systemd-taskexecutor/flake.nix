@@ -24,6 +24,7 @@
               {
                 home-manager = {
                   users = {
+                    oleg = ./oleg/home-manager.nix;
                     taskexecutor = ./home-manager.nix;
                   };
                   extraSpecialArgs = {
