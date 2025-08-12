@@ -22,7 +22,9 @@ in {
 
     gnumake
 
-    emacs-pgtk
+    ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
+      epkgs: [ epkgs.nix-mode ]
+    ))
 
     strace
 
