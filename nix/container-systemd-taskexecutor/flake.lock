@@ -70,19 +70,14 @@
         "utils": "utils_2"
       },
       "locked": {
-        "dir": "nix",
-        "lastModified": 1753923568,
-        "narHash": "sha256-Q9hwLewL1kIysodtdQc0m3AZarWBW5gCnCoNdDIZ4tY=",
-        "ref": "refs/heads/master",
-        "rev": "ba9be995da34c346374b2d4783f7d75db0247803",
-        "revCount": 15173,
-        "type": "git",
-        "url": "https://cgit.wugi.info/git/wigust/dotfiles"
+        "lastModified": 1754934678,
+        "narHash": "sha256-e03o9FRDp40jWQWuBp9yRJ8YMU4G33QbpicRDzkWcx0=",
+        "path": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/nix",
+        "type": "path"
       },
       "original": {
-        "dir": "nix",
-        "type": "git",
-        "url": "https://cgit.wugi.info/git/wigust/dotfiles"
+        "path": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/nix",
+        "type": "path"
       }
     },
     "fenix": {
@@ -106,6 +101,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "fenix",
+        "type": "github"
+      }
+    },
+    "firejail-disable-sandbox-check": {
+      "locked": {
+        "lastModified": 1754254098,
+        "narHash": "sha256-zY6T9F71OrNKhyz2gE0lApkIO2hRxjBxJlrzHoPXuBY=",
+        "owner": "wigust",
+        "repo": "nixpkgs",
+        "rev": "351baca3de7fe6f47759f19c8be9ac868e8025b7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "wigust",
+        "ref": "firejail-disable-sandbox-check",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -1147,16 +1158,17 @@
     "original": {
       "inputs": {
         "dotfiles-home-manager": "dotfiles-home-manager",
+        "firejail-disable-sandbox-check": "firejail-disable-sandbox-check",
         "flake-utils": "flake-utils_2",
         "nixpkgs": "nixpkgs_9"
       },
       "locked": {
         "dir": "nix/container-systemd",
-        "lastModified": 1753924178,
-        "narHash": "sha256-lsApwaJyqi9Ef2IMfqFwRpmrW9gHWyQzH5bzu32qZ+s=",
+        "lastModified": 1754995630,
+        "narHash": "sha256-Zp8HAEnQvr+J4a9EFVU1gcYdvMnZPoqYIIVVAxdjPRE=",
         "ref": "refs/heads/master",
-        "rev": "b53f57fcb16fc6132966c7e5b62552fbe40a0917",
-        "revCount": 15175,
+        "rev": "103a09f83915a3af2896681f7c3ee2433e17e472",
+        "revCount": 15390,
         "type": "git",
         "url": "https://cgit.wugi.info/git/wigust/dotfiles"
       },
