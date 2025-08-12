@@ -70,14 +70,18 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1754934678,
-        "narHash": "sha256-e03o9FRDp40jWQWuBp9yRJ8YMU4G33QbpicRDzkWcx0=",
-        "path": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/nix",
-        "type": "path"
+        "dir": "nix",
+        "dirtyRev": "ef52a59122bb5301c61cecdbb06b1d7838ee3e7d-dirty",
+        "dirtyShortRev": "ef52a59-dirty",
+        "lastModified": 1755004766,
+        "narHash": "sha256-/8RsyOPFUFxebMTNscO6XyFbd3DUbpgAbmTr+F9PD/o=",
+        "type": "git",
+        "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
       },
       "original": {
-        "path": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/nix",
-        "type": "path"
+        "dir": "nix",
+        "type": "git",
+        "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
       }
     },
     "fenix": {
