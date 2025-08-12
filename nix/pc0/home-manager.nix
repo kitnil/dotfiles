@@ -22,7 +22,7 @@ in {
 
     gnumake
 
-    emacs
+    emacs-pgtk
 
     strace
 
