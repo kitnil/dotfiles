@@ -8,7 +8,11 @@
     firejail-disable-sandbox-check.url = "github:wigust/nixpkgs?ref=firejail-disable-sandbox-check";
   };
 
-  outputs = { self, nixpkgs, flake-utils, dotfiles-home-manager, ... } @ inputs:
+  outputs = { self
+            , nixpkgs
+            , flake-utils
+            , dotfiles-home-manager
+            , ... } @ inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -36,51 +40,63 @@
             modules = [
               inputs.dotfiles-home-manager.inputs.home-manager.nixosModules.home-manager
               {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.users.oleg =  inputs.dotfiles-home-manager.outPath + "/pc0/home-manager.nix";
-                home-manager.sharedModules = [
-                  inputs.dotfiles-home-manager.nixosModules.home-manager-firefox
-                  inputs.dotfiles-home-manager.nixosModules.home-manager-foot
-                  inputs.dotfiles-home-manager.nixosModules.home-manager-google-chrome
-                  inputs.dotfiles-home-manager.nixosModules.home-manager-idea-community
-                  inputs.dotfiles-home-manager.nixosModules.home-manager-pycharm-community
-                  inputs.dotfiles-home-manager.nixosModules.home-manager-vendir
-                ];
-                home-manager.extraSpecialArgs =
-                  let
-                    packages = with inputs.dotfiles-home-manager.inputs;
-                      let
-                        inherit (dotfiles-home-manager) overlay;
-                      in
-                        import inputs.dotfiles-home-manager.inputs.nixpkgs {
-                          overlays = [ nur.overlays.default flake-utils-plus.overlay overlay ];
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  users = {
+                    oleg = ./home-manager.nix;
+                  };
+                  sharedModules = [
+                    inputs.dotfiles-home-manager.nixosModules.home-manager-firefox
+                    inputs.dotfiles-home-manager.nixosModules.home-manager-foot
+                    inputs.dotfiles-home-manager.nixosModules.home-manager-google-chrome
+                    inputs.dotfiles-home-manager.nixosModules.home-manager-idea-community
+                    inputs.dotfiles-home-manager.nixosModules.home-manager-pycharm-community
+                    inputs.dotfiles-home-manager.nixosModules.home-manager-vendir
+                  ];
+                  extraSpecialArgs =
+                    let
+                      packages = with inputs.dotfiles-home-manager.inputs;
+                        let
+                          inherit (dotfiles-home-manager) overlay;
+                        in
+                          import inputs.dotfiles-home-manager.inputs.nixpkgs {
+                            overlays = [
+                              nur.overlays.default
+                              flake-utils-plus.overlay
+                              overlay
+                            ];
+                            inherit system;
+                            config = {
+                              allowUnfreePredicate = pkg:
+                                builtins.elem (nixpkgs.lib.getName pkg) [
+                                  "google-chrome"
+                                ];
+                              permittedInsecurePackages = [
+                                "qtwebkit-5.212.0-alpha4"
+                              ];
+                            };
+                          };
+                    in
+                      rec {
+                        inherit (self) nixosConfigurations;
+                        inherit inputs system;
+                        pkgs = import nixpkgs {
                           inherit system;
                           config = {
                             allowUnfreePredicate = pkg:
                               builtins.elem (nixpkgs.lib.getName pkg) [
                                 "google-chrome"
                               ];
-                            permittedInsecurePackages = [ "qtwebkit-5.212.0-alpha4" ];
                           };
+                        } // {
+                          inherit (packages) google-chrome;
+                          inherit (inputs.firejail-disable-sandbox-check.legacyPackages.${system})
+                            firejail-disable-sandbox-check;
                         };
-                  in
-                    rec {
-                      inherit (self) nixosConfigurations;
-                      inherit inputs system;
-                      pkgs = import nixpkgs {
-                        inherit system;
-                        config = {
-                          allowUnfreePredicate = pkg:
-                            builtins.elem (nixpkgs.lib.getName pkg) [ "google-chrome" ];
-                        };
-                      } // {
-                        inherit (packages) google-chrome;
-                        inherit (inputs.firejail-disable-sandbox-check.legacyPackages.${system})
-                          firejail-disable-sandbox-check;
+                        inherit packages;
                       };
-                      inherit packages;
-                    };
+                };
               }
               ./hosts/nixos-systemd.nix
             ];
