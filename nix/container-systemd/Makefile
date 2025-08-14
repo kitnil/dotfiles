@@ -11,4 +11,4 @@ nixos-systemd:
 
 dotfiles-home-manager:
 	nix flake lock --update-input dotfiles-home-manager
-	git commit -m 'flake.lock: Update dotfiles-home-manager input.' flake.lock
+	git commit -m 'nix: container-systemd: Update dotfiles-home-manager input.' flake.lock

@@ -11,4 +11,4 @@ nixos-systemd-taskexecutor:
 
 original:
 	nix flake lock --update-input original
-	git commit -m 'flake.lock: Update original input.' flake.lock
+	git commit -m 'nix: container-systemd-taskexecutor: Update original input.' flake.lock
