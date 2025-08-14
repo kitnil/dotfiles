@@ -728,10 +728,11 @@
       },
       "locked": {
         "dir": "nix/container-systemd",
-        "dirtyRev": "01754269eee8e8c57992a235d27be48392da9729-dirty",
-        "dirtyShortRev": "0175426-dirty",
-        "lastModified": 1755162805,
-        "narHash": "sha256-/8ToIFScH4PzHOVZlXVVSwhoJIM6MkLeKLtfd79fL0U=",
+        "lastModified": 1755163236,
+        "narHash": "sha256-7KGBC9x1f69YO0XU8vXdlINg4LBposMr5xDK3rxqFWA=",
+        "ref": "refs/heads/master",
+        "rev": "abf8947cab7491bfd9cf69bde64b69d13fbd97c6",
+        "revCount": 15425,
         "type": "git",
         "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
       },
