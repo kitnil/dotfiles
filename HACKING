@@ -3,3 +3,7 @@
 guix time-machine -C guix/wugi/etc/guix/channels/development.scm -- shell -L guix --development -e '(@ (wugi packages dotfiles) dotfiles-extra)'
 ./bootstrap
 ./configure
+
+nix develop ./nix/dotfiles#dotfiles
+./bootstrap
+./configure
