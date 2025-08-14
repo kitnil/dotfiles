@@ -313,6 +313,7 @@ guix-image-builder: $(DECRYPT_TARGETS)
 nix-update-inputs:
 	$(MAKE) -C nix/container-systemd dotfiles-home-manager
 	$(MAKE) -C nix/container-systemd-taskexecutor original
+	$(MAKE) -C nix/container-systemd-nixos-majordomo original
 
 container-systemd-taskexecutor: $(DECRYPT_TARGETS)
 	$(MAKE) -C nix/container-systemd-taskexecutor
