@@ -7,10 +7,14 @@
 {
   imports = [
     (modulesPath + "/virtualisation/docker-image.nix")
+    (modulesPath + "/system/boot/tmp.nix")
   ];
 
   boot.isContainer = true;
   boot.loader.initScript.enable = true;
+  boot.tmp = {
+    useTmpfs = true;
+  };
 
   time.timeZone = "Europe/Moscow";
 
