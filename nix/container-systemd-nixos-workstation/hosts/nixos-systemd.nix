@@ -16,4 +16,10 @@
     enable = true;
     wantedBy = [ "multi-user.target" ];
   };
+
+  services.seatd = {
+    enable = true;
+    user = "oleg";
+    group = "users";
+  };
 }
