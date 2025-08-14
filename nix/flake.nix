@@ -1,5 +1,3 @@
-# !/usr/bin/env -S bash -c "nix-shell --run 'deploy . -- -L'"
-
 {
   description = "Nix package manifest";
   inputs = {
@@ -57,8 +55,6 @@
       flake = false;
     };
 
-    deploy-rs.url = "github:serokell/deploy-rs";
-
     utils.url = "github:numtide/flake-utils";
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
     naersk.url = "github:nmattia/naersk";
@@ -72,7 +68,7 @@
   # nixConfig.allowUnfree = true;
 
   outputs = { self, nixpkgs, nixpkgs-20-03, nixpkgs-20-03-firefox
-    , nixpkgs-phantomjs, deploy-rs, nixpkgs-home-manager, home-manager, nur
+    , nixpkgs-phantomjs, nixpkgs-home-manager, home-manager, nur
     , rycee-nur-expressions, github-com-guibou-nixGL
     , github-com-emilazy-mpv-notify-send
     , github-com-tsoding-boomer
@@ -108,7 +104,6 @@
             buildFirefoxXpiAddon;
           inherit (prev) callPackage;
         in {
-          inherit (deploy-rs.outputs.packages.${system}) deploy-rs;
           inherit (import
             (rycee-nur-expressions.outPath + "/default.nix") {
               pkgs = prev;
@@ -160,7 +155,6 @@
             buildInputs = with pkgs; [
               nix
               mozilla-addons-to-nix
-              deploy-rs.outputs.packages.${system}.deploy-rs
             ];
           };
       packages.${system} = let
@@ -341,69 +335,5 @@
         home-manager-pycharm-community = import ./modules/services/pycharm-community.nix;
         home-manager-vendir = import ./modules/services/vendir.nix;
       };
-
-      deploy.nodes = let
-        home-manager-profile = home-manager-modules:
-          let
-            pkgs = import nixpkgs {
-              overlays = [ nur.overlays.default flake-utils-plus.overlay self.overlay ];
-              inherit system;
-              config = {
-                allowUnfreePredicate = pkg:
-                  builtins.elem (lib.getName pkg) [ "betterttv" ];
-                permittedInsecurePackages = [ "qtwebkit-5.212.0-alpha4" ];
-              };
-            };
-          in rec {
-            user = "oleg";
-            profilePath = "/nix/var/nix/profiles/per-user/${user}/home-manager";
-            autoRollback = false;
-            magicRollback = false;
-            path = deploy-rs.lib.${system}.activate.home-manager
-              (home-manager.lib.homeManagerConfiguration {
-                pkgs = nixpkgs-home-manager.legacyPackages.${system};
-                extraSpecialArgs = { packages = pkgs; };
-                modules = home-manager-modules;
-              });
-          };
-      in {
-        guixsd = let
-          dryActivateScript = pkgs.writeScript "deploy-rs-dry-activate" ''
-            #!${pkgs.runtimeShell}
-            echo $PROFILE
-          '';
-        in {
-          hostname = "guix.wugi.info";
-          profiles = let
-          in { home-manager = home-manager-profile [ ./home-manager.nix ]; };
-        };
-        notebook = let
-          dryActivateScript = pkgs.writeScript "deploy-rs-dry-activate" ''
-            #!${pkgs.runtimeShell}
-            echo $PROFILE
-          '';
-        in {
-          hostname = "notebook.wugi.info";
-          profiles = let
-          in {
-            home-manager = home-manager-profile [ ./notebook/home-manager.nix ];
-          };
-        };
-        pc0 = let
-          dryActivateScript = pkgs.writeScript "deploy-rs-dry-activate" ''
-            #!${pkgs.runtimeShell}
-            echo $PROFILE
-          '';
-        in {
-          hostname = "192.168.0.192";
-          profiles = let
-          in {
-            home-manager = home-manager-profile [ ./pc0/home-manager.nix ];
-          };
-        };
-      };
-
-      checks = builtins.mapAttrs
-        (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 }
