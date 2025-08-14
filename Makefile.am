@@ -314,6 +314,7 @@ nix-update-inputs:
 	$(MAKE) -C nix/container-systemd dotfiles-home-manager
 	$(MAKE) -C nix/container-systemd-taskexecutor original
 	$(MAKE) -C nix/container-systemd-nixos-majordomo original
+	$(MAKE) -C nix/container-systemd-nixos-workstation original
 
 container-systemd-taskexecutor: $(DECRYPT_TARGETS)
 	$(MAKE) -C nix/container-systemd-taskexecutor
