@@ -104,6 +104,9 @@
   users.users.oleg = {
     isNormalUser = true;
     extraGroups = [
+      "audio"
+      "video"
+      "input"
       "docker"
       "wheel" # Enable ‘sudo’ for the user.
     ];
