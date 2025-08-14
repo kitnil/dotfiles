@@ -20,6 +20,8 @@ in {
 
     gnumake
 
+    kubectl
+
     ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
       epkgs: [
         epkgs.magit
