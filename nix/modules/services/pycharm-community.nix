@@ -41,13 +41,10 @@ in
           WAYLAND_DISPLAY=wayland-1
           export WAYLAND_DISPLAY
 
-          DISPLAY=:0
-          export DISPLAY
-
           _JAVA_AWT_WM_NONREPARENTING=1
           export _JAVA_AWT_WM_NONREPARENTING
 
-          exec -a pycharm-community ${cfg.package}/bin/pycharm-community "$@"
+          exec -a pycharm-community ${cfg.package}/bin/pycharm-community -Dawt.toolkit.name=WLToolkit -Djava.net.preferIPv4Stack=true "$@"
         '';
         Type = "simple";
       };
