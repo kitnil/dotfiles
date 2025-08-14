@@ -31,6 +31,10 @@
     '';
   };
 
+  services.udev = {
+    enable = lib.mkForce true;
+  };
+
   programs.firejail = {
     enable = true;
   };
