@@ -322,7 +322,7 @@ in {
           args = [
             "-l"
             "-c"
-            "set -x; /run/current-system/profile/bin/ssh \${NAME}.intr; read"
+            "set -x; ssh \${NAME}.intr; read"
           ];
           background = false;
           command = "sh";
