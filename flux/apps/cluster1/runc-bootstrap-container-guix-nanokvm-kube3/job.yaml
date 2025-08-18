@@ -8,7 +8,7 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: kube3
       tolerations:
-      - key: nanokvm.cluster.local
+      - key: workstation.cluster.local
         operator: Equal
         value: 'true'
         effect: NoSchedule
