@@ -63,7 +63,6 @@
   #:use-module (wigust packages linux)
   #:use-module (wigust packages web)
   #:use-module (wugi config)
-  #:use-module (wugi manifests deprecated)
   #:use-module (wugi packages certs)
   #:use-module (wugi system hardware guixsd)
   #:use-module (wugi packages linux)
@@ -546,10 +545,10 @@ location / {
           (proxy "prometheus.wugi.info" 9090 #:listen %guixsd-private-ip-address)
           (proxy "guix.wugi.info" 5556 #:ssl? #t #:ssl-key? #t)
           ((lambda* (host #:key
-                     (ssl? #f)
-                     (ssl-target? #f)
-                     (target #f)
-                     (sub-domains? #f))
+                          (ssl? #f)
+                          (ssl-target? #f)
+                          (target #f)
+                          (sub-domains? #f))
              (nginx-server-configuration
               (server-name (if sub-domains?
                                (list (string-append sub-domains?
@@ -833,8 +832,8 @@ location / {
       (kernel-loadable-modules (list drbd-module
                                      v4l2loopback-linux-module))
 
-      ;; (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
-      ;;                         (operating-system-initrd-modules base-system)))
+      (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
+                              (operating-system-initrd-modules base-system)))
 
       (packages (append (map package-from-program-file
                              (list restic-system-backup
@@ -1036,21 +1035,6 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
          ;;             "RESTIC_REPOSITORY=/srv/backup/ntfsgames"
          ;;             "RESTIC_EXPORTER_PORT=8052"
          ;;             "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
-
-         (service prometheus-tp-link-exporter-service-type
-                  (prometheus-tp-link-exporter-configuration
-                   ;; XXX: Deprecated SSH client.
-                   (ssh ((@ (wugi manifests deprecated) openssh)))
-                   (host "192.168.0.1")
-                   (environment-variables
-                    (list
-                     (string-append
-                      "PROMETHEUS_TP_LINK_EXPORTER_PASSWORD="
-                      (string-trim-right
-                       (if (= (getuid) 0)
-                           (with-input-from-file "/etc/guix/secrets/prometheus-tp-link-exporter"
-                             read-string)
-                           "skipping /etc/guix/secrets/prometheus-tp-link-exporter")))))))
 
          ;; (service yggdrasil-service-type
          ;;          (yggdrasil-configuration
