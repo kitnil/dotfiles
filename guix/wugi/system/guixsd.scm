@@ -784,16 +784,6 @@ location / {
             (start (%firewall-program))
             (respawn? #f)))))
 
-  ;; Avahi in workstation Pod
-  (define container-guix-networking-avahi-program
-    (program-file "container-guix-networking-avahi-program"
-                  #~(begin
-                      (setenv "PATH"
-                              "/run/setuid-programs:/root/.config/guix/current/bin:/run/current-system/profile/bin:/run/current-system/profile/sbin")
-                      (execl #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/10-avahi-namespace.sh")
-                                           #:recursive? #t)
-                             "container-guix-networking-avahi-program"))))
-
   (let ((base-system (%guixsd-hardware)))
     (operating-system
       (inherit base-system)
@@ -1802,18 +1792,6 @@ namespaces = [ ]
          (bluetooth-service #:auto-enable? #t)
 
          seatd-service
-
-         (simple-service 'container-guix-networking-avahi shepherd-root-service-type
-                         (list
-                          (shepherd-service
-                           (provision '(container-guix-networking-avahi))
-                           (auto-start? #f)
-                           (documentation "Configure networking for avahi.")
-                           (requirement '())
-                           (start #~(make-forkexec-constructor
-                                     (list #$container-guix-networking-avahi-program)))
-                           (respawn? #f)
-                           (stop #~(make-kill-destructor)))))
 
          (udisks-service)
          (service accountsservice-service-type)

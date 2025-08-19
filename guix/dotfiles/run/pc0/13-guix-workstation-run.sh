@@ -17,7 +17,6 @@ do
 done
 container_id="$(guix_workstation_id)"
 
-/home/oleg/.local/share/chezmoi/dotfiles/run/pc0/10-avahi-namespace.sh
 /home/oleg/.local/share/chezmoi/dotfiles/run/pc0/09-firefox-twitch-namespace.sh
 
 nerdctl -n k8s.io exec "$container_id" /run/current-system/profile/bin/bash -lc '
