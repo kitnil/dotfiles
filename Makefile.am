@@ -105,6 +105,7 @@ GUIX_SYSTEM_CONFIGURATIONS =			\
   vm1						\
   vm2						\
   vm-guixsd					\
+  wireless					\
   workstation
 
 define guix-time-machine
