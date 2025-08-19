@@ -93,55 +93,13 @@ program.")))
       (services
        (append
         (list
-         (service nginx-service-type
-                  (nginx-configuration
-                   (server-blocks
-                    (list
-                     (nginx-server-configuration
-                      (server-name '("guix.localhost"))
-                      (listen '("*:80"))
-                      (locations
-                       (list
-                        (nginx-location-configuration
-                         (uri "/")
-                         (body
-                          '("resolver 80.80.80.80 ipv6=off;"
-                            "proxy_pass https://mirrors.sjtug.sjtu.edu.cn/guix/;"
-                            "proxy_set_header Host mirrors.sjtug.sjtu.edu.cn;"
-                            "proxy_ssl_server_name on;"
-                            "client_max_body_size 0;"
-                            "proxy_busy_buffers_size 512k;"
-                            "proxy_buffers 4 512k;"
-                            "proxy_buffer_size 256k;"
-                            "add_header Access-Control-Allow-Origin *;"))))))
-                     (nginx-server-configuration
-                      (server-name '("nonguix.localhost"))
-                      (listen '("*:80"))
-                      (locations
-                       (list
-                        (nginx-location-configuration
-                         (uri "/")
-                         (body
-                          '("resolver 80.80.80.80 ipv6=off;"
-                            "proxy_pass https://nonguix-proxy.ditigal.xyz/;"
-                            "proxy_set_header Host nonguix-proxy.ditigal.xyz;"
-                            "proxy_ssl_server_name on;"
-                            "client_max_body_size 0;"
-                            "proxy_busy_buffers_size 512k;"
-                            "proxy_buffers 4 512k;"
-                            "proxy_buffer_size 256k;"
-                            "add_header Access-Control-Allow-Origin *;"))))))))))
          (service elogind-service-type)
          seatd-service
-         (service container-mingetty-service-type
-                  (mingetty-configuration (tty "tty8")))
          (service dbus-root-service-type))
         (modify-services %base-services
           (guix-service-type
            config =>
            (guix-configuration
-            (channels %channels-docker-image)
-            (guix (guix-for-channels %channels-docker-image))
             (authorized-keys
              (append
               (map (lambda (file-name)
@@ -158,14 +116,7 @@ program.")))
               %default-authorized-guix-keys))
             (substitute-urls '("http://runc-kube1-guix-builder.guix:5556"
                                "http://guix.localhost"
-                               "http://nonguix.localhost"))))
-          (syslog-service-type
-           config =>
-           (syslog-configuration
-            (extra-options '("--rcfile=/etc/syslog.conf"
-                             "--no-forward"
-                             "--no-unixaf"
-                             "--no-klog")))))))
+                               "http://nonguix.localhost")))))))
 
       (sudoers-file (plain-file "sudoers"
                                 (string-join `("Defaults:root runcwd=*"
@@ -174,6 +125,4 @@ program.")))
                                                "oleg ALL=(ALL) NOPASSWD:ALL")
                                              "\n")))))
 
-  (containerized-operating-system %my-operating-system
-                                  (cons %store-mapping '())
-                                  #:shared-network? #t))
+  %my-operating-system)
