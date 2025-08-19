@@ -1,5 +1,5 @@
 -*- mode: org; coding: utf-8; -*-
 
-guix time-machine -C guix/wugi/etc/guix/channels/workstation.scm -- shell -L guix --development -e '(@ (wugi packages dotfiles) dotfiles-extra)'
+guix time-machine -C guix/wugi/etc/guix/channels/development.scm -- shell -L guix --development -e '(@ (wugi packages dotfiles) dotfiles-extra)'
 ./bootstrap
 ./configure
