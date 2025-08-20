@@ -8,7 +8,7 @@
   #:use-module (gnu services xorg)
   #:use-module (nongnu system linux-initrd)
   #:use-module (wugi bootloader grub)
-  #:use-module (wugi packages linux)
+  #:use-module (nongnu packages linux)
   #:export (%guixsd-hardware))
 
 (define (%guixsd-hardware)
@@ -70,8 +70,8 @@
                          %base-file-systems))
 
     (initrd microcode-initrd)
-    (kernel linux-5.15-with-bpf)
-    (firmware (append (list (@ (wugi packages linux) linux-firmware))
+    (kernel linux-6.12)
+    (firmware (append (list linux-firmware)
                       %base-firmware))
 
     (kernel-arguments '("net.ifnames=0"
@@ -80,19 +80,19 @@
                         "modprobe.blacklist=pcspkr,snd_pcsp"
 
                         ;; <https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF#Setting_up_IOMMU>
-                        "iommu=pt"
+                        ;; "iommu=pt"
 
                         "kvm.ignore_msrs=1"
                         "report_ignored_msrs=0"
-                        "vfio-pci.ids=1002:7480,1002:ab30"
-                        "disable_vga=1"
+                        ;; "vfio-pci.ids=1002:7480,1002:ab30"
+                        ;; "disable_vga=1"
 
                         ;; (#934) · Issues · drm / amd · GitLab
                         ;; <https://gitlab.freedesktop.org/drm/amd/-/issues/934>
-                        "amdgpu.audio=0"
-                        "amdgpu.gpu_recovery=1"
-                        "amdgpu.noretry=0"
-                        "amdgpu.ppfeaturemask=0xfffffffb"
+                        ;; "amdgpu.audio=0"
+                        ;; "amdgpu.gpu_recovery=1"
+                        ;; "amdgpu.noretry=0"
+                        ;; "amdgpu.ppfeaturemask=0xfffffffb"
 
                         ;; https://gitlab.freedesktop.org/drm/amd/-/issues/2220
                         ;; [amdgpu]] *ERROR* ring sdma0 timeout
@@ -124,7 +124,7 @@
                         ;;
                         ;; I assume more CPU utilization as a side effect and
                         ;; maybe slower rendering.
-                        "amdgpu.vm_update_mode=3"
+                        ;; "amdgpu.vm_update_mode=3"
 
                         ;; Enable LUKS TRIM/DISCARD pass-through.
                         "rd.luks.options=discard"))

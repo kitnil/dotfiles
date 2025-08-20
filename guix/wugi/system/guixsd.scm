@@ -779,6 +779,7 @@ location / {
     (simple-service
      'firewall shepherd-root-service-type
      (list (shepherd-service
+            (requirement '(br0))
             (provision '(firewall))
             (start (%firewall-program))
             (respawn? #f)))))
@@ -831,9 +832,6 @@ location / {
 
       (kernel-loadable-modules (list drbd-module
                                      v4l2loopback-linux-module))
-
-      (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
-                              (operating-system-initrd-modules base-system)))
 
       (packages (append (map package-from-program-file
                              (list restic-system-backup
@@ -1197,17 +1195,17 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
 Match Address 127.0.0.1
 PasswordAuthentication yes")))
 
-         (service nfs-service-type
-                  (nfs-configuration
-                   (exports
-                    '(("/srv"
-                       "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=0)")
-                      ("/home/oleg/src"
-                       "192.168.0.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=2)")
-                      ("/srv/vagrant"
-                       "192.168.0.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=3)")
-                      ("/srv/lib/video"
-                       "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=4)")))))
+         ;; (service nfs-service-type
+         ;;          (nfs-configuration
+         ;;           (exports
+         ;;            '(("/srv"
+         ;;               "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=0)")
+         ;;              ("/home/oleg/src"
+         ;;               "192.168.0.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=2)")
+         ;;              ("/srv/vagrant"
+         ;;               "192.168.0.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=3)")
+         ;;              ("/srv/lib/video"
+         ;;               "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=4)")))))
 
          ;; (service (certbot-service-type-custom-nginx "192.168.0.144")
          ;;          (certbot-configuration
@@ -1626,7 +1624,10 @@ PasswordAuthentication yes")))
 
          (service kernel-module-loader-service-type
                   '(;; "vfio-pci"
-                    ;; "amdgpu"
+                    "amdgpu"
+
+                    "drbd"
+
                     "dm-snapshot"
                     "dm-thin-pool"
                     "br_netfilter" ;kube-dns
@@ -1676,7 +1677,7 @@ PasswordAuthentication yes")))
          ;;                            ("cluster_addr" . "http://vault1:8211")
          ;;                            ("api_addr" . "http://vault1:8210"))))))))))))
 
-         %firewall-service
+         ;; %firewall-service
 
          ;; Bring eth0 up and pass it to the networking bridge.
          (service static-networking-service-type
@@ -1688,16 +1689,12 @@ PasswordAuthentication yes")))
                                  (device "eth0")
                                  (value "127.0.0.2/8")))))
                    (static-networking
-                    (provision '(br0-link))
+                    (provision '(br0))
                     (links (list
                             (network-link
                              (name "br0")
                              (type 'bridge)
                              (arguments '()))))
-                    (addresses '()))
-                   (static-networking
-                    (provision '(br0))
-                    (requirement '(br0-link))
                     (addresses (list
                                 (network-address
                                  (device "br0")
