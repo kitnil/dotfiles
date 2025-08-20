@@ -1270,13 +1270,10 @@ PasswordAuthentication yes")))
                    (enable-index-owner? #f)
                    (root-title "Personal Cgit")
                    (snapshots (list "tar.gz"))
-                   (clone-prefix (list ;; "git://magnolia.local/~natsu"
-                                  "https://cgit.duckdns.org/git"))
+                   (clone-prefix (list "https://cgit.wugi.info/git"))
                    (nginx (list (nginx-server-configuration
                                  (inherit %cgit-configuration-nginx)
-                                 (server-name '("cgit.wugi.info"
-                                                "cgit.duckdns.org"
-                                                "git.tld"))
+                                 (server-name '("cgit.wugi.info"))
                                  (locations
                                   (append (nginx-server-configuration-locations %cgit-configuration-nginx)
                                           (list (git-http-nginx-location-configuration
