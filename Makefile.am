@@ -102,6 +102,7 @@ GUIX_SYSTEM_CONFIGURATIONS =			\
   libvirt					\
   notebook					\
   pc0						\
+  pc0-guix-workstation				\
   vm1						\
   vm2						\
   vm-guixsd					\
