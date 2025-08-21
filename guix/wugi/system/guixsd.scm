@@ -76,6 +76,7 @@
   #:use-module (wugi services bird)
   #:use-module (wugi services bittorrent)
   #:use-module (wugi services certbot)
+  #:use-module (wugi services containers)
   #:use-module (wugi services desktop)
   #:use-module (wugi services docker)
   #:use-module (wugi services ipset)
@@ -1330,6 +1331,11 @@ PasswordAuthentication yes")))
                    (timezone "Europe/Moscow")))
 
          (service jenkins-service-type %jenkins-config)
+
+         (service runc-container-service-type
+                  (runc-container-configuration
+                   (bundle "/srv/runc/guix-workstation")
+                   (name "guix-workstation")))
 
          ;; (service docker-compose-service-type
          ;;          (docker-compose-configuration
