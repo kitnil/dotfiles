@@ -3,7 +3,6 @@
 ;;
 ;; Upgrade shepherd services:
 ;;
-;;     oleg@workstation ~/src/dotfiles/guix$ sudo guix repl -L .
 ;;     sudo guix repl -L guix <<< '(load "guix/dot_local/bin/docker-image-shepherd-upgrade-services.scm")'
 
 (use-modules ((gnu services) #:select (sexp->system-provenance))
