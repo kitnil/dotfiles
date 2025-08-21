@@ -23,7 +23,7 @@
                             "/boot2/efi"
                             "/boot3/efi"))))
 
-    (initrd-modules (cons "raid456" %base-initrd-modules))
+    (initrd-modules (append '("raid456" "vfio-pci") %base-initrd-modules))
 
     (mapped-devices (list (mapped-device
                            (source
@@ -70,12 +70,14 @@
                          %base-file-systems))
 
     (initrd microcode-initrd)
-    (kernel linux-6.12)
+    (kernel linux-6.6)
     (firmware (append (list linux-firmware)
                       %base-firmware))
 
     (kernel-arguments '("net.ifnames=0"
                         "biosdevname=0"
+
+                        "mitigations=off"
 
                         "modprobe.blacklist=pcspkr,snd_pcsp"
 
@@ -84,7 +86,8 @@
 
                         "kvm.ignore_msrs=1"
                         "report_ignored_msrs=0"
-                        ;; "vfio-pci.ids=1002:7480,1002:ab30"
+
+                        "vfio-pci.ids=1002:7480,1002:ab30"
                         ;; "disable_vga=1"
 
                         ;; (#934) · Issues · drm / amd · GitLab
