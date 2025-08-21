@@ -7,6 +7,13 @@ then
     sudo mv /run/setuid-programs/mount.nfs /run/setuid-programs/mount.nfs.1
 fi
 
+sudo virsh start kube91
+until ssh root@192.168.0.91 -- uptime
+do
+    sleep 2
+done
+ssh root@192.168.0.91 -- systemctl start kubelet
+
 sudo rm -f /var/lib/kubelet/.maintenance
 sudo herd restart kubelet
 
