@@ -1337,6 +1337,11 @@ PasswordAuthentication yes")))
                    (bundle "/srv/runc/guix-workstation")
                    (name "guix-workstation")))
 
+         (service runc-container-service-type
+                  (runc-container-configuration
+                   (bundle "/srv/runc/nixos-workstation")
+                   (name "nixos-workstation")))
+
          ;; (service docker-compose-service-type
          ;;          (docker-compose-configuration
          ;;           (project-name "registry")
