@@ -85,7 +85,7 @@
                         ;; "iommu=pt"
 
                         "kvm.ignore_msrs=1"
-                        "report_ignored_msrs=0"
+                        "kvm.report_ignored_msrs=0"
 
                         "vfio-pci.ids=1002:7480,1002:ab30"
                         ;; "disable_vga=1"
