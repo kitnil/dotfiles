@@ -310,6 +310,11 @@
 
                             (service runc-container-service-type
                                      (runc-container-configuration
+                                      (bundle "/srv/runc/guix-nanokvm")
+                                      (name "guix-nanokvm")))
+
+                            (service runc-container-service-type
+                                     (runc-container-configuration
                                       (bundle "/srv/runc/nixos-workstation")
                                       (name "nixos-workstation")))
 
