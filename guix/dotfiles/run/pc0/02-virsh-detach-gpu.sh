@@ -8,3 +8,4 @@ echo > /sys/bus/pci/devices/0000:03:00.0/reset_method
 
 virsh nodedev-detach pci_0000_03_00_0
 virsh nodedev-detach pci_0000_03_00_1
+virsh nodedev-detach pci_0000_0f_00_0

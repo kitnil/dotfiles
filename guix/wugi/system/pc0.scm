@@ -32,8 +32,11 @@
   #:use-module (gnu services sound)
   #:use-module (gnu services ssh)
   #:use-module (gnu services sysctl)
+  #:use-module (gnu system linux-initrd)
   #:use-module (gnu services virtualization)
   #:use-module (gnu services xorg)
+  #:use-module (gnu services)
+  #:use-module (wugi services containers)
   #:use-module (gnu system)
   #:use-module (gnu system file-systems)
   #:use-module (gnu system mapped-devices)
@@ -81,6 +84,7 @@
 
 
     (initrd microcode-initrd)
+    (initrd-modules (append '("vfio-pci") %base-initrd-modules))
     (kernel linux)
     (firmware (append (list linux-firmware) %base-firmware))
 
@@ -133,8 +137,7 @@
                            (options "mode=1777,size=10%")))
                    %base-file-systems))
 
-    (kernel-arguments '("console=tty2" ;do not follow current tty
-
+    (kernel-arguments '(
                         "net.ifnames=0"
                         "biosdevname=0"
 
@@ -239,8 +242,7 @@
 
     ;; Add services to the baseline: a DHCP client and an SSH
     ;; server.  You may wish to add an NTP service here.
-    (services (append (list (service avahi-service-type)
-                            (service openssh-service-type
+    (services (append (list (service openssh-service-type
                                      (openssh-configuration
                                       (openssh openssh-sans-x)
                                       (permit-root-login 'prohibit-password)))
@@ -252,18 +254,24 @@
                             (service polkit-service-type)
                             (elogind-service)
                             (dbus-service)
-                            (service ntp-service-type)
 
-                            (service nix-service-type
-                                     (nix-configuration
-                                      (extra-config '("\
-trusted-users = oleg root
-binary-caches = https://cache.nixos.org/
-trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-"))))
+                            (simple-service 'vfio-override boot-service-type
+                                            '(and (call-with-output-file "/sys/bus/pci/devices/0000:03:00.0/driver_override"
+                                                    (lambda (p)
+                                                      (display "vfio-pci" p)))
+                                                  (call-with-output-file "/sys/bus/pci/drivers/vfio-pci/new_id"
+                                                    (lambda (p)
+                                                      (display "1002 7550" p)))
+                                                  (call-with-output-file "/sys/bus/pci/devices/0000:03:00.1/driver_override"
+                                                    (lambda (p)
+                                                      (display "vfio-pci" p)))
+                                                  (call-with-output-file "/sys/bus/pci/drivers/vfio-pci/new_id"
+                                                    (lambda (p)
+                                                      (display "1002 ab40" p)))))
+
                             (service kernel-module-loader-service-type
-                                     '("amdgpu"
-                                       "vfio-pci"
+                                     '("vfio-pci"
+                                       "amdgpu"
 
                                        "dm-snapshot"
                                        "dm-thin-pool"
@@ -284,6 +292,17 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                        "ddcci_backlight"))
                             (service containerd-service-type)
                             (service docker-service-type)
+
+                            (service runc-container-service-type
+                                     (runc-container-configuration
+                                      (bundle "/srv/runc/guix-workstation")
+                                      (name "guix-workstation")))
+
+                            (service runc-container-service-type
+                                     (runc-container-configuration
+                                      (bundle "/srv/runc/nixos-workstation")
+                                      (name "nixos-workstation")))
+
                             (service kubelet-service-type
                                      (kubelet-configuration
                                       (kubelet "/nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet")
@@ -322,17 +341,6 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                       (flux? #t)
                                       (kubevirt? #t)))
 
-                            (service bluetooth-service-type
-                                     (bluetooth-configuration
-                                      (auto-enable? #t)
-                                      (just-works-repairing 'confirm)
-                                      (controller-mode 'dual)
-                                      (min-connection-interval 7)
-                                      (max-connection-interval 9)
-                                      (connection-latency 0)
-                                      (privacy 'device)))
-                            udev-rules-service-xbox
-
                             (udev-rules-service 'kvm
                                                 (udev-rule
                                                  "91-kvm-custom.rules"
@@ -343,8 +351,6 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                                  "99-kvmfr.rules"
                                                  "SUBSYSTEM==\"kvmfr\", OWNER=\"oleg\", GROUP=\"kvm\", MODE=\"0660\"\n"))
 
-                            (service ladspa-service-type
-                                     (ladspa-configuration (plugins (list swh-plugins))))
                             (service libvirt-service-type
                                      (libvirt-configuration
                                       ;; XXX: Specify listen-addr after adding networking requirement.
@@ -388,28 +394,6 @@ cgroup_device_acl = [
                                             "tty4"
                                             "tty5"
                                             "tty6")))
-                            (simple-service 'container-guix shepherd-root-service-type
-                                            (list
-                                             (shepherd-service
-                                              (provision '(container-guix))
-                                              (auto-start? #f)
-                                              (one-shot? #t)
-                                              (documentation "Provision Guix container.")
-                                              (requirement '())
-                                              (start #~(make-forkexec-constructor
-                                                        (list #$container-guix-program)))
-                                              (respawn? #f))))
-                            (simple-service 'container-guix-sway-autostart shepherd-root-service-type
-                                            (list
-                                             (shepherd-service
-                                              (provision '(container-guix-sway-autostart))
-                                              (auto-start? #f)
-                                              (documentation "Run programs in Sway inside Guix container.")
-                                              (requirement '())
-                                              (start #~(make-forkexec-constructor
-                                                        (list #$container-guix-sway-autostart-program)))
-                                              (respawn? #f)
-                                              (stop #~(make-kill-destructor)))))
 
                             (service knot-resolver-service-type
                                      (knot-resolver-configuration
