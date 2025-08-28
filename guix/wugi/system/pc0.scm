@@ -300,6 +300,11 @@
 
                             (service runc-container-service-type
                                      (runc-container-configuration
+                                      (bundle "/srv/runc/guix-rde")
+                                      (name "guix-rde")))
+
+                            (service runc-container-service-type
+                                     (runc-container-configuration
                                       (bundle "/srv/runc/nixos-workstation")
                                       (name "nixos-workstation")))
 
