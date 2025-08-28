@@ -318,6 +318,11 @@
                                       (bundle "/srv/runc/nixos-workstation")
                                       (name "nixos-workstation")))
 
+                            (service runc-container-service-type
+                                     (runc-container-configuration
+                                      (bundle "/srv/runc/nixos-majordomo")
+                                      (name "nixos-majordomo")))
+
                             (service kubelet-service-type
                                      (kubelet-configuration
                                       (kubelet "/nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet")
