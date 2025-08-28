@@ -10,7 +10,9 @@
   #:use-module (wugi services desktop)
   #:use-module (gnu)
   #:use-module (gnu packages)
+  #:use-module (gnu packages audio)
   #:use-module (gnu packages bash)
+  #:use-module (gnu packages linux)
   #:use-module (gnu packages package-management)
   #:use-module (gnu packages ssh)
   #:use-module (gnu services)
@@ -19,6 +21,7 @@
   #:use-module (gnu services desktop)
   #:use-module (gnu services guix)
   #:use-module (gnu services shepherd)
+  #:use-module (gnu services sound)
   #:use-module (gnu services web)
   #:use-module (gnu system linux-container)
   #:use-module (guix channels)
@@ -31,6 +34,7 @@
   #:use-module (wugi etc guix channels docker-image)
   #:use-module (wugi config)
   #:use-module (wugi utils)
+  #:use-module (wugi utils package)
   #:export (%pc0-guix-workstation))
 
 (define (%pc0-guix-workstation)
@@ -102,21 +106,14 @@ program.")))
          (service bluetooth-service-type
                   (bluetooth-configuration
                     (bluez
-                     #~(gexp->derivation "bluez-host-net-namespace"
-                                         #~(with-imported-modules '((guix build utils))
-                                             #~(begin
-                                                 (use-modules (guix build utils))
-                                                 (let* ((bluez-program #$(program-file "bluez-host-net-namespace"
-                                                                                       #~(begin
-                                                                                           (execl #$(file-append util-linux-with-udev "/bin/nsenter")
-                                                                                                  "--net=/rootns/net"
-                                                                                                  "--"
-                                                                                                  #$(file-append bluez "/libexec/bluetooth/bluetoothd") "--debug" "--nodetach"))))
-                                                        (bluetooth (string-append #$output "/libexec/bluetooth"))
-                                                        (executable (string-append bluetooth "/bluetoothd")))
-                                                   (mkdir-p bluetooth)
-                                                   (copy-file bluez-program executable)
-                                                   (chmod #o555 executable))))))
+                     (package-from-program-file
+                      (program-file "bluetoothd"
+                                    #~(begin
+                                        (execl #$(file-append util-linux+udev "/bin/nsenter")
+                                               "--net=/rootns/net"
+                                               "--"
+                                               #$(file-append bluez "/libexec/bluetooth/bluetoothd") "--debug" "--nodetach")))
+                      "/libexec/bluetooth"))
                     (auto-enable? #t)
                     (just-works-repairing 'confirm)
                     (controller-mode 'dual)
@@ -124,7 +121,9 @@ program.")))
                     (max-connection-interval 9)
                     (connection-latency 0)
                     (privacy 'device)))
-         udev-rules-service-xbox)
+         udev-rules-service-xbox
+         (service ladspa-service-type
+                  (ladspa-configuration (plugins (list swh-plugins)))))
         (modify-services %base-services
           (guix-service-type
            config =>
