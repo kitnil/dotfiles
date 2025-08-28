@@ -305,6 +305,11 @@
 
                             (service runc-container-service-type
                                      (runc-container-configuration
+                                      (bundle "/srv/runc/guix-wugi")
+                                      (name "guix-wugi")))
+
+                            (service runc-container-service-type
+                                     (runc-container-configuration
                                       (bundle "/srv/runc/nixos-workstation")
                                       (name "nixos-workstation")))
 
