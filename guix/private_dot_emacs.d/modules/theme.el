@@ -35,8 +35,8 @@
    '(elfeed-search-title-face ((t (:foreground "dim gray"))))
    '(elfeed-search-unread-title-face ((t (:foreground "white"))))
    '(completions-common-part ((t (:width normal :weight normal
-                                :slant normal :foreground "gold1"
-				:background "black"))))
+                                         :slant normal :foreground "gold1"
+				         :background "black"))))
    '(highlight-stages-level-1-face ((t (:background "dark slate gray"))))
    '(highlight-stages-level-2-face ((t (:background "dark olive green"))))
    '(highlight-stages-level-3-face ((t (:background "sea green"))))
@@ -78,7 +78,7 @@
     (load-theme-modus-vivendi)))
 
 (load-theme-modus-vivendi)
-(wi-toggle-theme)
+;; (wi-toggle-theme)
 
 (setq terminal-here-color 'dark)
 
