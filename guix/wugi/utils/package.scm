@@ -6,7 +6,7 @@
   #:use-module (guix packages)
   #:export (package-from-program-file))
 
-(define (package-from-program-file program)
+(define* (package-from-program-file program #:optional (location "/bin"))
   (package
     (name (program-file-name program))
     (version "0.0.1")
@@ -14,13 +14,14 @@
     (build-system trivial-build-system)
     (arguments
      (list
+      #:modules '((guix build utils))
       #:builder
       #~(begin
-          (mkdir %output)
-          (mkdir (string-append %output "/bin"))
+          (use-modules (guix build utils))
+          (mkdir-p (string-append #$output #$location))
           (copy-file #$program
-                     (string-append %output "/bin/" #$(program-file-name program)))
-          (chmod (string-append %output "/bin/" #$(program-file-name program))
+                     (string-append %output #$location "/" #$(program-file-name program)))
+          (chmod (string-append %output #$location "/" #$(program-file-name program))
                  #o555)
           #t)))
     (home-page "")
