@@ -16,6 +16,7 @@
   #:use-module (gnu packages package-management)
   #:use-module (gnu packages ssh)
   #:use-module (gnu services)
+  #:use-module (gnu services avahi)
   #:use-module (gnu services base)
   #:use-module (gnu services dbus)
   #:use-module (gnu services desktop)
@@ -123,7 +124,8 @@ program.")))
                    (privacy 'device)))
          udev-rules-service-xbox
          (service ladspa-service-type
-                  (ladspa-configuration (plugins (list swh-plugins)))))
+                  (ladspa-configuration (plugins (list swh-plugins))))
+         (service avahi-service-type))
         (modify-services %base-services
           (guix-service-type
            config =>
