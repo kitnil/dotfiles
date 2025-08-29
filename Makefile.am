@@ -109,6 +109,14 @@ GUIX_SYSTEM_CONFIGURATIONS =			\
   wireless					\
   workstation
 
+define guix-pull
+$(GUIX) pull "--channels=guix/wugi/etc/guix/channels/$(1).scm"
+endef
+
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-pull-$(configuration)):
+	system=$(subst guix-pull-,,$@); \
+	$(call guix-pull,$$system)
+
 define guix-time-machine
 $(GUIX) time-machine "--channels=guix/wugi/etc/guix/channels/$(1).scm" --substitute-urls=$(SUBSTITUTE_URLS)
 endef
