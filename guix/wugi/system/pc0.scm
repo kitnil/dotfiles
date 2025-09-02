@@ -212,7 +212,6 @@
                           (supplementary-groups '("wheel"
                                                   "audio"
                                                   "video"
-                                                  "docker"
                                                   "kvm"
                                                   "input"
                                                   "libvirt"))))
@@ -291,7 +290,6 @@
                                        "ddcci"
                                        "ddcci_backlight"))
                             (service containerd-service-type)
-                            (service docker-service-type)
 
                             (service runc-container-service-type
                                      (runc-container-configuration
