@@ -428,16 +428,12 @@ cgroup_device_acl = [
                                                     (device "eth0")
                                                     (value "127.0.0.2/8")))))
                                       (static-networking
-                                       (provision '(br0-link))
+                                       (provision '(br0))
                                        (links (list
                                                (network-link
                                                 (name "br0")
                                                 (type 'bridge)
                                                 (arguments '()))))
-                                       (addresses '()))
-                                      (static-networking
-                                       (provision '(br0))
-                                       (requirement '(br0-link))
                                        (addresses (list
                                                    (network-address
                                                     (device "br0")
