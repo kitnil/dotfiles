@@ -106,15 +106,15 @@ program.")))
                   (mingetty-configuration (tty "tty8")))
          (service bluetooth-service-type
                   (bluetooth-configuration
-                   (bluez
-                    (package-from-program-file
-                     (program-file "bluetoothd"
-                                   #~(begin
-                                       (execl #$(file-append util-linux+udev "/bin/nsenter")
-                                              "--net=/rootns/net"
-                                              "--"
-                                              #$(file-append bluez "/libexec/bluetooth/bluetoothd") "--debug" "--nodetach")))
-                     "/libexec/bluetooth"))
+                   ;; (bluez
+                   ;;  (package-from-program-file
+                   ;;   (program-file "bluetoothd"
+                   ;;                 #~(begin
+                   ;;                     (execl #$(file-append util-linux+udev "/bin/nsenter")
+                   ;;                            "--net=/rootns/net"
+                   ;;                            "--"
+                   ;;                            #$(file-append bluez "/libexec/bluetooth/bluetoothd") "--debug" "--nodetach")))
+                   ;;   "/libexec/bluetooth"))
                    (auto-enable? #t)
                    (just-works-repairing 'confirm)
                    (controller-mode 'dual)
