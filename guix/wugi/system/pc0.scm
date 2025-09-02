@@ -460,6 +460,8 @@ cgroup_device_acl = [
                                                 (arguments '((master . "br0"))))))
                                        (addresses '())))))
                       (modify-services %base-services
+                        (shepherd-system-log-service-type config =>
+                                                          (system-log-configuration (kernel-log-file #f)))
                         (guix-service-type config =>
                                            (guix-configuration
                                             (authorized-keys
