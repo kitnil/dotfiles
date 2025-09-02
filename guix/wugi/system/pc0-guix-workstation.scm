@@ -127,6 +127,10 @@ program.")))
                   (ladspa-configuration (plugins (list swh-plugins))))
          (service avahi-service-type))
         (modify-services %base-services
+          (shepherd-system-log-service-type
+           config =>
+           (system-log-configuration
+            (kernel-log-file #f)))
           (guix-service-type
            config =>
            (guix-configuration
