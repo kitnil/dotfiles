@@ -1,5 +1,9 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, robo3t, ... }:
 {
+  home.packages = [
+    robo3t
+  ];
+
   home.file = {
     ".ssh/known_hosts" = {
       force = true;
