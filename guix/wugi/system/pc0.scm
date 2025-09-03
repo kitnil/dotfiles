@@ -5,11 +5,8 @@
 (define-module (wugi system pc0)
   #:use-module (gnu bootloader)
   #:use-module (gnu bootloader grub)
-  #:use-module (gnu packages audio)
   #:use-module (gnu packages linux)
-  #:use-module (gnu packages screen)
   #:use-module (gnu packages ssh)
-  #:use-module (gnu packages wm)
   #:use-module ((gnu services) #:select (delete
                                          service-type
                                          service-extension
@@ -18,23 +15,18 @@
                                          simple-service
                                          modify-services
                                          activation-service-type))
-  #:use-module (gnu services avahi)
   #:use-module (gnu services base)
-  #:use-module (gnu services dbus)
-  #:use-module (gnu services desktop)
   #:use-module (gnu services dns)
   #:use-module (gnu services docker)
   #:use-module (gnu services linux)
   #:use-module (gnu services monitoring)
   #:use-module (gnu services networking)
-  #:use-module (gnu services nix)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services sound)
   #:use-module (gnu services ssh)
   #:use-module (gnu services sysctl)
   #:use-module (gnu system linux-initrd)
   #:use-module (gnu services virtualization)
-  #:use-module (gnu services xorg)
   #:use-module (gnu services)
   #:use-module (wugi services containers)
   #:use-module (gnu system)
@@ -50,6 +42,7 @@
   #:use-module ((wugi packages linux) #:select (kvmfr-linux-module))
   #:use-module (wugi services backup)
   #:use-module (wugi services kubernetes)
+  #:use-module (wugi services virtualization)
   #:use-module (wugi utils)
   #:use-module (wugi utils package)
   #:use-module (srfi srfi-26)
@@ -135,10 +128,10 @@
                            (check? #f)
                            (flags '(no-dev))
                            (options "mode=1777,size=10%")))
+                   %control-groups
                    %base-file-systems))
 
-    (kernel-arguments '(
-                        "net.ifnames=0"
+    (kernel-arguments '("net.ifnames=0"
                         "biosdevname=0"
 
                         "modprobe.blacklist=pcspkr,snd_pcsp"
@@ -146,56 +139,13 @@
                         ;; Enable LUKS TRIM/DISCARD pass-through.
                         "rd.luks.options=discard"
 
-                        ;; <https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF#Setting_up_IOMMU>
-                        ;; "iommu=pt"
-
                         ;; <https://pve.proxmox.com/wiki/PCI_Passthrough>
                         ;; Some Windows applications like GeForce Experience,
                         ;; Passmark Performance Test and SiSoftware Sandra can
                         ;; crash the VM.
                         "kvm.ignore_msrs=1"
 
-                        "vfio-pci.ids=1002:7550,1002:ab40"
-
-                        ;; (#934) · Issues · drm / amd · GitLab
-                        ;; <https://gitlab.freedesktop.org/drm/amd/-/issues/934>
-                        ;; "amdgpu.audio=0"
-                        ;; "amdgpu.gpu_recovery=1"
-                        ;; "amdgpu.noretry=0"
-                        ;; "amdgpu.ppfeaturemask=0xfffffffb"
-
-                        ;; https://gitlab.freedesktop.org/drm/amd/-/issues/2220
-                        ;; [amdgpu]] *ERROR* ring sdma0 timeout
-                        ;;
-                        ;;
-                        ;; https://wiki.archlinux.org/title/AMDGPU
-                        ;;
-                        ;; Freezes with "[drm] IP block:gmc_v8_0 is hung!" kernel error
-                        ;;
-                        ;; If you experience freezes and kernel crashes during a
-                        ;; GPU intensive task with the kernel error " [drm] IP
-                        ;; block:gmc_v8_0 is hung!" [6], a workaround is to set
-                        ;; amdgpu.vm_update_mode=3 as kernel parameters to force
-                        ;; the GPUVM page tables update to be done using the
-                        ;; CPU. Downsides are listed here [7].
-                        ;;
-                        ;;
-                        ;; [7]: https://gitlab.freedesktop.org/drm/amd/-/issues/226#note_308665
-                        ;;
-                        ;; I think it just means systems with large VRAM so it
-                        ;; will require large BAR for mapping. But I am not sure
-                        ;; on that point.
-                        ;;
-                        ;; vm_update_mode=3 means GPUVM page tables update is
-                        ;; done using CPU. By default we do it using DMA engine
-                        ;; on the ASIC. The log showed a hang in this engine so
-                        ;; I assumed there is something wrong with SDMA commands
-                        ;; we submit.
-                        ;;
-                        ;; I assume more CPU utilization as a side effect and
-                        ;; maybe slower rendering.
-                        ;; "amdgpu.vm_update_mode=3"
-                        ))
+                        "vfio-pci.ids=1002:7550,1002:ab40"))
 
     ;; This is where user accounts are specified.  The "root"
     ;; account is implicit, and is initially created with the
@@ -218,8 +168,7 @@
                    %base-user-accounts))
 
     ;; Globally-installed packages.
-    (packages (append (list screen sway)
-                      (map package-from-program-file
+    (packages (append (map package-from-program-file
                            (list restic-pc0-backup
                                  restic-pc0-win10-backup))
                       %pc0-packages
@@ -241,18 +190,16 @@
 
     ;; Add services to the baseline: a DHCP client and an SSH
     ;; server.  You may wish to add an NTP service here.
-    (services (append (list (service openssh-service-type
+    (services (append (list (service syslog-service-type
+                                     (syslog-configuration
+                                      (extra-options '("--rcfile=/etc/syslog.conf"
+                                                       "--no-forward"
+                                                       "--no-unixaf"
+                                                       "--no-klog"))))
+                            (service openssh-service-type
                                      (openssh-configuration
                                       (openssh openssh-sans-x)
                                       (permit-root-login 'prohibit-password)))
-                            (udisks-service)
-                            (service upower-service-type)
-                            (service accountsservice-service-type)
-                            (service colord-service-type)
-                            (geoclue-service)
-                            (service polkit-service-type)
-                            (elogind-service)
-                            (dbus-service)
 
                             (simple-service 'vfio-override boot-service-type
                                             '(and (call-with-output-file "/sys/bus/pci/devices/0000:03:00.0/driver_override"
@@ -359,17 +306,7 @@
                                       (flux? #t)
                                       (kubevirt? #t)))
 
-                            (udev-rules-service 'kvm
-                                                (udev-rule
-                                                 "91-kvm-custom.rules"
-                                                 "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n"))
-
-                            (udev-rules-service 'kvmfr
-                                                (udev-rule
-                                                 "99-kvmfr.rules"
-                                                 "SUBSYSTEM==\"kvmfr\", OWNER=\"oleg\", GROUP=\"kvm\", MODE=\"0660\"\n"))
-
-                            (service libvirt-service-type
+                            (service (@ (wugi services virtualization) libvirt-service-type)
                                      (libvirt-configuration
                                       ;; XXX: Specify listen-addr after adding networking requirement.
                                       ;;
@@ -402,6 +339,17 @@ cgroup_device_acl = [
                             (service virtlog-service-type
                                      (virtlog-configuration
                                       (max-clients 1000)))
+
+                            (udev-rules-service 'kvm
+                                                (udev-rule
+                                                 "91-kvm-custom.rules"
+                                                 "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n"))
+
+                            (udev-rules-service 'kvmfr
+                                                (udev-rule
+                                                 "99-kvmfr.rules"
+                                                 "SUBSYSTEM==\"kvmfr\", OWNER=\"oleg\", GROUP=\"kvm\", MODE=\"0660\"\n"))
+
                             (service console-font-service-type
                                      (map (lambda (tty)
                                             (append (list tty)
@@ -460,8 +408,7 @@ cgroup_device_acl = [
                                                 (arguments '((master . "br0"))))))
                                        (addresses '())))))
                       (modify-services %base-services
-                        (shepherd-system-log-service-type config =>
-                                                          (system-log-configuration (kernel-log-file #f)))
+                        (delete shepherd-system-log-service-type)
                         (guix-service-type config =>
                                            (guix-configuration
                                             (authorized-keys
