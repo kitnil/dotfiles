@@ -248,6 +248,16 @@ in {
           id = 6;
           isDefault = false;
         };
+        shopping = {
+          name = "shopping";
+          id = 7;
+          isDefault = false;
+          extensions = {
+            packages = (with packages; with packages.nur.repos.rycee.firefox-addons; [
+              auto-tab-discard
+            ]);
+          };
+        };
       };
   };
 
