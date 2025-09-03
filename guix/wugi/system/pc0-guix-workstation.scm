@@ -99,6 +99,12 @@ program.")))
       (services
        (append
         (list
+         (service syslog-service-type
+                  (syslog-configuration
+                   (extra-options '("--rcfile=/etc/syslog.conf"
+                                    "--no-forward"
+                                    "--no-unixaf"
+                                    "--no-klog"))))
          (service elogind-service-type)
          seatd-service
          (service dbus-root-service-type)
@@ -127,10 +133,7 @@ program.")))
                   (ladspa-configuration (plugins (list swh-plugins))))
          (service avahi-service-type))
         (modify-services %base-services
-          (shepherd-system-log-service-type
-           config =>
-           (system-log-configuration
-            (kernel-log-file #f)))
+          (delete shepherd-system-log-service-type)
           (guix-service-type
            config =>
            (guix-configuration
