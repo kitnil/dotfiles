@@ -221,6 +221,7 @@ in {
             "network.proxy.socks" = "example-tor-instance-tor-svc.tor-controller-instance";
             "network.proxy.socks_port" = 9050;
             "network.proxy.type" = 1;
+            "network.proxy.no_proxies_on" = ".home.wugi.info";
           };
           bookmarks = {
             force = true;
