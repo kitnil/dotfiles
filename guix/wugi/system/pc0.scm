@@ -6,6 +6,7 @@
   #:use-module (gnu bootloader)
   #:use-module (gnu bootloader grub)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages video)
   #:use-module (gnu packages ssh)
   #:use-module ((gnu services) #:select (delete
                                          service-type
@@ -39,7 +40,6 @@
   #:use-module (nongnu system linux-initrd)
   #:use-module (wugi bootloader grub)
   #:use-module (wugi config)
-  #:use-module ((wugi packages linux) #:select (kvmfr-linux-module))
   #:use-module (wugi services backup)
   #:use-module (wugi services kubernetes)
   #:use-module (wugi services virtualization)
