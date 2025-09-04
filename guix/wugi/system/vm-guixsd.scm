@@ -175,7 +175,7 @@ PasswordAuthentication yes")))
          ;;              "--healthz-bind-address=127.0.0.1"
          ;;              "--healthz-port=10248"
          ;;              "--hostname-override=kube1"
-         ;;              "--kubeconfig=/home/oleg/.local/share/chezmoi/dotfiles/kubernetes/kubeconfig"
+         ;;              "--kubeconfig=/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/kubernetes/kubeconfig"
          ;;              "--pod-infra-container-image=pause"
          ;;              "--port=10250"
          ;;              "--register-node=true"

@@ -23,7 +23,7 @@ case "$1" in
     bin)
         diff --unified \
              <(for file in "$HOME"/bin/*; do basename "$file"; done) \
-             <(for file in "$HOME"/.local/share/chezmoi/bin/*; do basename "$file" | sed 's@@@'; done)
+             <(for file in "$HOME"/src/cgit.wugi.info/wigust/dotfiles/bin/*; do basename "$file" | sed 's@@@'; done)
         ;;
     *)
         exec -a chezmoi chezmoi "$@"

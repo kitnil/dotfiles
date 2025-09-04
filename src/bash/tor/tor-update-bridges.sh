@@ -7,6 +7,6 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
-/home/oleg/.local/share/chezmoi/src/bash/tor/tor-bridges-password-store.sh "$1"
-/home/oleg/.local/share/chezmoi/flux/apps/cluster1/tor-controller-instance/tor-configuration.sh
+/home/oleg/src/cgit.wugi.info/wigust/dotfiles/src/bash/tor/tor-bridges-password-store.sh "$1"
+/home/oleg/src/cgit.wugi.info/wigust/dotfiles/flux/apps/cluster1/tor-controller-instance/tor-configuration.sh
 kubectl --namespace tor-controller-instance delete pod --all

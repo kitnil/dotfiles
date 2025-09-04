@@ -262,5 +262,5 @@
 
 (defcommand webhook () ()
   (run-shell-command (join (list "/home/oleg/.nix-profile/bin/webhook"
-                                 "-hooks" "/home/oleg/.local/share/chezmoi/dotfiles/webhook/hooks.json"
+                                 "-hooks" "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/webhook/hooks.json"
                                  "-port" "9090"))))

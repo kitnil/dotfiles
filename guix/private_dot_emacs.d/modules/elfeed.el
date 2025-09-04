@@ -113,7 +113,7 @@
   (interactive)
   (find-file
    (expand-file-name
-    "~/.local/share/chezmoi/private_dot_emacs.d/modules/elfeed.el")))
+    "~/src/cgit.wugi.info/wigust/dotfiles/private_dot_emacs.d/modules/elfeed.el")))
 
 (defun elfeed-guix-show ()
   (interactive)

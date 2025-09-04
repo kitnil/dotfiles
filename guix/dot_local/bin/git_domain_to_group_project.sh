@@ -80,4 +80,4 @@ do
     fi
 done
 
-# oleg@guixsd ~/src$ for dir in $(ls -d */*/.git | xargs dirname | xargs dirname | sort -u); do (cd "$dir"; eval "$(~/.local/share/chezmoi/dot_local/bin/git_directories_to_domain.sh)"); done
+# oleg@guixsd ~/src$ for dir in $(ls -d */*/.git | xargs dirname | xargs dirname | sort -u); do (cd "$dir"; eval "$(~/src/cgit.wugi.info/wigust/dotfiles/dot_local/bin/git_directories_to_domain.sh)"); done

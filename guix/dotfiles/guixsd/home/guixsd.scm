@@ -78,10 +78,10 @@
 (use-modules (mjru-github-projects))
 
 (define .bash_profile
-  (string-append %home "/.local/share/chezmoi/dot_bash_profile"))
+  (string-append %home "/src/cgit.wugi.info/wigust/dotfiles/dot_bash_profile"))
 
 (define .bashrc
-  (string-append %home "/.local/share/chezmoi/dot_bashrc"))
+  (string-append %home "/src/cgit.wugi.info/wigust/dotfiles/dot_bashrc"))
 
 (define xmodmap-script
   (program-file
@@ -547,7 +547,7 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
                    ,@(map (lambda (config-file)
                             `(load ,(string-append "/home/oleg/.stumpwm.d/" config-file)))
                           config-files)
-                   ;; (restore-from-file ,(local-file "/home/oleg/.local/share/chezmoi/dot_stumpwm.d/group-1.lisp"))
+                   ;; (restore-from-file ,(local-file "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/dot_stumpwm.d/group-1.lisp"))
                    ))
                 (config-files config-files))))
 
@@ -729,7 +729,7 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
                                        (and=> (getenv "HOME")
                                               (lambda (home)
                                                 home))))
-                                  (add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles"))
+                                  (add-to-load-path (string-append %home "/src/cgit.wugi.info/wigust/guix/dotfiles"))
                                   (use-modules (ice-9 format)
                                                (ice-9 match)
                                                (guile pass))
@@ -809,7 +809,7 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
                     (with-extensions (list guile-json-4)
                       (with-imported-modules (source-module-closure '((json builder)))
                         #~(begin
-                            (add-to-load-path (string-append #$%home "/.local/share/chezmoi/dotfiles"))
+                            (add-to-load-path (string-append #$%home "/src/cgit.wugi.info/wigust/guix/dotfiles"))
                             (use-modules (ice-9 rdelim)
                                          (ice-9 popen)
                                          (guile pass)
@@ -1256,7 +1256,7 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
                                  ("known_hosts" . ,(string-append %home "/.ssh/known_hosts"))
                                  ("command" . "uptime"))))))))))))))
 
-    ;; oleg@guixsd ~/.local/share/chezmoi$ command guix home -L dotfiles/guixsd/modules -L ~/src/engstrand-config-home-service-dwl-guile reconfigure dotfiles/guixsd/home.scm
+    ;; oleg@guixsd ~/src/cgit.wugi.info/wigust/dotfiles$ command guix home -L dotfiles/guixsd/modules -L ~/src/engstrand-config-home-service-dwl-guile reconfigure dotfiles/guixsd/home.scm
     ;; (service home-dwl-guile-service-type
     ;;          (home-dwl-guile-configuration
     ;;           (package-transform? #f)

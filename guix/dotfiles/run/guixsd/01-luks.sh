@@ -2,7 +2,7 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
-/home/oleg/.local/share/chezmoi/guix/dot_local/bin/luks-decrypt.sh
+/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dot_local/bin/luks-decrypt.sh
 
 sudo swapon /dev/lvm2/swap
 

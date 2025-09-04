@@ -39,13 +39,13 @@
                          ("source" . "bare-bones.tmpl")
                          ("destination" . "/mnt/etc/config.scm"))
                         (("type" . "file")
-                         ("source" . "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
+                         ("source" . "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
                          ("destination" . "/root/guix.wugi.info.pub"))
                         (("type" . "shell")
                          ("inline" . #("set -x"
                                        "guix archive --authorize < /root/guix.wugi.info.pub")))
                         (("type" . "file")
-                         ("source" . "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub")
+                         ("source" . "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub")
                          ("destination" . "/root/bordeaux.guix.gnu.org.pub"))
                         (("type" . "shell")
                          ("inline" . #("set -x"

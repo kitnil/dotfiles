@@ -15,4 +15,4 @@
 
 (define %connect-program
   (local-file "connect"
-              (string-append %home "/.local/share/chezmoi/dot_local/bin/connect")))
+              (string-append %home "/src/cgit.wugi.info/wigust/dotfiles/dot_local/bin/connect")))

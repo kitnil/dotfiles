@@ -400,7 +400,7 @@ maintenance()
         upgrade)
             (
                 set -xe
-                cd "${HOME}/.local/share/chezmoi" || exit 1
+                cd "${HOME}/src/cgit.wugi.info/wigust/dotfiles" || exit 1
                 make dotfiles/nix/flake.lock
                 if make dotfiles/nix/flake.nix
                 then

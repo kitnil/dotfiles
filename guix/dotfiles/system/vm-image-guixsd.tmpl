@@ -76,14 +76,14 @@ exec -a twm /bin/sh --login -c ~a/bin/twm\n" #$twm)))
            #t)))))
 
 (define stumpwm-configure
-  (let* ((dotfiles (load "/home/oleg/.local/share/chezmoi/guix.scm"))
+  (let* ((dotfiles (load "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix.scm"))
          (home "/home/oleg")
          (xsession (string-append home "/.xsession"))
          (cp (file-append coreutils "/bin/cp"))
          (chown (file-append coreutils "/bin/chown"))
          (chmod (file-append coreutils "/bin/chmod"))
          (sbcl (file-append sbcl "/bin/sbcl"))
-         (stumpwm-config (local-file "/home/oleg/.local/share/chezmoi/dotfiles/system/.stumpwm.d/init.lisp")))
+         (stumpwm-config (local-file "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/system/.stumpwm.d/init.lisp")))
     (program-file "vm-image-stumpwm-configure"
      (with-imported-modules '((guix build utils))
        #~(begin

@@ -3,4 +3,4 @@
 LLM_COPY_PRIMARY=true
 export LLM_COPY_PRIMARY
 
-exec wl-paste --no-newline --watch ~/.local/share/chezmoi/dot_local/bin/llm-aichat
+exec wl-paste --no-newline --watch ~/src/cgit.wugi.info/wigust/dotfiles/dot_local/bin/llm-aichat

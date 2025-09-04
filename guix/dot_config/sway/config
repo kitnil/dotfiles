@@ -90,7 +90,7 @@ bindsym $mod+y exec clipman pick -t wofi
     bindsym $mod+Shift+w exec $browser
 
     bindsym $mod+Shift+m exec looking-glass-client-wrapper
-    bindsym $mod+Shift+s exec /home/oleg/.local/share/chezmoi/dot_local/bin/passmenu
+    bindsym $mod+Shift+s exec /home/oleg/src/cgit.wugi.info/wigust/dotfiles/dot_local/bin/passmenu
     bindsym $mod+Shift+v exec virt-manager
 
     # kill focused window
@@ -288,8 +288,8 @@ bindsym $mod+r mode "resize"
 #
 mode "obs" {
     # switch to scene
-    bindsym 0 exec /home/oleg/.local/share/chezmoi/dot_local/bin/obs-websocket-http.sh edit scene scene-0
-    bindsym 1 exec /home/oleg/.local/share/chezmoi/dot_local/bin/obs-websocket-http.sh edit scene scene-1
+    bindsym 0 exec /home/oleg/src/cgit.wugi.info/wigust/dotfiles/dot_local/bin/obs-websocket-http.sh edit scene scene-0
+    bindsym 1 exec /home/oleg/src/cgit.wugi.info/wigust/dotfiles/dot_local/bin/obs-websocket-http.sh edit scene scene-1
 
     # return to default mode
     bindsym Return mode "default"

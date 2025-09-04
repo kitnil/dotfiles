@@ -2,7 +2,7 @@
   description = "Control machine via voice";
 
   inputs = {
-    vosk.url = "git+file:///home/oleg/.local/share/chezmoi?dir=src/nix/vosk";
+    vosk.url = "git+file:///home/oleg/src/cgit.wugi.info/wigust/dotfiles?dir=src/nix/vosk";
   };
 
   outputs = { self, nixpkgs, vosk }:

@@ -129,7 +129,7 @@ If no commit hash provides, show a commit from hash at current point."
                '("http://cuirass.tld" . cuirass)))
 
 (defvar bui-rgrep-directory
-  "~/.local/share/chezmoi/dotfiles/fiore/manifests/"
+  "~/src/cgit.wugi.info/wigust/guix/dotfiles/fiore/manifests/"
   "Directory to search for a package in `bui-rgrep-manifests' procedure.")
 
 (defun bui-rgrep-manifests ()

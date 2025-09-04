@@ -274,9 +274,9 @@
 	    ]
 	},
 	{
-	    "destination": "/home/oleg/.local/share/chezmoi",
+	    "destination": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles",
 	    "type": "none",
-	    "source": "/home/oleg/.local/share/chezmoi",
+	    "source": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles",
 	    "options": [
 		"bind"
 	    ]

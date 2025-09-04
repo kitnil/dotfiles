@@ -42,12 +42,12 @@
         "rev": "f0b1fe47deffa28ba477360ba6a7cf88da4ebf95",
         "revCount": 12594,
         "type": "git",
-        "url": "file:///home/oleg/.local/share/chezmoi?dir=src/nix/vosk"
+        "url": "file:///home/oleg/src/cgit.wugi.info/wigust/dotfiles?dir=src/nix/vosk"
       },
       "original": {
         "dir": "src/nix/vosk",
         "type": "git",
-        "url": "file:///home/oleg/.local/share/chezmoi?dir=src/nix/vosk"
+        "url": "file:///home/oleg/src/cgit.wugi.info/wigust/dotfiles?dir=src/nix/vosk"
       }
     }
   },

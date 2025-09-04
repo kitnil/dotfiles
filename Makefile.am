@@ -288,7 +288,7 @@ haproxy:
 isc-dhcp:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(echo $(GIT_COMMIT) | cut -c -8)
-	container=$$($(GUIX) system image --load-path=/home/oleg/.local/share/chezmoi/guix/wugi --max-layers=100 -t docker --network guix/dotfiles/guixsd/docker-image-isc-dhcp.scm)
+	container=$$($(GUIX) system image --load-path=/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/wugi --max-layers=100 -t docker --network guix/dotfiles/guixsd/docker-image-isc-dhcp.scm)
 	$(SKOPEO) copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 .ONESHELL:
@@ -307,7 +307,7 @@ pc0-manifest:
 guix-image-builder: $(DECRYPT_TARGETS)
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(echo $(GIT_COMMIT) | cut -c -8)
-	container=$$($(GUIX) time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls="$(SUBSTITUTE_URLS)" --max-layers=100 -t docker --network ~/.local/share/chezmoi/guix/wugi/system/guix-image-builder.scm)
+	container=$$($(GUIX) time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls="$(SUBSTITUTE_URLS)" --max-layers=100 -t docker --network ~/src/cgit.wugi.info/wigust/dotfiles/guix/wugi/system/guix-image-builder.scm)
 	$(SKOPEO) copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 nix-update-inputs:

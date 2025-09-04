@@ -17,7 +17,7 @@ do
 done
 container_id="$(guix_workstation_id)"
 
-/home/oleg/.local/share/chezmoi/dotfiles/run/pc0/09-firefox-twitch-namespace.sh
+/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/run/pc0/09-firefox-twitch-namespace.sh
 
 nerdctl -n k8s.io exec "$container_id" /run/current-system/profile/bin/bash -lc '
 export PATH=/home/oleg/.guix-home/profile/bin:$PATH

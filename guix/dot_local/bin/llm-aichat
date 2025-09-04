@@ -44,7 +44,7 @@ main()
     do
         if [[ -n $content ]]
         then
-            local output="$(printf "$content" | /home/oleg/.local/share/chezmoi/dot_local/bin/aichat --prompt "$prompt")"
+            local output="$(printf "$content" | /home/oleg/src/cgit.wugi.info/wigust/dotfiles/dot_local/bin/aichat --prompt "$prompt")"
             echo "$output"
             russian()
             {

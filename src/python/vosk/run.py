@@ -15,7 +15,7 @@ log_level = os.getenv("VOSK_LOG_LEVEL", "WARNING")
 log.info(f"{log_level}: log_level")
 log.setLevel(log_level)
 
-model = Model("/home/oleg/.local/share/chezmoi/vosk/small_model")
+model = Model("/home/oleg/src/cgit.wugi.info/wigust/dotfiles/vosk/small_model")
 rec = KaldiRecognizer(model, 16000)
 p = pyaudio.PyAudio()
 stream = p.open(

@@ -40,8 +40,8 @@
               (openssh-configuration
                (permit-root-login 'prohibit-password)
                (authorized-keys
-                `(("root" ,(local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/ssh/id_rsa_vm1.wugi.info.pub")))))))
+                `(("root" ,(local-file "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/guixsd/ssh/id_rsa_vm1.wugi.info.pub")))))))
     (modify-services %base-services
       (guix-service-type config => (guix-configuration
-                                    (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub"))
+                                    (authorized-keys (append (list (local-file "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub"))
                                                              %default-authorized-guix-keys))))))))

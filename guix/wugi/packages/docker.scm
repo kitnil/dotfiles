@@ -11,7 +11,7 @@
            home)))
 
 (define %source-dir
-  (string-append %home "/.local/share/chezmoi"))
+  (string-append %home "/src/cgit.wugi.info/wigust/dotfiles"))
 
 (define-public docker-guix-workstation
   (package
@@ -20,7 +20,7 @@
     (source
      (local-file
       ;; TODO: Use %source-dir.
-      (string-append "/home/user" "/.local/share/chezmoi"
+      (string-append "/home/user" "/src/cgit.wugi.info/wigust/dotfiles"
                      "/dotfiles/docker/guix-workstation/run.sh")))
     (build-system trivial-build-system)
     (native-inputs `(("source" ,source)))

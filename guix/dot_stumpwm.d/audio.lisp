@@ -63,7 +63,7 @@
 (defcommand pulseaudio-toggle-ladspa () ()
   (run-shell-command
    (concat (getenv "HOME")
-           "/.local/share/chezmoi/src/python/pulseaudio/sink.py")))
+           "/src/cgit.wugi.info/wigust/dotfiles/src/python/pulseaudio/sink.py")))
 
 (defcommand alsamixer () ()
   "Download video."

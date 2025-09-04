@@ -209,7 +209,7 @@
     script-path: Jenkinsfile
     scm:
       - git:
-          url: file:///home/oleg/.local/share/chezmoi/.git
+          url: file:///home/oleg/src/cgit.wugi.info/wigust/dotfiles/.git
 
 - job:
     name: wigust/org

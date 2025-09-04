@@ -77,12 +77,12 @@
         "tooltip-format": "{app}: {title}"
     },
     "custom/lm-studio-models": {
-        "exec": "/home/oleg/.local/share/chezmoi/guix/dot_local/bin/lm-studio-loaded-models.sh",
+        "exec": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dot_local/bin/lm-studio-loaded-models.sh",
         "return-type": "json",
         "interval": 2,
         "tooltip": true,
         "format": "{text}  ",
-        "on-click": "alacritty --command /home/oleg/.local/share/chezmoi/guix/dot_local/bin/llm-watch-primary"
+        "on-click": "alacritty --command /home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dot_local/bin/llm-watch-primary"
     },
     "wlr/taskbar": {
         "format": "{icon}",
@@ -236,7 +236,7 @@
         "format-linked": "{ifname} (No IP)  ",
         "format-disconnected": "DOWN  ",
         "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "/home/oleg/.local/share/chezmoi/guix/dot_local/bin/herd-toggle-service.sh"
+        "on-click": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dot_local/bin/herd-toggle-service.sh"
     },
     "network#tapvpn1": {
         "interface": "tapvpn1",
@@ -246,7 +246,7 @@
         "format-linked": "{ifname} (No IP)  ",
         "format-disconnected": "DOWN  ",
         "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "/home/oleg/.local/share/chezmoi/guix/dot_local/bin/herd-toggle-service.sh"
+        "on-click": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dot_local/bin/herd-toggle-service.sh"
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float

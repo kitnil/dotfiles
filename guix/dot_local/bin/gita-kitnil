@@ -2,7 +2,7 @@
 
 set -eu
 
-TERRAFORM_FILE="${TERRAFORM_FILE:-$HOME/.local/share/chezmoi/dotfiles/maintenance/github/projects.tf}"
+TERRAFORM_FILE="${TERRAFORM_FILE:-$HOME/src/cgit.wugi.info/wigust/guix/dotfiles/maintenance/github/projects.tf}"
 
 config()
 {

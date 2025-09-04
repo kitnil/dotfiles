@@ -15,4 +15,4 @@ bind k kill
 bind C-k kill
 definekey top s-k kill
 
-definekey top s-s exec /home/oleg/.local/share/chezmoi/dot_local/bin/passmenu
+definekey top s-s exec /home/oleg/src/cgit.wugi.info/wigust/dotfiles/dot_local/bin/passmenu

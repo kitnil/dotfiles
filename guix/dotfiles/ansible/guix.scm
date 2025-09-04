@@ -13,7 +13,7 @@
 (define %dotfiles-directory
   (and=> (getenv "HOME")
          (lambda (home)
-           (string-append home "/.local/share/chezmoi"))))
+           (string-append home "/src/cgit.wugi.info/wigust/dotfiles"))))
 
 (define %ansible-playbook
   (list->vector

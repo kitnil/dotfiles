@@ -45,7 +45,7 @@ log.info(f"{log_level}: log_level")
 log.setLevel(log_level)
 log.info("Starting")
 
-model = Model("/home/oleg/.local/share/chezmoi/vosk/small_model")
+model = Model("/home/oleg/src/cgit.wugi.info/wigust/dotfiles/vosk/small_model")
 rec = KaldiRecognizer(model, RATE)
 
 

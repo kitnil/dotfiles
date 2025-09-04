@@ -21,7 +21,7 @@
 (use-service-modules base guix shepherd ssh)
 
 (define my-channels
-  (include "/home/oleg/.local/share/chezmoi/dotfiles/channels-current-guix-image-builder.scm"))
+  (include "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/channels-current-guix-image-builder.scm"))
 
 (operating-system
   (host-name "builder")
@@ -68,12 +68,12 @@
                                          (guix-configuration
                                           (channels my-channels)
                                           (guix (guix-for-channels my-channels))
-                                          (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub"))
+                                          (authorized-keys (append (list (local-file "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
+                                                                         (local-file "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
+                                                                         (local-file "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
+                                                                         (local-file "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
+                                                                         (local-file "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub")
+                                                                         (local-file "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub"))
                                                                    %default-authorized-guix-keys))
                                           (substitute-urls '("https://guix.wugi.info"
                                                              "https://bordeaux.guix.gnu.org"
