@@ -36,7 +36,7 @@ function dmesg()
             "$@"
 }
 
-alias ,h="${BROWSER} ~/.guix-profile/share/doc/concise-gnu-bash/concise-gnu-bash.pdf"
+alias ,h="${BROWSER} ~/${GUIX_PROFILE}/share/doc/concise-gnu-bash/concise-gnu-bash.pdf"
 alias ,c='command'
 
 # Count number of code lines
@@ -161,13 +161,13 @@ lsd()
     fi
 }
 
-if [ -f "$HOME/.guix-profile/etc/profile.d/autojump.sh" ]
+if [ -f "${GUIX_PROFILE}/etc/profile.d/autojump.sh" ]
 then
-    source "$HOME/.guix-profile/etc/profile.d/autojump.sh"
+    source "${GUIX_PROFILE}/etc/profile.d/autojump.sh"
 fi
 
 # http://puzan.info/linux/2014-05-14-direnv.html
-if [ -f "$HOME/.guix-profile/bin/direnv" ]
+if [ -f "${GUIX_PROFILE}/bin/direnv" ]
 then
     eval "$(direnv hook bash)"
 fi
@@ -579,42 +579,42 @@ nixos_interactive_test()
 
 terraform_refresh()
 {
-    NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
-                     SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
-                     SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
+    NIX_SSL_CERT_FILE="${GUIX_PROFILE}/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
+                     SSL_CERT_DIR="${GUIX_PROFILE}/etc/ssl/certs" \
+                     SSL_CERT_FILE="${GUIX_PROFILE}/etc/ssl/certs/ca-certificates.crt" \
             terraform refresh
 }
 
 terraform_plan()
 {
     NIX_SSL_CERT_FILE="$HOME/src/gitlab.intr/office/ssl-certificates/Majordomo_LLC_Root_CA.crt" \
-                     SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
-                     SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
+                     SSL_CERT_DIR="${GUIX_PROFILE}/etc/ssl/certs" \
+                     SSL_CERT_FILE="${GUIX_PROFILE}/etc/ssl/certs/ca-certificates.crt" \
             terraform plan -out=plan "$@"
 }
 
 terraform_import()
 {
-    NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
-                     SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
-                     SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
+    NIX_SSL_CERT_FILE="${GUIX_PROFILE}/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
+                     SSL_CERT_DIR="${GUIX_PROFILE}/etc/ssl/certs" \
+                     SSL_CERT_FILE="${GUIX_PROFILE}/etc/ssl/certs/ca-certificates.crt" \
             terraform import "$@"
 }
 
 terraform_apply()
 {
     NIX_SSL_CERT_FILE="$HOME/src/gitlab.intr/office/ssl-certificates/Majordomo_LLC_Root_CA.crt" \
-                     SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
-                     SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
+                     SSL_CERT_DIR="${GUIX_PROFILE}/etc/ssl/certs" \
+                     SSL_CERT_FILE="${GUIX_PROFILE}/etc/ssl/certs/ca-certificates.crt" \
                      terraform apply "plan"
 }
 
 terraform_apply_no_plan()
 {
-    NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
-                     SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
-                     SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
-            terraform apply
+    NIX_SSL_CERT_FILE="${GUIX_PROFILE}/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
+                     SSL_CERT_DIR="${GUIX_PROFILE}/etc/ssl/certs" \
+                     SSL_CERT_FILE="${GUIX_PROFILE}/etc/ssl/certs/ca-certificates.crt" \
+                     terraform apply
 }
 
 terraform_apply_gitlab()
@@ -948,7 +948,7 @@ alias tmux-reload="tmux source-file ~/.tmux.conf"
 
 less_color()
 {
-    LESSOPEN="| ~/.guix-profile/bin/src-hilite-lesspipe.sh %s"
+    LESSOPEN="| ~/${GUIX_PROFILE}/bin/src-hilite-lesspipe.sh %s"
     export LESSOPEN
 
     LESS=' -R '
@@ -1029,8 +1029,8 @@ function password()
         pass "$@"
     fi
 }
-if [ -f "$HOME/.guix-profile/etc/bash_completion.d/pass" ]; then
-    source "$HOME/.guix-profile/etc/bash_completion.d/pass"
+if [ -f "${GUIX_PROFILE}/etc/bash_completion.d/pass" ]; then
+    source "${GUIX_PROFILE}/etc/bash_completion.d/pass"
     complete -o filenames -F _pass password
 fi
 alias password='EDITOR=nano password'
@@ -1322,8 +1322,8 @@ if [ -f "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash" ]; t
     complete -o default -F __start_chezmoi dotfiles
 fi
 
-if [ -f "$HOME/.guix-profile/etc/bash_completion.d/restic" ]; then
-    source "$HOME/.guix-profile/etc/bash_completion.d/restic"
+if [ -f "${GUIX_PROFILE}/etc/bash_completion.d/restic" ]; then
+    source "${GUIX_PROFILE}/etc/bash_completion.d/restic"
     complete -o default -F __start_restic backup
 fi
 
@@ -1588,9 +1588,9 @@ mediatomb()
 
 if [ -z $IN_NIX_SHELL ]
 then
-    if [ -e $HOME/.guix-profile/lib/bash/libguile-bash.so ]
+    if [ -e ${GUIX_PROFILE}/lib/bash/libguile-bash.so ]
     then
-        enable -f "$HOME"/.guix-profile/lib/bash/libguile-bash.so scm
+        enable -f "$HOME"/${GUIX_PROFILE}/lib/bash/libguile-bash.so scm
         if [ -e "$HOME"/.bash.d/bash.scm ]
         then
             GUILE_AUTO_COMPILE=0 scm "$HOME"/.bash.d/bash.scm
@@ -1598,7 +1598,7 @@ then
     fi
 fi
 
-if [[ -e $HOME/.guix-profile/bin/chezmoi ]]
+if [[ -e ${GUIX_PROFILE}/bin/chezmoi ]]
 then
     eval "$(chezmoi completion bash)"
 fi
@@ -1655,9 +1655,9 @@ __lazy_kubectl()
         *)
             if [[ $(type -t __start_kubectl) != function ]]
             then
-                if [[ -f /home/oleg/.guix-profile/bin/kubectl ]]
+                if [[ -f ${GUIX_PROFILE}/bin/kubectl ]]
                 then
-                    source <(/home/oleg/.guix-profile/bin/kubectl completion bash)
+                    source <(${GUIX_PROFILE}/bin/kubectl completion bash)
                 fi
             fi
             ;;
@@ -1674,9 +1674,9 @@ __lazy_helm()
         *)
             if [[ $(type -t __start_helm) != function ]]
             then
-                if [[ -f /home/oleg/.guix-profile/bin/helm ]]
+                if [[ -f ${GUIX_PROFILE}/bin/helm ]]
                 then
-                    source <(/home/oleg/.guix-profile/bin/helm completion bash)
+                    source <(${GUIX_PROFILE}/bin/helm completion bash)
                 fi
             fi
             ;;
@@ -1895,9 +1895,9 @@ __lazy_flux()
         *)
             if [[ $(type -t __start_flux) != function ]]
             then
-                if [[ -f /home/oleg/.guix-profile/bin/flux ]]
+                if [[ -f ${GUIX_PROFILE}/bin/flux ]]
                 then
-                    source <(/home/oleg/.guix-profile/bin/flux completion bash)
+                    source <(${GUIX_PROFILE}/bin/flux completion bash)
                 fi
             fi
             ;;

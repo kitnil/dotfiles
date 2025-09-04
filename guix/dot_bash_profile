@@ -23,6 +23,9 @@ fi
 
 export USER=oleg
 
+GUIX_PROFILE="${HOME}/.guix-home/profile"
+export GUIX_PROFILE
+
 export LC_TIME=en_GB.UTF-8
 export LANG=en_US.UTF-8
 
