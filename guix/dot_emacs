@@ -165,6 +165,11 @@
  '(safe-local-variable-values
    '((eval progn
            (setq-local geiser-repl-add-project-paths nil)
+           (when
+               (functionp #'aggressive-indent-mode)
+             (aggressive-indent-mode)))
+     (eval progn
+           (setq-local geiser-repl-add-project-paths nil)
            (aggressive-indent-mode))
      (eval progn
            (setq-local geiser-guile-load-path
