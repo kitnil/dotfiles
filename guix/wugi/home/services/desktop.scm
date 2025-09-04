@@ -64,7 +64,7 @@
          (provision '(sway))
          (start #~(make-forkexec-constructor
                    (list #$(file-append bash "/bin/bash")
-                         "-i"
+                         "-l"
                          "-c" (format #f "exec ~a"
                                       #$(file-append sway "/bin/sway")))
                    #:environment-variables
