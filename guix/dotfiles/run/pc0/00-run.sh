@@ -3,6 +3,7 @@
 set -o nounset -o errexit -o pipefail
 
 iptables "-P" "FORWARD" "ACCEPT"
+sysctl -w net.ipv4.conf.br0.forwarding=1
 
 swapon /dev/vg0/swap
 
