@@ -36,6 +36,7 @@
   #:use-module (gnu packages vnc)
   #:use-module (gnu packages web)
   #:use-module (gnu packages xdisorg)
+  #:use-module (gnu packages xorg)
   #:use-module (guix profiles)
 
   #:export (%pc0-packages-manifest))

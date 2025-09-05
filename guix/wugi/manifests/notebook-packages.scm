@@ -35,6 +35,7 @@
   #:use-module (gnu packages vnc)
   #:use-module (gnu packages web)
   #:use-module (gnu packages xdisorg)
+  #:use-module (gnu packages xorg)
   #:export (%notebook-packages-manifest))
 
 (define (%notebook-packages-manifest)
