@@ -120,7 +120,7 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),root-guix-pull-$(configura
 	sudo -i $(call guix-pull,$(call subst,root-guix-pull-,,$@))
 
 define guix-time-machine
-$(GUIX) time-machine "--channels=$(abs_top_srcdir)/guix/wugi/etc/guix/channels/$(1).scm" --substitute-urls=$(SUBSTITUTE_URLS)
+$(GUIX) time-machine --channels="$(abs_top_srcdir)/guix/wugi/etc/guix/channels/$(1).scm" --substitute-urls="$(SUBSTITUTE_URLS)"
 endef
 
 define guix-build-expression
@@ -147,29 +147,23 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-b
 	$(call guix-time-machine,$$system) -- $(call guix-build-expression,$$system,$$system)
 
 define guix-home-expression
-home $$ACTION --load-path=$(LOAD_PATH) --substitute-urls=$(SUBSTITUTE_URLS) -e "((@ (wugi home config $(subst -home-environment,,$1)) %$(2)))"
+home $1 --load-path="$(LOAD_PATH)" --substitute-urls="$(SUBSTITUTE_URLS)" -e "((@ (wugi home config $(subst -home-environment,,$2)) %$(3)))"
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-home-build-$(configuration)): $(DECRYPT_TARGETS)
-	ACTION=build; \
-	system=$(subst guix-home-build-,,$@); \
-	$(GUIX) $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
+	$(call guix-home-expression,build,$(call subst,guix-home-build-,,$@)-home-environment,$(call subst,guix-home-build-,,$@)-home-environment)
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-home-build-$(configuration)): $(DECRYPT_TARGETS)
-	ACTION=build; \
-	system=$(subst guix-time-machine-home-build-,,$@); \
-	$(call guix-time-machine,$$system) -- $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
+	$(call guix-time-machine,$(call subst,guix-time-machine-home-build-,,$@)) -- $(call guix-home-expression,build,$(call subst,guix-time-machine-home-build-,,$@)-home-environment,$(call subst,guix-time-machine-home-build-,,$@)-home-environment)
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-home-reconfigure-$(configuration)): $(DECRYPT_TARGETS)
-	ACTION=reconfigure; \
-	system=$(subst guix-home-reconfigure-,,$@); \
-	$(GUIX) $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
+	$(call guix-home-expression,reconfigure,$(call subst,guix-home-reconfigure-,,$@)-home-environment,$(call subst,guix-home-reconfigure-,,$@)-home-environment) --allow-downgrades
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-home-reconfigure-$(configuration)):
-	$(call guix-time-machine,$(call subst,-home-environment,,$(call subst,guix-time-machine-home-reconfigure-,,$@))) -- home reconfigure --load-path=$(LOAD_PATH) --substitute-urls=$(SUBSTITUTE_URLS) --expression="((@ (wugi home config $(call subst,-home-environment,,$(call subst,guix-time-machine-home-reconfigure-,,$@))) %$(call subst,guix-time-machine-home-reconfigure-,,$@)-home-environment))" --allow-downgrades
+	$(call guix-time-machine,$(call subst,guix-time-machine-home-reconfigure-,,$@)) -- $(call guix-home-expression,reconfigure,$(call subst,guix-time-machine-home-reconfigure-,,$@)-home-environment,$(call subst,guix-time-machine-home-reconfigure-,,$@)-home-environment) --allow-downgrades
 
 define guix-build-manifest
-build --load-path=$(LOAD_PATH) --expression="((@ (wugi manifests $(subst $(1),,$(2))) %$(subst $(1),,$(2)-manifest)))"
+build --load-path="$(LOAD_PATH)" --expression="((@ (wugi manifests $(subst $(1),,$(2))) %$(subst $(1),,$(2)-manifest)))"
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-build-manifest-$(configuration)):
