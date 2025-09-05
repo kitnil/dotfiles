@@ -117,6 +117,10 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-pull-$(configuration)
 	system=$(subst guix-pull-,,$@); \
 	$(call guix-pull,$$system)
 
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),root-guix-pull-$(configuration)):
+	system=$(subst root-guix-pull-,,$@); \
+	sudo -i $(call guix-pull,$$system)
+
 define guix-time-machine
 $(GUIX) time-machine "--channels=guix/wugi/etc/guix/channels/$(1).scm" --substitute-urls=$(SUBSTITUTE_URLS)
 endef
