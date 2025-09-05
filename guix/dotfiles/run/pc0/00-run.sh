@@ -15,6 +15,7 @@ swapon /dev/vg0/swap
 mount -t tmpfs -o rw,relatime,size=100M,rshared none /mnt/guix-workstation/run
 mount -t tmpfs -o rw,relatime,size=100M,rshared none /mnt/guix-workstation/tmp
 
+mount /dev/vg0/guixworkstation /srv/runc/guix-workstation
 mount /dev/vg0/nixosmajordomo /srv/runc/nixos-majordomo
 
 /home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dotfiles/run/pc0/12-run-win10.sh
