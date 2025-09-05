@@ -110,7 +110,7 @@ GUIX_SYSTEM_CONFIGURATIONS =			\
   workstation
 
 define guix-pull
-$(GUIX) pull "--channels=guix/wugi/etc/guix/channels/$(1).scm"
+$(GUIX) pull "--channels=$(abs_top_srcdir)/guix/wugi/etc/guix/channels/$(1).scm"
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-pull-$(configuration)):
