@@ -7,15 +7,7 @@
 
 (define (%nonguix-manifest)
   (define fonts
-    (list font-apple-color-emoji
-          font-apple-new-york
-          font-apple-sf-arabic
-          font-apple-sf-compact
-          font-apple-sf-mono
-          font-apple-sf-pro
-          font-apple-sf-symbols
-          font-apple-symbols
-          font-awesome-nonfree
+    (list font-awesome-nonfree
           font-microsoft-andale-mono
           font-microsoft-arial
           font-microsoft-arial-black
