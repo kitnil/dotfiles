@@ -6,9 +6,9 @@
   (list (channel
          (name 'guix)
          (url "https://cgit.wugi.info/git/guix/guix")
-         (branch "master")
+         (branch "looking-glass")
          (commit
-          "4bfeff64b6e3c85a77a79c29fdb434e5a76b5b28")
+          "60491edac81c73897a6a93c0b01f375e9a9b2477")
          (introduction
           (make-channel-introduction
            "9edb3f66fd807b096b48283debdcddccfea34bad"
@@ -19,7 +19,7 @@
          (url "https://cgit.wugi.info/git/guix/nonguix")
          (branch "master")
          (commit
-          "e899121adbaa13cfcaeae7a5c24921bffa645771")
+          "477f283914ca771a8622e16b73d845b87c63335d")
          (introduction
           (make-channel-introduction
            "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
