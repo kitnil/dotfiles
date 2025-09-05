@@ -110,16 +110,14 @@ GUIX_SYSTEM_CONFIGURATIONS =			\
   workstation
 
 define guix-pull
-$(GUIX) pull "--channels=$(abs_top_srcdir)/guix/wugi/etc/guix/channels/$(1).scm"
+$(GUIX) pull "--channels=$(abs_top_srcdir)/guix/wugi/etc/guix/channels/$(1).scm" --allow-downgrades
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-pull-$(configuration)):
-	system=$(subst guix-pull-,,$@); \
-	$(call guix-pull,$$system)
+	$(call guix-pull,$(call subst,guix-pull-,,$@))
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),root-guix-pull-$(configuration)):
-	system=$(subst root-guix-pull-,,$@); \
-	sudo -i $(call guix-pull,$$system)
+	sudo -i $(call guix-pull,$(call subst,root-guix-pull-,,$@))
 
 define guix-time-machine
 $(GUIX) time-machine "--channels=guix/wugi/etc/guix/channels/$(1).scm" --substitute-urls=$(SUBSTITUTE_URLS)
