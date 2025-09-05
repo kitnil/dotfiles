@@ -166,9 +166,7 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-home-reconfigure-$(co
 	$(GUIX) $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-home-reconfigure-$(configuration)):
-	ACTION=reconfigure; \
-	system=$(subst guix-time-machine-home-reconfigure-,,$@); \
-	$(call guix-time-machine,$$system) -- $(call guix-home-expression,$$system-home-environment,$$system-home-environment)
+	$(call guix-time-machine,$(call subst,-home-environment,,$(call subst,guix-time-machine-home-reconfigure-,,$@))) -- home reconfigure --load-path=$(LOAD_PATH) --substitute-urls=$(SUBSTITUTE_URLS) --expression="((@ (wugi home config $(call subst,-home-environment,,$(call subst,guix-time-machine-home-reconfigure-,,$@))) %$(call subst,guix-time-machine-home-reconfigure-,,$@)-home-environment))"
 
 define guix-build-manifest
 build --load-path=$(LOAD_PATH) --expression="((@ (wugi manifests $(subst $(1),,$(2))) %$(subst $(1),,$(2)-manifest)))"
