@@ -120,7 +120,7 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),root-guix-pull-$(configura
 	sudo -i $(call guix-pull,$(call subst,root-guix-pull-,,$@))
 
 define guix-time-machine
-$(GUIX) time-machine "--channels=guix/wugi/etc/guix/channels/$(1).scm" --substitute-urls=$(SUBSTITUTE_URLS)
+$(GUIX) time-machine "--channels=$(abs_top_srcdir)/guix/wugi/etc/guix/channels/$(1).scm" --substitute-urls=$(SUBSTITUTE_URLS)
 endef
 
 define guix-build-expression
