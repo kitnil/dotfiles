@@ -2,7 +2,7 @@
 
 guix time-machine -C guix/wugi/etc/guix/channels/development.scm -- shell -L guix --development -e '(@ (wugi packages dotfiles) dotfiles-extra)'
 ./bootstrap
-./configure
+./configure PASSWORD_STORE=$HOME/.password-store
 
 nix develop ./nix/dotfiles#dotfiles
 ./bootstrap
