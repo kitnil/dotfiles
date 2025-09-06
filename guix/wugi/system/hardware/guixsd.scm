@@ -84,8 +84,6 @@
                         "kvm.ignore_msrs=1"
                         "kvm.report_ignored_msrs=0"
 
-                        "vfio-pci.ids=1002:7480,1002:ab30"
-
                         ;; Enable LUKS TRIM/DISCARD pass-through.
                         "rd.luks.options=discard"))
     (users (append (list (user-account
