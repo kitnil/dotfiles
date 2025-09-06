@@ -81,6 +81,7 @@
          screen
          skopeo
          socat
+         sshfs
          sshpass
          strace
          tigervnc-client
