@@ -37,7 +37,7 @@
                                   obs-composite-blur
                                   obs-exporter
                                   obs-gradient-source
-                                  obs-looking-glass
+                                  (@ (wigust packages video) obs-looking-glass)
                                   obs-move-transition
                                   obs-multi-rtmp
                                   obs-ndi

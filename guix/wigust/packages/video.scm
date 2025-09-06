@@ -24,12 +24,23 @@
   #:use-module (gnu packages bash)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages elf)
+  #:use-module (gnu packages freedesktop)
+  #:use-module (gnu packages fontutils)
   #:use-module (gnu packages gawk)
   #:use-module (gnu packages gcc)
+  #:use-module (gnu packages gl)
+  #:use-module (gnu packages multiprecision)
+  #:use-module (gnu packages nettle)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages python)
   #:use-module (gnu packages qt)
+  #:use-module (gnu packages sdl)
+  #:use-module (gnu packages spice)
+  #:use-module (gnu packages textutils)
+  #:use-module (gnu packages tls)
   #:use-module (gnu packages video)
+  #:use-module (gnu packages xdisorg)
+  #:use-module (gnu packages xorg)
   #:use-module (guix build-system cmake)
   #:use-module (guix build-system copy)
   #:use-module (guix build-system trivial)
@@ -749,9 +760,9 @@ the audio levels of any audio source you choose.")
     (source (origin
               (method git-fetch)
               (uri (git-reference
-                    (url "https://github.com/phandasm/waveform")
-                    (commit (string-append "v" version))
-                    (recursive? #t))) ; for cpu_features git submodule
+                     (url "https://github.com/phandasm/waveform")
+                     (commit (string-append "v" version))
+                     (recursive? #t))) ; for cpu_features git submodule
               (file-name (git-file-name name version))
               (sha256
                (base32
@@ -791,3 +802,75 @@ the audio levels of any audio source you choose.")
     (synopsis "")
     (description "")
     (license license:gpl2)))
+
+(define-public obs-looking-glass
+  (package
+    (name "obs-looking-glass")
+    (version "B7")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://looking-glass.io/artifact/" version
+                                  "/source"))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "11crsvy783ig7kzmr2cr68wv9zsjkcbp1akcs28rc6yc1ik0dr89"))))
+    (build-system cmake-build-system)
+    (arguments
+     (list
+      #:tests? #f ; no test target
+      #:make-flags #~(list "CC=gcc")
+      #:configure-flags
+      #~(list "-DGLOBAL_INSTALLATION=ON"
+              "-DUSE_CMAKE_LIBDIR=ON"
+              (string-append "-DOBS_PLUGIN_PREFIX="
+                             #$output "/lib/obs-plugins"))
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-before 'configure 'chdir-to-source
+            (lambda* (#:key outputs #:allow-other-keys)
+              (chdir "obs")
+              #t))
+          (add-after 'chdir-to-source 'substitute-output
+            (lambda* (#:key outputs #:allow-other-keys)
+              (substitute* "CMakeLists.txt"
+                (("\\$\\{OBS_PLUGIN_PREFIX\\}/\\$\\{CMAKE_PROJECT_NAME\\}/bin/\\$\\{OBS_PLUGIN_DIR\\}")
+                 (string-append (string-append #$output "/lib/obs-plugins"))))
+              #t)))))
+    (native-inputs (list libconfig nettle pkg-config))
+    (inputs
+     (list bash-minimal
+           fontconfig
+           freetype
+           glu
+           gmp
+           libglvnd
+           libiberty
+           libx11
+           libxcursor
+           libxfixes
+           libxi
+           libxinerama
+           libxkbcommon
+           libxpresent
+           libxrandr
+           libxscrnsaver
+           mesa
+           obs
+           openssl
+           sdl2
+           sdl2-ttf
+           spice-protocol
+           wayland
+           wayland-protocols
+           `(,zlib "static")))
+    (home-page "https://looking-glass.io/")
+    (synopsis "Looking Glass video feed to OBS as a video source")
+    (description "This OBS plugin allows a Looking Glass video feed to OBS as
+a video source with the included OBS plugin.  This provides a lower-latency
+alternative to capturing the Looking Glass client window with a Screen or
+Window Capture source.
+
+This may help improve your viewers watching experience, and allows you to use
+your host privately.")
+    (license license:gpl2+)))
