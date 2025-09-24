@@ -8,6 +8,8 @@ in {
   manual.manpages.enable = false;
 
   home.packages = with packages; [
+    binutils
+
     viddy
 
     OVMF.fd # UEFI for virtual machines in libvirt
