@@ -1,6 +1,7 @@
 { pkgs, lib, config, robo3t, ... }:
 {
   home.packages = [
+    pkgs.ipmitool
     pkgs.ipmiview
     robo3t
   ];
