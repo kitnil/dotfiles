@@ -1,7 +1,7 @@
-{ pkgs, lib, config, robo3t, ipmiview-wrapper, ... }:
+{ pkgs, lib, config, robo3t, ... }:
 {
   home.packages = [
-    ipmiview-wrapper
+    pkgs.ipmiview
     robo3t
   ];
 
