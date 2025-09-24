@@ -185,6 +185,9 @@
       dejavu_fonts
       wqy_zenhei
     ];
+    fontconfig = {
+      enable = true;
+    };
   };
 
   hardware.graphics = {
