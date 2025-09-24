@@ -87,6 +87,7 @@
                             allowUnfreePredicate = pkg:
                               builtins.elem (nixpkgs.lib.getName pkg) [
                                 "google-chrome"
+                                "IPMIView"
                               ];
                           };
                         } // {
