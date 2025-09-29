@@ -160,7 +160,7 @@ direnv:
 "
 
     export XDG_RUNTIME_DIR="/run/user/$UID"
-    export EDITOR="$HOME/.guix-profile/bin/emacsclient -nc"
+    export EDITOR="emacsclient -nc"
 
     cat <<'EOF'
 sudo --login \
