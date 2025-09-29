@@ -1,7 +1,8 @@
 (add-hook 'yaml-mode-hook
           '(lambda () (set (make-local-variable 'yas-indent-line) 'fixed)))
 
-(add-hook 'yaml-mode-hook 'yaml-pro-mode)
+(when (functionp #'yaml-pro-mode)
+  (add-hook 'yaml-mode-hook 'yaml-pro-mode))
 
 
 (defun wi-yaml-prettify-symbols ()
