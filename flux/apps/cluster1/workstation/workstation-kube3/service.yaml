@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: workstation-kube3
+  labels:
+    app.kubernetes.io/name: workstation-kube3
+    app.kubernetes.io/part-of: workstation
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+    name: http
+  clusterIP: None
