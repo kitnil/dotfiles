@@ -23,6 +23,7 @@ in {
     ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
       epkgs: [
         epkgs.magit
+        epkgs.nginx-mode
         epkgs.nix-mode
         epkgs.yaml-mode
       ]
