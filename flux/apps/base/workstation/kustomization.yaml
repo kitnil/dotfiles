@@ -3,4 +3,3 @@ kind: Kustomization
 namespace: workstation
 resources:
 - namespace.yaml
-- daemonset.yaml
