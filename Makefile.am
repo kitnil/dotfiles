@@ -132,19 +132,16 @@ system image --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) --m
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-build-$(configuration)):
-	system=$(subst guix-system-build-,,$@); \
-	$(GUIX) $(call guix-build-expression,$$system,$$system)
+	$(GUIX) $(call guix-build-expression,$(call subst,guix-system-build-,,$@),$(call subst,guix-system-build-,,$@))
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-image-$(configuration)):
-	system=$(subst guix-time-machine-system-image-,,$@); \
-	container=$$($(call guix-time-machine,$$system) -- $(call guix-image-expression,$$system,$$system))
-	IMG=$(container_registry)/library/$$system:$$(echo $(GIT_COMMIT) | cut -c -8)-$$(date +%s)
+	container=$$($(call guix-time-machine,$(call subst,guix-time-machine-system-image-,,$@)) -- $(call guix-image-expression,$(call subst,guix-time-machine-system-image-,,$@),$(call subst,guix-time-machine-system-image-,,$@)))
+	IMG=$(container_registry)/library/$(call subst,guix-time-machine-system-image-,,$@):$$(echo $(GIT_COMMIT) | cut -c -8)-$$(date +%s)
 	$(SKOPEO) copy docker-archive\:$$container docker://$$IMG
 	echo $$IMG
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-build-$(configuration)):
-	system=$(subst guix-time-machine-system-build-,,$@); \
-	$(call guix-time-machine,$$system) -- $(call guix-build-expression,$$system,$$system)
+	$(call guix-time-machine,$(call subst,guix-time-machine-system-build-,,$@)) -- $(call guix-build-expression,$(call subst,guix-time-machine-system-build-,,$@),$(call subst,guix-time-machine-system-build-,,$@))
 
 define guix-home-expression
 home $1 --load-path="$(LOAD_PATH)" --substitute-urls="$(SUBSTITUTE_URLS)" -e "((@ (wugi home config $(subst -home-environment,,$2)) %$(3)))"
@@ -170,8 +167,7 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-build-manifest-$(conf
 	$(GUIX) $(call guix-build-manifest,guix-build-manifest-,$@)
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-build-manifest-$(configuration)):
-	system=$(subst guix-time-machine-build-manifest-,,$@); \
-	$(call guix-time-machine,$$system) -- $(call guix-build-manifest,guix-time-machine-build-manifest-,$$system)
+	$(call guix-time-machine,$(call subst,guix-time-machine-build-manifest-,,$@)) -- $(call guix-build-manifest,guix-time-machine-build-manifest-,$(call subst,guix-time-machine-build-manifest-,,$@))
 
 .PHONY: github
 github:
