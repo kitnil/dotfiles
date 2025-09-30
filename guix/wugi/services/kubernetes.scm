@@ -298,22 +298,24 @@
 (define-record-type* <kubelet-configuration>
   kubelet-configuration make-kubelet-configuration
   kubelet-configuration?
-  (kubelet kubelet-configuration-kubelet ;string
-           (default kubernetes))
-  (log-file kubelet-configuration-log-file ;string
-            (default "/var/log/kubelet.log"))
-  (drbd? kubelet-configuration-drbd? ;boolean
-         (default #f))
-  (hpvolumes? kubelet-configuration-hpvolumes? ;boolean
-              (default #f))
-  (kubevirt? kubernetes-kubelet-configuration-kubevirt? ;boolean
-             (default #f))
-  (cilium?   kubernetes-kubelet-configuration-cilium?   ;boolean
-             (default #f))
-  (flux?     kubernetes-kubelet-configuration-flux?     ;boolean
-             (default #f))
-  (arguments kubelet-configuration-arguments ;list of strings
-             (default '())))
+  (kubelet      kubelet-configuration-kubelet      ;string
+                (default kubernetes))
+  (log-file     kubelet-configuration-log-file     ;string
+                (default "/var/log/kubelet.log"))
+  (drbd?        kubelet-configuration-drbd?        ;boolean
+                (default #f))
+  (hpvolumes?   kubelet-configuration-hpvolumes?   ;boolean
+                (default #f))
+  (kubevirt?    kubelet-configuration-kubevirt?    ;boolean
+                (default #f))
+  (cilium?      kubelet-configuration-cilium?      ;boolean
+                (default #f))
+  (flux?        kubelet-configuration-flux?        ;boolean
+                (default #f))
+  (maintenance? kubelet-configuration-maintenance? ;boolean
+                (default #f))
+  (arguments    kubelet-configuration-arguments    ;list of strings
+                (default '())))
 
 (define (kubelet-log-rotations config)
   (list (log-rotation
@@ -329,7 +331,9 @@
               (list #$(program-file
                        "kubelet"
                        #~(begin
-                           #$(maintenance)
+                           '#$(if (kubelet-configuration-maintenance? config)
+                                  (maintenance)
+                                  '())
                            #$(etcd)
                            #$(kubernetes-images)
                            #$(cilium-requirements)
@@ -372,13 +376,13 @@
                                              kubernetes-helm
                                              nerdctl
                                              k9s)
-                                       (if (kubernetes-kubelet-configuration-cilium? config)
+                                       (if (kubelet-configuration-cilium? config)
                                            (list cilium)
                                            '())
-                                       (if (kubernetes-kubelet-configuration-flux? config)
+                                       (if (kubelet-configuration-flux? config)
                                            (list flux)
                                            '())
-                                       (if (kubernetes-kubelet-configuration-kubevirt? config)
+                                       (if (kubelet-configuration-kubevirt? config)
                                            (list virtctl)
                                            '()))))))
    (default-value (kubelet-configuration))
