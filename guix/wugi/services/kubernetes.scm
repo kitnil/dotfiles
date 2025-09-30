@@ -236,11 +236,7 @@
    (extensions
     (list (service-extension profile-service-type
                              (lambda (config)
-                               (append (list k3s
-                                             kubectl
-                                             kubernetes-helm
-                                             nerdctl
-                                             k9s)
+                               (append (list nerdctl)
                                        (if (kubernetes-k3s-configuration-cilium? config)
                                            (list cilium)
                                            '())
@@ -299,7 +295,7 @@
   kubelet-configuration make-kubelet-configuration
   kubelet-configuration?
   (kubelet      kubelet-configuration-kubelet      ;string
-                (default kubernetes))
+                (default #f))
   (log-file     kubelet-configuration-log-file     ;string
                 (default "/var/log/kubelet.log"))
   (drbd?        kubelet-configuration-drbd?        ;boolean
@@ -372,18 +368,9 @@
                              kubelet-log-rotations)
           (service-extension profile-service-type
                              (lambda (config)
-                               (append (list kubectl
-                                             kubernetes-helm
-                                             nerdctl
-                                             k9s)
+                               (append (list nerdctl)
                                        (if (kubelet-configuration-cilium? config)
                                            (list cilium)
-                                           '())
-                                       (if (kubelet-configuration-flux? config)
-                                           (list flux)
-                                           '())
-                                       (if (kubelet-configuration-kubevirt? config)
-                                           (list virtctl)
                                            '()))))))
    (default-value (kubelet-configuration))
    (description "Run the kubelet.")))
