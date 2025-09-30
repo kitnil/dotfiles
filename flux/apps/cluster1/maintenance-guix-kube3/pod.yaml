@@ -10,7 +10,7 @@ metadata:
 spec:
   hostNetwork: true
   hostPID: true
-  restartPolicy: Never
+  restartPolicy: Always
   containers:
   - command:
     - /bin/guile
