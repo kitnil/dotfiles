@@ -475,6 +475,23 @@ in {
     };
   };
 
+  programs.gpg = {
+    enable = true;
+  };
+
+  services.gpg-agent = {
+    enable = true;
+    enableBashIntegration = true;
+    defaultCacheTtl = 172800;
+    defaultCacheTtlSsh = 172800;
+    maxCacheTtl = 172800;
+    maxCacheTtlSsh = 172800;
+    grabKeyboardAndMouse = false;
+    extraConfig = ''
+      allow-preset-passphrase
+    '';
+  };
+
   programs.ssh = {
     enable = true;
   };
