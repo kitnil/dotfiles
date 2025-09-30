@@ -49,7 +49,7 @@ in
           DISPLAY=:0
           export DISPLAY
 
-          exec -a foot ${cfg.package}/bin/foot --title="nixos - foot" "$@"
+          exec -a foot ${cfg.package}/bin/foot --title="nixos - foot" ${pkgs.coreutils}/bin/env --unset XDG_RUNTIME_DIR ${pkgs.bash} -l
         '';
         Type = "simple";
         Restart = "always";
