@@ -79,6 +79,8 @@ code is non-zero; otherwise return #t."
                           (list (string-append "--setgid=" gid))))
                  '())
            "/run/current-system/profile/bin/guile" "--no-auto-compile"
-           "-c" ,(with-output-to-string (lambda () (write (nsenter-program)))))))
+           "-c" ,(with-output-to-string (lambda () (write (nsenter-program))))))
+  (while #t
+    (sleep 10)))
 
 ;;; guile-nsenter ends here
