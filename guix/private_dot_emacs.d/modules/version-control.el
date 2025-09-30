@@ -388,7 +388,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   (let ((default-directory (projectile-project-root)))
     (aichat-git-common 0)))
 
-(add-hook 'git-commit-setup-hook #'git-commit-aichat)
+;; (add-hook 'git-commit-setup-hook #'git-commit-aichat)
 
 
 ;;;
