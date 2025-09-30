@@ -39,6 +39,8 @@ code is non-zero; otherwise return #t."
            (error (format #f "program ~s exited with non-zero code" program)
                   status))
          #t))
+     (setenv "PATH" (string-append "/run/current-system/profile/bin:"
+                                   "/run/current-system/profile/sbin"))
      (invoke "herd" "start" "runc-container-guix-workstation")
      (invoke "herd" "start" "runc-container-nixos-workstation")
      (invoke "herd" "start" "runc-container-nixos-majordomo")
