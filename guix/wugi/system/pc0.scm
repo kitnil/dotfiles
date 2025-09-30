@@ -5,6 +5,7 @@
 (define-module (wugi system pc0)
   #:use-module (gnu bootloader)
   #:use-module (gnu bootloader grub)
+  #:use-module (gnu packages admin)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages video)
   #:use-module (gnu packages ssh)
@@ -171,6 +172,7 @@
     (packages (append (map package-from-program-file
                            (list restic-pc0-backup
                                  restic-pc0-win10-backup))
+                      (list dmidecode) ;required for libvirt
                       %pc0-packages
                       %base-packages))
 
