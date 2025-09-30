@@ -15,7 +15,7 @@ DECRYPT_TARGETS =					\
 .PHONY: all
 all: $(foreach secret,$(DECRYPT_TARGETS),$(secret))
 
-SUBSTITUTE_URLS ?= https://bordeaux.guix.gnu.org https://mirrors.sjtug.sjtu.edu.cn/guix https://substitutes.nonguix.org
+SUBSTITUTE_URLS ?= "https://bordeaux.guix.gnu.org https://mirrors.sjtug.sjtu.edu.cn/guix https://substitutes.nonguix.org"
 
 LOAD_PATH=$(abs_top_srcdir)/guix
 
@@ -120,7 +120,7 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),root-guix-pull-$(configura
 	sudo -i $(call guix-pull,$(call subst,root-guix-pull-,,$@))
 
 define guix-time-machine
-$(GUIX) time-machine --channels="$(abs_top_srcdir)/guix/wugi/etc/guix/channels/$(1).scm" --substitute-urls="$(SUBSTITUTE_URLS)"
+$(GUIX) time-machine --channels="$(abs_top_srcdir)/guix/wugi/etc/guix/channels/$(1).scm" --substitute-urls=$(SUBSTITUTE_URLS)
 endef
 
 define guix-build-expression
@@ -144,7 +144,7 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-b
 	$(call guix-time-machine,$(call subst,guix-time-machine-system-build-,,$@)) -- $(call guix-build-expression,$(call subst,guix-time-machine-system-build-,,$@),$(call subst,guix-time-machine-system-build-,,$@))
 
 define guix-home-expression
-home $1 --load-path="$(LOAD_PATH)" --substitute-urls="$(SUBSTITUTE_URLS)" -e "((@ (wugi home config $(subst -home-environment,,$2)) %$(3)))"
+home $1 --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) -e "((@ (wugi home config $(subst -home-environment,,$2)) %$(3)))"
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-home-build-$(configuration)): $(DECRYPT_TARGETS)
@@ -291,13 +291,13 @@ mumble:
 .ONESHELL:
 pc0-manifest:
 	set -o nounset -o errexit -o pipefail -o xtrace
-	$(GUIX) time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- build --load-path="$(LOAD_PATH)" -m wugi/manifests/pc0.scm --substitute-urls="$(SUBSTITUTE_URLS)"
+	$(GUIX) time-machine --channels=guix/wugi/etc/guix/channels/workstation.scm -- build --load-path="$(LOAD_PATH)" -m wugi/manifests/pc0.scm --substitute-urls=$(SUBSTITUTE_URLS)
 
 .ONESHELL:
 guix-image-builder: $(DECRYPT_TARGETS)
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(echo $(GIT_COMMIT) | cut -c -8)
-	container=$$($(GUIX) time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls="$(SUBSTITUTE_URLS)" --max-layers=100 -t docker --network ~/src/cgit.wugi.info/wigust/dotfiles/guix/wugi/system/guix-image-builder.scm)
+	container=$$($(GUIX) time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls=$(SUBSTITUTE_URLS) --max-layers=100 -t docker --network ~/src/cgit.wugi.info/wigust/dotfiles/guix/wugi/system/guix-image-builder.scm)
 	$(SKOPEO) copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 nix-update-inputs:
