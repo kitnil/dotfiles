@@ -123,8 +123,12 @@ define guix-time-machine
 $(GUIX) time-machine --channels="$(abs_top_srcdir)/guix/wugi/etc/guix/channels/$(1).scm" --substitute-urls=$(SUBSTITUTE_URLS)
 endef
 
-define guix-system-expression
---load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) --expression="((@ (wugi system $(1)) %$(2)))"
+define guix-build-expression
+build --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) --expression="((@ (wugi system $(1)) %$(2)))"
+endef
+
+define guix-reconfigure-expression
+reconfigure --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) --expression="((@ (wugi system $(1)) %$(2)))"
 endef
 
 define guix-image-expression
@@ -132,10 +136,10 @@ system image --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) --m
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-build-$(configuration)):
-	$(GUIX) build $(call guix-system-expression,$(call subst,guix-system-build-,,$@),$(call subst,guix-system-build-,,$@))
+	$(GUIX) $(call guix-build-expression,$(call subst,guix-system-build-,,$@),$(call subst,guix-system-build-,,$@))
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-reconfigure-$(configuration)):
-	$(GUIX) reconfigure $(call guix-system-expression,$(call subst,guix-system-reconfigure-,,$@),$(call subst,guix-system-reconfigure-,,$@))
+	$(GUIX) $(call guix-reconfigure-expression,$(call subst,guix-system-reconfigure-,,$@),$(call subst,guix-system-reconfigure-,,$@))
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-image-$(configuration)):
 	container=$$($(call guix-time-machine,$(call subst,guix-time-machine-system-image-,,$@)) -- $(call guix-image-expression,$(call subst,guix-time-machine-system-image-,,$@),$(call subst,guix-time-machine-system-image-,,$@)))
@@ -144,7 +148,7 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-i
 	echo $$IMG
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-build-$(configuration)):
-	$(call guix-time-machine,$(call subst,guix-time-machine-system-build-,,$@)) -- build $(call guix-system-expression,$(call subst,guix-time-machine-system-build-,,$@),$(call subst,guix-time-machine-system-build-,,$@))
+	$(call guix-time-machine,$(call subst,guix-time-machine-system-build-,,$@)) -- $(call guix-build-expression,$(call subst,guix-time-machine-system-build-,,$@),$(call subst,guix-time-machine-system-build-,,$@))
 
 define guix-home-expression
 home $1 --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) -e "((@ (wugi home config $(subst -home-environment,,$2)) %$(3)))"
