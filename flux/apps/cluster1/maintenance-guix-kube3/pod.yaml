@@ -29,24 +29,12 @@ spec:
     image: harbor.home.wugi.info/library/util-linux-with-udev:44cd2b5c
     name: nsenter
     env:
-    - name: RUNC_CONTAINER_ID
-      value: guix-builder
-    - name: KUBERNETES_POD_NAME
-      value: runc-kube1-guix-builder
-    - name: KUBERNETES_NAMESPACE
-      value: guix
     - name: NSENTER_UID
-      value: "1000"
+      value: "0"
     - name: NSENTER_GID
-      value: "998"
-    - name: RUNC_UID
-      value: "1000"
-    - name: RUNC_GID
-      value: "998"
+      value: "0"
     - name: RUNC_GUILE
       value: /run/current-system/profile/bin/guile
-    - name: RUNC_USER
-      value: oleg
     resources:
       limits:
         cpu: 14000m
