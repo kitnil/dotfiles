@@ -31,9 +31,7 @@
 
             runc-configuration
             runc-configuration?
-            runc-service-type
-
-            libvirt-service-type))
+            runc-service-type))
 
 ;;; Commentary:
 ;;;
@@ -164,61 +162,5 @@
                                   (service-extension rottlog-service-type
                                                      runc-log-rotations)))
                 (description "Run runc.")))
-
-
-;;;
-;;; libvirt
-;;;
-
-(define (libvirt-shepherd-service config)
-  (let* ((config-file ((@@ (gnu services virtualization) libvirt-conf-file) config))
-         (libvirt ((@ (gnu services virtualization) libvirt-configuration-libvirt)
-                   config))
-         (listen-tcp? ((@ (gnu services virtualization) libvirt-configuration-listen-tcp?)
-                       config)))
-    (list (shepherd-service
-           (documentation "Run the libvirt daemon.")
-           (provision '(libvirtd))
-           (start #~(make-forkexec-constructor
-                     (list (string-append #$libvirt "/sbin/libvirtd")
-                           "-f" #$config-file
-                           #$@(if listen-tcp? '("--listen") '()))
-                     ;; For finding qemu, firmwares, the 'ip' command and
-                     ;; kernel modules.
-                     #:environment-variables
-                     (list
-                      (string-append
-                       "PATH=/run/current-system/profile/bin:"
-                       "/run/current-system/profile/sbin")
-                      (string-append
-                       "LINUX_MODULE_DIRECTORY="
-                       "/run/booted-system/kernel/lib/modules"))))
-           (stop #~(make-kill-destructor))))))
-
-(define libvirt-service-type
-  (service-type
-   (name 'libvirt)
-   (extensions
-    (list
-     (service-extension profile-service-type
-                        (lambda (config)
-                          (list ((@ (gnu services virtualization) libvirt-configuration-libvirt)
-                                 config)
-                                ((@ (gnu services virtualization) libvirt-configuration-qemu)
-                                 config))))
-     ;; Libvirt only considers the $libvirt/share/qemu/firmware and
-     ;; /etc/qemu/firmware directories to locate the QEMU firmware metadata
-     ;; specifications.
-     (service-extension etc-service-type (@@ (gnu services virtualization) /etc/qemu/firmware))
-     (service-extension activation-service-type
-                        (@@ (gnu services virtualization) %libvirt-activation))
-     (service-extension shepherd-root-service-type
-                        libvirt-shepherd-service)
-     (service-extension account-service-type
-                        (const (@@ (gnu services virtualization) %libvirt-accounts)))))
-   (default-value ((@@ (gnu services virtualization) libvirt-configuration)))
-   (description "Run @command{libvirtd}, a daemon of the libvirt
-virtualization management system.  This daemon runs on host servers and
-performs required management tasks for virtualized guests.")))
 
 ;;; virtualization.scm ends here

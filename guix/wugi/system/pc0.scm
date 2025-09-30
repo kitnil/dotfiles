@@ -439,13 +439,14 @@
                                       (flux? #t)
                                       (kubevirt? #t)))
 
-                            (service (@ (wugi services virtualization) libvirt-service-type)
+                            (service libvirt-service-type
                                      (libvirt-configuration
                                       ;; XXX: Specify listen-addr after adding networking requirement.
                                       ;;
-                                      ;; (listen-addr "192.168.0.192")
+                                      (listen-addr "192.168.0.192")
                                       (listen-tcp? #t)
-                                      (auth-tcp "none")))
+                                      (auth-tcp "none")
+                                      (requirement '(networking))))
                             (simple-service 'libvirt-qemu-config activation-service-type
                                             #~(begin
                                                 (when (file-exists? "/etc/libvirt")
