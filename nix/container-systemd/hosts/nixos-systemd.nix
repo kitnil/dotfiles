@@ -92,9 +92,17 @@
     };
   };
 
-  systemd.services.openvpn-client = {
-    unitConfig = {
-      ConditionPathExists = [ "/etc/openvpn/login.conf" ];
+  systemd = {
+    sockets = {
+      systemd-rfkill.enable = false;
+    };
+    services = {
+      systemd-rfkill.enable = false;
+      openvpn-client = {
+        unitConfig = {
+          ConditionPathExists = [ "/etc/openvpn/login.conf" ];
+        };
+      };
     };
   };
 
