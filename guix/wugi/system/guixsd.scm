@@ -1564,6 +1564,7 @@ PasswordAuthentication yes")))
          (service kubelet-service-type
                   (kubelet-configuration
                    (kubelet "/nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet")
+                   (maintenance? #t)
                    (arguments
                     '("--address=192.168.0.144"
                       "--node-ip=192.168.0.144"
