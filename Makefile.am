@@ -127,8 +127,8 @@ define guix-build-expression
 build --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) --expression="((@ (wugi system $(1)) %$(2)))"
 endef
 
-define guix-reconfigure-expression
-reconfigure --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) --expression="((@ (wugi system $(1)) %$(2)))"
+define guix-system-reconfigure-expression
+system reconfigure --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) --expression="((@ (wugi system $(1)) %$(2)))"
 endef
 
 define guix-image-expression
@@ -139,7 +139,7 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-build-$(config
 	$(GUIX) $(call guix-build-expression,$(call subst,guix-system-build-,,$@),$(call subst,guix-system-build-,,$@))
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-reconfigure-$(configuration)):
-	$(GUIX) $(call guix-reconfigure-expression,$(call subst,guix-system-reconfigure-,,$@),$(call subst,guix-system-reconfigure-,,$@))
+	$(GUIX) $(call guix-system-reconfigure-expression,$(call subst,guix-system-reconfigure-,,$@),$(call subst,guix-system-reconfigure-,,$@))
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-image-$(configuration)):
 	container=$$($(call guix-time-machine,$(call subst,guix-time-machine-system-image-,,$@)) -- $(call guix-image-expression,$(call subst,guix-time-machine-system-image-,,$@),$(call subst,guix-time-machine-system-image-,,$@)))
