@@ -382,12 +382,6 @@
 
                             (service runc-container-service-type
                                      (runc-container-configuration
-                                      (bundle "/srv/runc/guix-wugi")
-                                      (name "guix-wugi")
-                                      (requirement '(guix-wugi))))
-
-                            (service runc-container-service-type
-                                     (runc-container-configuration
                                       (bundle "/srv/runc/guix-nanokvm")
                                       (name "guix-nanokvm")
                                       (requirement '(guix-nanokvm))))
