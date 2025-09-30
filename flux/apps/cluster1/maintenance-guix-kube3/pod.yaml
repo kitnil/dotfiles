@@ -41,7 +41,7 @@ spec:
         memory: 8192Mi
       requests:
         cpu: 50m
-        memory: 8192Mi
+        memory: 128Mi
     securityContext:
       privileged: true
     volumeMounts:
