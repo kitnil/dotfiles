@@ -33,6 +33,8 @@ in {
 
     wlvncc
     zenity
+
+    pass
   ];
 
   home.file = {
