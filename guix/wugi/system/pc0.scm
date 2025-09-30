@@ -37,6 +37,7 @@
   #:use-module (gnu system setuid)
   #:use-module (gnu system shadow)
   #:use-module (guix gexp)
+  #:use-module (guix modules)
   #:use-module (nongnu packages linux)
   #:use-module (nongnu system linux-initrd)
   #:use-module (wugi bootloader grub)
@@ -69,6 +70,135 @@
                     (execl #$(local-file (string-append %distro-directory "/dotfiles/run/pc0/14-sway-run-all.sh")
                                          #:recursive? #t)
                            "sway-run-all"))))
+
+(define nixos-majordomo-program-file
+  (program-file "nixos-majordomo"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "nixos-majordomo")
+                      (invoke "ip" "link" "add" "name" "nixos2" "type" "veth" "peer" "name" "nixos3")
+                      (invoke "ip" "link" "set" "dev" "nixos3" "netns" "nixos-majordomo")
+                      (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "link" "set" "nixos3" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "nixos2" "master" "br0")
+                      (invoke "ip" "link" "set" "nixos2" "up")
+                      (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "addr" "add" "192.168.0.197/24" "dev" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "route" "add" "default" "via" "192.168.0.1")
+
+                      (invoke "mount" "/dev/vg0/nixosmajordomo" "/srv/runc/nixos-majordomo")))))
+
+(define nixos-workstation-program-file
+  (program-file "nixos-workstation"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "nixos-workstation")
+                      (invoke "ip" "link" "add" "name" "nixos0" "type" "veth" "peer" "name" "nixos1")
+                      (invoke "ip" "link" "set" "dev" "nixos1" "netns" "nixos-workstation")
+                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "link" "set" "nixos1" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "nixos0" "master" "br0")
+                      (invoke "ip" "link" "set" "nixos0" "up")
+                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "addr" "add" "192.168.0.195/24" "dev" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+
+(define guix-workstation-program-file
+  (program-file "guix-workstation"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "guix-workstation")
+                      (invoke "ip" "link" "add" "name" "guix0" "type" "veth" "peer" "name" "guix1")
+                      (invoke "ip" "link" "set" "dev" "guix1" "netns" "guix-workstation")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "link" "set" "guix1" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "guix0" "master" "br0")
+                      (invoke "ip" "link" "set" "guix0" "up")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.194/24" "dev" "eth0")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")
+
+                      (invoke "mount" "-t" "tmpfs" "-o" "rw,relatime,size=100M,rshared" "none" "/mnt/guix-workstation/run")
+                      (invoke "mount" "-t" "tmpfs" "-o" "rw,relatime,size=100M,rshared" "none" "/mnt/guix-workstation/tmp")
+
+                      (invoke "mount" "/dev/vg0/guixworkstation" "/srv/runc/guix-workstation")))))
+
+(define guix-rde-program-file
+  (program-file "guix-rde"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "guix-rde")
+                      (invoke "ip" "link" "add" "name" "guix2" "type" "veth" "peer" "name" "guix3")
+                      (invoke "ip" "link" "set" "dev" "guix3" "netns" "guix-rde")
+                      (invoke "ip" "netns" "exec" "guix-rde" "ip" "link" "set" "guix3" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "guix-rde" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "guix2" "master" "br0")
+                      (invoke "ip" "link" "set" "guix2" "up")
+                      (invoke "ip" "netns" "exec" "guix-rde" "ip" "addr" "add" "192.168.0.193/24" "dev" "eth0")
+                      (invoke "ip" "netns" "exec" "guix-rde" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+
+(define guix-nanokvm-program-file
+  (program-file "nixos-majordomo"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+
+                      (invoke "ip" "netns" "add" "guix-nanokvm")
+                      (invoke "ip" "link" "add" "name" "guix4" "type" "veth" "peer" "name" "guix5")
+                      (invoke "ip" "link" "set" "dev" "guix5" "netns" "guix-nanokvm")
+                      (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "link" "set" "guix5" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "guix4" "master" "br0")
+                      (invoke "ip" "link" "set" "guix4" "up")
+                      (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "addr" "add" "192.168.0.198/24" "dev" "eth0")
+                      (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "route" "add" "default" "via" "192.168.0.1")
+
+                      (invoke "mount" "/dev/vg0/guixnanokvm" "/srv/runc/guix-nanokvm")))))
+
+(define windows-program-file
+  (program-file "windows"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (setenv "LINUX_MODULE_DIRECTORY" "/run/booted-system/kernel/lib/modules")
+                      (invoke "modprobe" "kvmfr" "static_size_mb=128")
+                      (invoke "chown" "oleg:kvm" "/dev/kvmfr0")
+                      (invoke "modprobe" "vfio_iommu_type1")
+                      (invoke "virsh" "start" "win10")))))
+
+(define system-provision-program-file
+  (program-file "system-provision"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+
+                      (invoke "iptables" "-P" "FORWARD" "ACCEPT")
+
+                      (invoke "swapon" "/dev/vg0/swap")))))
 
 (define (%pc0)
   (operating-system
@@ -338,6 +468,76 @@ cgroup_device_acl = [
 ]
 "))))))
 
+                            (simple-service 'system-provision shepherd-root-service-type
+                                            (list (shepherd-service
+                                                    (provision '(system-provision))
+                                                    (requirement '())
+                                                    (start #~(make-forkexec-constructor
+                                                              (list #$system-provision-program-file)))
+                                                    (respawn? #f)
+                                                    (auto-start? #t)
+                                                    (one-shot? #t))))
+
+                            (simple-service 'nixos-majordomo shepherd-root-service-type
+                                            (list (shepherd-service
+                                                    (provision '(nixos-majordomo))
+                                                    (requirement '(networking))
+                                                    (start #~(make-forkexec-constructor
+                                                              (list #$nixos-majordomo-program-file)))
+                                                    (respawn? #f)
+                                                    (auto-start? #t)
+                                                    (one-shot? #t))))
+
+                            (simple-service 'nixos-workstation shepherd-root-service-type
+                                            (list (shepherd-service
+                                                    (provision '(nixos-workstation))
+                                                    (requirement '(networking))
+                                                    (start #~(make-forkexec-constructor
+                                                              (list #$nixos-workstation-program-file)))
+                                                    (respawn? #f)
+                                                    (auto-start? #t)
+                                                    (one-shot? #t))))
+
+                            (simple-service 'guix-workstation shepherd-root-service-type
+                                            (list (shepherd-service
+                                                    (provision '(guix-workstation))
+                                                    (requirement '(networking))
+                                                    (start #~(make-forkexec-constructor
+                                                              (list #$guix-workstation-program-file)))
+                                                    (respawn? #f)
+                                                    (auto-start? #t)
+                                                    (one-shot? #t))))
+
+                            (simple-service 'guix-rde shepherd-root-service-type
+                                            (list (shepherd-service
+                                                    (provision '(guix-rde))
+                                                    (requirement '(networking))
+                                                    (start #~(make-forkexec-constructor
+                                                              (list #$guix-rde-program-file)))
+                                                    (respawn? #f)
+                                                    (auto-start? #t)
+                                                    (one-shot? #t))))
+
+                            (simple-service 'guix-nanokvm shepherd-root-service-type
+                                            (list (shepherd-service
+                                                    (provision '(guix-nanokvm))
+                                                    (requirement '(networking))
+                                                    (start #~(make-forkexec-constructor
+                                                              (list #$guix-nanokvm-program-file)))
+                                                    (respawn? #f)
+                                                    (auto-start? #t)
+                                                    (one-shot? #t))))
+
+                            (simple-service 'windows shepherd-root-service-type
+                                            (list (shepherd-service
+                                                    (provision '(windows))
+                                                    (requirement '(networking libvirtd))
+                                                    (start #~(make-forkexec-constructor
+                                                              (list #$windows-program-file)))
+                                                    (respawn? #f)
+                                                    (auto-start? #f)
+                                                    (one-shot? #t))))
+
                             (service virtlog-service-type
                                      (virtlog-configuration
                                       (max-clients 1000)))
@@ -430,6 +630,8 @@ cgroup_device_acl = [
                         (sysctl-service-type _ =>
                                              (sysctl-configuration
                                               (settings (append '(("kernel.sysrq" . "1")
-                                                                  ("net.bridge.bridge-nf-call-iptables" . "0"))
+                                                                  ("net.bridge.bridge-nf-call-iptables" . "0")
+                                                                  ;; for runc containers and libvirt virtual machines
+                                                                  ("net.ipv4.conf.br0.forwarding" . "1"))
                                                                 %default-sysctl-settings))))
                         (delete console-font-service-type))))))
