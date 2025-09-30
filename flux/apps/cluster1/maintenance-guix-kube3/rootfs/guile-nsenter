@@ -43,8 +43,7 @@ code is non-zero; otherwise return #t."
                                    "/run/current-system/profile/sbin"))
      (invoke "herd" "start" "runc-container-guix-workstation")
      (invoke "herd" "start" "runc-container-nixos-workstation")
-     (invoke "herd" "start" "runc-container-nixos-majordomo")
-     (invoke "herd" "start" "windows")))
+     (invoke "herd" "start" "runc-container-nixos-majordomo")))
 
 (define (main args)
   (define opts
