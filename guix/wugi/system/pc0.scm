@@ -471,73 +471,73 @@ cgroup_device_acl = [
 
                             (simple-service 'system-provision shepherd-root-service-type
                                             (list (shepherd-service
-                                                    (provision '(system-provision))
-                                                    (requirement '())
-                                                    (start #~(make-forkexec-constructor
-                                                              (list #$system-provision-program-file)))
-                                                    (respawn? #f)
-                                                    (auto-start? #t)
-                                                    (one-shot? #t))))
+                                                   (provision '(system-provision))
+                                                   (requirement '())
+                                                   (start #~(make-forkexec-constructor
+                                                             (list #$system-provision-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
 
                             (simple-service 'nixos-majordomo shepherd-root-service-type
                                             (list (shepherd-service
-                                                    (provision '(nixos-majordomo))
-                                                    (requirement '(networking))
-                                                    (start #~(make-forkexec-constructor
-                                                              (list #$nixos-majordomo-program-file)))
-                                                    (respawn? #f)
-                                                    (auto-start? #t)
-                                                    (one-shot? #t))))
+                                                   (provision '(nixos-majordomo))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-constructor
+                                                             (list #$nixos-majordomo-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
 
                             (simple-service 'nixos-workstation shepherd-root-service-type
                                             (list (shepherd-service
-                                                    (provision '(nixos-workstation))
-                                                    (requirement '(networking))
-                                                    (start #~(make-forkexec-constructor
-                                                              (list #$nixos-workstation-program-file)))
-                                                    (respawn? #f)
-                                                    (auto-start? #t)
-                                                    (one-shot? #t))))
+                                                   (provision '(nixos-workstation))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-constructor
+                                                             (list #$nixos-workstation-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
 
                             (simple-service 'guix-workstation shepherd-root-service-type
                                             (list (shepherd-service
-                                                    (provision '(guix-workstation))
-                                                    (requirement '(networking))
-                                                    (start #~(make-forkexec-constructor
-                                                              (list #$guix-workstation-program-file)))
-                                                    (respawn? #f)
-                                                    (auto-start? #t)
-                                                    (one-shot? #t))))
+                                                   (provision '(guix-workstation))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-constructor
+                                                             (list #$guix-workstation-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
 
                             (simple-service 'guix-rde shepherd-root-service-type
                                             (list (shepherd-service
-                                                    (provision '(guix-rde))
-                                                    (requirement '(networking))
-                                                    (start #~(make-forkexec-constructor
-                                                              (list #$guix-rde-program-file)))
-                                                    (respawn? #f)
-                                                    (auto-start? #t)
-                                                    (one-shot? #t))))
+                                                   (provision '(guix-rde))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-constructor
+                                                             (list #$guix-rde-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
 
                             (simple-service 'guix-nanokvm shepherd-root-service-type
                                             (list (shepherd-service
-                                                    (provision '(guix-nanokvm))
-                                                    (requirement '(networking))
-                                                    (start #~(make-forkexec-constructor
-                                                              (list #$guix-nanokvm-program-file)))
-                                                    (respawn? #f)
-                                                    (auto-start? #t)
-                                                    (one-shot? #t))))
+                                                   (provision '(guix-nanokvm))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-constructor
+                                                             (list #$guix-nanokvm-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
 
                             (simple-service 'windows shepherd-root-service-type
                                             (list (shepherd-service
-                                                    (provision '(windows))
-                                                    (requirement '(networking libvirtd))
-                                                    (start #~(make-forkexec-constructor
-                                                              (list #$windows-program-file)))
-                                                    (respawn? #f)
-                                                    (auto-start? #f)
-                                                    (one-shot? #t))))
+                                                   (provision '(windows))
+                                                   (requirement '(networking libvirtd))
+                                                   (start #~(make-forkexec-constructor
+                                                             (list #$windows-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #f)
+                                                   (one-shot? #t))))
 
                             (service virtlog-service-type
                                      (virtlog-configuration
