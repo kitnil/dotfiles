@@ -489,6 +489,9 @@ in {
     maxCacheTtl = 172800;
     maxCacheTtlSsh = 172800;
     grabKeyboardAndMouse = false;
+    pinentry = {
+      package = pkgs.pinentry-curses;
+    };
     extraConfig = ''
       allow-preset-passphrase
     '';
