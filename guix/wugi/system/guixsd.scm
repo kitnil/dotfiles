@@ -345,6 +345,10 @@
                                                    "-")))
                             (display password port)
                             (close-port port))))
+
+                      ;; LABEL="luks2" race condition.
+                      (invoke "sudo" "blkid")
+
                       (unless (file-exists? "/dev/lvm2/swap")
                         (invoke "sudo" "lvchange" "-ay" "/dev/lvm2/swap")
                         (invoke "sudo" "swapon" "/dev/lvm2/swap"))
