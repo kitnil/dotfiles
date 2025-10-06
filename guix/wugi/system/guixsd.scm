@@ -289,6 +289,8 @@
                                              #:recursive? #t))
                       (newline)
                       (format #t "PYTHON_TTY_DEVICE=~s PYTHON_TTY_STRING=~s ~a"
+                              "/dev/tty8"
+                              "password"
                               #$(local-file (string-append %distro-directory "/dot_local/bin/python-tty")
                                             #:recursive? #t))
                       (newline)))))
