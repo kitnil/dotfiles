@@ -345,10 +345,10 @@
                                                    "-")))
                             (display password port)
                             (close-port port))))
+                      (sleep 2)
 
                       (unless (file-exists? "/dev/lvm2/swap")
                         (invoke "sudo" "lvchange" "-ay" "/dev/lvm2/swap")
-                        (sleep 2)
                         (invoke "sudo" "swapon" "/dev/lvm2/swap"))
                       (unless (file-exists? "/dev/lvm2/ntfsgames")
                         (invoke "sudo" "lvchange" "-ay" "/dev/lvm2/ntfsgames"))
@@ -386,8 +386,8 @@
                                                    "-")))
                             (display password port)
                             (close-port port))))
-
                       (sleep 2)
+
                       (for-each (lambda (subvolume)
                                   (unless (guard (c ((invoke-error? c)
                                                      (report-invoke-error c)
