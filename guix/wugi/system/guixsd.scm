@@ -416,7 +416,10 @@
                                 #$(plain-file "kill-container-shim"
                                               "\
 pgrep -fa containerd-shim-runc-v2 | awk '{ print $1 }' | xargs kill")))
-                      (invoke "virsh" "shutdown" "kube91")
+                      (guard (c ((invoke-error? c)
+                                 (report-invoke-error c)
+                                 #f))
+                        (invoke "virsh" "shutdown" "kube91"))
                       (invoke "sync")))))
 
 (define %motd
