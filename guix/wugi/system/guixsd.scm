@@ -275,8 +275,8 @@
 
 (define provision-kubernetes-controller-program-file
   (program-file "kubernetes-controller-provision"
-                #~(with-imported-modules (source-module-closure '((guix build utils)))
-                    (begin
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
                       (use-modules (guix build utils)
                                    (ice-9 format)
                                    (srfi srfi-34))
@@ -291,8 +291,8 @@
 
 (define provision-kubelet-program-file
   (program-file "kubelet-provision"
-                #~(with-imported-modules (source-module-closure '((guix build utils)))
-                    (begin
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
                       (use-modules (guix build utils)
                                    (ice-9 format)
                                    (srfi srfi-34))
