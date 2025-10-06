@@ -287,6 +287,30 @@
                       (invoke #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/09-piraeus.sh")
                                             #:recursive? #t))))))
 
+(define %motd
+  (plain-file "motd"
+              "\
+   ░░░                                     ░░░
+    ░░▒▒░░░░░░░░░               ░░░░░░░░░▒▒░░
+     ░░▒▒▒▒▒░░░░░░░           ░░░░░░░▒▒▒▒▒░
+         ░▒▒▒░░▒▒▒▒▒         ░░░░░░░▒▒░
+               ░▒▒▒▒░       ░░░░░░
+                ▒▒▒▒▒      ░░░░░░
+                 ▒▒▒▒▒     ░░░░░
+                 ░▒▒▒▒▒   ░░░░░    Welcome to Guix!
+                  ▒▒▒▒▒   ░░░░░
+                   ▒▒▒▒▒ ░░░░░
+                   ░▒▒▒▒▒░░░░░
+                    ▒▒▒▒▒▒░░░
+                     ▒▒▒▒▒▒░
+
+Best practices:
+
+  1. Store everything in dotfiles.git.
+  2. Run 'system-provision' after boot.
+
+Happy hacking!\n"))
+
 (define (%guixsd)
   (define %home
     (passwd:dir (getpw "oleg")))
@@ -1836,6 +1860,10 @@ namespaces = [ ]
          (service ntp-service-type))
 
         (modify-services (operating-system-user-services base-system)
+          (login-service-type
+           config => (login-configuration
+                      (inherit config)
+                      (motd %motd)))
           (guix-service-type config => (guix-configuration
                                         (inherit %guix-daemon-config)
                                         (substitute-urls '("http://10.8.19.125:5556" ;TODO: Replace with domain name.
