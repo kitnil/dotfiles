@@ -300,7 +300,8 @@
                 (with-imported-modules (source-module-closure
                                         '((guix build utils)))
                   #~(begin
-                      (use-modules (guix build utils))
+                      (use-modules (guix build utils)
+                                   (srfi srfi-34))
                       (when (not (= (getuid) 0))
                         (display "Cannot run as not root user.\n")
                         (exit 1))
