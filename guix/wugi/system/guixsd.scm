@@ -397,28 +397,30 @@
                                 '#$(map (lambda (subvolume)
                                           (string-append "/srv/" subvolume))
                                         %data18-subvolumes))
+                      (invoke "sudo"
+                              #$(program-file "chown-data18-subvolumes"
+                                              #~(begin
+                                                  (for-each (lambda (subvolume)
+                                                              (when (file-exists? subvolume)
+                                                                (chown subvolume
+                                                                       (passwd:uid (getpw "oleg"))
+                                                                       (passwd:gid (getpw "oleg")))))
+                                                            (map (lambda (subvolume)
+                                                                   (string-append "/srv/" subvolume))
+                                                                 '("audio"
+                                                                   "git"
+                                                                   "home"
+                                                                   "iso"
+                                                                   "lib"
+                                                                   "music"
+                                                                   "obs"
+                                                                   "packer"
+                                                                   "stash"
+                                                                   "tribler"
+                                                                   "video")))
 
-                      (for-each (lambda (subvolume)
-                                  (when (file-exists? subvolume)
-                                    (chown subvolume
-                                           (passwd:uid (getpw "oleg"))
-                                           (passwd:gid (getpw "oleg")))))
-                                (map (lambda (subvolume)
-                                          (string-append "/srv/" subvolume))
-                                     '("audio"
-                                       "git"
-                                       "home"
-                                       "iso"
-                                       "lib"
-                                       "music"
-                                       "obs"
-                                       "packer"
-                                       "stash"
-                                       "tribler"
-                                       "video")))
-
-                      (when (file-exists? "/srv/peertube")
-                        (chown "/srv/peertube" 999 999))
+                                                  (when (file-exists? "/srv/peertube")
+                                                    (chown "/srv/peertube" 999 999)))))
 
                       (unless (guard (c ((invoke-error? c)
                                          (report-invoke-error c)
