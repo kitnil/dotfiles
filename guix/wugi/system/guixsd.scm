@@ -378,7 +378,9 @@
                                            (report-invoke-error c)
                                            #f))
                                   (invoke "mountpoint" "-q" "/srv"))
-                          (invoke "sudo" "mount" "/srv")))
+                          (for-each (lambda (subvolume)
+                                      (invoke "sudo" "mount" (string-append "/srv/" subvolume)))
+                                    '#$%data18-subvolumes)))
 
                       (unless (guard (c ((invoke-error? c)
                                          (report-invoke-error c)
@@ -451,6 +453,20 @@ Best practices:
   2. Run 'system-provision' after boot.
 
 Happy hacking!\n"))
+
+(define %data18-subvolumes
+  '("audio"
+    "backup"
+    "hdd1"
+    "iso"
+    "lib"
+    "obs"
+    "packer"
+    "peertube"
+    "rsync"
+    "stash"
+    "var"
+    "video"))
 
 (define (%guixsd)
   (define %home
@@ -1022,18 +1038,7 @@ location / {
                                ","))
                  (mount? #f) ;requires decryption
                  (type "btrfs")))
-             '("audio"
-               "backup"
-               "hdd1"
-               "iso"
-               "lib"
-               "obs"
-               "packer"
-               "peertube"
-               "rsync"
-               "stash"
-               "var"
-               "video"))
+             %data18-subvolumes)
         (operating-system-file-systems base-system)))
 
       ;; (swap-devices (list (swap-space
