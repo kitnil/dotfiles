@@ -350,7 +350,8 @@
                                                    "-")))
                             (display password port)
                             (close-port port))))
-                      (sleep 2)
+                      (while (not (file-exists? "/dev/lvm2/swap"))
+                        (sleep 2))
 
                       (unless (file-exists? "/dev/lvm2/swap")
                         (invoke "sudo" "lvchange" "-ay" "/dev/lvm2/swap")
@@ -391,7 +392,8 @@
                                                    "-")))
                             (display password port)
                             (close-port port))))
-                      (sleep 2)
+                      (while (not (file-exists? "/dev/mapper/crypt-srv"))
+                        (sleep 2))
 
                       (for-each (lambda (subvolume)
                                   (unless (guard (c ((invoke-error? c)
