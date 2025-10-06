@@ -387,14 +387,39 @@
                                                     "crypt-srv"
                                                     "-")))
                              (display password port)
-                             (close-port port))))
-                        (unless (guard (c ((invoke-error? c)
-                                           (report-invoke-error c)
-                                           #f))
-                                  (invoke "mountpoint" "-q" "/srv"))
-                          (for-each (lambda (subvolume)
-                                      (invoke "sudo" "mount" (string-append "/srv/" subvolume)))
-                                    '#$%data18-subvolumes)))
+                             (close-port port)))))
+
+                      (for-each (lambda (subvolume)
+                                  (unless (guard (c ((invoke-error? c)
+                                                     (report-invoke-error c)
+                                                     #f))
+                                            (invoke "mountpoint" "-q" "/srv"))
+                                    (invoke "sudo" "mount" subvolume)))
+                                '#$(map (lambda (subvolume)
+                                          (string-append "/srv/" subvolume))
+                                        %data18-subvolumes))
+
+                      (for-each (lambda (subvolume)
+                                  (when (file-exists? subvolume)
+                                    (chown subvolume
+                                           (passwd:uid "oleg")
+                                           (group:gid "users"))))
+                                (map (lambda (subvolume)
+                                          (string-append "/srv/" subvolume))
+                                     '("audio"
+                                       "git"
+                                       "home"
+                                       "iso"
+                                       "lib"
+                                       "music"
+                                       "obs"
+                                       "packer"
+                                       "stash"
+                                       "tribler"
+                                       "video")))
+
+                      (when (file-exists? "/srv/peertube")
+                        (chown "/srv/peertube" 999 999))
 
                       (unless (guard (c ((invoke-error? c)
                                          (report-invoke-error c)
