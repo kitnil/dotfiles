@@ -273,22 +273,6 @@
                       (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.198/24" "dev" "eth0")
                       (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
-(define provision-kubernetes-controller-program-file
-  (program-file "kubernetes-controller-provision"
-                (with-imported-modules (source-module-closure '((guix build utils)))
-                  #~(begin
-                      (use-modules (guix build utils)
-                                   (ice-9 format)
-                                   (srfi srfi-34))
-                      (invoke "virsh" "start" "kube91")
-                      (while (guard (c ((invoke-error? c)
-                                        (report-invoke-error c)
-                                        #f))
-                               (invoke "ssh" "root@192.168.0.91" "--" "uptime"))
-                        (format #t "~s is not available.~%" "root@192.168.0.91")
-                        (sleep 2))
-                      (invoke "ssh" "root@192.168.0.91" "--" "systemctl" "start" "kubelet")))))
-
 (define provision-kubelet-program-file
   (program-file "kubelet-provision"
                 (with-imported-modules (source-module-closure '((guix build utils)))
@@ -438,7 +422,14 @@
                         ;; (invoke "mount" "--bind" "/var/hpvolumes" "/var/hpvolumes")
                         (invoke "sudo" "mount" "--make-shared" "/var/hpvolumes"))
 
-                      (invoke #$provision-kubernetes-controller-program-file)
+                      (invoke "sudo" "virsh" "start" "kube91")
+                      (while (guard (c ((invoke-error? c)
+                                        (report-invoke-error c)
+                                        #f))
+                               (invoke "ssh" "root@192.168.0.91" "--" "uptime"))
+                        (format #t "~s is not available.~%" "root@192.168.0.91")
+                        (sleep 2))
+                      (invoke "ssh" "root@192.168.0.91" "--" "systemctl" "start" "kubelet")
                       (invoke "sudo" #$provision-kubelet-program-file)
 
                       (display #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/09-piraeus.sh")
