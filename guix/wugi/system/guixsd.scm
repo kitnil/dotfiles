@@ -325,29 +325,26 @@
                                    (ice-9 popen)
                                    (ice-9 rdelim)
                                    (srfi srfi-34))
-                      (define (exit-on-error function)
-                        (when (not (null? (function)) (exit 1))))
                       (unless (file-exists? "/dev/lvm1/win10")
                         (invoke "sudo" "lvchange" "-ay" "/dev/lvm1/win10"))
                       (unless (file-exists? "/dev/mapper/crypt-nvme0n1")
-                        (exit-on-error
-                         (let ((password
-                                (let* ((port (open-pipe* OPEN_READ "pass" "show" "luks2/luks2-header-210582390001289540AC"))
-                                       (output (read-string port)))
-                                  (close-port port)
-                                  (string-trim-right output #\newline))))
-                           (let* ((port (open-pipe* OPEN_WRITE
-                                                    "sudo"
-                                                    "cryptsetup"
-                                                    "open"
-                                                    "--allow-discards"
-                                                    (format #f "--header=~a"
-                                                            "/home/oleg/crypt/luks2-210582390001289540AC")
-                                                    "/dev/nvme0n1"
-                                                    "crypt-nvme0n1"
-                                                    "-")))
-                             (display password port)
-                             (close-port port)))))
+                        (let ((password
+                               (let* ((port (open-pipe* OPEN_READ "pass" "show" "luks2/luks2-header-210582390001289540AC"))
+                                      (output (read-string port)))
+                                 (close-port port)
+                                 (string-trim-right output #\newline))))
+                          (let* ((port (open-pipe* OPEN_WRITE
+                                                   "sudo"
+                                                   "cryptsetup"
+                                                   "open"
+                                                   "--allow-discards"
+                                                   (format #f "--header=~a"
+                                                           "/home/oleg/crypt/luks2-210582390001289540AC")
+                                                   "/dev/nvme0n1"
+                                                   "crypt-nvme0n1"
+                                                   "-")))
+                            (display password port)
+                            (close-port port))))
                       (unless (file-exists? "/dev/lvm2/swap")
                         (invoke "sudo" "lvchange" "-ay" "/dev/lvm2/swap")
                         (invoke "sudo" "swapon" "/dev/lvm2/swap"))
@@ -370,30 +367,29 @@
                                       (invoke "sudo" "mount" mount-point))))
                                 '("archive" "phone" "src" "Maildir"))
                       (unless (file-exists? "/dev/mapper/crypt-srv")
-                        (exit-on-error
-                         (let ((password
-                                (let* ((port (open-pipe* OPEN_READ "pass" "show" "luks2/luks2-header-wd-wd181purp-85b6hy0"))
-                                       (output (read-string port)))
-                                  (close-port port)
-                                  (string-trim-right output #\newline))))
-                           (let* ((port (open-pipe* OPEN_WRITE
-                                                    "sudo"
-                                                    "cryptsetup"
-                                                    "open"
-                                                    "--allow-discards"
-                                                    (format #f "--header=~a"
-                                                            "/home/oleg/crypt/luks2-wd181purp-85b6hy0")
-                                                    "/dev/sdb"
-                                                    "crypt-srv"
-                                                    "-")))
-                             (display password port)
-                             (close-port port)))))
+                        (let ((password
+                               (let* ((port (open-pipe* OPEN_READ "pass" "show" "luks2/luks2-header-wd-wd181purp-85b6hy0"))
+                                      (output (read-string port)))
+                                 (close-port port)
+                                 (string-trim-right output #\newline))))
+                          (let* ((port (open-pipe* OPEN_WRITE
+                                                   "sudo"
+                                                   "cryptsetup"
+                                                   "open"
+                                                   "--allow-discards"
+                                                   (format #f "--header=~a"
+                                                           "/home/oleg/crypt/luks2-wd181purp-85b6hy0")
+                                                   "/dev/sdb"
+                                                   "crypt-srv"
+                                                   "-")))
+                            (display password port)
+                            (close-port port))))
 
                       (for-each (lambda (subvolume)
                                   (unless (guard (c ((invoke-error? c)
                                                      (report-invoke-error c)
                                                      #f))
-                                            (invoke "mountpoint" "-q" "/srv"))
+                                            (invoke "mountpoint" "-q" subvolume))
                                     (invoke "sudo" "mount" subvolume)))
                                 '#$(map (lambda (subvolume)
                                           (string-append "/srv/" subvolume))
@@ -402,8 +398,8 @@
                       (for-each (lambda (subvolume)
                                   (when (file-exists? subvolume)
                                     (chown subvolume
-                                           (passwd:uid "oleg")
-                                           (group:gid "users"))))
+                                           (passwd:uid (getpw "oleg"))
+                                           (passwd:gid (getpw "oleg")))))
                                 (map (lambda (subvolume)
                                           (string-append "/srv/" subvolume))
                                      '("audio"
