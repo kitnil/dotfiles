@@ -307,7 +307,9 @@
                 (with-imported-modules (source-module-closure '((guix build utils)))
                   #~(begin
                       (use-modules (guix build utils)
-                                   (ice-9 format))
+                                   (ice-9 format)
+                                   (ice-9 popen)
+                                   (ice-9 rdelim))
                       (unless (file-exists? "/dev/lvm1/win10")
                         (invoke "sudo" "lvchange" "-ay" "/dev/lvm1/win10"))
                       (unless (file-exists? "/dev/mapper/crypt-nvme0n1")
