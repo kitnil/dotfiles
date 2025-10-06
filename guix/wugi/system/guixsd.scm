@@ -280,9 +280,11 @@
                       (use-modules (guix build utils)
                                    (ice-9 format)
                                    (srfi srfi-34))
-                      (rename-file "/run/setuid-programs/mount.nfs"
-                                   "/run/setuid-programs/mount.nfs.1")
-                      (delete-file "/var/lib/kubelet/.maintenance")
+                      (when (file-exists? "/run/setuid-programs/mount.nfs")
+                        (rename-file "/run/setuid-programs/mount.nfs"
+                                     "/run/setuid-programs/mount.nfs.1"))
+                      (when (file-exists? "/var/lib/kubelet/.maintenance")
+                        (delete-file "/var/lib/kubelet/.maintenance"))
                       (invoke "herd" "restart" "kubelet")
                       (display "sudo mv /run/setuid-programs/mount.nfs.1 /run/setuid-programs/mount.nfs\n")))))
 
