@@ -305,8 +305,8 @@
                         (exit 1))
                       (invoke "herd" "stop" "kubelet")
                       (invoke #$(file-append bash "/bin/bash")
-                              #$(text-file "kill-container-shim"
-                                           "pgrep -fa shim | awk '{ print $1 }' | xargs kill"))
+                              #$(plain-file "kill-container-shim"
+                                            "pgrep -fa shim | awk '{ print $1 }' | xargs kill"))
                       (invoke "virsh" "shutdown" "kube91")
                       (invoke "sync")))))
 
