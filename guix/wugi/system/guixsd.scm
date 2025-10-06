@@ -273,23 +273,121 @@
                       (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.198/24" "dev" "eth0")
                       (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
+(define provision-kubernetes-controller-program-file
+  (program-file "kubernetes-controller-provision"
+                #~(with-imported-modules (source-module-closure '((guix build utils)))
+                    (begin
+                      (use-modules (guix build utils)
+                                   (ice-9 format)
+                                   (srfi srfi-34))
+                      (invoke "virsh" "start" "kube91")
+                      (while (guard (c ((invoke-error? c)
+                                        (report-invoke-error c)
+                                        #f))
+                               (invoke "ssh" "root@192.168.0.91" "--" "uptime"))
+                        (format #t "~s is not available.~%" "root@192.168.0.91")
+                        (sleep 2))
+                      (invoke "ssh" "root@192.168.0.91" "--" "systemctl" "start" "kubelet")))))
+
+(define provision-kubelet-program-file
+  (program-file "kubelet-provision"
+                #~(with-imported-modules (source-module-closure '((guix build utils)))
+                    (begin
+                      (use-modules (guix build utils)
+                                   (ice-9 format)
+                                   (srfi srfi-34))
+                      (rename-file "/run/setuid-programs/mount.nfs"
+                                   "/run/setuid-programs/mount.nfs.1")
+                      (delete-file "/var/lib/kubelet/.maintenance")
+                      (invoke "herd" "restart" "kubelet")
+                      (display "sudo mv /run/setuid-programs/mount.nfs.1 /run/setuid-programs/mount.nfs\n")))))
+
 (define system-provision-program-file
   (program-file "system-provision"
                 (with-imported-modules (source-module-closure '((guix build utils)))
                   #~(begin
                       (use-modules (guix build utils)
                                    (ice-9 format))
-                      (invoke #$(local-file (string-append %distro-directory "/dot_local/bin/luks-decrypt.sh")
-                                            #:recursive? #t))
-                      (invoke "sudo" "swapon" "/dev/lvm2/swap")
-                      (invoke "sudo" "mv" "/run/setuid-programs/mount.nfs" "/run/setuid-programs/mount.nfs.1")
-                      (invoke #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/04-kubelet.sh")
-                                            #:recursive? #t))
+                      (unless (file-exists? "/dev/lvm1/win10")
+                        (invoke "sudo" "lvchange" "-ay" "/dev/lvm1/win10"))
+                      (unless (file-exists? "/dev/mapper/crypt-nvme0n1")
+                        (let ((password
+                               (let* ((port (open-pipe* OPEN_READ "pass" "show" "luks2/luks2-header-210582390001289540AC"))
+                                      (output (read-string port)))
+                                 (close-port port)
+                                 (string-trim-right output #\newline))))
+                          (let* ((port (open-pipe* OPEN_WRITE
+                                                   "sudo"
+                                                   "cryptsetup"
+                                                   "open"
+                                                   "--allow-discards"
+                                                   (format #f "--header=~s"
+                                                           "/home/oleg/crypt/luks2-210582390001289540AC")
+                                                   "/dev/nvme0n1"
+                                                   "crypt-nvme0n1"
+                                                   "-")))
+                            (close-port port))))
+                      (unless (file-exists? "/dev/lvm2/swap")
+                        (invoke "sudo" "lvchange" "-ay" "/dev/lvm2/swap")
+                        (invoke "sudo" "swapon" "/dev/lvm2/swap"))
+                      (unless (file-exists? "/dev/lvm2/ntfsgames")
+                        (invoke "sudo" "lvchange" "-ay" "/dev/lvm2/ntfsgames"))
+                      (unless (file-exists? "/dev/lvm2/qbittorrent-incomplete")
+                        (invoke "sudo" "lvchange" "-ay" "/dev/lvm2/qbittorrent-incomplete"))
+                      (unless (guard (c ((invoke-error? c)
+                                         (report-invoke-error c)
+                                         #f))
+                                (invoke "mountpoint" "-q" "/mnt/qbittorrent-incomplete"))
+                        (invoke "sudo" "mount" "-o" "discard" "/dev/lvm2/qbittorrent-incomplete" "/mnt/qbittorrent-incomplete"))
+                      (for-each (lambda (subvolume)
+                                  (let ((mount-point (string-append "/home/oleg/" subvolume)))
+                                    (unless (guard (c ((invoke-error? c)
+                                                       (report-invoke-error c)
+                                                       #f))
+                                              (invoke "mountpoint" "-q"
+                                                      mount-point))
+                                      (invoke "sudo" "mount" mount-point))))
+                                '("archive" "phone" "src" "Maildir"))
+                      (unless (file-exists? "/dev/mapper/crypt-srv")
+                        (let ((password
+                               (let* ((port (open-pipe* OPEN_READ "pass" "show" "luks2/luks2-header-wd-wd181purp-85b6hy0"))
+                                      (output (read-string port)))
+                                 (close-port port)
+                                 (string-trim-right output #\newline))))
+                          (let* ((port (open-pipe* OPEN_WRITE
+                                                   "sudo"
+                                                   "cryptsetup"
+                                                   "open"
+                                                   "--allow-discards"
+                                                   (format #f "--header=~s"
+                                                           "/home/oleg/crypt/luks2-wd181purp-85b6hy0")
+                                                   "/dev/sdb"
+                                                   "crypt-srv"
+                                                   "-")))
+                            (close-port port)))
+                        (unless (guard (c ((invoke-error? c)
+                                           (report-invoke-error c)
+                                           #f))
+                                  (invoke "mountpoint" "-q" "/srv"))
+                          (invoke "sudo" "mount" "/srv")))
+
+                      (unless (guard (c ((invoke-error? c)
+                                         (report-invoke-error c)
+                                         #f))
+                                (invoke "mountpoint" "-q" "/var/hpvolumes"))
+                        (invoke "sudo" "mount" "/var/hpvolumes")
+                        ;; Uncomment if '/var/hpvolumes' directory is on a '/' file-system.
+                        ;; (invoke "mount" "--bind" "/var/hpvolumes" "/var/hpvolumes")
+                        (invoke "sudo" "mount" "--make-shared" "/var/hpvolumes"))
+
+                      (invoke #$provision-kubernetes-controller-program-file)
+                      (invoke "sudo" #$provision-kubelet-program-file)
+
                       (display #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/09-piraeus.sh")
                                              #:recursive? #t))
                       (newline)
                       (display "sudo herd start runc-container-guix-workstation\n")
-                      (format #t "PYTHON_TTY_DEVICE=~s PYTHON_TTY_STRING=~s ~a"
+                      (format #t "PYTHON_TTY_DEVICE=~s PYTHON_TTY_STRING=~s ~a~%"
                               "/dev/tty8"
                               "password"
                               #$(local-file (string-append %distro-directory "/dot_local/bin/python-tty")
