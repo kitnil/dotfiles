@@ -297,16 +297,21 @@
 
 (define system-stop-program-file
   (program-file "system-stop"
-                (with-imported-modules (source-module-closure '((guix build utils)))
+                (with-imported-modules (source-module-closure
+                                        '((guix build utils)))
                   #~(begin
                       (use-modules (guix build utils))
                       (when (not (= (getuid) 0))
                         (display "Cannot run as not root user.\n")
                         (exit 1))
                       (invoke "herd" "stop" "kubelet")
-                      (system* #$(file-append bash "/bin/bash")
-                               #$(plain-file "kill-container-shim"
-                                             "pgrep -fa containerd-shim-runc-v2 | awk '{ print $1 }' | xargs kill"))
+                      (guard (c ((invoke-error? c)
+                                 (report-invoke-error c)
+                                 #f))
+                        (invoke #$(file-append bash "/bin/bash")
+                                #$(plain-file "kill-container-shim"
+                                              "\
+pgrep -fa containerd-shim-runc-v2 | awk '{ print $1 }' | xargs kill")))
                       (invoke "virsh" "shutdown" "kube91")
                       (invoke "sync")))))
 
