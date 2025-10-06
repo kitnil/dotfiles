@@ -14,4 +14,6 @@ data:
     HTTPTunnelPort 0.0.0.0:9250
     Bridge $(pass show tor/bridge/1)
     Bridge $(pass show tor/bridge/2)
+    Bridge $(pass show tor/bridge/3)
+    Bridge $(pass show tor/bridge/4)
 EOF
