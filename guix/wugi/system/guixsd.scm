@@ -325,9 +325,9 @@
                                    (ice-9 popen)
                                    (ice-9 rdelim)
                                    (srfi srfi-34))
-                      (unless (guard (c ((invoke-error? c)
-                                         (report-invoke-error c)
-                                         #f)))
+                      (guard (c ((invoke-error? c)
+                                 (report-invoke-error c)
+                                 #f))
                         ;; TODO: Remove hardcoded path.
                         (invoke "sudo" "mount" "--bind" "/root/etc" "/gnu/store/2jlxnjl1ziw9msi3wwbrb91j4y1dzb25-git-2.50.1/etc"))
                       (unless (file-exists? "/dev/lvm1/win10")
