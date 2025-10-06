@@ -301,7 +301,7 @@
                   #~(begin
                       (use-modules (guix build utils))
                       (when (not (= (getuid) 0))
-                        (display "Cannot run as not root user.")
+                        (display "Cannot run as not root user.\n")
                         (exit 1))
                       (invoke "herd" "stop" "kubelet")
                       (invoke #$(file-append bash "/bin/bash")
