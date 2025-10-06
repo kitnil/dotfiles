@@ -302,6 +302,20 @@
                       (invoke "herd" "restart" "kubelet")
                       (display "sudo mv /run/setuid-programs/mount.nfs.1 /run/setuid-programs/mount.nfs\n")))))
 
+(define %data18-subvolumes
+  '("audio"
+    "backup"
+    "hdd1"
+    "iso"
+    "lib"
+    "obs"
+    "packer"
+    "peertube"
+    "rsync"
+    "stash"
+    "var"
+    "video"))
+
 (define system-provision-program-file
   (program-file "system-provision"
                 (with-imported-modules (source-module-closure '((guix build utils)))
@@ -453,20 +467,6 @@ Best practices:
   2. Run 'system-provision' after boot.
 
 Happy hacking!\n"))
-
-(define %data18-subvolumes
-  '("audio"
-    "backup"
-    "hdd1"
-    "iso"
-    "lib"
-    "obs"
-    "packer"
-    "peertube"
-    "rsync"
-    "stash"
-    "var"
-    "video"))
 
 (define (%guixsd)
   (define %home
