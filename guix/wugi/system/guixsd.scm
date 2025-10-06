@@ -278,12 +278,12 @@
                 (with-imported-modules (source-module-closure '((guix build utils)))
                   #~(begin
                       (use-modules (guix build utils))
-                      (invoke (local-file (string-append %distro-directory "/guix/dotfiles/run/guixsd/01-luks.sh")
-                                          #:recursive? #t))
-                      (invoke (local-file (string-append %distro-directory "/guix/dotfiles/run/guixsd/04-kubelet.sh")
-                                          #:recursive? #t))
-                      (invoke (local-file (string-append %distro-directory "/guix/dotfiles/run/guixsd/09-piraeus.sh")
-                                          #:recursive? #t))))))
+                      (invoke #$(local-file (string-append %distro-directory "/guix/dotfiles/run/guixsd/01-luks.sh")
+                                            #:recursive? #t))
+                      (invoke #$(local-file (string-append %distro-directory "/guix/dotfiles/run/guixsd/04-kubelet.sh")
+                                            #:recursive? #t))
+                      (invoke #$(local-file (string-append %distro-directory "/guix/dotfiles/run/guixsd/09-piraeus.sh")
+                                            #:recursive? #t))))))
 
 (define (%guixsd)
   (define %home
