@@ -295,6 +295,18 @@
                                             #:recursive? #t))
                       (newline)))))
 
+(define system-stop-program-file
+  (program-file "system-stop"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (invoke "herd" "stop" "kubelet")
+                      (invoke #$(file-append bash "/bin/bash")
+                              (text-file "kill-container-shim"
+                                         "pgrep -fa shim | awk '{ print $1 }' | xargs kill"))
+                      (invoke "virsh" "shutdown" "kube91")
+                      (invoke "sync")))))
+
 (define %motd
   (plain-file "motd"
               "\
@@ -610,10 +622,10 @@ location / {
           (proxy "prometheus.wugi.info" 9090 #:listen %guixsd-private-ip-address)
           (proxy "guix.wugi.info" 5556 #:ssl? #t #:ssl-key? #t)
           ((lambda* (host #:key
-                          (ssl? #f)
-                          (ssl-target? #f)
-                          (target #f)
-                          (sub-domains? #f))
+                     (ssl? #f)
+                     (ssl-target? #f)
+                     (target #f)
+                     (sub-domains? #f))
              (nginx-server-configuration
               (server-name (if sub-domains?
                                (list (string-append sub-domains?
@@ -911,7 +923,8 @@ location / {
                                    restic-notebook-init
                                    restic-pc0-init
                                    restic-pc0-win10-init
-                                   system-provision-program-file))
+                                   system-provision-program-file
+                                   system-stop-program-file))
                         %my-system-packages))
 
       (groups (append (list (user-group (name "uinput")))
