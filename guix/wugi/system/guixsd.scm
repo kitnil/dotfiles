@@ -385,6 +385,9 @@
                             (display password port)
                             (close-port port))))
 
+                      ;; LABEL="data18" race condition.
+                      (invoke "sudo" "blkid")
+
                       (for-each (lambda (subvolume)
                                   (unless (guard (c ((invoke-error? c)
                                                      (report-invoke-error c)
