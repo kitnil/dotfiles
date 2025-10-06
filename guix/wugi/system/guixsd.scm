@@ -324,7 +324,7 @@
                                                    "cryptsetup"
                                                    "open"
                                                    "--allow-discards"
-                                                   (format #f "--header=~s"
+                                                   (format #f "--header=~a"
                                                            "/home/oleg/crypt/luks2-210582390001289540AC")
                                                    "/dev/nvme0n1"
                                                    "crypt-nvme0n1"
@@ -362,7 +362,7 @@
                                                    "cryptsetup"
                                                    "open"
                                                    "--allow-discards"
-                                                   (format #f "--header=~s"
+                                                   (format #f "--header=~a"
                                                            "/home/oleg/crypt/luks2-wd181purp-85b6hy0")
                                                    "/dev/sdb"
                                                    "crypt-srv"
