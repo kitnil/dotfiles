@@ -278,8 +278,10 @@
                 (with-imported-modules (source-module-closure '((guix build utils)))
                   #~(begin
                       (use-modules (guix build utils))
-                      (invoke #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/01-luks.sh")
+                      (invoke #$(local-file (string-append %distro-directory "/dot_local/bin/luks-decrypt.sh")
                                             #:recursive? #t))
+                      (invoke "sudo" "swapon" "/dev/lvm2/swap")
+                      (invoke "sudo" "mv" "/run/setuid-programs/mount.nfs" "/run/setuid-programs/mount.nfs.1")
                       (invoke #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/04-kubelet.sh")
                                             #:recursive? #t))
                       (invoke #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/09-piraeus.sh")
