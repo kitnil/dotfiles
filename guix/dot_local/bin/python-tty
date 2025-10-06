@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+
+import fcntl
+import sys
+import termios
+import os
+
+with open(os.getenv('PYTHON_TTY_DEVICE'), 'w') as fd:
+   for char in os.getenv('PYTHON_TTY_STRING') + "\n":
+      fcntl.ioctl(fd, termios.TIOCSTI, char)

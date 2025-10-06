@@ -277,15 +277,21 @@
   (program-file "system-provision"
                 (with-imported-modules (source-module-closure '((guix build utils)))
                   #~(begin
-                      (use-modules (guix build utils))
+                      (use-modules (guix build utils)
+                                   (ice-9 format))
                       (invoke #$(local-file (string-append %distro-directory "/dot_local/bin/luks-decrypt.sh")
                                             #:recursive? #t))
                       (invoke "sudo" "swapon" "/dev/lvm2/swap")
                       (invoke "sudo" "mv" "/run/setuid-programs/mount.nfs" "/run/setuid-programs/mount.nfs.1")
                       (invoke #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/04-kubelet.sh")
                                             #:recursive? #t))
-                      (invoke #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/09-piraeus.sh")
-                                            #:recursive? #t))))))
+                      (display #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/09-piraeus.sh")
+                                             #:recursive? #t))
+                      (newline)
+                      (format #t "PYTHON_TTY_DEVICE=~s PYTHON_TTY_STRING=~s ~a"
+                              #$(local-file (string-append %distro-directory "/dot_local/bin/python-tty")
+                                            #:recursive? #t))
+                      (newline)))))
 
 (define %motd
   (plain-file "motd"
