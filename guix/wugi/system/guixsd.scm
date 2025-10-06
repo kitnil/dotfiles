@@ -288,6 +288,7 @@
                       (display #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/09-piraeus.sh")
                                              #:recursive? #t))
                       (newline)
+                      (display "sudo herd start runc-container-guix-workstation\n")
                       (format #t "PYTHON_TTY_DEVICE=~s PYTHON_TTY_STRING=~s ~a"
                               "/dev/tty8"
                               "password"
