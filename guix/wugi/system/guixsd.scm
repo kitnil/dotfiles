@@ -431,20 +431,19 @@
                         ;; (invoke "mount" "--bind" "/var/hpvolumes" "/var/hpvolumes")
                         (invoke "sudo" "mount" "--make-shared" "/var/hpvolumes"))
 
-                      ;; (invoke #$provision-kubernetes-controller-program-file)
-                      ;; (invoke "sudo" #$provision-kubelet-program-file)
+                      (invoke #$provision-kubernetes-controller-program-file)
+                      (invoke "sudo" #$provision-kubelet-program-file)
 
-                      ;; (display #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/09-piraeus.sh")
-                      ;;                        #:recursive? #t))
-                      ;; (newline)
-                      ;; (display "sudo herd start runc-container-guix-workstation\n")
-                      ;; (format #t "PYTHON_TTY_DEVICE=~s PYTHON_TTY_STRING=~s ~a~%"
-                      ;;         "/dev/tty8"
-                      ;;         "password"
-                      ;;         #$(local-file (string-append %distro-directory "/dot_local/bin/python-tty")
-                      ;;                       #:recursive? #t))
-                      ;; (newline)
-                      ))))
+                      (display #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/09-piraeus.sh")
+                                             #:recursive? #t))
+                      (newline)
+                      (display "sudo herd start runc-container-guix-workstation\n")
+                      (format #t "PYTHON_TTY_DEVICE=~s PYTHON_TTY_STRING=~s ~a~%"
+                              "/dev/tty8"
+                              "password"
+                              #$(local-file (string-append %distro-directory "/dot_local/bin/python-tty")
+                                            #:recursive? #t))
+                      (newline)))))
 
 (define system-stop-program-file
   (program-file "system-stop"
