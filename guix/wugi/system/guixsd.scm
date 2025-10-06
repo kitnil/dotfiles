@@ -255,6 +255,24 @@
         (iptables "-I" "INPUT" "-s" "185.105.108.96/32" "-j" "DROP")
         (iptables "-I" "OUTPUT" "-d" "185.105.108.96/32" "-j" "DROP")))))
 
+(define guix-workstation-program-file
+  (program-file "guix-workstation"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "guix-workstation")
+                      (invoke "ip" "link" "add" "name" "guix0" "type" "veth" "peer" "name" "guix1")
+                      (invoke "ip" "link" "set" "dev" "guix1" "netns" "guix-workstation")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "link" "set" "guix1" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "guix0" "master" "br0")
+                      (invoke "ip" "link" "set" "guix0" "up")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.198/24" "dev" "eth0")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+
 (define (%guixsd)
   (define %home
     (passwd:dir (getpw "oleg")))
@@ -1335,7 +1353,18 @@ PasswordAuthentication yes")))
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/guix-workstation")
-                   (name "guix-workstation")))
+                   (name "guix-workstation")
+                   (requirement '(guix-workstation))))
+
+         (simple-service 'guix-workstation shepherd-root-service-type
+                         (list (shepherd-service
+                                (provision '(guix-workstation))
+                                (requirement '(networking))
+                                (start #~(make-forkexec-constructor
+                                          (list #$guix-workstation-program-file)))
+                                (respawn? #f)
+                                (auto-start? #t)
+                                (one-shot? #t))))
 
          (service runc-container-service-type
                   (runc-container-configuration
