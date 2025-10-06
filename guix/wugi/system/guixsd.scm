@@ -996,15 +996,6 @@ location / {
       (file-systems
        (append
         (list (file-system
-                (device (file-system-label "data18"))
-                (mount-point "/srv")
-                (options
-                 (string-join (list "compress=zstd:15"
-                                    "nossd")
-                              ","))
-                (mount? #f) ;requires decryption
-                (type "btrfs"))
-              (file-system
                 (device (file-system-label "hpvolumes"))
                 (mount-point "/var/hpvolumes")
                 (mount? #f) ;requires decryption
@@ -1021,6 +1012,28 @@ location / {
                  (mount? #f) ;requires decryption
                  (type "btrfs")))
              '("archive" "phone" "src" "Maildir"))
+        (map (lambda (subvolume)
+               (file-system
+                 (device (file-system-label "data18"))
+                 (mount-point (string-append "/srv/" subvolume))
+                 (options
+                  (string-join (list "compress=zstd:15"
+                                     "nossd")
+                               ","))
+                 (mount? #f) ;requires decryption
+                 (type "btrfs")))
+             '("audio"
+               "backup"
+               "hdd1"
+               "iso"
+               "lib"
+               "obs"
+               "packer"
+               "peertube"
+               "rsync"
+               "stash"
+               "var"
+               "video"))
         (operating-system-file-systems base-system)))
 
       ;; (swap-devices (list (swap-space
