@@ -273,6 +273,18 @@
                       (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.198/24" "dev" "eth0")
                       (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
+(define system-provision-program-file
+  (program-file "system-provision"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (invoke (local-file (string-append %distro-directory "/guix/dotfiles/run/guixsd/01-luks.sh")
+                                          #:recursive? #t))
+                      (invoke (local-file (string-append %distro-directory "/guix/dotfiles/run/guixsd/04-kubelet.sh")
+                                          #:recursive? #t))
+                      (invoke (local-file (string-append %distro-directory "/guix/dotfiles/run/guixsd/09-piraeus.sh")
+                                          #:recursive? #t))))))
+
 (define (%guixsd)
   (define %home
     (passwd:dir (getpw "oleg")))
@@ -864,7 +876,8 @@ location / {
                                    restic-whonix-gateway-direct-backup
                                    restic-notebook-init
                                    restic-pc0-init
-                                   restic-pc0-win10-init))
+                                   restic-pc0-win10-init
+                                   system-provision-program-file))
                         %my-system-packages))
 
       (groups (append (list (user-group (name "uinput")))
