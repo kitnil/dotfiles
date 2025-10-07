@@ -136,6 +136,8 @@
     oleg ALL = (root) NOPASSWD:ALL
   '';
 
+  services.getty.autologinUser = "oleg";
+
   # but NIX_PATH is still used by many useful tools, so we set it to the same value as the one used by this flake.
   # Make `nix repl '<nixpkgs>'` use the same nixpkgs as the one used by this flake.
   environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
