@@ -534,6 +534,9 @@ in {
         epkgs.yaml-mode
       ]
     ));
+    client = {
+      enable = true;
+    };
   };
 
   services.foot.enable = true;
