@@ -22,16 +22,6 @@ in {
 
     kubectl
 
-    ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
-      epkgs: [
-        epkgs.magit
-        epkgs.groovy-mode
-        epkgs.nginx-mode
-        epkgs.nix-mode
-        epkgs.yaml-mode
-      ]
-    ))
-
     strace
 
     wlvncc
@@ -535,6 +525,15 @@ in {
 
   services.emacs = {
     enable = true;
+    package = with packages; ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
+      epkgs: [
+        epkgs.magit
+        epkgs.groovy-mode
+        epkgs.nginx-mode
+        epkgs.nix-mode
+        epkgs.yaml-mode
+      ]
+    ));
   };
 
   services.foot.enable = true;
