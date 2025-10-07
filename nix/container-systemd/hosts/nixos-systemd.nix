@@ -192,6 +192,7 @@
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
+      adwaita-fonts
       dejavu_fonts
       wqy_zenhei
     ];
