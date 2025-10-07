@@ -271,7 +271,8 @@
                       (invoke "ip" "link" "set" "guix0" "master" "br0")
                       (invoke "ip" "link" "set" "guix0" "up")
                       (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.191/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "sysctl" "-w" "net.ipv4.ip_forward=1")))))
 
 (define provision-kubelet-program-file
   (program-file "kubelet-provision"
