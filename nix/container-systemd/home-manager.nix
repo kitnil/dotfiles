@@ -49,6 +49,7 @@ in {
           name = Oleg Pykhalov
       '';
     };
+    ".emacs.d/modules/keys.el".source = ../../guix/private_dot_emacs.d/modules/keys.el;
   };
 
   programs.home-manager.enable = true;
