@@ -590,9 +590,11 @@ in {
         epkgs.edit-indirect
         epkgs.magit
         epkgs.helm
+        epkgs.helm-projectile
         epkgs.groovy-mode
         epkgs.nginx-mode
         epkgs.nix-mode
+        epkgs.projectile
         epkgs.yaml-mode
       ]
     ));
