@@ -507,7 +507,7 @@ in {
     settings = {
       main = {
         term = "xterm-256color";
-        font = "DejaVu Sans Mono:size=10";
+        font = "DejaVu Sans Mono:size=13";
         dpi-aware = "yes";
       };
       colors = {
