@@ -502,6 +502,17 @@ in {
     enable = true;
   };
 
+  programs.foot = {
+    enable = true;
+    settings = {
+      main = {
+        term = "xterm-256color";
+        font = "DejaVu Sans Mono:size=10";
+        dpi-aware = "yes";
+      };
+    };
+  };
+
   services.foot.enable = true;
   services.google-chrome.enable = true;
   services.pycharm-community.enable = true;
