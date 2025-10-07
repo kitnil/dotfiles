@@ -443,7 +443,10 @@
                               "password"
                               #$(local-file (string-append %distro-directory "/dot_local/bin/python-tty")
                                             #:recursive? #t))
-                      (newline)))))
+                      (newline)
+
+                      (invoke "sudo" "mkdir" "-p" "/srv/runc/guix-workstation")
+                      (invoke "sudo" "mount" "/dev/lvm1/guixworkstation" "/srv/runc/guix-workstation")))))
 
 (define system-stop-program-file
   (program-file "system-stop"
