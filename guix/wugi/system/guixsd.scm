@@ -1061,7 +1061,8 @@ location / {
                  (device (file-system-label "data18"))
                  (mount-point (string-append "/srv/" subvolume))
                  (options
-                  (string-join (list "compress=zstd:15"
+                  (string-join (list (string-append "subvol=" subvolume)
+                                     "compress=zstd:15"
                                      "nossd")
                                ","))
                  (mount? #f) ;requires decryption
