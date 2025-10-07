@@ -258,7 +258,11 @@
                            (type "tmpfs")
                            (check? #f)
                            (flags '(no-dev))
-                           (options "mode=1777,size=10%")))
+                           (options "mode=1777,size=10%"))
+                         (file-system
+                           (device "hugetlbfs")
+                           (mount-point "/hugepages")
+                           (type "hugetlbfs")))
                    %control-groups
                    %base-file-systems))
 
@@ -633,6 +637,7 @@ cgroup_device_acl = [
                                              (sysctl-configuration
                                               (settings (append '(("kernel.sysrq" . "1")
                                                                   ("net.bridge.bridge-nf-call-iptables" . "0")
+                                                                  ("vm.nr_hugepages" . "16384")
                                                                   ;; for runc containers and libvirt virtual machines
                                                                   ("net.ipv4.conf.br0.forwarding" . "1"))
                                                                 %default-sysctl-settings))))
