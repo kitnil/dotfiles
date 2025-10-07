@@ -4,6 +4,8 @@ guix time-machine -C guix/wugi/etc/guix/channels/development.scm -- shell -L gui
 ./bootstrap
 ./configure PASSWORD_STORE=$HOME/.password-store
 
+make guix-system-reconfigure-pc0-guix-workstation GUIX='/home/oleg/src/codeberg.org/guix/guix/pre-inst-env guix' ARGS='--no-substitutes --no-bootloader --no-kexec --skip-checks'
+
 nix develop ./nix/dotfiles#dotfiles
 ./bootstrap
 ./configure

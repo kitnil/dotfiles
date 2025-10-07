@@ -128,7 +128,7 @@ build --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) --expressi
 endef
 
 define guix-system-reconfigure-expression
-system reconfigure --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) --expression="((@ (wugi system $(1)) %$(2)))"
+system reconfigure --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) --expression="((@ (wugi system $(1)) %$(2)))" $(ARGS)
 endef
 
 define guix-image-expression

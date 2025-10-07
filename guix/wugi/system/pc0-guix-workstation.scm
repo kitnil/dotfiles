@@ -122,9 +122,21 @@ program.")))
          udev-rules-service-xbox
          (service ladspa-service-type
                   (ladspa-configuration (plugins (list swh-plugins))))
-         (service avahi-service-type))
+         (service avahi-service-type)
+         (simple-service 'networking shepherd-root-service-type
+                         (list (shepherd-service
+                                 (provision '(networking))
+                                 (requirement '())
+                                 (start #~(make-forkexec-constructor
+                                           (list #$(file-append coreutils "/bin/sleep")
+                                                 (number->string 2))))
+                                 (respawn? #f)
+                                 (auto-start? #t)))))
         (modify-services %base-services
+          (delete console-font-service-type)
           (delete shepherd-system-log-service-type)
+          (delete mingetty-service-type)
+          (delete agetty-service-type)
           (guix-service-type
            config =>
            (guix-configuration
@@ -152,4 +164,7 @@ program.")))
                                                "oleg ALL=(ALL) NOPASSWD:ALL")
                                              "\n")))))
 
-  %my-operating-system)
+  (operating-system
+    (inherit (containerized-operating-system %my-operating-system
+                                             (cons %store-mapping '())))
+    (kernel linux-libre)))
