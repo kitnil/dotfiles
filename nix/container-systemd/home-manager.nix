@@ -28,6 +28,8 @@ in {
     zenity
 
     pass
+
+    ripgrep
   ];
 
   home.file = {
