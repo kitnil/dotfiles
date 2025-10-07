@@ -587,6 +587,7 @@ in {
     package = with packages; ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
       epkgs: [
         epkgs.deadgrep
+        epkgs.edit-indirect
         epkgs.magit
         epkgs.helm
         epkgs.groovy-mode
