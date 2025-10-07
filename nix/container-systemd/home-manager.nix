@@ -529,6 +529,7 @@ in {
     enable = true;
     package = with packages; ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
       epkgs: [
+        epkgs.deadgrep
         epkgs.magit
         epkgs.groovy-mode
         epkgs.nginx-mode
