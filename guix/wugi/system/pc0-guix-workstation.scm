@@ -56,15 +56,15 @@ program.")))
       ;; This is where user accounts are specified.  The "root" account is
       ;; implicit, and is initially created with the empty password.
       (users (append (list (user-account
-                            (name "oleg")
-                            (comment "Oleg Pykhalov")
-                            (group "users")
-                            (supplementary-groups '("wheel"
-                                                    "audio"
-                                                    "video"
-                                                    "kvm"
-                                                    "input"))
-                            (password (crypt "oleg" "NmhJoj")))
+                             (name "oleg")
+                             (comment "Oleg Pykhalov")
+                             (group "users")
+                             (supplementary-groups '("wheel"
+                                                     "audio"
+                                                     "video"
+                                                     "kvm"
+                                                     "input"))
+                             (password (crypt "oleg" "NmhJoj")))
                            (user-account (inherit %root-account)
                                          (password (crypt "root" "uUxBgD"))))
                      %base-user-accounts))
@@ -86,8 +86,8 @@ program.")))
 
       ;; This will be ignored.
       (bootloader (bootloader-configuration
-                   (bootloader grub-bootloader)
-                   (targets '("does-not-matter"))))
+                    (bootloader grub-bootloader)
+                    (targets '("does-not-matter"))))
 
       ;; This will be ignored, too.
       (file-systems (list (file-system
@@ -101,10 +101,10 @@ program.")))
         (list
          (service syslog-service-type
                   (syslog-configuration
-                   (extra-options '("--rcfile=/etc/syslog.conf"
-                                    "--no-forward"
-                                    "--no-unixaf"
-                                    "--no-klog"))))
+                    (extra-options '("--rcfile=/etc/syslog.conf"
+                                     "--no-forward"
+                                     "--no-unixaf"
+                                     "--no-klog"))))
          (service elogind-service-type)
          seatd-service
          (service dbus-root-service-type)
@@ -112,13 +112,13 @@ program.")))
                   (mingetty-configuration (tty "tty8")))
          (service (@ (wugi services desktop) bluetooth-service-type)
                   (bluetooth-configuration
-                   (auto-enable? #t)
-                   (just-works-repairing 'confirm)
-                   (controller-mode 'dual)
-                   (min-connection-interval 7)
-                   (max-connection-interval 9)
-                   (connection-latency 0)
-                   (privacy 'device)))
+                    (auto-enable? #t)
+                    (just-works-repairing 'confirm)
+                    (controller-mode 'dual)
+                    (min-connection-interval 7)
+                    (max-connection-interval 9)
+                    (connection-latency 0)
+                    (privacy 'device)))
          udev-rules-service-xbox
          (service ladspa-service-type
                   (ladspa-configuration (plugins (list swh-plugins))))
@@ -128,22 +128,22 @@ program.")))
           (guix-service-type
            config =>
            (guix-configuration
-            (authorized-keys
-             (append
-              (map (lambda (file-name)
-                     (local-file
-                      (string-append %distro-directory
-                                     "/wugi/etc/substitutes/" file-name)))
-                   '("bordeaux.guix.gnu.org.pub"
-                     "guix-builder.pub"
-                     "guix.wugi.info.pub"
-                     "mirror.brielmaier.net.pub"
-                     "substitutes.nonguix.org.pub"
-                     "vm1.wugi.info.pub"
-                     "vm2.wugi.info.pub"))
-              %default-authorized-guix-keys))
-            (substitute-urls '("https://mirrors.sjtug.sjtu.edu.cn/guix"
-                               "https://substitutes.nonguix.org")))))))
+             (authorized-keys
+              (append
+               (map (lambda (file-name)
+                      (local-file
+                       (string-append %distro-directory
+                                      "/wugi/etc/substitutes/" file-name)))
+                    '("bordeaux.guix.gnu.org.pub"
+                      "guix-builder.pub"
+                      "guix.wugi.info.pub"
+                      "mirror.brielmaier.net.pub"
+                      "substitutes.nonguix.org.pub"
+                      "vm1.wugi.info.pub"
+                      "vm2.wugi.info.pub"))
+               %default-authorized-guix-keys))
+             (substitute-urls '("https://mirrors.sjtug.sjtu.edu.cn/guix"
+                                "https://substitutes.nonguix.org")))))))
 
       (sudoers-file (plain-file "sudoers"
                                 (string-join `("Defaults:root runcwd=*"
