@@ -75,7 +75,7 @@
                                                      runc-container-activation)
                                   (service-extension shepherd-root-service-type
                                                      runc-container-shepherd-service)
-                                  (service-extension rottlog-service-type
+                                  (service-extension log-rotation-service-type
                                                      runc-container-log-rotations)))
                 (description "Run runc-container.")))
 

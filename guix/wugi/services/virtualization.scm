@@ -98,14 +98,14 @@
 
 (define virtual-machine-service-type
   (service-type
-   (name 'virtual-machine)
-   (extensions
-    (list (service-extension shepherd-root-service-type
-                             virtual-machine-shepherd-service)
-          (service-extension rottlog-service-type
-                             virtual-machine-log-rotations)))
-   (default-value '())
-   (description "Run virtual machine.")))
+    (name 'virtual-machine)
+    (extensions
+     (list (service-extension shepherd-root-service-type
+                              virtual-machine-shepherd-service)
+           (service-extension log-rotation-service-type
+                              virtual-machine-log-rotations)))
+    (default-value '())
+    (description "Run virtual machine.")))
 
 
 ;;;
@@ -159,7 +159,7 @@
                                                      runc-activation)
                                   (service-extension shepherd-root-service-type
                                                      runc-shepherd-service)
-                                  (service-extension rottlog-service-type
+                                  (service-extension log-rotation-service-type
                                                      runc-log-rotations)))
                 (description "Run runc.")))
 

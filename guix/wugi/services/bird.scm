@@ -68,7 +68,7 @@
   (service-type (name 'syncthing)
                 (extensions (list (service-extension shepherd-root-service-type
                                                      bird-shepherd-service)
-                                  (service-extension rottlog-service-type
+                                  (service-extension log-rotation-service-type
                                                      bird-log-rotations)))
                 (description "Run Bird Internet Routing Daemon.")))
 

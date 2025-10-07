@@ -232,26 +232,26 @@
 
 (define kubernetes-k3s-service-type
   (service-type
-   (name 'kubernetes-k3s)
-   (extensions
-    (list (service-extension profile-service-type
-                             (lambda (config)
-                               (append (list nerdctl)
-                                       (if (kubernetes-k3s-configuration-cilium? config)
-                                           (list cilium)
-                                           '())
-                                       (if (kubernetes-k3s-configuration-flux? config)
-                                           (list flux)
-                                           '())
-                                       (if (kubernetes-k3s-configuration-kubevirt? config)
-                                           (list virtctl)
-                                           '()))))
-          (service-extension shepherd-root-service-type
-                             kubernetes-k3s-shepherd-service)
-          (service-extension rottlog-service-type
-                             kubernetes-k3s-log-rotations)))
-   (default-value '())
-   (description "Run the kubernetes-k3s.")))
+    (name 'kubernetes-k3s)
+    (extensions
+     (list (service-extension profile-service-type
+                              (lambda (config)
+                                (append (list nerdctl)
+                                        (if (kubernetes-k3s-configuration-cilium? config)
+                                            (list cilium)
+                                            '())
+                                        (if (kubernetes-k3s-configuration-flux? config)
+                                            (list flux)
+                                            '())
+                                        (if (kubernetes-k3s-configuration-kubevirt? config)
+                                            (list virtctl)
+                                            '()))))
+           (service-extension shepherd-root-service-type
+                              kubernetes-k3s-shepherd-service)
+           (service-extension log-rotation-service-type
+                              kubernetes-k3s-log-rotations)))
+    (default-value '())
+    (description "Run the kubernetes-k3s.")))
 
 
 ;;;
@@ -360,20 +360,20 @@
 
 (define kubelet-service-type
   (service-type
-   (name 'kubelet)
-   (extensions
-    (list (service-extension shepherd-root-service-type
-                             kubelet-shepherd-service)
-          (service-extension rottlog-service-type
-                             kubelet-log-rotations)
-          (service-extension profile-service-type
-                             (lambda (config)
-                               (append (list nerdctl)
-                                       (if (kubelet-configuration-cilium? config)
-                                           (list cilium)
-                                           '()))))))
-   (default-value (kubelet-configuration))
-   (description "Run the kubelet.")))
+    (name 'kubelet)
+    (extensions
+     (list (service-extension shepherd-root-service-type
+                              kubelet-shepherd-service)
+           (service-extension log-rotation-service-type
+                              kubelet-log-rotations)
+           (service-extension profile-service-type
+                              (lambda (config)
+                                (append (list nerdctl)
+                                        (if (kubelet-configuration-cilium? config)
+                                            (list cilium)
+                                            '()))))))
+    (default-value (kubelet-configuration))
+    (description "Run the kubelet.")))
 
 
 ;;;
@@ -417,13 +417,13 @@
 
 (define edgecore-service-type
   (service-type
-   (name 'edgecore)
-   (extensions
-    (list (service-extension shepherd-root-service-type
-                             edgecore-shepherd-service)
-          (service-extension rottlog-service-type
-                             edgecore-log-rotations)))
-   (default-value '())
-   (description "Run the edgecore.")))
+    (name 'edgecore)
+    (extensions
+     (list (service-extension shepherd-root-service-type
+                              edgecore-shepherd-service)
+           (service-extension log-rotation-service-type
+                              edgecore-log-rotations)))
+    (default-value '())
+    (description "Run the edgecore.")))
 
 ;;; kubernetes.scm ends here

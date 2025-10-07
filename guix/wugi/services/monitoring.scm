@@ -171,7 +171,7 @@
                              prometheus-account)
           (service-extension activation-service-type
                              prometheus-activation)
-          (service-extension rottlog-service-type
+          (service-extension log-rotation-service-type
                              (const %prometheus-log-rotations))))
    (default-value (prometheus-configuration))
    (description
@@ -275,7 +275,7 @@
                              prometheus-alertmanager-account)
           (service-extension activation-service-type
                              prometheus-alertmanager-activation)
-          (service-extension rottlog-service-type
+          (service-extension log-rotation-service-type
                              (const %prometheus-alertmanager-log-rotations))))
    (default-value (prometheus-alertmanager-configuration))
    (description
@@ -373,7 +373,7 @@
                              prometheus-pushgateway-account)
           (service-extension activation-service-type
                              prometheus-pushgateway-activation)
-          (service-extension rottlog-service-type
+          (service-extension log-rotation-service-type
                              (const %prometheus-pushgateway-log-rotations))))
    (default-value (prometheus-pushgateway-configuration))
    (description
@@ -449,7 +449,7 @@
                              prometheus-dnsmasq-shepherd-service)
           (service-extension account-service-type
                              prometheus-dnsmasq-account)
-          (service-extension rottlog-service-type
+          (service-extension log-rotation-service-type
                              (const %prometheus-dnsmasq-log-rotations))))
    (default-value (prometheus-dnsmasq-configuration))
    (description
@@ -520,7 +520,7 @@
                              karma-shepherd-service)
           (service-extension account-service-type
                              karma-account)
-          (service-extension rottlog-service-type
+          (service-extension log-rotation-service-type
                              (const %karma-log-rotations))))
    (default-value (karma-configuration))
    (description
@@ -629,19 +629,19 @@
 
 (define prometheus-blackbox-exporter-service-type
   (service-type
-   (name 'prometheus-blackbox-exporter)
-   (extensions
-    (list (service-extension shepherd-root-service-type
-                             prometheus-blackbox-exporter-shepherd-service)
-          (service-extension account-service-type
-                             prometheus-blackbox-exporter-account)
-          (service-extension activation-service-type
-                             prometheus-blackbox-exporter-activation)
-          (service-extension rottlog-service-type
-                             (const %prometheus-blackbox-exporter-log-rotations))))
-   (default-value (prometheus-blackbox-exporter-configuration))
-   (description
-    "Run the prometheus-blackbox-exporter.")))
+    (name 'prometheus-blackbox-exporter)
+    (extensions
+     (list (service-extension shepherd-root-service-type
+                              prometheus-blackbox-exporter-shepherd-service)
+           (service-extension account-service-type
+                              prometheus-blackbox-exporter-account)
+           (service-extension activation-service-type
+                              prometheus-blackbox-exporter-activation)
+           (service-extension log-rotation-service-type
+                              (const %prometheus-blackbox-exporter-log-rotations))))
+    (default-value (prometheus-blackbox-exporter-configuration))
+    (description
+     "Run the prometheus-blackbox-exporter.")))
 
 
 ;;;
@@ -678,15 +678,15 @@
 
 (define prometheus-bird-exporter-service-type
   (service-type
-   (name 'prometheus-bird-exporter)
-   (extensions
-    (list (service-extension shepherd-root-service-type
-                             prometheus-bird-exporter-shepherd-service)
-          (service-extension rottlog-service-type
-                             (const %prometheus-bird-exporter-log-rotations))))
-   (default-value (prometheus-bird-exporter-configuration))
-   (description
-    "Run the prometheus-bird-exporter.")))
+    (name 'prometheus-bird-exporter)
+    (extensions
+     (list (service-extension shepherd-root-service-type
+                              prometheus-bird-exporter-shepherd-service)
+           (service-extension log-rotation-service-type
+                              (const %prometheus-bird-exporter-log-rotations))))
+    (default-value (prometheus-bird-exporter-configuration))
+    (description
+     "Run the prometheus-bird-exporter.")))
 
 
 ;;;
@@ -723,15 +723,15 @@
 
 (define prometheus-smartctl-exporter-service-type
   (service-type
-   (name 'prometheus-smartctl-exporter)
-   (extensions
-    (list (service-extension shepherd-root-service-type
-                             prometheus-smartctl-exporter-shepherd-service)
-          (service-extension rottlog-service-type
-                             (const %prometheus-smartctl-exporter-log-rotations))))
-   (default-value (prometheus-smartctl-exporter-configuration))
-   (description
-    "Run the prometheus-smartctl-exporter.")))
+    (name 'prometheus-smartctl-exporter)
+    (extensions
+     (list (service-extension shepherd-root-service-type
+                              prometheus-smartctl-exporter-shepherd-service)
+           (service-extension log-rotation-service-type
+                              (const %prometheus-smartctl-exporter-log-rotations))))
+    (default-value (prometheus-smartctl-exporter-configuration))
+    (description
+     "Run the prometheus-smartctl-exporter.")))
 
 
 ;;;
@@ -774,15 +774,15 @@
 
 (define prometheus-exim-exporter-service-type
   (service-type
-   (name 'prometheus-exim-exporter)
-   (extensions
-    (list (service-extension shepherd-root-service-type
-                             prometheus-exim-exporter-shepherd-service)
-          (service-extension rottlog-service-type
-                             (const %prometheus-exim-exporter-log-rotations))))
-   (default-value (prometheus-exim-exporter-configuration))
-   (description
-    "Run the prometheus-exim-exporter.")))
+    (name 'prometheus-exim-exporter)
+    (extensions
+     (list (service-extension shepherd-root-service-type
+                              prometheus-exim-exporter-shepherd-service)
+           (service-extension log-rotation-service-type
+                              (const %prometheus-exim-exporter-log-rotations))))
+    (default-value (prometheus-exim-exporter-configuration))
+    (description
+     "Run the prometheus-exim-exporter.")))
 
 
 ;;;
@@ -985,19 +985,19 @@ StrictHostKeyChecking no")
 
 (define grafana-service-type
   (service-type
-   (name 'grafana)
-   (extensions
-    (list (service-extension shepherd-root-service-type
-                             grafana-shepherd-service)
-          (service-extension account-service-type
-                             grafana-account)
-          (service-extension activation-service-type
-                             grafana-activation)
-          (service-extension rottlog-service-type
-                             (const %grafana-log-rotations))))
-   (default-value (grafana-configuration))
-   (description
-    "Run the grafana.")))
+    (name 'grafana)
+    (extensions
+     (list (service-extension shepherd-root-service-type
+                              grafana-shepherd-service)
+           (service-extension account-service-type
+                              grafana-account)
+           (service-extension activation-service-type
+                              grafana-activation)
+           (service-extension log-rotation-service-type
+                              (const %grafana-log-rotations))))
+    (default-value (grafana-configuration))
+    (description
+     "Run the grafana.")))
 
 
 ;;;
@@ -1138,17 +1138,17 @@ StrictHostKeyChecking no")
 
 (define fatrace-service-type
   (service-type
-   (name 'fatrace)
-   (extensions
-    (list (service-extension shepherd-root-service-type
-                             fatrace-shepherd-service)
-          (service-extension activation-service-type
-                             fatrace-activation)
-          (service-extension rottlog-service-type
-                             fatrace-log-rotations)))
-   (default-value (fatrace-configuration))
-   (description
-    "Run fatrace.")))
+    (name 'fatrace)
+    (extensions
+     (list (service-extension shepherd-root-service-type
+                              fatrace-shepherd-service)
+           (service-extension activation-service-type
+                              fatrace-activation)
+           (service-extension log-rotation-service-type
+                              fatrace-log-rotations)))
+    (default-value (fatrace-configuration))
+    (description
+     "Run fatrace.")))
 
 
 ;;;
