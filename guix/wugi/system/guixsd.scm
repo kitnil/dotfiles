@@ -272,7 +272,13 @@
                       (invoke "ip" "link" "set" "guix0" "up")
                       (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.191/24" "dev" "eth0")
                       (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")
-                      (invoke "ip" "netns" "exec" "guix-workstation" "sysctl" "-w" "net.ipv4.ip_forward=1")))))
+                      (invoke "ip" "netns" "exec" "guix-workstation" "sysctl" "-w" "net.ipv4.ip_forward=1")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "iptables" "-A" "FORWARD" "-i" "eth0" "-o" "tapvpn1" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "iptables" "-A" "FORWARD" "-i" "tapvpn1" "-o" "eth0" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "iptables" "-A" "FORWARD" "-i" "eth0" "-o" "tapvpn1" "-j" "ACCEPT")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "iptables" "-A" "FORWARD" "-i" "tapvpn1" "-o" "eth0" "-j" "ACCEPT")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "iptables" "-A" "POSTROUTING" "-o" "tapvpn1" "-j" "MASQUERADE")
+                      (invoke "ip" "netns" "exec" "guix-workstation" "iptables" "-A" "POSTROUTING" "-o" "eth0" "-j" "MASQUERADE")))))
 
 (define provision-kubelet-program-file
   (program-file "kubelet-provision"
