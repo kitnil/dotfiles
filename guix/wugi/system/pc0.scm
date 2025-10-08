@@ -378,7 +378,8 @@
                                      (runc-container-configuration
                                       (bundle "/srv/runc/guix-workstation")
                                       (name "guix-workstation")
-                                      (requirement '(guix-workstation))))
+;;                                      (requirement '(guix-workstation))
+))
 
                             (service runc-container-service-type
                                      (runc-container-configuration
@@ -450,7 +451,8 @@
                                       (listen-addr "192.168.0.192")
                                       (listen-tcp? #t)
                                       (auth-tcp "none")
-                                      (requirement '(networking))))
+                                      ;; (requirement '(networking))
+                                      ))
                             (simple-service 'libvirt-qemu-config activation-service-type
                                             #~(begin
                                                 (when (file-exists? "/etc/libvirt")
