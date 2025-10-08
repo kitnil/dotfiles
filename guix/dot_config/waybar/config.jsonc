@@ -10,10 +10,8 @@
     // Choose the order of the modules
     "modules-left": [
         "niri/workspaces",
+        "niri/window",
         "custom/media"
-    ],
-    "modules-center": [
-        "niri/window"
     ],
     "modules-right": [
         // "mpd",
