@@ -167,4 +167,9 @@ program.")))
   (operating-system
     (inherit (containerized-operating-system %my-operating-system
                                              (cons %store-mapping '())))
-    (kernel linux-libre)))
+    (kernel linux-libre)
+    (services (modify-services (operating-system-user-services %my-operating-system)
+                (guix-service-type
+                 config =>
+                 (guix-configuration
+                   (chroot? #t)))))))
