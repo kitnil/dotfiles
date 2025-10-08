@@ -610,6 +610,7 @@ in {
   services.pycharm-community.enable = true;
   services.idea-community.enable = true;
   services.vendir.enable = true;
+  services.wayland.enable = true;
 
   xresources.properties = {
     "Xcursor.theme" = "Adwaita";

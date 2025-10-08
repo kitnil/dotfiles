@@ -53,6 +53,7 @@
                     inputs.dotfiles-home-manager.nixosModules.home-manager-idea-community
                     inputs.dotfiles-home-manager.nixosModules.home-manager-pycharm-community
                     inputs.dotfiles-home-manager.nixosModules.home-manager-vendir
+                    inputs.dotfiles-home-manager.nixosModules.home-manager-wayland
                   ];
                   extraSpecialArgs =
                     let

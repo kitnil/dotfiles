@@ -334,6 +334,7 @@
         home-manager-idea-community = import ./modules/services/idea-community.nix;
         home-manager-pycharm-community = import ./modules/services/pycharm-community.nix;
         home-manager-vendir = import ./modules/services/vendir.nix;
+        home-manager-wayland = import ./modules/services/wayland.nix;
       };
     };
 }
