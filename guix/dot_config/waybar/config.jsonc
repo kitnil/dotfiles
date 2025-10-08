@@ -12,7 +12,9 @@
         "niri/workspaces",
         "custom/media"
     ],
-    // "wlr/taskbar"
+    "modules-center": [
+        "niri/window"
+    ],
     "modules-right": [
         // "mpd",
         "custom/ddc-switch-output",
