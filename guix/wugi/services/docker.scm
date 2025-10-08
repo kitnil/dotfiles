@@ -87,12 +87,9 @@
 
 (define (docker-compose-log-rotations config)
   (list
-   (log-rotation
-    (files
-     (list
-      (string-append "/var/log/docker-compose/"
-                     (docker-compose-configuration-project-name config)
-                     ".log"))))))
+   (string-append "/var/log/docker-compose/"
+                  (docker-compose-configuration-project-name config)
+                  ".log")))
 
 (define docker-compose-shepherd-service
   (match-lambda

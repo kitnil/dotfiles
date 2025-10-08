@@ -61,8 +61,7 @@
     (stop #~(make-kill-destructor)))))
 
 (define (bird-log-rotations config)
-  (list (log-rotation
-         (files (list (bird-configuration-log-file config))))))
+  (list (bird-configuration-log-file config)))
 
 (define bird-service-type
   (service-type (name 'syncthing)

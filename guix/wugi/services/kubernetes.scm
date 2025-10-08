@@ -72,8 +72,7 @@
              (default #f)))
 
 (define (kubernetes-k3s-log-rotations config)
-  (list (log-rotation
-         (files (list (kubernetes-k3s-configuration-log-file config))))))
+  (list (kubernetes-k3s-configuration-log-file config)))
 
 (define (cilium-requirements)
   (with-imported-modules '((guix build utils))
@@ -314,8 +313,7 @@
                 (default '())))
 
 (define (kubelet-log-rotations config)
-  (list (log-rotation
-         (files (list (kubelet-configuration-log-file config))))))
+  (list (kubelet-configuration-log-file config)))
 
 (define (kubelet-shepherd-service config)
   (list
@@ -391,8 +389,7 @@
              (default '())))
 
 (define (edgecore-log-rotations config)
-  (list (log-rotation
-         (files (list (edgecore-configuration-log-file config))))))
+  (list (edgecore-configuration-log-file config)))
 
 (define (edgecore-wrapper args)
   (program-file

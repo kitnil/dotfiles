@@ -48,10 +48,8 @@
 
 (define (virtual-machine-log-rotations config)
   (list
-   (log-rotation
-    (files
-     (list
-      (string-append "/var/log/virtual-machine-" (virtual-machine-name config) ".log"))))))
+   (string-append "/var/log/virtual-machine-"
+                  (virtual-machine-name config) ".log")))
 
 (define (virtual-machine-shepherd-service config)
   (list
@@ -128,11 +126,8 @@
 
 (define (runc-log-rotations config)
   (list
-   (log-rotation
-    (files
-     (list
-      (string-append "/var/log/runc/"
-                     (runc-configuration-name config) ".log"))))))
+   (string-append "/var/log/runc/"
+                  (runc-configuration-name config) ".log")))
 
 (define (runc-shepherd-service config)
   (match-record

@@ -41,12 +41,9 @@
 
 (define (runc-container-log-rotations config)
   (list
-   (log-rotation
-    (files
-     (list
-      (string-append "/var/log/runc/"
-                     (runc-container-configuration-name config)
-                     ".log"))))))
+   (string-append "/var/log/runc/"
+                  (runc-container-configuration-name config)
+                  ".log")))
 
 (define runc-container-shepherd-service
   (match-lambda

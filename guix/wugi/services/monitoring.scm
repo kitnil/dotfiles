@@ -135,8 +135,7 @@
 (define %prometheus-log "/var/log/prometheus.log")
 
 (define %prometheus-log-rotations
-  (list (log-rotation
-         (files (list %prometheus-log)))))
+  (list %prometheus-log))
 
 (define prometheus-shepherd-service
   (match-lambda
@@ -238,8 +237,7 @@
 (define %prometheus-alertmanager-log "/var/log/prometheus-alertmanager.log")
 
 (define %prometheus-alertmanager-log-rotations
-  (list (log-rotation
-         (files (list %prometheus-alertmanager-log)))))
+  (list %prometheus-alertmanager-log))
 
 (define prometheus-alertmanager-shepherd-service
   (match-lambda
@@ -338,8 +336,7 @@
 (define %prometheus-pushgateway-log "/var/log/prometheus-pushgateway.log")
 
 (define %prometheus-pushgateway-log-rotations
-  (list (log-rotation
-         (files (list %prometheus-pushgateway-log)))))
+  (list %prometheus-pushgateway-log))
 
 (define prometheus-pushgateway-shepherd-service
   (match-lambda
@@ -419,8 +416,7 @@
 (define %prometheus-dnsmasq-log "/var/log/prometheus-dnsmasq.log")
 
 (define %prometheus-dnsmasq-log-rotations
-  (list (log-rotation
-         (files (list %prometheus-dnsmasq-log)))))
+  (list %prometheus-dnsmasq-log))
 
 (define prometheus-dnsmasq-shepherd-service
   (match-lambda
@@ -492,8 +488,7 @@
 (define %karma-log "/var/log/karma.log")
 
 (define %karma-log-rotations
-  (list (log-rotation
-         (files (list %karma-log)))))
+  (list %karma-log))
 
 (define (karma-shepherd-service config)
   (list
@@ -585,8 +580,7 @@
 (define %prometheus-blackbox-exporter-log "/var/log/prometheus-blackbox-exporter.log")
 
 (define %prometheus-blackbox-exporter-log-rotations
-  (list (log-rotation
-         (files (list %prometheus-blackbox-exporter-log)))))
+  (list %prometheus-blackbox-exporter-log))
 
 (define (prometheus-blackbox-exporter-shepherd-service config)
   (list
@@ -659,8 +653,7 @@
 (define %prometheus-bird-exporter-log "/var/log/prometheus-bird-exporter.log")
 
 (define %prometheus-bird-exporter-log-rotations
-  (list (log-rotation
-         (files (list %prometheus-bird-exporter-log)))))
+  (list %prometheus-bird-exporter-log))
 
 (define (prometheus-bird-exporter-shepherd-service config)
   (list
@@ -704,8 +697,7 @@
 (define %prometheus-smartctl-exporter-log "/var/log/prometheus-smartctl-exporter.log")
 
 (define %prometheus-smartctl-exporter-log-rotations
-  (list (log-rotation
-         (files (list %prometheus-smartctl-exporter-log)))))
+  (list %prometheus-smartctl-exporter-log))
 
 (define (prometheus-smartctl-exporter-shepherd-service config)
   (list
@@ -749,8 +741,7 @@
 (define %prometheus-exim-exporter-log "/var/log/prometheus-exim-exporter.log")
 
 (define %prometheus-exim-exporter-log-rotations
-  (list (log-rotation
-         (files (list %prometheus-exim-exporter-log)))))
+  (list %prometheus-exim-exporter-log))
 
 (define (prometheus-exim-exporter-shepherd-service config)
   (list
@@ -964,8 +955,7 @@ StrictHostKeyChecking no")
 (define %grafana-log "/var/log/grafana.log")
 
 (define %grafana-log-rotations
-  (list (log-rotation
-         (files (list %grafana-log)))))
+  (list %grafana-log))
 
 (define (grafana-shepherd-service config)
   (list
@@ -1116,8 +1106,7 @@ StrictHostKeyChecking no")
           (delete-file #$log-file)))))
 
 (define (fatrace-log-rotations config)
-  (list (log-rotation
-         (files (list (fatrace-configuration-log-file config))))))
+  (list (fatrace-configuration-log-file config)))
 
 (define (fatrace-shepherd-service config)
   (list
