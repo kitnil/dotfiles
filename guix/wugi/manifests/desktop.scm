@@ -193,12 +193,13 @@
           font-xfree86-type1))
 
   (define fonts
-    (list font-adwaita
-          font-awesome
-          font-dejavu
-          font-wqy-microhei
-          font-wqy-zenhei
-          fontconfig))
+    (append (list font-adwaita
+                  font-awesome
+                  font-dejavu
+                  font-wqy-microhei
+                  font-wqy-zenhei
+                  fontconfig)
+            extra-fonts))
 
   (packages->manifest (append fonts
                               menus)))
