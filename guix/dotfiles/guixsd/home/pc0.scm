@@ -74,10 +74,6 @@
   (list
    (service home-dbus-service-type)
    (service home-pipewire-service-type)
-   (simple-service 'sway-config
-                   home-files-service-type
-                   (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/pc0.config")))
-                         `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom")))))
    home-bash-service
    home-mime-service
    home-direnv-service
@@ -119,8 +115,6 @@
    (service home-scream-service-type
             (scream-configuration
              (interface "eth0")))
-
-   (service home-sway-service-type)
 
    (service home-wayvnc-service-type
             (wayvnc-configuration
