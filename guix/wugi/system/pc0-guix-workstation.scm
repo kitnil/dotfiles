@@ -164,11 +164,14 @@ program.")))
                                                "oleg ALL=(ALL) NOPASSWD:ALL")
                                              "\n")))))
 
+  (define %my-containerized-operating-system
+    (containerized-operating-system %my-operating-system
+                                    (cons %store-mapping '())))
+
   (operating-system
-    (inherit (containerized-operating-system %my-operating-system
-                                             (cons %store-mapping '())))
+    (inherit %my-containerized-operating-system)
     (kernel linux-libre)
-    (services (modify-services (operating-system-user-services %my-operating-system)
+    (services (modify-services (operating-system-user-services %my-containerized-operating-system)
                 (guix-service-type
                  config =>
                  (guix-configuration
