@@ -129,7 +129,7 @@ program.")))
                                 (requirement '())
                                 (start #~(make-forkexec-constructor
                                           (list #$(file-append coreutils "/bin/sleep")
-                                                (number->string 2))))
+                                                "infinity")))
                                 (respawn? #f)
                                 (auto-start? #t)))))
         (modify-services %base-services
