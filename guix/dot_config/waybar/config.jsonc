@@ -9,16 +9,9 @@
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
-        "sway/workspaces",
-        "sway/mode",
-        "sway/scratchpad",
-        "custom/media",
-        "sway/window"
+        "custom/media"
     ],
     // "wlr/taskbar"
-    // "modules-center": [
-    //     "sway/window"
-    // ],
     "modules-right": [
         // "mpd",
         "custom/ddc-switch-output",
@@ -35,28 +28,11 @@
         "disk#/",
         "backlight",
         "keyboard-state",
-        "sway/language",
         "clock#utc",
         "clock#msk",
         "tray"
     ],
     // Modules configuration
-    // "sway/workspaces": {
-    //     "disable-scroll": true,
-    //     "all-outputs": true,
-    //     "warp-on-scroll": false,
-    //     "format": "{name}: {icon}",
-    //     "format-icons": {
-    //         "1": "",
-    //         "2": "",
-    //         "3": "",
-    //         "4": "",
-    //         "5": "",
-    //         "urgent": "",
-    //         "focused": "",
-    //         "default": ""
-    //     }
-    // },
     "keyboard-state": {
         "numlock": true,
         "capslock": true,
@@ -65,16 +41,6 @@
             "locked": "",
             "unlocked": ""
         }
-    },
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
-    },
-    "sway/scratchpad": {
-        "format": "{icon} {count}",
-        "show-empty": false,
-        "format-icons": ["", ""],
-        "tooltip": true,
-        "tooltip-format": "{app}: {title}"
     },
     "custom/lm-studio-models": {
         "exec": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dot_local/bin/lm-studio-loaded-models.sh",
@@ -101,10 +67,6 @@
         "on-click": "sudo ddcutil --bus=7 setvcp xF4 x0091 --i2c-source-addr=x50 --noverify",
         // dp-1
         "on-click-right": "sudo ddcutil --bus=7 setvcp xF4 x00d0 --i2c-source-addr=x50 --noverify",
-    },
-    "sway/language": {
-        "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
-        "format": "{short}  "
     },
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
