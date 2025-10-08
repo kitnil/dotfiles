@@ -17,7 +17,7 @@
   (define menus
     (list dmenu wofi))
 
-  (define fonts
+  (define extra-fonts
     (list font-abattis-cantarell
           font-adobe-source-code-pro
           font-adobe-source-han-sans
@@ -28,7 +28,6 @@
           font-adobe-source-serif-pro
           font-adobe100dpi
           font-adobe75dpi
-          font-adwaita
           font-alias
           font-amiri
           font-anonymous-pro
@@ -41,7 +40,6 @@
           font-artifika
           font-atkinson-hyperlegible
           font-atui-feather
-          font-awesome
           font-bitstream-vera
           font-blackfoundry-inria
           font-borg-sans-mono
@@ -63,7 +61,6 @@
           font-cronyx-cyrillic
           font-culmus
           font-dec-misc
-          font-dejavu
           font-dina
           font-dongle
           font-dosis
@@ -193,9 +190,14 @@
           font-velvetyne-jgs
           font-victor-mono
           font-winitzki-cyrillic
+          font-xfree86-type1))
+
+  (define fonts
+    (list font-adwaita
+          font-awesome
+          font-dejavu
           font-wqy-microhei
           font-wqy-zenhei
-          font-xfree86-type1
           fontconfig))
 
   (packages->manifest (append fonts

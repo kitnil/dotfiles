@@ -29,6 +29,7 @@
   #:use-module (gnu packages shellutils)
   #:use-module (gnu packages ssh)
   #:use-module (gnu packages suckless)
+  #:use-module (gnu packages textutils)
   #:use-module (gnu packages tmux)
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages video)
@@ -57,7 +58,6 @@
          git
          gnu-make
          gnupg
-         gron
          htop
          iputils
          jq

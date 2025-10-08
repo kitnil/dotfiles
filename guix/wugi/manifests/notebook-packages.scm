@@ -50,7 +50,6 @@
          flatpak
          git
          gnupg
-         gron
          htop
          iputils
          jq
