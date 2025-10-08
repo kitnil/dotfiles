@@ -31,8 +31,12 @@ in
       Service = {
         ExecStart = pkgs.writeScript "wayland.sh" ''
           #!${pkgs.runtimeShell}
-
-          ${pkgs.coreutils}/bin/ln -ns /mnt/guix/run/user/1000/wayland-1 /run/user/1000/
+          if [[ -e /run/user/1000/wayland-1 ]]
+          then
+              printf "'%s' file already exist.\n" /run/user/1000/wayland-1
+          else
+              ${pkgs.coreutils}/bin/ln -s /mnt/guix/run/user/1000/wayland-1 /run/user/1000/
+          fi
         '';
         Type = "oneshot";
         Restart = "never";
