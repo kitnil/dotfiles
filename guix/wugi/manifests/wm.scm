@@ -23,11 +23,7 @@
   (define wayland-utils
     (list wayvnc
           wl-mirror
-          wtype
-          xdg-desktop-portal
-          xdg-desktop-portal-gnome
-          xdg-desktop-portal-gtk
-          xdg-desktop-portal-wlr))
+          wtype))
 
   (packages->manifest (append clipboard
                               wm
