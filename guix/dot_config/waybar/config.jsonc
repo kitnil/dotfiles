@@ -22,8 +22,6 @@
         "custom/lm-studio-models",
         "pulseaudio",
         "network#eth0",
-        "network#tapvpn",
-        "network#tapvpn1",
         "power-profiles-daemon",
         "cpu",
         "temperature",
@@ -192,26 +190,6 @@
         "format-linked": "{ifname} (No IP)  ",
         "format-disconnected": "DOWN  ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
-    },
-    "network#tapvpn": {
-        "interface": "tapvpn",
-        "format-wifi": "{essid} ({signalStrength}%)  ",
-        "format-ethernet": "{bandwidthDownBits}     {bandwidthUpBits} ",
-        "tooltip-format": "{ipaddr}/{cidr} {ifname} via {gwaddr}",
-        "format-linked": "{ifname} (No IP)  ",
-        "format-disconnected": "DOWN  ",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dot_local/bin/herd-toggle-service.sh"
-    },
-    "network#tapvpn1": {
-        "interface": "tapvpn1",
-        "format-wifi": "{essid} ({signalStrength}%)  ",
-        "format-ethernet": "{bandwidthDownBits}     {bandwidthUpBits} ",
-        "tooltip-format": "{ipaddr}/{cidr} {ifname} via {gwaddr}",
-        "format-linked": "{ifname} (No IP)  ",
-        "format-disconnected": "DOWN  ",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dot_local/bin/herd-toggle-service.sh"
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
