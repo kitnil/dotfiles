@@ -99,6 +99,7 @@
                                     (list `(".config/aichat/config.yaml"
                                             ,(local-file (string-append %distro-directory "/dot_config/aichat/config.yaml")))))
                     (service home-wayvnc-service-type)
+                    (service home-niri-service-type)
                     (service home-scream-service-type
                              (scream-configuration
                               (port 16400)))
