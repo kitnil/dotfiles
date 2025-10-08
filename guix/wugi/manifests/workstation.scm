@@ -14,6 +14,7 @@
   #:use-module (wugi manifests guile)
   #:use-module (wugi manifests icons)
   #:use-module (wugi manifests majordomo)
+  #:use-module (wugi manifests nonguix)
   #:use-module (wugi manifests mqtt)
   #:use-module (wugi manifests notebook-packages)
   #:use-module (wugi manifests obs)
@@ -25,6 +26,7 @@
   (combined-manifest-from-files
    (list (%pc0-packages-manifest)
          (%desktop-manifest)
+         (%nonguix-manifest)
          (%icons-manifest)
          (%emacs-manifest)
          (%deprecated-manifest)
