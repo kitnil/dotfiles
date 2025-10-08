@@ -592,6 +592,7 @@ in {
         epkgs.magit
         epkgs.helm
         epkgs.helm-projectile
+        epkgs.ivy
         epkgs.groovy-mode
         epkgs.nginx-mode
         epkgs.nix-mode
