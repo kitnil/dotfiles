@@ -63,9 +63,9 @@
         "icon-theme": "Adwaita",
         "tooltip-format": "Switch output on DP-1",
         // hdmi-2
-        "on-click": "sudo ddcutil --bus=7 setvcp xF4 x0091 --i2c-source-addr=x50 --noverify",
+        "on-click": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dot_local/bin/ddc --output=HDMI-2",
         // dp-1
-        "on-click-right": "sudo ddcutil --bus=7 setvcp xF4 x00d0 --i2c-source-addr=x50 --noverify",
+        "on-click-right": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dot_local/bin/ddc --output=DP-1",
     },
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
