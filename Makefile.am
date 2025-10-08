@@ -155,13 +155,13 @@ home $1 --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) -e "((@ 
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-home-build-$(configuration)): $(DECRYPT_TARGETS)
-	$(GUIX) $(call guix-home-expression,build,$(call subst,guix-home-build-,,$@)-home-environment,$(call subst,guix-home-build-,,$@)-home-environment)
+	$(GUIX) $(call guix-home-expression,build,$(call subst,guix-home-build-,,$@)-home-environment,$(call subst,guix-home-build-,,$@)-home-environment) $(ARGS)
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-home-build-$(configuration)): $(DECRYPT_TARGETS)
 	$(call guix-time-machine,$(call subst,guix-time-machine-home-build-,,$@)) -- $(call guix-home-expression,build,$(call subst,guix-time-machine-home-build-,,$@)-home-environment,$(call subst,guix-time-machine-home-build-,,$@)-home-environment)
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-home-reconfigure-$(configuration)): $(DECRYPT_TARGETS)
-	$(GUIX) $(call guix-home-expression,reconfigure,$(call subst,guix-home-reconfigure-,,$@)-home-environment,$(call subst,guix-home-reconfigure-,,$@)-home-environment) --allow-downgrades
+	$(GUIX) $(call guix-home-expression,reconfigure,$(call subst,guix-home-reconfigure-,,$@)-home-environment,$(call subst,guix-home-reconfigure-,,$@)-home-environment) --allow-downgrades $(ARGS)
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-home-reconfigure-$(configuration)):
 	$(call guix-time-machine,$(call subst,guix-time-machine-home-reconfigure-,,$@)) -- $(call guix-home-expression,reconfigure,$(call subst,guix-time-machine-home-reconfigure-,,$@)-home-environment,$(call subst,guix-time-machine-home-reconfigure-,,$@)-home-environment) --allow-downgrades
