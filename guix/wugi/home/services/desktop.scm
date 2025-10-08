@@ -4,6 +4,7 @@
   #:use-module (guix gexp)
   #:use-module (guix records)
   #:use-module (gnu packages bash)
+  #:use-module (gnu packages glib)
   #:use-module (gnu packages haskell-apps)
   #:use-module (gnu packages vnc)
   #:use-module (gnu packages wm)
@@ -110,31 +111,32 @@
 
 (define (home-niri-shepherd-service config)
   (list (shepherd-service
-          (documentation "Run niri.")
-          (provision '(niri))
-          (start #~(make-forkexec-constructor
-                    (list #$(file-append bash "/bin/bash")
-                          "-l"
-                          "-c" (format #f "exec ~a"
-                                       #$(file-append niri "/bin/niri")))
-                    #:environment-variables
-                    (append (list #$@(niri-configuration-environment-variables config))
-                            '("DESKTOP_SESSION=niri"
-                              "XDG_CURRENT_DESKTOP=niri"
-                              "XDG_SESSION_DESKTOP=niri"
-                              "XDG_SESSION_TYPE=wayland")
-                            (filter (negate
-                                     (lambda (str)
-                                       (or (string-prefix? "WAYLAND_DISPLAY=" str))))
-                                    (environ)))))
-          (stop #~(make-kill-destructor)))))
+         (documentation "Run niri.")
+         (provision '(niri))
+         (start #~(make-forkexec-constructor
+                   (list #$(file-append bash "/bin/bash") "-l"
+                         "-c" "exec dbus-run-session niri --session")
+                   #:environment-variables
+                   (append (list #$@(niri-configuration-environment-variables config))
+                           '("DESKTOP_SESSION=niri"
+                             "XDG_CURRENT_DESKTOP=niri"
+                             "XDG_SESSION_DESKTOP=niri"
+                             "XDG_SESSION_TYPE=wayland")
+                           (filter (negate
+                                    (lambda (str)
+                                      (or (string-prefix? "WAYLAND_DISPLAY=" str))))
+                                   (environ)))))
+         (stop #~(make-kill-destructor)))))
 
 (define home-niri-service-type
   (service-type (name 'home-niri)
                 (extensions
                  (list (service-extension
                         home-shepherd-service-type
-                        home-niri-shepherd-service)))
+                        home-niri-shepherd-service)
+                       (service-extension home-profile-service-type
+                                          (lambda (config)
+                                            (list dbus niri)))))
                 (default-value (niri-configuration))
                 (description
                  "Run niri.")))
