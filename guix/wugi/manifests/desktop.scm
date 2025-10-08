@@ -29,7 +29,7 @@
           font-adobe100dpi
           font-adobe75dpi
           font-alias
-          font-amiri
+          ;; font-amiri
           font-anonymous-pro
           font-anonymous-pro-minus
           font-apl2741-unicode
@@ -57,12 +57,12 @@
           font-cns11643-swjz
           font-comic-neue
           font-cormorant
-          font-cozette
+          ;; font-cozette
           font-cronyx-cyrillic
           font-culmus
           font-dec-misc
           font-dina
-          font-dongle
+          ;; font-dongle
           font-dosis
           font-dseg
           font-et-book
