@@ -80,17 +80,6 @@
                                                         "the content of
                                                ~/.config/test.conf"))))
                    (service home-files-service-type)
-                   (simple-service 'sway-config
-                                   home-files-service-type
-                                   (append (list `(".xkb/symbols/custom" ,(local-file (string-append %distro-directory "/dot_xkb/symbols/custom"))))
-                                           (list `("bin/move" ,(program-file "sway-move"
-                                                                             #~(let ((args (cdr (command-line))))
-                                                                                 (execl #$(file-append sway "/bin/swaymsg") "swaymsg" "move" "workspace" (string-join args)))))
-                                                 `("bin/workspace" ,(program-file "sway-workspace"
-                                                                                  #~(let ((args (cdr (command-line))))
-                                                                                      (execl #$(file-append sway "/bin/swaymsg") "swaymsg" "workspace" (string-join args)))))
-                                                 `("bin/workspaces" ,(local-file (string-append %distro-directory "/dot_local/bin/sway-workspaces")
-                                                                                 #:recursive? #t)))))
                    (simple-service 'waybar-config
                                    home-files-service-type
                                    (list `(".config/waybar/config.jsonc"
@@ -109,7 +98,6 @@
                                    home-files-service-type
                                    (list `(".config/aichat/config.yaml"
                                            ,(local-file (string-append %distro-directory "/dot_config/aichat/config.yaml")))))
-                   (service home-sway-service-type)
                    (service home-wayvnc-service-type)
                    (service home-scream-service-type
                             (scream-configuration
