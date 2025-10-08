@@ -9,7 +9,8 @@
 
 (define (%firejail-manifest)
   (define inferior
-    (inferior-for-channels %channels-firejail))
+    (inferior-for-channels %channels-firejail
+                           #:cache-directory "/home/oleg/.cache/guix/inferiors"))
 
   (define firejail-disable-sandbox-check
     (first (lookup-inferior-packages inferior "firejail-disable-sandbox-check")))

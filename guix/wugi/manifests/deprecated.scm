@@ -19,7 +19,8 @@
             "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))))
 
 (define (inferior)
-  (inferior-for-channels channels))
+  (inferior-for-channels channels
+                         #:cache-directory "/home/oleg/.cache/guix/inferiors"))
 
 (define (openssh)
   (first (lookup-inferior-packages (inferior) "openssh")))

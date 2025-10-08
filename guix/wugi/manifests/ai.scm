@@ -9,7 +9,8 @@
 
 (define (%ai-manifest)
   (define inferior
-    (inferior-for-channels %channels-aichat))
+    (inferior-for-channels %channels-aichat
+                           #:cache-directory "/home/oleg/.cache/guix/inferiors"))
 
   (define aichat
     (first (lookup-inferior-packages inferior "aichat")))

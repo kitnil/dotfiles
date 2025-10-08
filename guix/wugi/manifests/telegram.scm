@@ -9,7 +9,8 @@
 
 (define (%telegram-manifest)
   (define inferior
-    (inferior-for-channels %channels-telegram))
+    (inferior-for-channels %channels-telegram
+                           #:cache-directory "/home/oleg/.cache/guix/inferiors"))
 
   (define telegram-desktop
     (first (lookup-inferior-packages inferior "telegram-desktop")))

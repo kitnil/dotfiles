@@ -12,7 +12,8 @@
 
 (define (%obs-manifest)
   (define inferior
-    (inferior-for-channels %channels-current-local-file))
+    (inferior-for-channels %channels-current-local-file
+                           #:cache-directory "/home/oleg/.cache/guix/inferiors"))
 
   (define inferior-packages
     (inferior-eval `(begin

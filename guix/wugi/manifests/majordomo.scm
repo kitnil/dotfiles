@@ -9,7 +9,8 @@
 
 (define (%majordomo-manifest)
   (define inferior
-    (inferior-for-channels %channels-majordomo))
+    (inferior-for-channels %channels-majordomo
+                           #:cache-directory "/home/oleg/.cache/guix/inferiors"))
 
   (packages->manifest
    (list (first (lookup-inferior-packages inferior "guile-ihs")))))
