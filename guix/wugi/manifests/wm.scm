@@ -1,6 +1,7 @@
 (define-module (wugi manifests wm)
   #:use-module (guix profiles)
   #:use-module (gnu packages freedesktop)
+  #:use-module (gnu packages gnome)
   #:use-module (gnu packages image)
   #:use-module (gnu packages terminals)
   #:use-module (gnu packages vnc)
@@ -24,6 +25,7 @@
           wl-mirror
           wtype
           xdg-desktop-portal
+          xdg-desktop-portal-gnome
           xdg-desktop-portal-gtk
           xdg-desktop-portal-wlr))
 
