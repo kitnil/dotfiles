@@ -155,7 +155,7 @@ home $1 --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) -e "((@ 
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-home-build-$(configuration)): $(DECRYPT_TARGETS)
-	$(call guix-home-expression,build,$(call subst,guix-home-build-,,$@)-home-environment,$(call subst,guix-home-build-,,$@)-home-environment)
+	$(GUIX) $(call guix-home-expression,build,$(call subst,guix-home-build-,,$@)-home-environment,$(call subst,guix-home-build-,,$@)-home-environment)
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-home-build-$(configuration)): $(DECRYPT_TARGETS)
 	$(call guix-time-machine,$(call subst,guix-time-machine-home-build-,,$@)) -- $(call guix-home-expression,build,$(call subst,guix-time-machine-home-build-,,$@)-home-environment,$(call subst,guix-time-machine-home-build-,,$@)-home-environment)
