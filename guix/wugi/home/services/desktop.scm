@@ -102,13 +102,15 @@
   (arguments             wayvnc-configuration-arguments             ;list of strings
                          (default '()))
   (environment-variables wayvnc-configuration-environment-variables ;list of strings
+                         (default '()))
+  (requirement           wayvnc-configuration-requirement
                          (default '())))
 
 (define (home-wayvnc-shepherd-service config)
   (list (shepherd-service
          (documentation "User wayvnc.")
          (provision '(wayvnc))
-         (requirement '(sway))
+         (requirement (wayvnc-configuration-requirement config))
          (start #~(make-forkexec-constructor
                    (list #$(file-append (wayvnc-configuration-wayvnc config)
                                         "/bin/wayvnc")
