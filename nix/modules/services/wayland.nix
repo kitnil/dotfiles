@@ -32,7 +32,7 @@ in
         ExecStart = pkgs.writeScript "wayland.sh" ''
           #!${pkgs.runtimeShell}
 
-          ${pkgs.coreutils}/bin/ln -s /mnt/guix/run/user/1000/wayland-1 /run/user/1000/
+          ${pkgs.coreutils}/bin/ln -ns /mnt/guix/run/user/1000/wayland-1 /run/user/1000/
         '';
         Type = "oneshot";
         Restart = "never";
