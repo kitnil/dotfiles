@@ -52,6 +52,11 @@
                 (description
                  "Run greenclip clipboard manager daemon.")))
 
+
+;;;
+;;; Sway
+;;;
+
 (define-record-type* <sway-configuration>
   sway-configuration make-sway-configuration
   sway-configuration?
