@@ -175,4 +175,5 @@ program.")))
                 (guix-service-type
                  config =>
                  (guix-configuration
+                   (inherit config)
                    (chroot? #t)))))))
