@@ -36,7 +36,6 @@
                                   ;; plugins
                                   obs-advanced-masks
                                   obs-composite-blur
-                                  obs-exporter
                                   obs-gradient-source
                                   (@ (wigust packages video) obs-looking-glass)
                                   obs-move-transition

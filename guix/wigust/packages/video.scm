@@ -53,8 +53,6 @@
   #:use-module (guix svn-download)
   #:use-module (guix utils)
   #:use-module (ice-9 match)
-  #:use-module (nongnu packages chromium)
-  #:use-module (nonguix build-system binary)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26))
 
@@ -298,33 +296,6 @@ channel/playlist and returns a link to the corresponding RSS feed.")
     (synopsis "")
     (description "")
     (license #f)))
-
-(define-public obs-exporter
-  (let ((commit "ebe35cbe8b963395a39066a83e31355c74f986d2"))
-    (package
-      (name "obs-exporter")
-      (version (git-version "0.0.1" "1" commit))
-      (source
-       (origin
-         (method url-fetch)
-         (uri "https://iso.wugi.info/obs-studio-exporter.so")
-         (sha256
-          (base32
-           "1rcw3cdsdp5ih24j2l5bln9af9fvp60dgzgi2q52gnb9xqqa4pwn"))))
-      (build-system binary-build-system)
-      (arguments
-       `(#:strip-binaries? #f
-         #:install-plan
-         '(("obs-studio-exporter.so"
-            "lib/obs-plugins/obs-studio-exporter.so"))
-         #:validate-runpath? #f))
-      (home-page "https://github.com/lukegb/obs_studio_exporter")
-      (synopsis
-       "Prometheus exporter for metrics from OBS Studio")
-      (description
-       "Exports metrics from OBS Studio in a Prometheus-compatible format.")
-      (supported-systems '("x86_64-linux"))
-      (license license:asl2.0))))
 
 (define-public obs-advanced-masks
   (package
