@@ -7,6 +7,7 @@
   #:use-module (gnu packages fontutils)
   #:use-module (gnu packages ghostscript)
   #:use-module (gnu packages javascript)
+  #:use-module (gnu packages package-management)
   #:use-module (gnu packages suckless)
   #:use-module (gnu packages terminals)
   #:use-module (gnu packages xorg)
@@ -201,7 +202,8 @@
                   fontconfig)
             extra-fonts))
 
-  (packages->manifest (append fonts
+  (packages->manifest (append (list flatpak)
+                              fonts
                               menus)))
 
 (%desktop-manifest)
