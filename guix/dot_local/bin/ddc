@@ -49,10 +49,6 @@ code is non-zero; otherwise return #t."
     (string->symbol (assoc-ref opts 'output)))
   (case output
     ((DP-1)
-     (system* "niri" "msg" "output" "DP-1" "on")
-     (sleep 2) ;wait for display
      (invoke "sudo" "ddcutil" "--bus=7" "setvcp" "xF4" "x00d0" "--i2c-source-addr=x50" "--noverify"))
     ((HDMI-2)
-     (system* "niri" "msg" "output" "DP-1" "off")
-     (sleep 2)
      (invoke "sudo" "ddcutil" "--bus=7" "setvcp" "xF4" "x0091" "--i2c-source-addr=x50" "--noverify"))))
