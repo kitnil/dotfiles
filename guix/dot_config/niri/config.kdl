@@ -262,6 +262,15 @@ layout {
         // top 64
         // bottom 64
     }
+
+    tab-indicator {
+        hide-when-single-tab
+        width 8
+        gap 8
+        length total-proportion=1.0
+        position "top"
+        place-within-column
+    }
 }
 
 // Add lines like this to spawn processes at startup.
