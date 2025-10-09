@@ -53,5 +53,6 @@ code is non-zero; otherwise return #t."
      (sleep 2) ;wait for display
      (invoke "sudo" "ddcutil" "--bus=7" "setvcp" "xF4" "x00d0" "--i2c-source-addr=x50" "--noverify"))
     ((HDMI-2)
-     (invoke "niri" "msg" "output" "DP-1" "off")
+     (system* "niri" "msg" "output" "DP-1" "off")
+     (sleep 2)
      (invoke "sudo" "ddcutil" "--bus=7" "setvcp" "xF4" "x0091" "--i2c-source-addr=x50" "--noverify"))))
