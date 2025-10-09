@@ -177,6 +177,85 @@ channel/playlist and returns a link to the corresponding RSS feed.")
     (description "")
     (license #f)))
 
+(define-public ndi-6
+  (package
+    (name "ndi-6")
+    (version "6.2.0") ;NDI SDK for Linux/Version.txt
+    (source
+     (origin
+       (method url-fetch)
+       (uri "https://iso.wugi.info/windows/Install_NDI_SDK_v6_Linux.tar.gz")
+       (sha256
+        (base32
+         "0dp5n95bl5iibnkjfj6qys80b06x90nlr4njvilhsvfqfay72jnp"))))
+    (build-system trivial-build-system)
+    (inputs (list bash-minimal tar findutils coreutils gawk gzip tar glibc patchelf `(,gcc "lib") avahi))
+    (native-inputs `(("source" ,source)))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (setenv "PATH"
+                  (string-append
+                   #$(this-package-input "gzip") "/bin"
+                   ":" #$(this-package-input "tar") "/bin"
+                   ":" #$(this-package-input "avahi") "/bin"
+                   ":" #$(this-package-input "bash-minimal") "/bin"
+                   ":" #$(this-package-input "gawk") "/bin"
+                   ":" #$(this-package-input "findutils") "/bin"
+                   ":" #$(this-package-input "tar") "/bin"
+                   ":" #$(this-package-input "coreutils") "/bin"
+                   ":" #$(this-package-input "patchelf") "/bin"))
+          (invoke "tar" "-xf" #$(this-package-native-input "source"))
+          (system "echo y | bash -x ./Install_NDI_SDK_v6_Linux.sh")
+          ;; Install binaries.
+          (mkdir-p (string-append #$output "/bin"))
+          (for-each (lambda (file)
+                      (invoke "patchelf"
+                              "--set-interpreter"
+                              (string-append #$(this-package-input "glibc")
+                                             "/lib/ld-linux-x86-64.so.2")
+                              (string-append "NDI SDK for Linux/bin/x86_64-linux-gnu/" file))
+                      (copy-file (string-append "NDI SDK for Linux/bin/x86_64-linux-gnu/" file)
+                                 (string-append #$output "/bin/" file)))
+                    '("ndi-benchmark"
+                      "ndi-free-audio"))
+          (invoke "patchelf"
+                  "--set-interpreter"
+                  (string-append #$(this-package-input "glibc")
+                                 "/lib/ld-linux-x86-64.so.2")
+                  "--set-rpath" (string-append #$(this-package-input "avahi") "/lib")
+                  (string-append "NDI SDK for Linux/bin/x86_64-linux-gnu/ndi-record"))
+          (copy-file "NDI SDK for Linux/bin/x86_64-linux-gnu/ndi-record"
+                     (string-append #$output "/bin/ndi-record"))
+          ;; Install libraries.
+          (mkdir-p (string-append #$output "/lib"))
+          (for-each (lambda (file)
+                      (invoke "patchelf"
+                              "--set-rpath" (string-append #$(this-package-input "avahi") "/lib")
+                              (string-append "NDI SDK for Linux/lib/x86_64-linux-gnu/" file))
+                      (copy-file (string-append "NDI SDK for Linux/lib/x86_64-linux-gnu/" file)
+                                 (string-append #$output "/lib/" file)))
+                    '("libndi.so.6.2.0"))
+          (with-directory-excursion (string-append #$output "/lib")
+            (for-each (lambda (file)
+                        (symlink "libndi.so.6.2.0" file))
+                      '("libndi.so.5"
+                        "libndi.so")))
+          ;; Install misc.
+          (for-each (lambda (directory)
+                      (mkdir-p (string-append #$output "/" directory))
+                      (copy-recursively (string-append "NDI SDK for Linux/" directory)
+                                        (string-append #$output "/" directory)))
+                    '("include" "examples"))
+          (mkdir-p (string-append #$output "/doc")))))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
+
 (define-public obs-ndi
   (package
     (name "obs-ndi")
@@ -184,8 +263,8 @@ channel/playlist and returns a link to the corresponding RSS feed.")
     (source (origin
               (method git-fetch)
               (uri (git-reference
-                    (url "https://github.com/Palakis/obs-ndi")
-                    (commit version)))
+                     (url "https://github.com/Palakis/obs-ndi")
+                     (commit version)))
               (file-name (git-file-name name version))
               (sha256
                (base32
