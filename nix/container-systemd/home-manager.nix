@@ -114,7 +114,7 @@ in {
     enable = true;
     profiles =
       let
-        firefoxBaseProfile = {
+        firefoxBaseProfile = { ech ? false }: {
           # TODO: Manage ~/.mozilla/firefox/nix/containers.json file with Nix.
           # TODO: Manage ~/.mozilla/firefox/nix/cookies.sqlite somehow.
           # TODO: Import ~/src/ssl/cert.p12 file with Nix.
@@ -134,7 +134,10 @@ in {
             "general.warnOnAboutConfig" = false;
             "startup.homepage_welcome_url" = "about:newtab";
             "toolkit.telemetry.reportingpolicy.firstRun" = false;
-          };
+          } // (if ech then {} else {
+            "network.dns.echconfig.enabled" = false;
+            "network.dns.http3_echconfig.enabled" = false;
+          });
           search = {
             force = true;
             default = "searxng";
@@ -153,7 +156,7 @@ in {
             };
           };
         };
-        firefoxBaseProfileWithExtensions = firefoxBaseProfile // {
+        firefoxBaseProfileWithExtensions = { ech ? true }: (firefoxBaseProfile { inherit ech; }) // {
           extensions = {
             packages =
               with packages;
@@ -179,7 +182,7 @@ in {
           isDefault = false;
           id = 0;
         };
-        nix = firefoxBaseProfileWithExtensions // {
+        nix = (firefoxBaseProfileWithExtensions { ech = false; }) // {
           name = "nix";
           id = 1;
           isDefault = true;
@@ -226,21 +229,21 @@ in {
             packages =
               fold
                 (extension: extensions: extensions ++ [extension])
-                firefoxBaseProfileWithExtensions.extensions.packages
+                (firefoxBaseProfileWithExtensions { ech = false; }).extensions.packages
                 (with packages; with packages.nur.repos.rycee.firefox-addons; [
                   auto-tab-discard
                   hello-goodbye
                 ]);
           };
         };
-        twitch = firefoxBaseProfileWithExtensions // {
+        twitch = (firefoxBaseProfileWithExtensions { ech = false; }) // {
           name = "twitch";
           id = 2;
           extensions = {
             packages =
               fold
                 (extension: extensions: extensions ++ [extension])
-                firefoxBaseProfileWithExtensions.extensions.packages
+                (firefoxBaseProfileWithExtensions { ech = false; }).extensions.packages
                 (with packages; with packages.nur.repos.rycee.firefox-addons; [
                   return-youtube-dislikes
                   sponsorblock
@@ -256,21 +259,21 @@ in {
             ;
           };
         };
-        development = firefoxBaseProfileWithExtensions // {
+        development = (firefoxBaseProfileWithExtensions { ech = false; }) // {
           name = "development";
           id = 3;
           isDefault = false;
         };
-        messaging = firefoxBaseProfileWithExtensions // {
+        messaging = (firefoxBaseProfileWithExtensions { ech = false; }) // {
           name = "messaging";
           isDefault = false;
           id = 4;
         };
-        tor = firefoxBaseProfileWithExtensions // {
+        tor = (firefoxBaseProfileWithExtensions { ech = true; }) // {
           name = "tor";
           id = 5;
           isDefault = false;
-          settings = firefoxBaseProfileWithExtensions.settings // {
+          settings = (firefoxBaseProfileWithExtensions { ech = true; }).settings // {
             "network.proxy.socks" = "example-tor-instance-tor-svc.tor-controller-instance";
             "network.proxy.socks_port" = 9050;
             "network.proxy.type" = 1;
@@ -298,7 +301,7 @@ in {
             default = "ddg";
           };
         };
-        work = firefoxBaseProfileWithExtensions // {
+        work = (firefoxBaseProfileWithExtensions { ech = false; }) // {
           name = "work";
           id = 6;
           isDefault = false;
