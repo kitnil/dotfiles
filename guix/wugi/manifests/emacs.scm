@@ -123,6 +123,7 @@
          emacs-nginx-mode
          emacs-nix-mode           ; Nix language mode
          emacs-notmuch
+         emacs-kdl-mode
          emacs-olivetti
          emacs-org-appear
          emacs-org-bullets
