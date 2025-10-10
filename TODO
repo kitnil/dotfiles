@@ -6,6 +6,4 @@ configure /etc/nsswitch.conf
 install /home/oleg/bin/waybar-1.sh
 install /home/oleg/bin/waybar-2.sh
 
-install /home/oleg/bin/icecat
-
 ln -s ~/.guix-home/profile/lib/tree-sitter/libtree-sitter-kdl.so  ~/.emacs.d/tree-sitter
