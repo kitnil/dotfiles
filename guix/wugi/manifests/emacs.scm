@@ -10,6 +10,7 @@
   #:use-module (gnu packages mail)
   #:use-module (gnu packages ocaml)
   #:use-module (gnu packages package-management)
+  #:use-module (gnu packages tree-sitter)
   #:use-module (wigust packages emacs)
   #:export (%emacs-manifest))
 
@@ -124,6 +125,7 @@
          emacs-nix-mode           ; Nix language mode
          emacs-notmuch
          emacs-kdl-mode
+         tree-sitter-kdl
          emacs-olivetti
          emacs-org-appear
          emacs-org-bullets
