@@ -176,9 +176,4 @@ program.")))
                  config =>
                  (guix-configuration
                    (inherit config)
-                   (chroot? #t)))))
-    (essential-services (modify-services (operating-system-essential-services %my-containerized-operating-system)
-                          (root-file-system-service-type
-                           config =>
-                           (root-file-system-configuration
-                            (re-mount-read-only? #f)))))))
+                   (chroot? #t)))))))
