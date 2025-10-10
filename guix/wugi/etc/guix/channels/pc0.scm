@@ -6,9 +6,9 @@
   (list (channel
          (name 'guix)
          (url "https://cgit.wugi.info/git/guix/guix")
-         (branch "master")
+         (branch "pc0-guix-workstation")
          (commit
-          "0824f8a3eb54b5893150176f5bbe89e89fe3826e")
+          "aec50b65d5aad6f5df7ed4f5d26438b27ccb7244")
          (introduction
           (make-channel-introduction
            "9edb3f66fd807b096b48283debdcddccfea34bad"
@@ -19,7 +19,7 @@
          (url "https://cgit.wugi.info/git/guix/nonguix")
          (branch "master")
          (commit
-          "a5d216cd7c2d67eb95e58871bb805f22c160c57b")
+          "3f4a1907cae9b0def09d1549c491bb4e307b9097")
          (introduction
           (make-channel-introduction
            "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
