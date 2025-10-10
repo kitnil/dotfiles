@@ -55,14 +55,6 @@ endef
 $(foreach configuration,$(GUIX_SYSTEM_VM_CONFIGURATIONS),guix-system-vm-configuration-$(configuration)):
 	$(GUIX) $(call guix-system-vm-arguments,guix/dotfiles/system/vm-image-$(subst guix-system-vm-configuration-,,$@).tmpl)
 
-.PHONY: extension-graph
-extension-graph:
-	$(GUIX) system --load-path="$(LOAD_PATH)" extension-graph guix/wugi/system/guixsd.scm | xdot -
-
-.PHONY: shepherd-graph
-shepherd-graph:
-	$(GUIX) system --load-path="$(LOAD_PATH)" shepherd-graph guix/wugi/system/guixsd.scm | xdot -
-
 .PHONY: guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
 guix/dotfiles/scripts/nix-ssh-known-hosts-to-file.scm:
 	mkdir -p private_dot_ssh
@@ -149,6 +141,20 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-i
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-time-machine-system-build-$(configuration)):
 	$(call guix-time-machine,$(call subst,guix-time-machine-system-build-,,$@)) -- $(call guix-build-expression,$(call subst,guix-time-machine-system-build-,,$@),$(call subst,guix-time-machine-system-build-,,$@))
+
+define system-shepherd-graph
+system shepherd-graph --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) --expression="((@ (wugi system $(1)) %$(2)))"
+endef
+
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-shepherd-graph-$(configuration)):
+	$(GUIX) $(call system-shepherd-graph,$(call subst,guix-system-shepherd-graph-,,$@),$(call subst,guix-system-shepherd-graph-,,$@))
+
+define system-extension-graph
+extension-graph --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) --expression="((@ (wugi system $(1)) %$(2)))"
+endef
+
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-extension-graph-$(configuration)):
+	$(GUIX) $(call system-extension-graph,$(call subst,guix-system-extension-graph-,,$@),$(call subst,guix-system-extension-graph-,,$@))
 
 define guix-home-expression
 home $1 --load-path="$(LOAD_PATH)" --substitute-urls=$(SUBSTITUTE_URLS) -e "((@ (wugi home config $(subst -home-environment,,$2)) %$(3)))"
