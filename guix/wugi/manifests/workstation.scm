@@ -20,6 +20,7 @@
   #:use-module (wugi manifests obs)
   #:use-module (wugi manifests pc0-packages)
   #:use-module (wugi manifests telegram)
+  #:use-module (wugi manifests web)
   #:export (%workstation-manifest))
 
 (define (%workstation-manifest)
@@ -38,6 +39,7 @@
          (%firejail-manifest)
          (%guile-manifest)
          (%mqtt-manifest)
-         (%wm-manifest))))
+         (%wm-manifest)
+         (%web-manifest))))
 
 (%workstation-manifest)
