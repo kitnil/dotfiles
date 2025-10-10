@@ -13,6 +13,7 @@
   #:use-module (gnu packages games)
   #:use-module (gnu packages gnupg)
   #:use-module (gnu packages golang-web)
+  #:use-module (gnu packages graphviz)
   #:use-module (gnu packages hardware)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages ncdu)
@@ -89,4 +90,5 @@
          translate-shell
          v4l-utils
          virt-manager
-         wl-clipboard)))
+         wl-clipboard
+         xdot)))
