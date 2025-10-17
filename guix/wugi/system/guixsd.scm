@@ -479,6 +479,24 @@ pgrep -fa containerd-shim-runc-v2 | awk '{ print $1 }' | xargs kill")))
                         (invoke "virsh" "shutdown" "kube91"))
                       (invoke "sync")))))
 
+(define nixos-workstation-program-file
+  (program-file "nixos-workstation"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "nixos-workstation")
+                      (invoke "ip" "link" "add" "name" "nixos0" "type" "veth" "peer" "name" "nixos1")
+                      (invoke "ip" "link" "set" "dev" "nixos1" "netns" "nixos-workstation")
+                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "link" "set" "nixos1" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "nixos0" "master" "br0")
+                      (invoke "ip" "link" "set" "nixos0" "up")
+                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "addr" "add" "192.168.0.185/24" "dev" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+
 (define %motd
   (plain-file "motd"
               "\
@@ -1605,6 +1623,16 @@ PasswordAuthentication yes")))
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-workstation")
                    (name "nixos-workstation")))
+
+         (simple-service 'nixos-workstation shepherd-root-service-type
+                         (list (shepherd-service
+                                (provision '(nixos-workstation))
+                                (requirement '(networking))
+                                (start #~(make-forkexec-constructor
+                                          (list #$nixos-workstation-program-file)))
+                                (respawn? #f)
+                                (auto-start? #t)
+                                (one-shot? #t))))
 
          ;; (service docker-compose-service-type
          ;;          (docker-compose-configuration
