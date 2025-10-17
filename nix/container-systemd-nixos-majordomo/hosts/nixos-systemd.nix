@@ -5,6 +5,18 @@
 { ... }:
 
 {
+  console.enable = true;
+  systemd.services."getty@tty1" = {
+    enable = false;
+  };
+  systemd.services."autovt@tty1" = {
+    enable = false;
+  };
+  systemd.services."getty@tty10" = {
+    enable = true;
+    wantedBy = [ "multi-user.target" ];
+  };
+
   users.users.taskexecutor = {
     isNormalUser = true;
     uid = 1001;
