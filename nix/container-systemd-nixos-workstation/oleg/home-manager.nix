@@ -9,6 +9,7 @@
     enable = true;
     plugins = with pkgs; [
       obs-studio-plugins.obs-ndi
+      obs-studio-plugins.looking-glass-obs
     ];
   };
 }
