@@ -44,3 +44,4 @@
 /src/guile/format-yaml/format-yaml
 /src/guile/guix-guile-next-compile-file/guix-guile-next-compile-file
 /src/bash/guile-clean-modules/guile-clean-modules.sh
+/*.dot
