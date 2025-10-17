@@ -11,6 +11,7 @@
       obs-studio-plugins.obs-ndi
       obs-studio-plugins.looking-glass-obs
       obs-studio-plugins.obs-pipewire-audio-capture
+      obs-studio-plugins.obs-multi-rtmp
     ];
   };
 }
