@@ -377,33 +377,8 @@
                             (service runc-container-service-type
                                      (runc-container-configuration
                                       (bundle "/srv/runc/guix-workstation")
-                                      (name "guix-workstation")
-;;                                      (requirement '(guix-workstation))
-))
-
-                            (service runc-container-service-type
-                                     (runc-container-configuration
-                                      (bundle "/srv/runc/guix-rde")
-                                      (name "guix-rde")
-                                      (requirement '(guix-rde))))
-
-                            (service runc-container-service-type
-                                     (runc-container-configuration
-                                      (bundle "/srv/runc/guix-nanokvm")
-                                      (name "guix-nanokvm")
-                                      (requirement '(guix-nanokvm))))
-
-                            (service runc-container-service-type
-                                     (runc-container-configuration
-                                      (bundle "/srv/runc/nixos-workstation")
-                                      (name "nixos-workstation")
-                                      (requirement '(nixos-workstation))))
-
-                            (service runc-container-service-type
-                                     (runc-container-configuration
-                                      (bundle "/srv/runc/nixos-majordomo")
-                                      (name "nixos-majordomo")
-                                      (requirement '(nixos-majordomo))))
+                                      ;; (requirement '(guix-workstation))
+                                      (name "guix-workstation")))
 
                             (service kubelet-service-type
                                      (kubelet-configuration
