@@ -1619,11 +1619,6 @@ PasswordAuthentication yes")))
                                 (auto-start? #t)
                                 (one-shot? #t))))
 
-         (service runc-container-service-type
-                  (runc-container-configuration
-                   (bundle "/srv/runc/nixos-workstation")
-                   (name "nixos-workstation")))
-
          (simple-service 'nixos-workstation shepherd-root-service-type
                          (list (shepherd-service
                                 (provision '(nixos-workstation))
