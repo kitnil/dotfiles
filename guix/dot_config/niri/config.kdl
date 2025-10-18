@@ -402,6 +402,9 @@ binds {
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
+    XF86AudioStop { spawn "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dot_local/bin/ddc" "--output=HDMI-2"; }
+    XF86AudioPrev { spawn "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dot_local/bin/ddc" "--output=DP-1"; }
+
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
     // or do a four-finger swipe up on a touchpad.
