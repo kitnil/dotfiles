@@ -30,6 +30,8 @@ in {
     pass
 
     ripgrep
+
+    nixpkgs-fmt
   ];
 
   home.file = {
