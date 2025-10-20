@@ -32,6 +32,8 @@ in {
     ripgrep
 
     nixpkgs-fmt
+
+    jq
   ];
 
   home.file = {
