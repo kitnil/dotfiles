@@ -11,6 +11,8 @@
       obs-studio-plugins.obs-multi-rtmp
       obs-studio-plugins.obs-ndi
       obs-studio-plugins.obs-pipewire-audio-capture
+
+      path-of-building
     ];
   };
 }
