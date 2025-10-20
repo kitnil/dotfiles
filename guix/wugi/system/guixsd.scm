@@ -526,9 +526,7 @@ Happy hacking!\n"))
     (passwd:dir (getpw "oleg")))
 
   (define %certbot-hosts
-    (list "cgit.duckdns.org"
-          "cgit.wugi.info"
-          "guix.duckdns.org"
+    (list "cgit.wugi.info"
           "guix.wugi.info"
           "jenkins.wugi.info"
           "monitor.wugi.info"
@@ -807,7 +805,6 @@ location / {
                  ;; https://docs.syncthing.net/users/faq.html#why-do-i-get-host-check-error-in-the-gui-api
                  #:proxy-set-header-host "localhost")
           (proxy "monitor.wugi.info" 8080)
-          (proxy "guix.duckdns.org" 5556 #:ssl? #t)
           (proxy "kiwiirc.wugi.info" 8194 #:ssl? #t #:ssl-key? #t #:mtls? #t)
           (proxy "prometheus.wugi.info" 9090 #:listen %guixsd-private-ip-address)
           (proxy "guix.wugi.info" 5556 #:ssl? #t #:ssl-key? #t)
