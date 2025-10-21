@@ -1,62 +1,517 @@
-#!/run/current-system/profile/bin/guile \
---no-auto-compile -e main -s
-!#
+;; guix build -f main.scm
 
 (use-modules (ice-9 format)
              (ice-9 popen)
              (ice-9 rdelim)
              (ice-9 string-fun)
+
              (srfi srfi-1)
+             (srfi srfi-26)
+             (srfi srfi-171)
 
              (json)
 
-             (guix records))
+             (gnu services configuration)
+             (guix gexp)
+             (guix store))
 
-(define-record-type* <rule>
-  rule make-rule
-  rule?
-  (base-type rule-base-types ;list of strings
-             (default #f))
-  (item-level rule-item-level ;number
-              (default #f)))
+(define (uglify-field-name field-name)
+  (apply string-append
+         (map string-titlecase
+              (string-split (string-delete #\?
+                                           (symbol->string field-name))
+                            #\-))))
 
-(define (main . args)
+(define show?
+  boolean?)
+
+(define (serialize-show field value)
+  #~(format #f "~a~%" (if #$value "Show" "Hide")))
+
+(define (serialize-string field-name value)
+  #~(format #f "~a ~a~%" #$field-name #$value))
+
+(define (serialize-list-of-strings field-name value)
+  #~(string-append #$@(map (cut serialize-string field-name <>) #$value)))
+
+(define-maybe list-of-strings)
+
+(define (serialize-symbol-1 field-name value)
+  #~(symbol->string '#$value))
+
+(define (serialize-list-of-symbols field-name value)
+  #~(if (null? '#$value)
+        ""
+        (string-append "\t"
+                       (string-join (append (list #$(uglify-field-name field-name))
+                                            (map (lambda (v)
+                                                   (symbol->string v))
+                                                 '#$value)))
+                       "\n")))
+
+(define-maybe list-of-symbols)
+
+(define set-font-size? integer?)
+
+(define (serialize-set-font-size field-name value)
+  #~(if (= #$value 0)
+        ""
+        (format #f "\t~a ~a~%" #$(uglify-field-name field-name) #$value)))
+
+(define base-types?
+  list-of-strings?)
+
+(define (serialize-base-types field-name value)
+  #~(if (null? '#$value)
+        ""
+        (format #f "\tBaseType == ~{~s ~}~%" '#$value)))
+
+(define classes?
+  list-of-strings?)
+
+(define (serialize-classes field-name value)
+  #~(if (null? '#$value)
+        ""
+        (format #f "\t~a == ~{~s ~}~%"
+                #$(uglify-field-name field-name)
+                '#$value)))
+
+(define commentary? string?)
+
+(define (serialize-commentary field-name value)
+  #~(if (string-null? #$value)
+        ""
+        (format #f "# ~a~%" #$value)))
+
+(define (operator? x)
+  (or (boolean? x)
+      (member x '(= ;Equal
+                  ! ;Not equal
+                  != ;Not equal
+                  <= ;Less than or equal
+                  >= ;Greater than or equal
+                  < ;Less than
+                  > ;Greater than
+                  == ;Exact match
+                  ))))
+
+(define (serialize-operator field-name value)
+  #~(symbol->string '#$value))
+
+(define conditional-value-1?
+  number?)
+
+(define (serialize-conditional-value-1 field-name value)
+  (number->string value))
+
+(define-configuration poe-item-filter-conditional-value-configuration
+  (operator
+   (operator #f)
+   "")
+  (value
+   (conditional-value-1 1)
+   ""))
+
+(define (serialize-conditional-value-configuration config fields)
+  "Similar to serialize-configuration."
+  #~(string-join
+     (list #$@(list-transduce (base-transducer config) rcons fields))))
+
+(define conditional-value? poe-item-filter-conditional-value-configuration?)
+(define (serialize-conditional-value field-name value)
+  #~(if #$(poe-item-filter-conditional-value-configuration-operator value)
+        (format #f
+                "\t~a ~a~%"
+                #$(uglify-field-name field-name)
+                #$(serialize-conditional-value-configuration value poe-item-filter-conditional-value-configuration-fields))
+        ""))
+
+(define continue? boolean?)
+
+(define (serialize-continue field-name value)
+  #~(if #$value
+        (string-append "\t" #$(uglify-field-name field-name) "\n")
+        ""))
+
+(define (serialize-integer field-name value)
+  #~(#$value))
+
+(define-configuration poe-item-filter-color-configuration
+  (red
+   (integer 0)
+   "")
+  (green
+   (integer 0)
+   "")
+  (blue
+   (integer 0)
+   "")
+  (alpha
+   (integer 0)
+   ""))
+
+(define (color? x)
+  (or (boolean? x)
+      (poe-item-filter-color-configuration? x)))
+
+(define (serialize-color field-name value)
+  #~(if (or (> #$(poe-item-filter-color-configuration-red value) 0)
+            (> #$(poe-item-filter-color-configuration-green value) 0)
+            (> #$(poe-item-filter-color-configuration-blue value) 0)
+            (> #$(poe-item-filter-color-configuration-alpha value) 0))
+        (string-append "\t"
+                       (string-join (list #$(uglify-field-name field-name)
+                                          #$(number->string (poe-item-filter-color-configuration-red value))
+                                          #$(number->string (poe-item-filter-color-configuration-green value))
+                                          #$(number->string (poe-item-filter-color-configuration-blue value))
+                                          #$(number->string (poe-item-filter-color-configuration-alpha value))))
+                       "\n")
+        ""))
+
+(define (serialize-symbol field-name value)
+  value)
+
+(define (serialize-boolean field-name value)
+  value)
+
+(define-configuration poe-item-filter-mini-map-icon-configuration
+  (enabled?
+   (boolean #f)
+   "")
+  (size
+   (integer 0)
+   "")
+  (colour
+   (symbol 'White)
+   "")
+  (shape
+   (symbol 'Circle)
+   ""))
+
+(define mini-map-icon?
+  poe-item-filter-mini-map-icon-configuration?)
+
+(define (serialize-mini-map-icon field-name value)
+  #~(if #$(poe-item-filter-mini-map-icon-configuration-enabled? value)
+        (string-append "\t"
+                       (string-join (list #$(uglify-field-name field-name)
+                                          #$(number->string (poe-item-filter-mini-map-icon-configuration-size value))
+                                          #$(symbol->string (poe-item-filter-mini-map-icon-configuration-colour value))
+                                          #$(symbol->string (poe-item-filter-mini-map-icon-configuration-shape value))))
+                       "\n")
+        ""))
+
+(define (boolean-with-field? x)
+  (or (and (symbol? x)
+           (eq? 'disabled x))
+      (boolean? x)))
+
+(define (serialize-boolean-with-field field-name value)
+  #~(if (and (symbol? '#$value)
+             (eq? 'disabled '#$value))
+        ""
+        (string-append "\t"
+                       (string-join (list #$(uglify-field-name field-name)
+                                          #$(if value "True" "False")))
+                       "\n")))
+
+(define-configuration poe-item-filter-play-alert-sound-configuration
+  (id
+   (integer 1)
+   "")
+  (volume
+   (integer 50)
+   ""))
+
+(define (play-alert-sound? x)
+  (or (boolean? x)
+      (poe-item-filter-play-alert-sound-configuration? x)))
+
+(define (serialize-play-alert-sound field-name value)
+  (if value
+      (format #f "\t~a ~a ~a~%"
+              (uglify-field-name field-name)
+              (poe-item-filter-play-alert-sound-configuration-id value)
+              (poe-item-filter-play-alert-sound-configuration-volume value))
+      ""))
+
+(define (symbol-or-false? x)
+  (or (symbol? x) (boolean? x)))
+
+(define (serialize-symbol-or-false field-name value)
+  (if value
+      (symbol->string value)
+      ""))
+
+(define-configuration poe-item-filter-play-effect-configuration
+  (colour
+   (symbol 'Red)
+   "")
+  (temp
+   (symbol-or-false #f)
+   ""))
+
+(define (play-effect? x)
+  (or (boolean? x)
+      (poe-item-filter-play-effect-configuration? x)))
+
+(define (serialize-play-effect field-name value)
+  (if value
+      (format #f "\t~a ~a~%"
+              (uglify-field-name field-name)
+              (poe-item-filter-play-effect-configuration-colour value)
+              ;; (poe-item-filter-play-effect-configuration-temp value)
+              )
+      ""))
+
+(define-configuration poe-item-filter-block-configuration
+  (commentary
+   (commentary "")
+   "")
+  (show?
+   (show #t)
+   "If any items are matched with the conditions in a \"Show\" Block, the item will be shown.")
+  (item-level
+   (conditional-value (poe-item-filter-conditional-value-configuration))
+   "")
+  (stack-size
+   (conditional-value (poe-item-filter-conditional-value-configuration))
+   "")
+  (gem-level
+   (conditional-value (poe-item-filter-conditional-value-configuration))
+   "")
+  (base-types
+   (base-types '())
+   "")
+  (classes
+   (classes '())
+   "")
+  (mini-map-icon
+   (mini-map-icon (poe-item-filter-mini-map-icon-configuration))
+   "")
+  (set-font-size
+   (set-font-size 0)
+   "")
+  (set-border-color
+   (color (poe-item-filter-color-configuration))
+   "")
+  (set-background-color
+   (color (poe-item-filter-color-configuration))
+   "")
+  (set-text-color
+   (color (poe-item-filter-color-configuration))
+   "")
+  (rarity
+   (list-of-symbols '())
+   "")
+  (play-alert-sound
+   (play-alert-sound #f)
+   "")
+  (play-effect
+   (play-effect #f)
+   "")
+  (identified?
+   (boolean-with-field 'disabled)
+   "")
+  (continue?
+   (continue #f)
+   ""))
+
+(define (blocks? lst)
+  (every poe-item-filter-block-configuration? lst))
+
+(define (serialize-blocks field-name value)
+  #~(string-join (list #$@(map (lambda (v)
+                                 (serialize-configuration v poe-item-filter-block-configuration-fields))
+                               value))
+                 "\n"))
+
+(define-configuration poe-item-filter-configuration
+  (commentary
+   (commentary "")
+   "")
+  (blocks
+   (blocks '())
+   ""))
+
+(define %weapon-classes
+  '("Bows"
+    "Claws"
+    "Corpses"
+    "Daggers"
+    "One Hand Axes"
+    "One Hand Maces"
+    "One Hand Swords"
+    "Quivers"
+    "Rune Daggers"
+    "Sceptres"
+    "Staves"
+    "Thrusting One Hand Swords"
+    "Two Hand Axes"
+    "Two Hand Maces"
+    "Two Hand Swords"
+    "Wands"
+    "Warstaves"))
+
+(define (generate-filter)
   (define font-size 20)
   (define base-items
     (json-string->scm
      (with-input-from-file "input.json"
        read-string)))
   (define sub-types
-    '("Armour/Evasion"
-      "Evasion"))
-  (for-each (lambda (base-type)
-              (let ((items
-                     (filter (lambda (item)
-                               (and=> (assoc-ref item "subType")
-                                      (lambda (sub-type)
-                                        (string= sub-type base-type))))
-                             base-items)))
-                (format #t "~%# ~a~%" base-type)
-                (format #t "~a~%" "Show")
-                (format #t "\tBaseType == ~{ ~s~}~%"
-                        (sort (map (lambda (item)
-                                     (let ((item-name (string-replace-substring (first item)
-                                                                                (format #f " (~a)" base-type)
-                                                                                "")))
-                                       ;; (pk (rule (base-types item-name)))
-                                       item-name))
-                                   items)
-                              string<))
-                (format #t "\tSetFontSize ~a~%" font-size)))
-            sub-types)
+    '("Armour"
+      "Armour/Energy Shield"
+      "Armour/Evasion"
+      "Energy Shield"
+      "Evasion"
+      "Evasion/Energy Shield"))
+  #~(begin
+      (use-modules (ice-9 format))
+      #$(serialize-configuration
+         (poe-item-filter-configuration
+          (blocks
+           (append (map (lambda (base-type)
+                          (poe-item-filter-block-configuration
+                           (commentary (format #f "Decrease font size for ~s base items."
+                                               base-type))
+                           (base-types
+                            (sort (let ((items
+                                         (filter (lambda (item)
+                                                   (and=> (assoc-ref item "subType")
+                                                          (lambda (sub-type)
+                                                            (string= sub-type base-type))))
+                                                 base-items)))
+                                    (map (lambda (item)
+                                           (string-replace-substring (first item)
+                                                                     (format #f " (~a)" base-type)
+                                                                     ""))
+                                         items))
+                                  string<))
+                           (set-font-size 20)))
+                        sub-types)
+                   (list (poe-item-filter-block-configuration
+                          (commentary "Decrease font size for items with classes.")
+                          (classes %weapon-classes)
+                          (set-font-size 20))
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight border of best crafting bases.")
+                          (item-level (poe-item-filter-conditional-value-configuration
+                                       (value 82)
+                                       (operator '>=)))
+                          (set-border-color (poe-item-filter-color-configuration
+                                             (red 74)
+                                             (green 230)
+                                             (blue 58)
+                                             (alpha 255)))
+                          (continue? #t))
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight 2500 or more gold.")
+                          (base-types '("Gold"))
+                          (mini-map-icon
+                           (poe-item-filter-mini-map-icon-configuration
+                            (enabled? #t)
+                            (size 1)
+                            (colour 'Yellow)
+                            (shape 'Cross)))
+                          (stack-size (poe-item-filter-conditional-value-configuration
+                                       (value 2500)
+                                       (operator '>=))))
+                         (poe-item-filter-block-configuration
+                          (commentary "Stop apply rules to gold.")
+                          (base-types '("Gold")))
+                         (poe-item-filter-block-configuration
+                          (commentary "Stop apply rules to scrolls.")
+                          (base-types '("Scroll of Wisdom")))
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight not identified items.")
+                          (identified? #f)
+                          (rarity '(Magic Rare Unique))
+                          (set-background-color (poe-item-filter-color-configuration
+                                                 (red 86)
+                                                 (green 0)
+                                                 (blue 0)
+                                                 (alpha 230)))
+                          (continue? #t))
+                         (poe-item-filter-block-configuration
+                          (commentary "Decrease identified items font size.")
+                          (identified? #t)
+                          (set-font-size 20)
+                          (continue? #t))
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight high level gems.")
+                          (gem-level (poe-item-filter-conditional-value-configuration
+                                      (value 20)
+                                      (operator '>=)))
+                          (set-text-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 255)
+                            (blue 255)
+                            (alpha 229)))
+                          (classes '("Skill Gems"
+                                     "Uncut Skill Gems"
+                                     "Uncut Spirit Gems"))
+                          (mini-map-icon
+                           (poe-item-filter-mini-map-icon-configuration
+                            (enabled? #t)
+                            (size 0)
+                            (colour 'Red)
+                            (shape 'Star)))
+                          (play-alert-sound
+                           (poe-item-filter-play-alert-sound-configuration
+                            (id 6)
+                            (volume 300)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'Red))))
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight unique items.")
+                          (rarity '(Unique))
+                          (set-text-color
+                           (poe-item-filter-color-configuration
+                            (red 188)
+                            (green 96)
+                            (blue 37)
+                            (alpha 255)))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 188)
+                            (green 96)
+                            (blue 37)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 53)
+                            (green 13)
+                            (blue 13)
+                            (alpha 229)))
+                          (mini-map-icon
+                           (poe-item-filter-mini-map-icon-configuration
+                            (enabled? #t)
+                            (size 1)
+                            (colour 'Brown)
+                            (shape 'Star)))
+                          (play-alert-sound
+                           (poe-item-filter-play-alert-sound-configuration
+                            (id 3)
+                            (volume 300)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'Brown))))))))
+         poe-item-filter-configuration-fields)))
 
-  (define item-level 82)
-  (newline)
-  (format #t "~a~%" "Show")
-  (format #t "\tItemLevel >= ~a~%" item-level)
-  (let ((red 74)
-        (green 230)
-        (blue 58)
-        (alpha 255))
-    (format #t "\tSetBorderColor ~a ~a ~a ~a~%" red green blue alpha))
-  (format #t "\tContinue"))
+(run-with-store (open-connection)
+  (text-file* "wigust.filter" (generate-filter)))
