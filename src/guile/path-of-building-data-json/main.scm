@@ -22,13 +22,20 @@
 
 (define (main . args)
   (define font-size 20)
+  (define base-items
+    (json-string->scm
+     (with-input-from-file "input.json"
+       read-string)))
+  (define sub-types
+    '("Armour/Evasion"
+      "Evasion"))
   (for-each (lambda (base-type)
               (let ((items
                      (filter (lambda (item)
                                (and=> (assoc-ref item "subType")
                                       (lambda (sub-type)
                                         (string= sub-type base-type))))
-                             (json-string->scm (with-input-from-file "input.json" read-string)))))
+                             base-items)))
                 (format #t "~%# ~a~%" base-type)
                 (format #t "~a~%" "Show")
                 (format #t "\tBaseType == ~{ ~s~}~%"
@@ -41,8 +48,7 @@
                                    items)
                               string<))
                 (format #t "\tSetFontSize ~a~%" font-size)))
-            '("Armour/Evasion"
-              "Evasion"))
+            sub-types)
 
   (define item-level 82)
   (newline)
