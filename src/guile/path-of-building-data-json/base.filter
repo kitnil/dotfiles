@@ -1,0 +1,330 @@
+Show
+	Class == "Stackable Currency"
+	BaseType == "Golden Oil"
+	SetFontSize 45
+	SetTextColor 255 0 0 255
+	SetBorderColor 255 0 0 255
+	SetBackgroundColor 255 255 255 255
+	PlayAlertSound 6 300
+	PlayEffect Red
+	MinimapIcon 0 Red Star
+
+Show
+	Class == "Stackable Currency"
+	BaseType == "Prismatic Oil" "Silver Oil" "Tainted Oil"
+	SetFontSize 45
+	SetTextColor 255 255 255 255
+	SetBorderColor 255 255 255 255
+	SetBackgroundColor 240 90 35 255
+	PlayAlertSound 1 300
+	PlayEffect Red
+	MinimapIcon 0 Red Circle
+
+Show
+	Class == "Stackable Currency"
+	BaseType == "Opalescent Oil"
+	SetFontSize 45
+	SetTextColor 0 0 0 255
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 240 90 35 255
+	PlayAlertSound 2 300
+	PlayEffect Yellow
+	MinimapIcon 1 Yellow Circle
+
+Show
+	Class == "Stackable Currency"
+	BaseType == "Black Oil" "Crimson Oil" "Reflective Oil" "Violet Oil"
+	SetFontSize 45
+	SetTextColor 0 0 0 255
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 249 150 25 255
+	PlayAlertSound 2 300
+	PlayEffect White
+	MinimapIcon 2 White Circle
+
+Show
+	Class == "Stackable Currency"
+	BaseType == "Amber Oil" "Azure Oil" "Clear Oil" "Indigo Oil" "Sepia Oil" "Teal Oil" "Verdant Oil"
+	SetFontSize 45
+	SetTextColor 0 0 0 255
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 210 178 135 255
+
+Show
+	Class == "Stackable Currency"
+	BaseType "Oil"
+	SetFontSize 45
+	SetTextColor 255 0 255 255
+	SetBorderColor 255 0 255 255
+	SetBackgroundColor 100 0 100 255
+	PlayAlertSound 3 300
+	PlayEffect Pink
+	MinimapIcon 0 Pink Circle
+
+Show
+	Class == "Stackable Currency"
+	BaseType == "Armourer's Scrap" "Chaos Shard" "Harbinger's Shard" "Jeweller's Orb" "Orb of Alchemy" "Orb of Binding" "Orb of Chance"
+	SetFontSize 45
+	SetTextColor 0 0 0 255
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 213 159 0 255
+	PlayAlertSound 2 300
+	PlayEffect White
+	MinimapIcon 2 White Circle
+Show
+	Class == "Stackable Currency"
+	BaseType == "Abrasive Catalyst" "Accelerating Catalyst" "Blighted Scouting Report" "Burial Medallion" "Cartographer's Chisel" "Chaos Orb" "Comprehensive Scouting Report" "Delirious Scouting Report" "Engineer's Orb" "Exalted Shard" "Gemcutter's Prism" "Glassblower's Bauble" "Grand Eldritch Ember" "Grand Eldritch Ichor" "Greater Eldritch Ember" "Greater Eldritch Ichor" "Harbinger's Orb" "Imbued Catalyst" "Intrinsic Catalyst" "Lesser Eldritch Ember" "Lesser Eldritch Ichor" "Maven's Chisel of Avarice" "Maven's Chisel of Divination" "Maven's Chisel of Procurement" "Noxious Catalyst" "Operative's Scouting Report" "Orb of Unmaking" "Primal Crystallised Lifeforce" "Ritual Splinter" "Scrap Metal" "Singular Scouting Report" "Stacked Deck" "Tainted Armourer's Scrap" "Tainted Blacksmith's Whetstone" "Tainted Jeweller's Orb" "Tempering Catalyst" "Turbulent Catalyst" "Unstable Catalyst" "Veiled Scarab" "Vivid Crystallised Lifeforce" "Wild Crystallised Lifeforce"
+	SetFontSize 45
+	SetTextColor 0 0 0 255
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 249 150 25 255
+	PlayAlertSound 2 300
+	PlayEffect White
+	MinimapIcon 2 White Circle
+Show
+	Class == "Stackable Currency"
+	BaseType == "Albino Rhoa Feather" "Awakener's Orb" "Blessing of Chayula" "Blessing of Xoph" "Crusader's Exalted Orb" "Divine Orb" "Eternal Orb" "Fracturing Orb" "Hinekora's Lock" "Hunter's Exalted Orb" "Mirror of Kalandra" "Mirror Shard" "Orb of Dominance" "Redeemer's Exalted Orb" "Reflecting Mist" "Tainted Divine Teardrop" "Valdo's Puzzle Box" "Warlord's Exalted Orb"
+	SetFontSize 45
+	SetTextColor 255 0 0 255
+	SetBorderColor 255 0 0 255
+	SetBackgroundColor 255 255 255 255
+	PlayAlertSound 6 300
+	PlayEffect Red
+	MinimapIcon 0 Red Star
+Show
+	Class == "Stackable Currency"
+	BaseType == "Ancient Shard" "Annulment Shard" "Astragali" "Bestiary Orb" "Blessed Orb" "Enkindling Orb" "Explorer's Scouting Report" "Facetor's Lens" "Instilling Orb" "Orb of Alchemy" "Orb of Fusing" "Orb of Horizons" "Orb of Regret" "Orb of Scouring" "Regal Orb" "Vaal Orb" "Vaal Scouting Report"
+	SetFontSize 45
+	SetTextColor 0 0 0 255
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 213 159 0 255
+	PlayAlertSound 2 300
+	PlayEffect White
+	MinimapIcon 2 White Circle
+Show
+	BaseType == "Orb of Augmentation" "Orb of Alteration" "Orb of Transmutation"
+	SetBackgroundColor 136 136 255
+	SetTextColor 0 0 0
+	MinimapIcon 0 Blue Circle
+	PlayEffect Blue
+Show
+	BaseType == "Orb of Alchemy" "Chaos Orb" "Orb of Binding" "Divine Orb"
+	SetBackgroundColor 255 255 119
+	SetTextColor 0 0 0
+	MinimapIcon 0 Yellow Circle
+	PlayEffect Yellow
+Show
+	BaseType == "Rogue's Marker"
+	SetFontSize 45
+	SetTextColor 255 178 135 255
+	SetBorderColor 255 178 135 255
+	SetBackgroundColor 20 20 0 255
+	PlayEffect Orange Temp
+Show
+	Class "Idols"
+	SetFontSize 45
+	SetTextColor 255 178 135 255
+	SetBorderColor 255 178 135 255
+	SetBackgroundColor 20 20 0 255
+	PlayEffect Orange Temp
+
+Show
+	BaseType == "Portal Scroll"
+	SetFontSize 45
+	SetBorderColor 60 100 200 255
+	SetBackgroundColor 5 8 40 255
+
+Show
+	BaseType == "Scroll of Wisdom"
+	SetFontSize 45
+	SetBorderColor 200 100 60 255
+	SetBackgroundColor 30 5 5 255
+
+Show
+	Quality >= 1
+	Class == "Skill Gems" "Support Gems"
+	SetFontSize 45
+	SetTextColor 30 190 190 255
+	SetBorderColor 30 190 190 255
+	PlayAlertSound 2 300
+	PlayEffect Grey
+	MinimapIcon 1 White Triangle
+
+Show
+	Class Currency
+	MinimapIcon 0 Yellow Circle
+
+Show
+	Class == "Map Fragments"
+	BaseType == "Divine Vessel" "Sacrifice at Dawn" "Sacrifice at Dusk" "Sacrifice at Midnight" "Sacrifice at Noon"
+	SetTextColor 175 120 230 240
+	SetBorderColor 175 120 230 240
+
+Show
+	Class == "Utility Flasks"
+	SetFontSize 40
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 25 100 75
+
+Show
+	Rarity Rare
+	BaseType == "Cobalt Jewel" "Crimson Jewel" "Viridian Jewel"
+	SetFontSize 45
+	SetTextColor 220 220 0 255
+	SetBorderColor 220 220 0 255
+	SetBackgroundColor 120 120 0 225
+
+Show
+	Corrupted True
+	Rarity Rare
+	Class == "Abyss Jewels"
+	SetFontSize 45
+	SetTextColor 220 220 0 255
+	SetBorderColor 240 100 0 255
+	SetBackgroundColor 120 120 0 225
+	PlayEffect Grey
+	MinimapIcon 2 Grey Diamond
+
+Show
+	Rarity Rare
+	Class == "Abyss Jewels"
+	SetFontSize 45
+	SetTextColor 220 220 0 255
+	SetBorderColor 240 100 0 255
+	SetBackgroundColor 120 120 0 225
+	PlayEffect Grey
+	MinimapIcon 2 Grey Diamond
+
+Show
+	Rarity Normal Magic
+	Class == "Abyss Jewels"
+	SetFontSize 40
+	SetTextColor 0 75 250 255
+	SetBorderColor 240 100 0 255
+	SetBackgroundColor 0 20 40 255
+
+Show
+	Class == "Maps"
+	SetFontSize 45
+	SetTextColor 0 0 0 255
+	SetBackgroundColor 235 235 235 255
+	PlayAlertSound 5 300
+	PlayEffect Yellow
+	MinimapIcon 1 Red Square
+
+Show
+	BaseType "Scarab"
+	SetFontSize 45
+	SetTextColor 255 0 255 255
+	SetBorderColor 255 0 255 255
+	SetBackgroundColor 100 0 100 255
+	PlayAlertSound 3 300
+	PlayEffect Pink
+	MinimapIcon 0 Pink Circle
+
+Show
+	BaseType "Amethyst Ring"
+	SetBackgroundColor 38 0 86
+
+Show
+	Rarity Rare
+	Class == "Abyss Jewels"
+	SetFontSize 45
+	SetTextColor 220 220 0 255
+	SetBorderColor 200 120 0 220
+	SetBackgroundColor 120 120 0 225
+
+Show
+	Rarity Rare
+	Class == "Abyss Jewels"
+	SetFontSize 45
+	SetTextColor 220 220 0 255
+	SetBorderColor 220 220 0 255
+	SetBackgroundColor 120 120 0 225
+
+Show
+	BaseType == "Cobalt Jewel" "Crimson Jewel" "Viridian Jewel"
+	SetFontSize 40
+	SetTextColor 0 75 250 255
+	SetBorderColor 0 75 250 255
+	SetBackgroundColor 0 20 40 255
+
+Show
+	Class == "Incursion Items" "Labyrinth Items"
+	SetFontSize 45
+	SetTextColor 74 230 58 255
+	SetBorderColor 74 230 58 255
+	SetBackgroundColor 20 20 0 255
+	PlayAlertSound 3 300
+	PlayEffect Green
+	MinimapIcon 0 Green Pentagon
+
+Show
+	SetBackgroundColor 255 0 0
+	LinkedSockets >= 6
+
+Show
+	SetTextColor 42 42 42
+	SetBackgroundColor 255 255 119
+	LinkedSockets >= 4
+
+Show
+	Class == "Two Hand Axes"
+	SetBackgroundColor 0 90 0
+
+Show
+	BaseDefencePercentile >= 90
+	Rarity Normal
+	Class == "Body Armours" "Helmets" "Gloves" "Boots" "Shields"
+	SetFontSize 45
+	SetBackgroundColor 128 0 0
+Show
+	BaseDefencePercentile > 80
+	Rarity Normal
+	Class == "Body Armours" "Helmets" "Gloves" "Boots" "Shields"
+	SetFontSize 45
+	SetBackgroundColor 80 0 0
+Show
+	BaseDefencePercentile > 70
+	Rarity Normal
+	Class == "Body Armours" "Helmets" "Gloves" "Boots" "Shields"
+	SetFontSize 45
+
+Show
+	LinkedSockets >= 3
+	SetFontSize 45
+
+Show
+	Class == "Blueprints" "Contracts"
+	SetFontSize 45
+	SetTextColor 255 85 85 255
+	SetBorderColor 255 85 85 255
+	SetBackgroundColor 40 0 30 255
+	PlayAlertSound 5 300
+	PlayEffect Yellow
+	MinimapIcon 1 Yellow UpsideDownHouse
+
+Show
+	Class == "Memories"
+	SetFontSize 45
+	SetTextColor 255 85 85 255
+	SetBorderColor 255 85 85 255
+	SetBackgroundColor 40 0 30 255
+	PlayAlertSound 5 300
+	PlayEffect Yellow
+	MinimapIcon 1 Yellow UpsideDownHouse
+
+Show
+	Class == "Sanctum Research"
+	SetFontSize 45
+	SetTextColor 255 85 85 255
+	SetBorderColor 255 85 85 255
+	SetBackgroundColor 40 0 30 255
+	PlayAlertSound 5 300
+	PlayEffect Yellow
+	MinimapIcon 1 Yellow UpsideDownHouse
+
+Show
+	Rarity Unique
+	PlayEffect Brown
+	MinimapIcon 2 Brown Star
