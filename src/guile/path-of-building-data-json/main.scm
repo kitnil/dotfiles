@@ -8,7 +8,17 @@
              (ice-9 string-fun)
              (srfi srfi-1)
 
-             (json))
+             (json)
+
+             (guix records))
+
+(define-record-type* <rule>
+  rule make-rule
+  rule?
+  (base-type rule-base-type ;string
+             (default #f))
+  (item-level rule-item-level ;number
+              (default #f)))
 
 (define (main . args)
   (define font-size 20)
@@ -23,11 +33,24 @@
                 (format #t "~a~%" "Show")
                 (format #t "\tBaseType == ~{ ~s~}~%"
                         (sort (map (lambda (item)
-                                     (string-replace-substring (first item)
-                                                               (format #f " (~a)" base-type)
-                                                               ""))
+                                     (let ((item-name (string-replace-substring (first item)
+                                                                                (format #f " (~a)" base-type)
+                                                                                "")))
+                                       ;; (pk (rule (base-type item-name)))
+                                       item-name))
                                    items)
                               string<))
                 (format #t "\tSetFontSize ~a~%" font-size)))
             '("Armour/Evasion"
-              "Evasion")))
+              "Evasion"))
+
+  (define item-level 82)
+  (newline)
+  (format #t "~a~%" "Show")
+  (format #t "\tItemLevel >= ~a~%" item-level)
+  (let ((red 74)
+        (green 230)
+        (blue 58)
+        (alpha 255))
+    (format #t "\tSetBorderColor ~a ~a ~a ~a~%" red green blue alpha))
+  (format #t "\tContinue"))
