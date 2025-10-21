@@ -15,7 +15,7 @@
 (define-record-type* <rule>
   rule make-rule
   rule?
-  (base-type rule-base-type ;string
+  (base-type rule-base-types ;list of strings
              (default #f))
   (item-level rule-item-level ;number
               (default #f)))
@@ -36,7 +36,7 @@
                                      (let ((item-name (string-replace-substring (first item)
                                                                                 (format #f " (~a)" base-type)
                                                                                 "")))
-                                       ;; (pk (rule (base-type item-name)))
+                                       ;; (pk (rule (base-types item-name)))
                                        item-name))
                                    items)
                               string<))
