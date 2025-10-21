@@ -1,0 +1,15 @@
+
+# Armour/Evasion
+Show
+	BaseType ==  "Atonement Mask" "Baroque Round Shield" "Battered Helm" "Battle Lamellar" "Bronzescale Boots" "Bronzescale Gauntlets" "Cardinal Round Shield" "Chimerascale Boots" "Chimerascale Gauntlets" "Commander's Brigandine" "Conquest Helmet" "Conquest Lamellar" "Crimson Round Shield" "Desert Brigandine" "Dragonscale Boots" "Dragonscale Doublet" "Dragonscale Gauntlets" "Elegant Round Shield" "Fencer Helm" "Field Lamellar" "Fir Round Shield" "Fishscale Gauntlets" "Fluted Bascinet" "Full Dragonscale" "Full Scale Armour" "Full Wyrmscale" "Full Wyvernscale" "General's Brigandine" "Gilded Sallet" "Haunted Bascinet" "Hussar Brigandine" "Hydrascale Boots" "Hydrascale Gauntlets" "Infantry Brigandine" "Ironscale Boots" "Ironscale Gauntlets" "Knight Helm" "Lacquered Helmet" "Leatherscale Boots" "Light Brigandine" "Maple Round Shield" "Marshall's Brigandine" "Nightmare Bascinet" "Penitent Mask" "Pig-Faced Bascinet" "Rotted Round Shield" "Sallet" "Scale Doublet" "Scale Vest" "Scarlet Round Shield" "Secutor Helm" "Serpentscale Boots" "Serpentscale Gauntlets" "Soldier's Brigandine" "Sorrow Mask" "Spiked Round Shield" "Spiny Round Shield" "Splendid Round Shield" "Steelscale Boots" "Steelscale Gauntlets" "Studded Round Shield" "Teak Round Shield" "Triumphant Lamellar" "Two-Toned Boots" "Visored Sallet" "Wyrmscale Boots" "Wyrmscale Doublet" "Wyrmscale Gauntlets" "Wyvernscale Boots" "Wyvernscale Gauntlets"
+	SetFontSize 20
+
+# Evasion
+Show
+	BaseType ==  "Apprentice Gloves" "Assassin's Garb" "Astral Leather" "Battle Buckler" "Buckskin Tunic" "Cloudwhisper Boots" "Cold-attuned Buckler" "Coronal Leather" "Corrugated Buckler" "Crusader Buckler" "Cutthroat's Garb" "Deerskin Boots" "Deerskin Gloves" "Destiny Leather" "Dire Pelt" "Eelskin Boots" "Eelskin Gloves" "Eelskin Tunic" "Enameled Buckler" "Endothermic Buckler" "Exquisite Leather" "Frontier Leather" "Full Leather" "Gilded Buckler" "Glorious Leather" "Goathide Boots" "Goathide Buckler" "Goathide Gloves" "Golden Buckler" "Gripped Gloves" "Grizzly Pelt" "Hammered Buckler" "Harpyskin Boots" "Harpyskin Gloves" "Hunter Hood" "Imperial Buckler" "Ironwood Buckler" "Lacquered Buckler" "Leather Cap" "Leather Hood" "Lion Pelt" "Majestic Pelt" "Noble Tricorne" "Nubuck Boots" "Nubuck Gloves" "Oak Buckler" "Painted Buckler" "Pine Buckler" "Polar Buckler" "Rawhide Boots" "Rawhide Gloves" "Shabby Jerkin" "Shagreen Boots" "Shagreen Gloves" "Sharkskin Boots" "Sharkskin Gloves" "Sharkskin Tunic" "Silken Hood" "Sinner Tricorne" "Slink Boots" "Slink Gloves" "Stealth Boots" "Stealth Gloves" "Stormrider Boots" "Strapped Leather" "Sun Leather" "Supreme Leather" "Syndicate's Garb" "Thief's Garb" "Tinker Gloves" "Trapsetter Gloves" "Tricorne" "Ursine Pelt" "Vaal Buckler" "Velour Boots" "Velour Gloves" "War Buckler" "Wild Leather" "Windbreak Boots" "Wolf Pelt" "Zodiac Leather"
+	SetFontSize 20
+
+Show
+	ItemLevel >= 82
+	SetBorderColor 74 230 58 255
+	Continue
