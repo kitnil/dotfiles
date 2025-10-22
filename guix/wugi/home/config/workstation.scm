@@ -2,6 +2,7 @@
   #:use-module (gnu home)
   #:use-module (gnu home services)
   #:use-module (gnu home services desktop)
+  #:use-module (gnu home services mail)
   #:use-module (gnu home services niri)
   #:use-module (gnu home services shells)
   #:use-module (gnu home services sound)
@@ -223,4 +224,22 @@ allow-preset-passphrase"))))
                                                                         ,@(if (file-exists? "/dev/kvmfr0")
                                                                               '("-f" "/dev/kvmfr0")
                                                                               '())
-                                                                        ,@args)))))))))))
+                                                                        ,@args)))))))
+
+                    (service home-msmtp-service-type
+                             (home-msmtp-configuration
+                               (default-account "gmail")
+                               (extra-content "\
+auth on
+tls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt\n")
+                               (accounts
+                                (list
+                                 (msmtp-account
+                                   (name "gmail")
+                                   (configuration
+                                    (msmtp-configuration
+                                      (host "smtp.gmail.com")
+                                      (port 587)
+                                      (user "go.wigust")
+                                      (password-eval "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/myaccount.google.com/apppasswords/go.wigust.gpg"))))))))))))
