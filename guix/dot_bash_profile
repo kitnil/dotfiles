@@ -1,17 +1,3 @@
-# Setups system and user profiles and related variables
-# /etc/profile will be sourced by bash automatically
-# Setups home environment profile
-if [[ $(tty) == "/dev/tty8" ]]
-then
-    if [[ -f ~/.profile ]]
-    then
-        source ~/.profile
-    fi
-fi
-
-GUIX_PROFILE="${HOME}/.guix-home/profile"
-export GUIX_PROFILE
-
 export LC_TIME=en_GB.UTF-8
 export LANG=en_US.UTF-8
 

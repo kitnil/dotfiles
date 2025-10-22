@@ -22,10 +22,7 @@
 (define home-bash-service
   (simple-service 'bash-config
                   home-files-service-type
-                  (append (list `(".bashrc" ,(local-file (string-append %distro-directory "/dot_bashrc")))
-                                `(".bash_profile" ,(local-file (string-append %distro-directory "/dot_bash_profile")))
-                                `(".bash_completion" ,(local-file (string-append %distro-directory "/dot_bash_completion")))
-                                `(".bash_guix" ,(local-file (string-append %distro-directory "/dot_bash_guix")))
+                  (append (list `(".bash_completion" ,(local-file (string-append %distro-directory "/dot_bash_completion")))
                                 `(".bash_vterm" ,(local-file (string-append %distro-directory "/dot_bash_vterm")))
                                 `(".local/share/bash-completion/completions/lexicon" ,(local-file (string-append %distro-directory "/dot_local/share/bash-completion/completions/lexicon")))
                                 `(".local/share/bash-completion/completions/herd" ,(local-file (string-append %distro-directory "/dot_local/share/bash-completion/completions/herd")))

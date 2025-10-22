@@ -173,6 +173,16 @@ allow-preset-passphrase"))))
                                             ,(local-file (string-append %distro-directory "/dot_local/bin/passmenu")
                                                          #:recursive? #t))))
                     home-bash-service
+                    (service home-bash-service-type
+                             (home-bash-configuration
+                               (bashrc
+                                (list
+                                 (local-file
+                                  (string-append %distro-directory "/dot_bashrc"))))
+                               (bash-profile
+                                (list
+                                 (local-file
+                                  (string-append %distro-directory "/dot_bash_profile"))))))
                     home-mime-service
                     home-direnv-service
                     home-git-service
