@@ -34,6 +34,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (wugi etc guix channels docker-image)
   #:use-module (wugi config)
+  #:use-module (wugi services containers)
   #:use-module (wugi utils)
   #:use-module (wugi utils package)
   #:export (%pc0-guix-workstation))
@@ -131,7 +132,12 @@ program.")))
                                            (list #$(file-append coreutils "/bin/sleep")
                                                  "infinity")))
                                  (respawn? #f)
-                                 (auto-start? #t)))))
+                                 (auto-start? #t))))
+
+         (service runc-container-service-type
+                  (runc-container-configuration
+                   (bundle "/srv/runc/nixos-zapret")
+                   (name "nixos-zapret"))))
         (modify-services %base-services
           (delete console-font-service-type)
           (delete shepherd-system-log-service-type)
