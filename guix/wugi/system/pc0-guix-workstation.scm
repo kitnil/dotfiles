@@ -137,7 +137,12 @@ program.")))
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-zapret")
-                   (name "nixos-zapret"))))
+                   (name "nixos-zapret")))
+
+         (service runc-container-service-type
+                  (runc-container-configuration
+                   (bundle "/srv/runc/nixos-majordomo")
+                   (name "nixos-majordomo"))))
         (modify-services %base-services
           (delete console-font-service-type)
           (delete shepherd-system-log-service-type)
