@@ -24,7 +24,6 @@
         "flake-compat": "flake-compat",
         "flake-utils-plus": "flake-utils-plus",
         "github-com-9999years-nix-config": "github-com-9999years-nix-config",
-        "github-com-emilazy-mpv-notify-send": "github-com-emilazy-mpv-notify-send",
         "github-com-tsoding-boomer": "github-com-tsoding-boomer",
         "home-manager": "home-manager",
         "kamadorueda-alejandra": "kamadorueda-alejandra",
@@ -48,11 +47,11 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1761711511,
-        "narHash": "sha256-HyUuWX+lxuZGrFzXVAzJh/OarjdNsx/Heq2Ms2KOjy0=",
+        "lastModified": 1761711697,
+        "narHash": "sha256-aKmbgXwdEJzdGq25JxiT8uk23vJLzBwSughr7tcSRqk=",
         "ref": "refs/heads/master",
-        "rev": "361f5ea12dd24a108da4a04802999c56204c6001",
-        "revCount": 15962,
+        "rev": "e91a223f354225e8d7ac7a06de431da0f09c06da",
+        "revCount": 15967,
         "type": "git",
         "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
       },
@@ -224,22 +223,6 @@
       "original": {
         "owner": "9999years",
         "repo": "nix-config",
-        "type": "github"
-      }
-    },
-    "github-com-emilazy-mpv-notify-send": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1720707586,
-        "narHash": "sha256-H8WIKfQnle27eiwnz2sxC8D1EwQplY4N7Qg5+c1e/uU=",
-        "owner": "emilazy",
-        "repo": "mpv-notify-send",
-        "rev": "d98d9fe566b222c5b909e3905e9e201eaec34959",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emilazy",
-        "repo": "mpv-notify-send",
         "type": "github"
       }
     },
@@ -642,11 +625,11 @@
       },
       "locked": {
         "dir": "nix/container-systemd",
-        "lastModified": 1761711528,
-        "narHash": "sha256-Slnhie4W2sW+TJga4GQcrBRE89NTuikmYmVWakzRpvw=",
+        "lastModified": 1761711707,
+        "narHash": "sha256-e1jOhY+V9el4dJpx2T860wJtTMXLHjcUZCbSrao3XPQ=",
         "ref": "refs/heads/master",
-        "rev": "6496f43e152b99b75d85c0ef3487c82befe91536",
-        "revCount": 15965,
+        "rev": "0c31163223502cfacac063aea091fd6cabfdf494",
+        "revCount": 15970,
         "type": "git",
         "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
       },
