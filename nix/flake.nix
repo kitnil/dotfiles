@@ -40,10 +40,6 @@
       url = "github:9999years/nix-config";
       flake = false;
     };
-    github-com-emilazy-mpv-notify-send = {
-      url = "github:emilazy/mpv-notify-send";
-      flake = false;
-    };
     github-com-tsoding-boomer = {
       url = "github:tsoding/boomer";
       flake = false;
@@ -64,7 +60,6 @@
   outputs = { self, nixpkgs, nixpkgs-20-03, nixpkgs-20-03-firefox
     , nixpkgs-phantomjs, nixpkgs-home-manager, home-manager, nur
     , rycee-nur-expressions
-    , github-com-emilazy-mpv-notify-send
     , github-com-tsoding-boomer
     , nixpkgs-idea, nixpkgs-idea-community
     , nixpkgs-nixd, nixpkgs-copyq, nixpkgs-chatterino2
@@ -156,8 +151,6 @@
           (import ./plugins.nix { inherit (pkgs) fetchurl stdenv; });
       in fold (x: xs: xs // x) { } [
         {
-          # TODO: Flake inherit (pkgs.callPackage github-com-emilazy-mpv-notify-send) mpv-notify-send;
-
           inherit (pkgs-20-03) nixfmt;
 
           inherit (pkgs-20-03.python3Packages) yamllint;
