@@ -175,26 +175,49 @@ allow-preset-passphrase"))))
                     home-bash-service
                     (service home-bash-service-type
                              (home-bash-configuration
-                               (bashrc
-                                (list
-                                 (local-file
-                                  (string-append %distro-directory "/dot_bashrc"))))
-                               (bash-profile
-                                (list
-                                 (local-file
-                                  (string-append %distro-directory "/dot_bash_profile"))))
-                               (environment-variables
-                                `(("PATH" .
-                                   ,(string-append "${HOME}/bin"
-                                                   ":" "${HOME}/.local/bin"
-                                                   ;; ":" "$(/usr/bin/env --ignore-environment sh --norc --noprofile -c 'unset PATH; export HOME=/home/oleg; export USER=oleg; source /etc/profile; printf $PATH')"
-                                                   ":" "${HOME}/go/bin"
-                                                   ":" "${HOME}/.npm-global/bin"
-                                                   ":" "/opt/gradle/bin"
-                                                   ":" "${HOME}/perl5/bin"
-                                                   ;; ":" "${HOME}/.nix-profile/lib/openjdk/bin"
-                                                   ;; ":" "${HOME}/.nix-profile/bin"
-                                                   ":" "$PATH"))))))
+                              (bashrc
+                               (list
+                                (local-file
+                                 (string-append %distro-directory "/dot_bashrc"))))
+                              (environment-variables
+                               `(("PATH" .
+                                  ,(string-append "${HOME}/bin"
+                                                  ":" "${HOME}/.local/bin"
+                                                  ;; ":" "$(/usr/bin/env --ignore-environment sh --norc --noprofile -c 'unset PATH; export HOME=/home/oleg; export USER=oleg; source /etc/profile; printf $PATH')"
+                                                  ":" "${HOME}/go/bin"
+                                                  ":" "${HOME}/.npm-global/bin"
+                                                  ":" "/opt/gradle/bin"
+                                                  ":" "${HOME}/perl5/bin"
+                                                  ;; ":" "${HOME}/.nix-profile/lib/openjdk/bin"
+                                                  ;; ":" "${HOME}/.nix-profile/bin"
+                                                  ":" "$PATH"))
+                                 ("LC_TIME" . "en_GB.UTF-8")
+                                 ("LANG" . "en_US.UTF-8")
+
+                                 ("CHICKEN_REPOSITORY" . "${HOME}/.eggs/lib/chicken/8")
+                                 ("CHICKEN_DOC_REPOSITORY" . "${HOME}/.eggs/share/chicken-doc")
+
+                                 ("BROWSER" . "icecat")
+                                 ("INFOPATH" . "${HOME}/src/codeberg.org/guix/guix/doc${INFOPATH:+:}$INFOPATH")
+                                 ("GUILE_WARN_DEPRECATED" . "no")
+
+                                 ;; Fix mouse wheel in gtk3
+                                 ;; https://github.com/stumpwm/stumpwm/wiki/FAQ
+                                 ("GDK_CORE_DEVICE_EVENTS" . "1")
+
+                                 ("QT_QPA_PLATFORMTHEME" . "gtk2")
+                                 ("GUILE_LOAD_PATH" . "${HOME}/.config:${GUILE_LOAD_PATH}")
+                                 ("RIPGREP_CONFIG_PATH" . "${HOME}/.config/ripgrep/ripgreprc")
+                                 ("SSHRC_BECOME" . "yes")
+                                 ("GRADLE_HOME" . "/opt/gradle")
+                                 ("PYTHONSTARTUP" . "${HOME}/.pythonrc")
+                                 ("TMUXIFIER_LAYOUT_PATH" . "${HOME}/.tmuxifier-layouts")
+                                 ("EDITOR" . "emacsclient -nw -c")
+                                 ("MANWIDTH" . "80")
+                                 ("PERL5LIB" . "${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}")
+                                 ("PERL_LOCAL_LIB_ROOT" . "${HOME}/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}")
+                                 ("PERL_MB_OPT" . "--install_base ${HOME}/perl5")
+                                 ("PERL_MM_OPT" . "INSTALL_BASE=${HOME}/perl5")))))
                     home-mime-service
                     home-direnv-service
                     home-git-service

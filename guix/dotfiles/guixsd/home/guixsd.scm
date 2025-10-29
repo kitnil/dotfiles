@@ -77,9 +77,6 @@
 (add-to-load-path (string-append %home "/.local/bin"))
 (use-modules (mjru-github-projects))
 
-(define .bash_profile
-  (string-append %home "/src/cgit.wugi.info/wigust/dotfiles/dot_bash_profile"))
-
 (define .bashrc
   (string-append %home "/src/cgit.wugi.info/wigust/dotfiles/dot_bashrc"))
 
