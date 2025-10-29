@@ -24,7 +24,6 @@
         "flake-compat": "flake-compat",
         "flake-utils-plus": "flake-utils-plus",
         "github-com-9999years-nix-config": "github-com-9999years-nix-config",
-        "github-com-tsoding-boomer": "github-com-tsoding-boomer",
         "home-manager": "home-manager",
         "kamadorueda-alejandra": "kamadorueda-alejandra",
         "naersk": "naersk",
@@ -47,11 +46,11 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1761711697,
-        "narHash": "sha256-aKmbgXwdEJzdGq25JxiT8uk23vJLzBwSughr7tcSRqk=",
+        "lastModified": 1761711925,
+        "narHash": "sha256-fiwJnpAUdCoF9xPIgatbyn+7WeNq1oxWWtFV9ImZKQ0=",
         "ref": "refs/heads/master",
-        "rev": "e91a223f354225e8d7ac7a06de431da0f09c06da",
-        "revCount": 15967,
+        "rev": "cc767d1c0be56222f15c66710d4762a3d2264308",
+        "revCount": 15972,
         "type": "git",
         "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
       },
@@ -221,22 +220,6 @@
       "original": {
         "owner": "9999years",
         "repo": "nix-config",
-        "type": "github"
-      }
-    },
-    "github-com-tsoding-boomer": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1707424554,
-        "narHash": "sha256-o65/VVxttriA5Qqt35lLKkWIZYS7T4VBBuYdAIGUmx8=",
-        "owner": "tsoding",
-        "repo": "boomer",
-        "rev": "dfd4e1f5514e2a9d7c7a6429c1c0642c2021e792",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tsoding",
-        "repo": "boomer",
         "type": "github"
       }
     },
