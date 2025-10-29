@@ -314,6 +314,7 @@ guix-image-builder: $(DECRYPT_TARGETS)
 	$(SKOPEO) copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 nix-update-inputs:
+	$(MAKE) -C nix nur
 	$(MAKE) -C nix/container-systemd dotfiles-home-manager
 	$(MAKE) -C nix/container-systemd-taskexecutor original
 	$(MAKE) -C nix/container-systemd-nixos-majordomo original

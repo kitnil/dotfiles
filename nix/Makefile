@@ -7,3 +7,7 @@ build:
 .PHONY: install
 install:
 	nix-shell --run "deploy --skip-checks --debug-logs .#$(HOSTNAME) -- --print-build-logs --show-trace"
+
+.PHONY: nur
+nur:
+	nix flake lock --update-input nur
