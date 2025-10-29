@@ -142,7 +142,12 @@ program.")))
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-majordomo")
-                   (name "nixos-majordomo"))))
+                   (name "nixos-majordomo")))
+
+         (service runc-container-service-type
+                  (runc-container-configuration
+                   (bundle "/srv/runc/guix-nanokvm")
+                   (name "guix-nanokvm"))))
         (modify-services %base-services
           (delete console-font-service-type)
           (delete shepherd-system-log-service-type)
