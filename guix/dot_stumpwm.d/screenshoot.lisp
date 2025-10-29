@@ -10,6 +10,3 @@
 
 (defcommand xfce-screenshooter () ()
     (run-shell-command "xfce4-screenshooter"))
-
-(defcommand zoom () ()
-  (run-shell-command "boomer"))

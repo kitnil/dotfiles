@@ -40,10 +40,6 @@
       url = "github:9999years/nix-config";
       flake = false;
     };
-    github-com-tsoding-boomer = {
-      url = "github:tsoding/boomer";
-      flake = false;
-    };
 
     utils.url = "github:numtide/flake-utils";
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
@@ -60,7 +56,6 @@
   outputs = { self, nixpkgs, nixpkgs-20-03, nixpkgs-20-03-firefox
     , nixpkgs-phantomjs, nixpkgs-home-manager, home-manager, nur
     , rycee-nur-expressions
-    , github-com-tsoding-boomer
     , nixpkgs-idea, nixpkgs-idea-community
     , nixpkgs-nixd, nixpkgs-copyq, nixpkgs-chatterino2
     , nixpkgs-phpactor, kamadorueda-alejandra, flake-utils-plus
@@ -236,21 +231,6 @@
 
         ({ inherit (pkgs.nodePackages) node2nix; })
 
-        # XXX: Failed to build boomer.
-        #
-        # error: attribute 'lib' missing
-        #
-        #        at /nix/store/ny73wh68zm5gkgxz0pf7v2sf4cw3657x-source/overlay/boomer.nix:31:40:
-        #
-        #            30|   installPhase = "install -Dt $out/bin src/boomer";
-        #            31|   fixupPhase = "patchelf --set-rpath ${stdenv.lib.makeLibraryPath [stdenv.cc.cc libX11 libXrandr libGL]} $out/bin/boomer";
-        #              |                                        ^
-        #            32| }
-        #
-        # // (let boomer-repo = (github-com-tsoding-boomer.outPath + "/overlay"); in rec {
-        #           nim_1_0 = pkgs.callPackage (boomer-repo + "/nim_1_0.nix") {};
-        #           boomer = pkgs.callPackage (boomer-repo + "/boomer.nix") { inherit nim_1_0; };
-        #         })
         (let
           pkgs = import nixpkgs {
             inherit system;

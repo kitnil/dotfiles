@@ -203,7 +203,6 @@
     json2hcl
 
     alerta
-    # boomer
     deploy-rs
     discord
     elktail
