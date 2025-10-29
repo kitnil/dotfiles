@@ -378,6 +378,7 @@
               visited-link-enabler
               ultrawidify
               web-scrobbler
+              betterttv
             ];
           settings = {
             "browser.startup.homepage" = "about:addons";
