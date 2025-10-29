@@ -88,7 +88,6 @@
         "flake-compat": "flake-compat_28",
         "flake-utils-plus": "flake-utils-plus",
         "github-com-9999years-nix-config": "github-com-9999years-nix-config",
-        "github-com-emilazy-mpv-notify-send": "github-com-emilazy-mpv-notify-send",
         "github-com-tsoding-boomer": "github-com-tsoding-boomer",
         "home-manager": "home-manager",
         "kamadorueda-alejandra": "kamadorueda-alejandra",
@@ -112,11 +111,11 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1761711511,
-        "narHash": "sha256-HyUuWX+lxuZGrFzXVAzJh/OarjdNsx/Heq2Ms2KOjy0=",
+        "lastModified": 1761711697,
+        "narHash": "sha256-aKmbgXwdEJzdGq25JxiT8uk23vJLzBwSughr7tcSRqk=",
         "ref": "refs/heads/master",
-        "rev": "361f5ea12dd24a108da4a04802999c56204c6001",
-        "revCount": 15962,
+        "rev": "e91a223f354225e8d7ac7a06de431da0f09c06da",
+        "revCount": 15967,
         "type": "git",
         "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
       },
@@ -844,22 +843,6 @@
       "original": {
         "owner": "9999years",
         "repo": "nix-config",
-        "type": "github"
-      }
-    },
-    "github-com-emilazy-mpv-notify-send": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1720707586,
-        "narHash": "sha256-H8WIKfQnle27eiwnz2sxC8D1EwQplY4N7Qg5+c1e/uU=",
-        "owner": "emilazy",
-        "repo": "mpv-notify-send",
-        "rev": "d98d9fe566b222c5b909e3905e9e201eaec34959",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emilazy",
-        "repo": "mpv-notify-send",
         "type": "github"
       }
     },
@@ -3663,11 +3646,11 @@
       },
       "locked": {
         "dir": "nix/container-systemd-taskexecutor",
-        "lastModified": 1761711528,
-        "narHash": "sha256-wWtK6SX+gLdhLkl42eZVOJk0hUdhZiHg71m3BslpNc4=",
+        "lastModified": 1761711706,
+        "narHash": "sha256-17S32awyxZB/kIho7nzSFFdm9Fnjddx8EDSHvUC0MT4=",
         "ref": "refs/heads/master",
-        "rev": "f603f7b7f6ee3164d73fe5ac6586a0171242f825",
-        "revCount": 15964,
+        "rev": "10dadf9effd8139283723678118efc444e3a7b57",
+        "revCount": 15969,
         "type": "git",
         "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
       },
@@ -3686,11 +3669,11 @@
       },
       "locked": {
         "dir": "nix/container-systemd",
-        "lastModified": 1761711527,
-        "narHash": "sha256-DUxtbFnKtyU3vWcc9N6b818qiB1Dfkqw2OKejUMy/Jw=",
+        "lastModified": 1761711706,
+        "narHash": "sha256-bxTyq43SSTFcH0PknbcnW32la6yYPSsN4BYW+MiAcz8=",
         "ref": "refs/heads/master",
-        "rev": "d8c733f5875dc33be7c3c9a50f26f96983ff8725",
-        "revCount": 15963,
+        "rev": "f67e68717c17b6af728f0198e5fe5d9a149f2d73",
+        "revCount": 15968,
         "type": "git",
         "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
       },
