@@ -37,10 +37,6 @@
     rycee-nur-expressions.url =
       "git+https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons";
 
-    github-com-guibou-nixGL = {
-      url = "github:guibou/nixGL";
-      flake = false;
-    };
     # github-com-xzfc-cached-nix-shell.url = "github:xzfc/cached-nix-shell";
     github-com-9999years-nix-config = {
       url = "github:9999years/nix-config";
@@ -69,7 +65,7 @@
 
   outputs = { self, nixpkgs, nixpkgs-20-03, nixpkgs-20-03-firefox
     , nixpkgs-phantomjs, nixpkgs-home-manager, home-manager, nur
-    , rycee-nur-expressions, github-com-guibou-nixGL
+    , rycee-nur-expressions
     , github-com-emilazy-mpv-notify-send
     , github-com-tsoding-boomer
     , nixpkgs-idea, nixpkgs-idea-community, nixpkgs-ddcutil
@@ -163,8 +159,6 @@
       in fold (x: xs: xs // x) { } [
         {
           # TODO: Flake inherit (pkgs.callPackage github-com-emilazy-mpv-notify-send) mpv-notify-send;
-
-          inherit (import github-com-guibou-nixGL { inherit pkgs; }) nixGLIntel;
 
           inherit (pkgs-20-03) nixfmt;
 

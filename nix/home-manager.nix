@@ -222,7 +222,6 @@
 
     # nim_1_0
 
-    nixGLIntel
     nixfmt
     alejandra
     nixpkgs-fmt
