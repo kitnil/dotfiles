@@ -182,7 +182,19 @@ allow-preset-passphrase"))))
                                (bash-profile
                                 (list
                                  (local-file
-                                  (string-append %distro-directory "/dot_bash_profile"))))))
+                                  (string-append %distro-directory "/dot_bash_profile"))))
+                               (environment-variables
+                                `(("PATH" .
+                                   ,(string-append "${HOME}/bin"
+                                                   ":" "${HOME}/.local/bin"
+                                                   ;; ":" "$(/usr/bin/env --ignore-environment sh --norc --noprofile -c 'unset PATH; export HOME=/home/oleg; export USER=oleg; source /etc/profile; printf $PATH')"
+                                                   ":" "${HOME}/go/bin"
+                                                   ":" "${HOME}/.npm-global/bin"
+                                                   ":" "/opt/gradle/bin"
+                                                   ":" "${HOME}/perl5/bin"
+                                                   ;; ":" "${HOME}/.nix-profile/lib/openjdk/bin"
+                                                   ;; ":" "${HOME}/.nix-profile/bin"
+                                                   ":" "$PATH"))))))
                     home-mime-service
                     home-direnv-service
                     home-git-service
