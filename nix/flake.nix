@@ -29,8 +29,6 @@
 
     nixpkgs-chatterino2.url = "nixpkgs/nixpkgs-unstable";
 
-    nixpkgs-ddcutil.url = "nixpkgs/nixpkgs-unstable";
-
     nixpkgs-home-manager.url = "nixpkgs/nixpkgs-unstable";
     home-manager.url = "git+https://github.com/nix-community/home-manager?ref=release-25.05";
     nur.url = "github:nix-community/NUR";
@@ -68,7 +66,7 @@
     , rycee-nur-expressions
     , github-com-emilazy-mpv-notify-send
     , github-com-tsoding-boomer
-    , nixpkgs-idea, nixpkgs-idea-community, nixpkgs-ddcutil
+    , nixpkgs-idea, nixpkgs-idea-community
     , nixpkgs-nixd, nixpkgs-copyq, nixpkgs-chatterino2
     , nixpkgs-phpactor, kamadorueda-alejandra, flake-utils-plus
     , ... }:
@@ -239,9 +237,6 @@
             idea-community;
 
           inherit (nixpkgs-idea-community.legacyPackages.${system}) sunshine;
-
-          inherit (nixpkgs-ddcutil.legacyPackages.${system})
-            ddcutil tribler telegram-desktop fastfetch;
 
           inherit (nixpkgs-phpactor.legacyPackages.${system}) phpactor;
         }
