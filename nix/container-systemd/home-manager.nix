@@ -249,6 +249,7 @@ in {
                 (extension: extensions: extensions ++ [extension])
                 (firefoxBaseProfileWithExtensions { ech = false; }).extensions.packages
                 (with packages; with packages.nur.repos.rycee.firefox-addons; [
+                  betterttv
                   return-youtube-dislikes
                   sponsorblock
                   hide-twitch-chat-users
