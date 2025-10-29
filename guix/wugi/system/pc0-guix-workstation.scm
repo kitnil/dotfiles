@@ -146,6 +146,11 @@ program.")))
 
          (service runc-container-service-type
                   (runc-container-configuration
+                   (bundle "/srv/runc/nixos-workstation")
+                   (name "nixos-workstation")))
+
+         (service runc-container-service-type
+                  (runc-container-configuration
                    (bundle "/srv/runc/guix-nanokvm")
                    (name "guix-nanokvm"))))
         (modify-services %base-services
