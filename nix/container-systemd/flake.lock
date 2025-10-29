@@ -35,7 +35,6 @@
         "nixpkgs-20-03-firefox": "nixpkgs-20-03-firefox",
         "nixpkgs-chatterino2": "nixpkgs-chatterino2",
         "nixpkgs-copyq": "nixpkgs-copyq",
-        "nixpkgs-ddcutil": "nixpkgs-ddcutil",
         "nixpkgs-home-manager": "nixpkgs-home-manager",
         "nixpkgs-idea": "nixpkgs-idea",
         "nixpkgs-idea-community": "nixpkgs-idea-community",
@@ -49,11 +48,11 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1761710552,
-        "narHash": "sha256-eZ1xYcwMn9ZgKAg2H0mBHY08RlgwPmFFy3JN+gdqcBA=",
+        "lastModified": 1761711511,
+        "narHash": "sha256-HyUuWX+lxuZGrFzXVAzJh/OarjdNsx/Heq2Ms2KOjy0=",
         "ref": "refs/heads/master",
-        "rev": "1d3f2b286901d5caa9a9deb99ee1068d625f534d",
-        "revCount": 15957,
+        "rev": "361f5ea12dd24a108da4a04802999c56204c6001",
+        "revCount": 15962,
         "type": "git",
         "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
       },
@@ -396,21 +395,6 @@
       }
     },
     "nixpkgs-copyq": {
-      "locked": {
-        "lastModified": 1752596105,
-        "narHash": "sha256-lFNVsu/mHLq3q11MuGkMhUUoSXEdQjCHvpReaGP1S2k=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "dab3a6e781554f965bde3def0aa2fda4eb8f1708",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixpkgs-unstable",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs-ddcutil": {
       "locked": {
         "lastModified": 1752596105,
         "narHash": "sha256-lFNVsu/mHLq3q11MuGkMhUUoSXEdQjCHvpReaGP1S2k=",
