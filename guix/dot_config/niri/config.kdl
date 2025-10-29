@@ -630,3 +630,7 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
 }
+
+environment {
+    GTK_THEME "Adwaita:dark"
+}
