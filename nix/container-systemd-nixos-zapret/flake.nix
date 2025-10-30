@@ -18,6 +18,9 @@
                   users = {
                     oleg = ./oleg/home-manager.nix;
                   };
+                  sharedModules = [
+                    original.inputs.dotfiles-home-manager.nixosModules.home-manager-chatterino
+                  ];
                 };
               }
               ./hosts/nixos-systemd.nix
