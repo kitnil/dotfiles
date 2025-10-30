@@ -20,7 +20,7 @@
       };
       inherit (pkgs) mkShell nixStable nixos-install-tools;
     in
-      {
+      rec {
         devShell.${system} = mkShell {
           buildInputs = [
             nixStable
@@ -31,7 +31,7 @@
             export LANG=C
           '';
         };
-        lib = {
+        customLib = {
           firefoxBaseProfile = { ech ? false }: {
             # TODO: Manage ~/.mozilla/firefox/nix/containers.json file with Nix.
             # TODO: Manage ~/.mozilla/firefox/nix/cookies.sqlite somehow.
@@ -142,8 +142,7 @@
                           inherit (inputs.firejail-disable-sandbox-check.legacyPackages.${system})
                             firejail-disable-sandbox-check;
                         };
-                        inherit packages;
-                        lib = packages.lib // self.lib;
+                        inherit packages customLib;
                       };
                 };
               }

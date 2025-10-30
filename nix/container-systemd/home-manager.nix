@@ -1,7 +1,8 @@
-{ pkgs, packages, lib, config, ... }:
+{ pkgs, packages, lib, config, customLib, ... }:
 
 let
   inherit (lib) fold;
+  inherit (customLib) firefoxBaseProfile;
 in {
   home.username = "oleg";
   home.homeDirectory = "/home/oleg";
