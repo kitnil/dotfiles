@@ -14,6 +14,7 @@
   #:use-module (gnu packages bash)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages package-management)
+  #:use-module (gnu packages virtualization)
   #:use-module (gnu packages ssh)
   #:use-module (gnu services)
   #:use-module (gnu services avahi)
@@ -71,7 +72,7 @@ program.")))
                      %base-user-accounts))
 
       ;; Globally-installed packages.
-      (packages (append (list bash-completion openssh)
+      (packages (append (list bash-completion openssh runc)
                         %base-packages))
 
       ;; Because the system will run in a Docker container, we may omit many
@@ -153,6 +154,7 @@ program.")))
                   (runc-container-configuration
                    (bundle "/srv/runc/guix-nanokvm")
                    (name "guix-nanokvm"))))
+
         (modify-services %base-services
           (delete console-font-service-type)
           (delete shepherd-system-log-service-type)
