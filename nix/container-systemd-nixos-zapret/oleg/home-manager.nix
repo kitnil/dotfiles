@@ -44,6 +44,7 @@ in
     profiles = {
       socialstream = (firefoxBaseProfile { ech = false; }) // {
         name = "socialstream";
+        id = 42187;
         isDefault = false;
       };
     };
