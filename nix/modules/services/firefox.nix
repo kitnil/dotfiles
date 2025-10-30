@@ -11,7 +11,7 @@
           "XDG_RUNTIME_DIR=/mnt/guix/run/user/%U"
           "WAYLAND_DISPLAY=wayland-1"
         ];
-        ExecStart = "${pkgs.firefox}/bin/firefox --profile %h/.mozilla/firefox/%i";
+        ExecStart = "${pkgs.firefox}/bin/firefox --profile %h/.mozilla/firefox/%i --name firefox-%i";
         Type = "simple";
       };
     };
