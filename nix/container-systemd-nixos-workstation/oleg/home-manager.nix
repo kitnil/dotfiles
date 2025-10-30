@@ -1,7 +1,7 @@
 { pkgs, lib, config, customLib, ... }:
 
 let
-  inherit (lib) customLib;
+  inherit (customLib) firefoxBaseProfile;
   path-of-building-data-json = with pkgs;
     let
       lua-json = fetchFromGitHub {
