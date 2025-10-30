@@ -1,4 +1,4 @@
-<domain type='kvm' id='8' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
+<domain type='kvm' id='3' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
   <name>win10</name>
   <uuid>32ba10e9-3ec6-46e6-bcfa-a0ab8344bb76</uuid>
   <metadata>
@@ -218,20 +218,20 @@
     <interface type='bridge'>
       <mac address='52:54:00:3d:a2:2a'/>
       <source bridge='br0'/>
-      <target dev='vnet7'/>
+      <target dev='vnet2'/>
       <model type='virtio'/>
       <alias name='net0'/>
       <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
     </interface>
     <serial type='pty'>
-      <source path='/dev/pts/3'/>
+      <source path='/dev/pts/6'/>
       <target type='isa-serial' port='0'>
         <model name='isa-serial'/>
       </target>
       <alias name='serial0'/>
     </serial>
-    <console type='pty' tty='/dev/pts/3'>
-      <source path='/dev/pts/3'/>
+    <console type='pty' tty='/dev/pts/6'>
+      <source path='/dev/pts/6'/>
       <target type='serial' port='0'/>
       <alias name='serial0'/>
     </console>
