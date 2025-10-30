@@ -313,8 +313,10 @@ guix-image-builder: $(DECRYPT_TARGETS)
 	container=$$($(GUIX) time-machine --channels=guix/dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls=$(SUBSTITUTE_URLS) --max-layers=100 -t docker --network ~/src/cgit.wugi.info/wigust/dotfiles/guix/wugi/system/guix-image-builder.scm)
 	$(SKOPEO) copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
-nix-update-inputs:
+nix-update-upstream-inputs:
 	$(MAKE) -C nix nur
+
+nix-update-inputs:
 	$(MAKE) -C nix/container-systemd dotfiles-home-manager
 	$(MAKE) -C nix/container-systemd-taskexecutor original
 	$(MAKE) -C nix/container-systemd-nixos-majordomo original
