@@ -20,7 +20,7 @@
       };
       inherit (pkgs) mkShell nixStable nixos-install-tools;
     in
-      rec {
+      {
         devShell.${system} = mkShell {
           buildInputs = [
             nixStable
@@ -143,7 +143,7 @@
                             firejail-disable-sandbox-check;
                         };
                         inherit packages;
-                        lib = lib // packages.lib;
+                        lib = packages.lib // self.lib;
                       };
                 };
               }
