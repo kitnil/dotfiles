@@ -1,6 +1,7 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, customLib, ... }:
 
 let
+  inherit (lib) customLib;
   path-of-building-data-json = with pkgs;
     let
       lua-json = fetchFromGitHub {
@@ -38,5 +39,14 @@ in
       path-of-building
       path-of-building-data-json
     ];
+  };
+  programs.firefox = {
+    profiles = {
+      stream-manager = (firefoxBaseProfile { ech = false; }) // {
+        name = "stream-manager";
+        id = 18243;
+        isDefault = false;
+      };
+    };
   };
 }
