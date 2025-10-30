@@ -1,4 +1,4 @@
-{ pkgs, packages, lib, config, firefoxBaseProfile, ... }:
+{ pkgs, packages, lib, config, ... }:
 
 let
   inherit (lib) fold;

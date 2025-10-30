@@ -39,4 +39,12 @@ in
       path-of-building-data-json
     ];
   };
+  programs.firefox = {
+    profiles = {
+      socialstream = (firefoxBaseProfile { ech = false; }) // {
+        name = "socialstream";
+        isDefault = false;
+      };
+    };
+  };
 }
