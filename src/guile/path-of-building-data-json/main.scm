@@ -690,7 +690,32 @@
                             (enabled? #t)
                             (size 0)
                             (colour 'Pink)
-                            (shape 'Circle))))))))
+                            (shape 'Circle))))
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight Rogue markers.")
+                          (base-types '("Rogue's Marker"))
+                          (set-font-size 45)
+                          (set-text-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 178)
+                            (blue 135)
+                            (alpha 255)))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 178)
+                            (blue 135)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 20)
+                            (green 20)
+                            (blue 0)
+                            (alpha 255)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'Orange))))))))
          poe-item-filter-configuration-fields)))
 
 (run-with-store (open-connection)
