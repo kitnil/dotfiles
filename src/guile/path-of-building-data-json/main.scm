@@ -636,7 +636,26 @@
                             (enabled? #t)
                             (size 2)
                             (colour 'White)
-                            (shape 'Circle))))))))
+                            (shape 'Circle))))
+                         (poe-item-filter-block-configuration
+                          (base-types '("Divine Vessel"
+                                        "Sacrifice at Dawn"
+                                        "Sacrifice at Dusk"
+                                        "Sacrifice at Midnight"
+                                        "Sacrifice at Noon"))
+                          (set-font-size 45)
+                          (set-text-color
+                           (poe-item-filter-color-configuration
+                            (red 178)
+                            (green 120)
+                            (blue 230)
+                            (alpha 240)))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 175)
+                            (green 120)
+                            (blue 230)
+                            (alpha 240))))))))
          poe-item-filter-configuration-fields)))
 
 (run-with-store (open-connection)
