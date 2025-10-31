@@ -382,31 +382,7 @@
       #$(serialize-configuration
          (poe-item-filter-configuration
           (blocks
-           (append (map (lambda (base-type)
-                          (poe-item-filter-block-configuration
-                           (commentary (format #f "Decrease font size for ~s base items."
-                                               base-type))
-                           (base-types
-                            (sort (let ((items
-                                         (filter (lambda (item)
-                                                   (and=> (assoc-ref item "subType")
-                                                          (lambda (sub-type)
-                                                            (string= sub-type base-type))))
-                                                 base-items)))
-                                    (map (lambda (item)
-                                           (string-replace-substring (first item)
-                                                                     (format #f " (~a)" base-type)
-                                                                     ""))
-                                         items))
-                                  string<))
-                           (set-font-size 20)))
-                        sub-types)
-                   (list (poe-item-filter-block-configuration
-                          (commentary "Decrease font size for items with classes.")
-                          (classes %weapon-classes)
-                          (set-font-size 20))
-
-                         (poe-item-filter-block-configuration
+           (append (list (poe-item-filter-block-configuration
                           (commentary "Highlight border of best crafting bases.")
                           (item-level (poe-item-filter-conditional-value-configuration
                                        (value 82)
@@ -438,23 +414,6 @@
                          (poe-item-filter-block-configuration
                           (commentary "Stop apply rules to scrolls.")
                           (base-types '("Scroll of Wisdom")))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight not identified items.")
-                          (identified? #f)
-                          (rarity '(Magic Rare Unique))
-                          (set-background-color (poe-item-filter-color-configuration
-                                                 (red 86)
-                                                 (green 0)
-                                                 (blue 0)
-                                                 (alpha 230)))
-                          (continue? #t))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Decrease identified items font size.")
-                          (identified? #t)
-                          (set-font-size 20)
-                          (continue? #t))
 
                          (poe-item-filter-block-configuration
                           (commentary "Highlight unique items.")
@@ -967,7 +926,49 @@
                        (enabled? #t)
                        (size 1)
                        (colour 'Yellow)
-                       (shape 'UpsideDownHouse))))))))
+                       (shape 'UpsideDownHouse)))))
+
+                   (map (lambda (base-type)
+                          (poe-item-filter-block-configuration
+                           (commentary (format #f "Decrease font size for ~s base items."
+                                               base-type))
+                           (base-types
+                            (sort (let ((items
+                                         (filter (lambda (item)
+                                                   (and=> (assoc-ref item "subType")
+                                                          (lambda (sub-type)
+                                                            (string= sub-type base-type))))
+                                                 base-items)))
+                                    (map (lambda (item)
+                                           (string-replace-substring (first item)
+                                                                     (format #f " (~a)" base-type)
+                                                                     ""))
+                                         items))
+                                  string<))
+                           (set-font-size 20)))
+                        sub-types)
+
+                   (list (poe-item-filter-block-configuration
+                          (commentary "Decrease font size for items with classes.")
+                          (classes %weapon-classes)
+                          (set-font-size 20))
+
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight not identified items.")
+                          (identified? #f)
+                          (rarity '(Magic Rare Unique))
+                          (set-background-color (poe-item-filter-color-configuration
+                                                 (red 86)
+                                                 (green 0)
+                                                 (blue 0)
+                                                 (alpha 230)))
+                          (continue? #t))
+
+                         (poe-item-filter-block-configuration
+                          (commentary "Decrease identified items font size.")
+                          (identified? #t)
+                          (set-font-size 20)
+                          (continue? #t))))))
          poe-item-filter-configuration-fields)))
 
 (run-with-store (open-connection)
