@@ -99,11 +99,15 @@
 (define (serialize-operator field-name value)
   #~(symbol->string '#$value))
 
-(define conditional-value-1?
-  number?)
+(define (conditional-value-1? x)
+  (or (number? x)
+      (symbol? x)))
 
 (define (serialize-conditional-value-1 field-name value)
-  (number->string value))
+  (cond ((number? value)
+         (number->string value))
+        ((symbol? value)
+         (symbol->string value))))
 
 (define-configuration poe-item-filter-conditional-value-configuration
   (operator
@@ -418,6 +422,12 @@
                           (commentary "Stop apply rules to scrolls.")
                           (base-types '("Portal Scroll"
                                         "Scroll of Wisdom")))
+
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight sockets vendor recipe.")
+                          (sockets (poe-item-filter-conditional-value-configuration
+                                    (value '3RGB)
+                                    (operator '>=))))
 
                          (poe-item-filter-block-configuration
                           (commentary "Highlight unique items.")
