@@ -717,7 +717,42 @@
                             (red 25)
                             (green 100)
                             (blue 75)
-                            (alpha 255)))))
+                            (alpha 255))))
+
+                         (poe-item-filter-block-configuration
+                          (classes '("Incursion Items" "Labyrinth Items"))
+                          (set-font-size 45)
+                          (set-text-color
+                           (poe-item-filter-color-configuration
+                            (red 74)
+                            (green 230)
+                            (blue 58)
+                            (alpha 255)))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 74)
+                            (green 230)
+                            (blue 58)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 20)
+                            (green 20)
+                            (blue 0)
+                            (alpha 255)))
+                          (play-alert-sound
+                           (poe-item-filter-play-alert-sound-configuration
+                            (id 3)
+                            (volume 300)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'Green)))
+                          (mini-map-icon
+                           (poe-item-filter-mini-map-icon-configuration
+                            (enabled? #t)
+                            (size 0)
+                            (colour 'Green)
+                            (shape 'Pentagon)))))
 
                    (let ((gem (poe-item-filter-block-configuration
                                (set-font-size 45)
