@@ -89,6 +89,7 @@ Show
 
 # Highlight high value currency.
 Show
+	BaseType == "Albino Rhoa Feather" "Awakener's Orb" "Blessing of Chayula" "Blessing of Xoph" "Crusader's Exalted Orb" "Divine Orb" "Eternal Orb" "Fracturing Orb" "Hinekora's Lock" "Hunter's Exalted Orb" "Mirror of Kalandra" "Mirror Shard" "Orb of Dominance" "Redeemer's Exalted Orb" "Reflecting Mist" "Tainted Divine Teardrop" "Valdo's Puzzle Box" "Warlord's Exalted Orb" 
 	MiniMapIcon 0 Red Star
 	SetFontSize 45
 	SetBorderColor 255 0 0 255
@@ -96,3 +97,14 @@ Show
 	SetTextColor 255 0 0 255
 	PlayAlertSound 6 300
 	PlayEffect Red
+
+# Highlight middle value currency.
+Show
+	BaseType == "Abrasive Catalyst" "Accelerating Catalyst" "Blighted Scouting Report" "Burial Medallion" "Cartographer's Chisel" "Chaos Orb" "Comprehensive Scouting Report" "Delirious Scouting Report" "Engineer's Orb" "Exalted Shard" "Gemcutter's Prism" "Glassblower's Bauble" "Grand Eldritch Ember" "Grand Eldritch Ichor" "Greater Eldritch Ember" "Greater Eldritch Ichor" "Harbinger's Orb" "Imbued Catalyst" "Intrinsic Catalyst" "Lesser Eldritch Ember" "Lesser Eldritch Ichor" "Maven's Chisel of Avarice" "Maven's Chisel of Divination" "Maven's Chisel of Procurement" "Noxious Catalyst" "Operative's Scouting Report" "Orb of Unmaking" "Primal Crystallised Lifeforce" "Ritual Splinter" "Scrap Metal" "Singular Scouting Report" "Stacked Deck" "Tainted Armourer's Scrap" "Tainted Blacksmith's Whetstone" "Tainted Jeweller's Orb" "Tempering Catalyst" "Turbulent Catalyst" "Unstable Catalyst" "Veiled Scarab" "Vivid Crystallised Lifeforce" "Wild Crystallised Lifeforce" 
+	MiniMapIcon 2 White Circle
+	SetFontSize 45
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 249 150 25 255
+	SetTextColor 0 0 0 255
+	PlayAlertSound 2 300
+	PlayEffect White

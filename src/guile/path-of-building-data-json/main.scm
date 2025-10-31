@@ -562,7 +562,82 @@
                             (enabled? #t)
                             (size 0)
                             (colour 'Red)
-                            (shape 'Star))))))))
+                            (shape 'Star))))
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight middle value currency.")
+                          (base-types '("Abrasive Catalyst"
+                                        "Accelerating Catalyst"
+                                        "Blighted Scouting Report"
+                                        "Burial Medallion"
+                                        "Cartographer's Chisel"
+                                        "Chaos Orb"
+                                        "Comprehensive Scouting Report"
+                                        "Delirious Scouting Report"
+                                        "Engineer's Orb"
+                                        "Exalted Shard"
+                                        "Gemcutter's Prism"
+                                        "Glassblower's Bauble"
+                                        "Grand Eldritch Ember"
+                                        "Grand Eldritch Ichor"
+                                        "Greater Eldritch Ember"
+                                        "Greater Eldritch Ichor"
+                                        "Harbinger's Orb"
+                                        "Imbued Catalyst"
+                                        "Intrinsic Catalyst"
+                                        "Lesser Eldritch Ember"
+                                        "Lesser Eldritch Ichor"
+                                        "Maven's Chisel of Avarice"
+                                        "Maven's Chisel of Divination"
+                                        "Maven's Chisel of Procurement"
+                                        "Noxious Catalyst"
+                                        "Operative's Scouting Report"
+                                        "Orb of Unmaking"
+                                        "Primal Crystallised Lifeforce"
+                                        "Ritual Splinter"
+                                        "Scrap Metal"
+                                        "Singular Scouting Report"
+                                        "Stacked Deck"
+                                        "Tainted Armourer's Scrap"
+                                        "Tainted Blacksmith's Whetstone"
+                                        "Tainted Jeweller's Orb"
+                                        "Tempering Catalyst"
+                                        "Turbulent Catalyst"
+                                        "Unstable Catalyst"
+                                        "Veiled Scarab"
+                                        "Vivid Crystallised Lifeforce"
+                                        "Wild Crystallised Lifeforce"))
+                          (set-font-size 45)
+                          (set-text-color
+                           (poe-item-filter-color-configuration
+                            (red 0)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 0)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 249)
+                            (green 150)
+                            (blue 25)
+                            (alpha 255)))
+                          (play-alert-sound
+                           (poe-item-filter-play-alert-sound-configuration
+                            (id 2)
+                            (volume 300)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'White)))
+                          (mini-map-icon
+                           (poe-item-filter-mini-map-icon-configuration
+                            (enabled? #t)
+                            (size 2)
+                            (colour 'White)
+                            (shape 'Circle))))))))
          poe-item-filter-configuration-fields)))
 
 (run-with-store (open-connection)
