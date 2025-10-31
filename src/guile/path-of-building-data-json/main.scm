@@ -935,7 +935,7 @@
 
                     (poe-item-filter-block-configuration
                      (commentary "Highlight Blueprints and Contracts and Sanctum.")
-                     (base-types '("Blueprints" "Contracts" "Sanctum Research"))
+                     (classes '("Blueprints" "Contracts" "Sanctum Research"))
                      (set-font-size 45)
                      (set-text-color
                       (poe-item-filter-color-configuration
