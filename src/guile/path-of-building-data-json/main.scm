@@ -277,6 +277,9 @@
   (stack-size
    (conditional-value (poe-item-filter-conditional-value-configuration))
    "")
+  (quality
+   (conditional-value (poe-item-filter-conditional-value-configuration))
+   "")
   (gem-level
    (conditional-value (poe-item-filter-conditional-value-configuration))
    "")
