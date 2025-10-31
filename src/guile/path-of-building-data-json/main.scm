@@ -173,7 +173,7 @@
 (define (serialize-boolean field-name value)
   value)
 
-(define-configuration poe-item-filter-mini-map-icon-configuration
+(define-configuration poe-item-filter-minimap-icon-configuration
   (enabled?
    (boolean #f)
    "")
@@ -187,16 +187,16 @@
    (symbol 'Circle)
    ""))
 
-(define mini-map-icon?
-  poe-item-filter-mini-map-icon-configuration?)
+(define minimap-icon?
+  poe-item-filter-minimap-icon-configuration?)
 
-(define (serialize-mini-map-icon field-name value)
-  #~(if #$(poe-item-filter-mini-map-icon-configuration-enabled? value)
+(define (serialize-minimap-icon field-name value)
+  #~(if #$(poe-item-filter-minimap-icon-configuration-enabled? value)
         (string-append "\t"
                        (string-join (list #$(uglify-field-name field-name)
-                                          #$(number->string (poe-item-filter-mini-map-icon-configuration-size value))
-                                          #$(symbol->string (poe-item-filter-mini-map-icon-configuration-colour value))
-                                          #$(symbol->string (poe-item-filter-mini-map-icon-configuration-shape value))))
+                                          #$(number->string (poe-item-filter-minimap-icon-configuration-size value))
+                                          #$(symbol->string (poe-item-filter-minimap-icon-configuration-colour value))
+                                          #$(symbol->string (poe-item-filter-minimap-icon-configuration-shape value))))
                        "\n")
         ""))
 
@@ -297,8 +297,8 @@
   (classes
    (classes '())
    "")
-  (mini-map-icon
-   (mini-map-icon (poe-item-filter-mini-map-icon-configuration))
+  (minimap-icon
+   (minimap-icon (poe-item-filter-minimap-icon-configuration))
    "")
   (set-font-size
    (set-font-size 0)
@@ -421,8 +421,8 @@
                          (poe-item-filter-block-configuration
                           (commentary "Highlight 2500 or more gold.")
                           (base-types '("Gold"))
-                          (mini-map-icon
-                           (poe-item-filter-mini-map-icon-configuration
+                          (minimap-icon
+                           (poe-item-filter-minimap-icon-configuration
                             (enabled? #t)
                             (size 1)
                             (colour 'Yellow)
@@ -477,8 +477,8 @@
                             (green 13)
                             (blue 13)
                             (alpha 229)))
-                          (mini-map-icon
-                           (poe-item-filter-mini-map-icon-configuration
+                          (minimap-icon
+                           (poe-item-filter-minimap-icon-configuration
                             (enabled? #t)
                             (size 1)
                             (colour 'Brown)
@@ -537,8 +537,8 @@
                           (play-effect
                            (poe-item-filter-play-effect-configuration
                             (colour 'Red)))
-                          (mini-map-icon
-                           (poe-item-filter-mini-map-icon-configuration
+                          (minimap-icon
+                           (poe-item-filter-minimap-icon-configuration
                             (enabled? #t)
                             (size 0)
                             (colour 'Red)
@@ -613,8 +613,8 @@
                           (play-effect
                            (poe-item-filter-play-effect-configuration
                             (colour 'White)))
-                          (mini-map-icon
-                           (poe-item-filter-mini-map-icon-configuration
+                          (minimap-icon
+                           (poe-item-filter-minimap-icon-configuration
                             (enabled? #t)
                             (size 2)
                             (colour 'White)
@@ -669,8 +669,8 @@
                           (play-effect
                            (poe-item-filter-play-effect-configuration
                             (colour 'Pink)))
-                          (mini-map-icon
-                           (poe-item-filter-mini-map-icon-configuration
+                          (minimap-icon
+                           (poe-item-filter-minimap-icon-configuration
                             (enabled? #t)
                             (size 0)
                             (colour 'Pink)
@@ -704,8 +704,8 @@
 
                          (poe-item-filter-block-configuration
                           (classes '("Currency"))
-                          (mini-map-icon
-                           (poe-item-filter-mini-map-icon-configuration
+                          (minimap-icon
+                           (poe-item-filter-minimap-icon-configuration
                             (enabled? #t)
                             (size 0)
                             (colour 'Pink)
@@ -755,8 +755,8 @@
                           (play-effect
                            (poe-item-filter-play-effect-configuration
                             (colour 'Green)))
-                          (mini-map-icon
-                           (poe-item-filter-mini-map-icon-configuration
+                          (minimap-icon
+                           (poe-item-filter-minimap-icon-configuration
                             (enabled? #t)
                             (size 0)
                             (colour 'Green)
@@ -790,8 +790,8 @@
                           (play-effect
                            (poe-item-filter-play-effect-configuration
                             (colour 'Pink)))
-                          (mini-map-icon
-                           (poe-item-filter-mini-map-icon-configuration
+                          (minimap-icon
+                           (poe-item-filter-minimap-icon-configuration
                             (enabled? #t)
                             (size 0)
                             (colour 'Pink)
@@ -819,8 +819,8 @@
                           (play-effect
                            (poe-item-filter-play-effect-configuration
                             (colour 'Yellow)))
-                          (mini-map-icon
-                           (poe-item-filter-mini-map-icon-configuration
+                          (minimap-icon
+                           (poe-item-filter-minimap-icon-configuration
                             (enabled? #t)
                             (size 0)
                             (colour 'Red)
@@ -857,8 +857,8 @@
                             (play-effect
                              (poe-item-filter-play-effect-configuration
                               (colour 'Grey)))
-                            (mini-map-icon
-                             (poe-item-filter-mini-map-icon-configuration
+                            (minimap-icon
+                             (poe-item-filter-minimap-icon-configuration
                               (enabled? #t)
                               (size 2)
                               (colour 'Grey)
@@ -880,8 +880,8 @@
                                  (alpha 255)))
                                (classes '("Skill Gems"
                                           "Support Gems"))
-                               (mini-map-icon
-                                (poe-item-filter-mini-map-icon-configuration
+                               (minimap-icon
+                                (poe-item-filter-minimap-icon-configuration
                                  (enabled? #t)
                                  (size 1)
                                  (colour 'White)
@@ -962,8 +962,8 @@
                       (poe-item-filter-play-alert-sound-configuration
                        (id 5)
                        (volume 300)))
-                     (mini-map-icon
-                      (poe-item-filter-mini-map-icon-configuration
+                     (minimap-icon
+                      (poe-item-filter-minimap-icon-configuration
                        (enabled? #t)
                        (size 1)
                        (colour 'Yellow)
