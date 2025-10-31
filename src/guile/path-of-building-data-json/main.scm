@@ -357,14 +357,15 @@
     "One Hand Swords"
     "Quivers"
     "Rune Daggers"
-    "Sceptres"
-    "Staves"
+    ;; "Sceptres"
+    ;; "Staves"
     "Thrusting One Hand Swords"
     "Two Hand Axes"
     "Two Hand Maces"
     "Two Hand Swords"
-    "Wands"
-    "Warstaves"))
+    ;; "Wands"
+    ;; "Warstaves"
+    ))
 
 (define (generate-filter)
   (define font-size 20)
@@ -374,7 +375,7 @@
        read-string)))
   (define sub-types
     '("Armour"
-      "Armour/Energy Shield"
+      ;; "Armour/Energy Shield"
       "Armour/Evasion"
       "Energy Shield"
       "Evasion"
@@ -947,34 +948,38 @@
                        (colour 'Yellow)
                        (shape 'UpsideDownHouse)))))
 
-                   (apply append
-                          (map (lambda (type)
-                                 (map (lambda (base-type)
-                                        (poe-item-filter-block-configuration
-                                         (commentary (format #f "Decrease font size for ~s ~s base items."
-                                                             type base-type))
-                                         (base-types
-                                          (sort (let ((items
-                                                       (filter (lambda (item)
-                                                                 (and=> (assoc-ref item "subType")
-                                                                        (lambda (sub-type)
-                                                                          (and (string= sub-type base-type)
-                                                                               (and=> (assoc-ref item "type")
-                                                                                      (lambda (t)
-                                                                                        (string= type t)))))))
-                                                               base-items)))
-                                                  (map (lambda (item)
-                                                         (string-replace-substring (first item)
-                                                                                   (format #f " (~a)" base-type)
-                                                                                   ""))
-                                                       items))
-                                                string<))
-                                         (set-font-size 20)))
-                                      sub-types))
-                               '("Body Armour"
-                                 "Boots"
-                                 "Gloves"
-                                 "Helmet")))
+                   (delete #f
+                           (apply append
+                                  (map (lambda (type)
+                                         (map (lambda (base-type)
+                                                (if (and (string= base-type "Energy Shield")
+                                                         (string= type "Body Armour"))
+                                                    #f
+                                                    (poe-item-filter-block-configuration
+                                                     (commentary (format #f "Decrease font size for ~s ~s base items."
+                                                                         type base-type))
+                                                     (base-types
+                                                      (sort (let ((items
+                                                                   (filter (lambda (item)
+                                                                             (and=> (assoc-ref item "subType")
+                                                                                    (lambda (sub-type)
+                                                                                      (and (string= sub-type base-type)
+                                                                                           (and=> (assoc-ref item "type")
+                                                                                                  (lambda (t)
+                                                                                                    (string= type t)))))))
+                                                                           base-items)))
+                                                              (map (lambda (item)
+                                                                     (string-replace-substring (first item)
+                                                                                               (format #f " (~a)" base-type)
+                                                                                               ""))
+                                                                   items))
+                                                            string<))
+                                                     (set-font-size 20))))
+                                              sub-types))
+                                       '("Body Armour"
+                                         "Boots"
+                                         "Gloves"
+                                         "Helmet"))))
 
                    (list (poe-item-filter-block-configuration
                           (commentary "Decrease font size for items with classes.")
