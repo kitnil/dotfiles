@@ -449,45 +449,6 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
-                          (commentary "Highlight high level gems.")
-                          (gem-level (poe-item-filter-conditional-value-configuration
-                                      (value 20)
-                                      (operator '>=)))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 255)
-                            (blue 255)
-                            (alpha 229)))
-                          (classes '("Skill Gems"
-                                     "Support Gems"))
-                          (mini-map-icon
-                           (poe-item-filter-mini-map-icon-configuration
-                            (enabled? #t)
-                            (size 0)
-                            (colour 'Red)
-                            (shape 'Star)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 6)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Red))))
-
-                         (poe-item-filter-block-configuration
                           (commentary "Highlight unique items.")
                           (rarity '(Unique))
                           (set-text-color
@@ -757,7 +718,49 @@
                             (alpha 255)))
                           (play-effect
                            (poe-item-filter-play-effect-configuration
-                            (colour 'Orange))))))))
+                            (colour 'Orange)))))
+
+                   (let ((gem (poe-item-filter-block-configuration
+                               (set-font-size 45)
+                               (set-text-color
+                                (poe-item-filter-color-configuration
+                                 (red 30)
+                                 (green 190)
+                                 (blue 190)
+                                 (alpha 255)))
+                               (set-border-color
+                                (poe-item-filter-color-configuration
+                                 (red 30)
+                                 (green 190)
+                                 (blue 190)
+                                 (alpha 255)))
+                               (classes '("Skill Gems"
+                                          "Support Gems"))
+                               (mini-map-icon
+                                (poe-item-filter-mini-map-icon-configuration
+                                 (enabled? #t)
+                                 (size 1)
+                                 (colour 'White)
+                                 (shape 'Triangle)))
+                               (play-alert-sound
+                                (poe-item-filter-play-alert-sound-configuration
+                                 (id 2)
+                                 (volume 300)))
+                               (play-effect
+                                (poe-item-filter-play-effect-configuration
+                                 (colour 'Grey))))))
+                     (list
+                      (poe-item-filter-block-configuration
+                       (inherit gem)
+                       (gem-level (poe-item-filter-conditional-value-configuration
+                                   (value 20)
+                                   (operator '>=))))
+
+                      (poe-item-filter-block-configuration
+                       (inherit gem)
+                       (quality (poe-item-filter-conditional-value-configuration
+                                 (value 1)
+                                 (operator '>=)))))))))
          poe-item-filter-configuration-fields)))
 
 (run-with-store (open-connection)
