@@ -798,7 +798,7 @@
                             (shape 'Circle))))
 
                          (poe-item-filter-block-configuration
-                          (base-types '("Maps"))
+                          (classes '("Maps"))
                           (set-font-size 45)
                           (set-text-color
                            (poe-item-filter-color-configuration
