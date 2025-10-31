@@ -280,6 +280,15 @@
   (quality
    (conditional-value (poe-item-filter-conditional-value-configuration))
    "")
+  (linked-sockets
+   (conditional-value (poe-item-filter-conditional-value-configuration))
+   "")
+  (sockets
+   (conditional-value (poe-item-filter-conditional-value-configuration))
+   "")
+  (socket-group
+   (conditional-value (poe-item-filter-conditional-value-configuration))
+   "")
   (gem-level
    (conditional-value (poe-item-filter-conditional-value-configuration))
    "")
