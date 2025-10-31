@@ -416,7 +416,8 @@
 
                          (poe-item-filter-block-configuration
                           (commentary "Stop apply rules to scrolls.")
-                          (base-types '("Scroll of Wisdom")))
+                          (base-types '("Portal Scroll"
+                                        "Scroll of Wisdom")))
 
                          (poe-item-filter-block-configuration
                           (commentary "Highlight unique items.")
