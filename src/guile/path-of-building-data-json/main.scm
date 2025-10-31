@@ -397,6 +397,7 @@
                           (commentary "Decrease font size for items with classes.")
                           (classes %weapon-classes)
                           (set-font-size 20))
+
                          (poe-item-filter-block-configuration
                           (commentary "Highlight border of best crafting bases.")
                           (item-level (poe-item-filter-conditional-value-configuration
@@ -408,6 +409,7 @@
                                              (blue 58)
                                              (alpha 255)))
                           (continue? #t))
+
                          (poe-item-filter-block-configuration
                           (commentary "Highlight 2500 or more gold.")
                           (base-types '("Gold"))
@@ -420,12 +422,15 @@
                           (stack-size (poe-item-filter-conditional-value-configuration
                                        (value 2500)
                                        (operator '>=))))
+
                          (poe-item-filter-block-configuration
                           (commentary "Stop apply rules to gold.")
                           (base-types '("Gold")))
+
                          (poe-item-filter-block-configuration
                           (commentary "Stop apply rules to scrolls.")
                           (base-types '("Scroll of Wisdom")))
+
                          (poe-item-filter-block-configuration
                           (commentary "Highlight not identified items.")
                           (identified? #f)
@@ -436,11 +441,13 @@
                                                  (blue 0)
                                                  (alpha 230)))
                           (continue? #t))
+
                          (poe-item-filter-block-configuration
                           (commentary "Decrease identified items font size.")
                           (identified? #t)
                           (set-font-size 20)
                           (continue? #t))
+
                          (poe-item-filter-block-configuration
                           (commentary "Highlight high level gems.")
                           (gem-level (poe-item-filter-conditional-value-configuration
@@ -479,6 +486,7 @@
                           (play-effect
                            (poe-item-filter-play-effect-configuration
                             (colour 'Red))))
+
                          (poe-item-filter-block-configuration
                           (commentary "Highlight unique items.")
                           (rarity '(Unique))
@@ -513,6 +521,7 @@
                           (play-effect
                            (poe-item-filter-play-effect-configuration
                             (colour 'Brown))))
+
                          (poe-item-filter-block-configuration
                           (commentary "Highlight high value currency.")
                           (base-types '("Albino Rhoa Feather"
@@ -565,6 +574,7 @@
                             (size 0)
                             (colour 'Red)
                             (shape 'Star))))
+
                          (poe-item-filter-block-configuration
                           (commentary "Highlight middle value currency.")
                           (base-types '("Abrasive Catalyst"
@@ -640,6 +650,7 @@
                             (size 2)
                             (colour 'White)
                             (shape 'Circle))))
+
                          (poe-item-filter-block-configuration
                           (base-types '("Divine Vessel"
                                         "Sacrifice at Dawn"
@@ -659,6 +670,7 @@
                             (green 120)
                             (blue 230)
                             (alpha 240))))
+
                          (poe-item-filter-block-configuration
                           (commentary "Highlight oils.")
                           (base-types '("Oil"))
@@ -694,6 +706,7 @@
                             (size 0)
                             (colour 'Pink)
                             (shape 'Circle))))
+
                          (poe-item-filter-block-configuration
                           (commentary "Highlight Rogue markers.")
                           (base-types '("Rogue's Marker"))
@@ -719,6 +732,7 @@
                           (play-effect
                            (poe-item-filter-play-effect-configuration
                             (colour 'Orange))))
+
                          (poe-item-filter-block-configuration
                           (commentary "Highlight Idols.")
                           (base-types '("Idols"))
