@@ -727,7 +727,23 @@
                             (enabled? #t)
                             (size 0)
                             (colour 'Pink)
-                            (shape 'Circle)))))
+                            (shape 'Circle))))
+
+                         (poe-item-filter-block-configuration
+                          (classes '("Utility Flasks"))
+                          (set-font-size 40)
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 0)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 25)
+                            (green 100)
+                            (blue 75)
+                            (alpha 255)))))
 
                    (let ((gem (poe-item-filter-block-configuration
                                (set-font-size 45)
