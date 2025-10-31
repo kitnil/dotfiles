@@ -708,7 +708,7 @@
                            (poe-item-filter-minimap-icon-configuration
                             (enabled? #t)
                             (size 0)
-                            (colour 'Pink)
+                            (colour 'Yellow)
                             (shape 'Circle))))
 
                          (poe-item-filter-block-configuration
