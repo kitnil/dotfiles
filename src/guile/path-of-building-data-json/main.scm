@@ -470,7 +470,6 @@
                                         "Tainted Divine Teardrop"
                                         "Valdo's Puzzle Box"
                                         "Warlord's Exalted Orb"))
-                          (set-font-size 45)
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 255)
@@ -546,7 +545,6 @@
                                         "Veiled Scarab"
                                         "Vivid Crystallised Lifeforce"
                                         "Wild Crystallised Lifeforce"))
-                          (set-font-size 45)
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 0)
@@ -585,7 +583,6 @@
                                         "Sacrifice at Dusk"
                                         "Sacrifice at Midnight"
                                         "Sacrifice at Noon"))
-                          (set-font-size 45)
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 178)
@@ -602,7 +599,6 @@
                          (poe-item-filter-block-configuration
                           (commentary "Highlight oils.")
                           (base-types '("Oil"))
-                          (set-font-size 45)
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 255)
@@ -638,7 +634,6 @@
                          (poe-item-filter-block-configuration
                           (commentary "Highlight Idols.")
                           (classes '("Idols"))
-                          (set-font-size 45)
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 255)
@@ -672,7 +667,6 @@
 
                          (poe-item-filter-block-configuration
                           (classes '("Utility Flasks"))
-                          (set-font-size 40)
                           (set-border-color
                            (poe-item-filter-color-configuration
                             (red 0)
@@ -688,7 +682,6 @@
 
                          (poe-item-filter-block-configuration
                           (classes '("Incursion Items" "Labyrinth Items"))
-                          (set-font-size 45)
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 74)
@@ -723,7 +716,6 @@
 
                          (poe-item-filter-block-configuration
                           (base-types '("Scarab"))
-                          (set-font-size 45)
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 255)
@@ -758,7 +750,6 @@
 
                          (poe-item-filter-block-configuration
                           (classes '("Maps"))
-                          (set-font-size 45)
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 0)
@@ -786,7 +777,6 @@
                             (shape 'Square)))))
 
                    (let ((jewel (poe-item-filter-block-configuration
-                                 (set-font-size 40)
                                  (set-text-color
                                   (poe-item-filter-color-configuration
                                    (red 0)
@@ -824,7 +814,6 @@
                               (shape 'Diamond))))))
 
                    (let ((gem (poe-item-filter-block-configuration
-                               (set-font-size 45)
                                (set-text-color
                                 (poe-item-filter-color-configuration
                                  (red 30)
@@ -869,7 +858,6 @@
                     (poe-item-filter-block-configuration
                      (commentary "Highlight Rogue markers.")
                      (base-types '("Rogue's Marker"))
-                     (set-font-size 45)
                      (set-text-color
                       (poe-item-filter-color-configuration
                        (red 255)
@@ -895,7 +883,6 @@
                     (poe-item-filter-block-configuration
                      (commentary "Highlight Blueprints and Contracts and Sanctum.")
                      (classes '("Blueprints" "Contracts" "Sanctum Research"))
-                     (set-font-size 45)
                      (set-text-color
                       (poe-item-filter-color-configuration
                        (red 255)
