@@ -655,7 +655,42 @@
                             (red 175)
                             (green 120)
                             (blue 230)
-                            (alpha 240))))))))
+                            (alpha 240))))
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight oils.")
+                          (base-types '("Oil"))
+                          (set-font-size 45)
+                          (set-text-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 0)
+                            (blue 255)
+                            (alpha 255)))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 0)
+                            (blue 255)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 100)
+                            (green 0)
+                            (blue 100)
+                            (alpha 255)))
+                          (play-alert-sound
+                           (poe-item-filter-play-alert-sound-configuration
+                            (id 3)
+                            (volume 300)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'Pink)))
+                          (mini-map-icon
+                           (poe-item-filter-mini-map-icon-configuration
+                            (enabled? #t)
+                            (size 0)
+                            (colour 'Pink)
+                            (shape 'Circle))))))))
          poe-item-filter-configuration-fields)))
 
 (run-with-store (open-connection)
