@@ -64,7 +64,9 @@
 (define (serialize-base-types field-name value)
   #~(if (null? '#$value)
         ""
-        (format #f "\tBaseType == ~{~s ~}~%" '#$value)))
+        (if (> (length '#$value) 1)
+            (format #f "\tBaseType == ~{~s ~}~%" '#$value)
+            (format #f "\tBaseType ~{~s ~}~%" '#$value))))
 
 (define classes?
   list-of-strings?)
@@ -596,65 +598,65 @@
                             (blue 230)
                             (alpha 240))))
 
-                         ;; (poe-item-filter-block-configuration
-                         ;;  (commentary "Highlight oils.")
-                         ;;  (base-types '("Oil"))
-                         ;;  (set-text-color
-                         ;;   (poe-item-filter-color-configuration
-                         ;;    (red 255)
-                         ;;    (green 0)
-                         ;;    (blue 255)
-                         ;;    (alpha 255)))
-                         ;;  (set-border-color
-                         ;;   (poe-item-filter-color-configuration
-                         ;;    (red 255)
-                         ;;    (green 0)
-                         ;;    (blue 255)
-                         ;;    (alpha 255)))
-                         ;;  (set-background-color
-                         ;;   (poe-item-filter-color-configuration
-                         ;;    (red 100)
-                         ;;    (green 0)
-                         ;;    (blue 100)
-                         ;;    (alpha 255)))
-                         ;;  (play-alert-sound
-                         ;;   (poe-item-filter-play-alert-sound-configuration
-                         ;;    (id 3)
-                         ;;    (volume 300)))
-                         ;;  (play-effect
-                         ;;   (poe-item-filter-play-effect-configuration
-                         ;;    (colour 'Pink)))
-                         ;;  (minimap-icon
-                         ;;   (poe-item-filter-minimap-icon-configuration
-                         ;;    (enabled? #t)
-                         ;;    (size 0)
-                         ;;    (colour 'Pink)
-                         ;;    (shape 'Circle))))
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight oils.")
+                          (base-types '("Oil"))
+                          (set-text-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 0)
+                            (blue 255)
+                            (alpha 255)))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 0)
+                            (blue 255)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 100)
+                            (green 0)
+                            (blue 100)
+                            (alpha 255)))
+                          (play-alert-sound
+                           (poe-item-filter-play-alert-sound-configuration
+                            (id 3)
+                            (volume 300)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'Pink)))
+                          (minimap-icon
+                           (poe-item-filter-minimap-icon-configuration
+                            (enabled? #t)
+                            (size 0)
+                            (colour 'Pink)
+                            (shape 'Circle))))
 
-                         ;; (poe-item-filter-block-configuration
-                         ;;  (commentary "Highlight Idols.")
-                         ;;  (classes '("Idols"))
-                         ;;  (set-text-color
-                         ;;   (poe-item-filter-color-configuration
-                         ;;    (red 255)
-                         ;;    (green 178)
-                         ;;    (blue 135)
-                         ;;    (alpha 255)))
-                         ;;  (set-border-color
-                         ;;   (poe-item-filter-color-configuration
-                         ;;    (red 255)
-                         ;;    (green 178)
-                         ;;    (blue 135)
-                         ;;    (alpha 255)))
-                         ;;  (set-background-color
-                         ;;   (poe-item-filter-color-configuration
-                         ;;    (red 20)
-                         ;;    (green 20)
-                         ;;    (blue 0)
-                         ;;    (alpha 255)))
-                         ;;  (play-effect
-                         ;;   (poe-item-filter-play-effect-configuration
-                         ;;    (colour 'Orange))))
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight Idols.")
+                          (classes '("Idols"))
+                          (set-text-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 178)
+                            (blue 135)
+                            (alpha 255)))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 178)
+                            (blue 135)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 20)
+                            (green 20)
+                            (blue 0)
+                            (alpha 255)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'Orange))))
 
                          (poe-item-filter-block-configuration
                           (classes '("Currency"))
