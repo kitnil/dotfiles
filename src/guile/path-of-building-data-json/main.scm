@@ -752,7 +752,31 @@
                             (enabled? #t)
                             (size 0)
                             (colour 'Green)
-                            (shape 'Pentagon)))))
+                            (shape 'Pentagon))))
+
+                         (poe-item-filter-block-configuration
+                          (base-types '("Cobalt Jewel"
+                                        "Crimson Jewel"
+                                        "Viridian Jewel"))
+                          (set-font-size 40)
+                          (set-text-color
+                           (poe-item-filter-color-configuration
+                            (red 0)
+                            (green 75)
+                            (blue 250)
+                            (alpha 255)))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 0)
+                            (green 75)
+                            (blue 250)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 0)
+                            (green 75)
+                            (blue 250)
+                            (alpha 255)))))
 
                    (let ((gem (poe-item-filter-block-configuration
                                (set-font-size 45)
