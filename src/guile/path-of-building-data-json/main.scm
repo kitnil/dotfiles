@@ -718,7 +718,16 @@
                             (alpha 255)))
                           (play-effect
                            (poe-item-filter-play-effect-configuration
-                            (colour 'Orange)))))
+                            (colour 'Orange))))
+
+                         (poe-item-filter-block-configuration
+                          (classes '("Currency"))
+                          (mini-map-icon
+                           (poe-item-filter-mini-map-icon-configuration
+                            (enabled? #t)
+                            (size 0)
+                            (colour 'Pink)
+                            (shape 'Circle)))))
 
                    (let ((gem (poe-item-filter-block-configuration
                                (set-font-size 45)
