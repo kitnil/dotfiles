@@ -678,7 +678,7 @@
 
                          (poe-item-filter-block-configuration
                           (commentary "Highlight Idols.")
-                          (base-types '("Idols"))
+                          (classes '("Idols"))
                           (set-font-size 45)
                           (set-text-color
                            (poe-item-filter-color-configuration
