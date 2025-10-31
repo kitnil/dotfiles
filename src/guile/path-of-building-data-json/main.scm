@@ -462,8 +462,7 @@
                             (blue 255)
                             (alpha 229)))
                           (classes '("Skill Gems"
-                                     "Uncut Skill Gems"
-                                     "Uncut Spirit Gems"))
+                                     "Support Gems"))
                           (mini-map-icon
                            (poe-item-filter-mini-map-icon-configuration
                             (enabled? #t)
