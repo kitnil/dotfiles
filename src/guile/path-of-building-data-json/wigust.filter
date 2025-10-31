@@ -1,15 +1,88 @@
-
-# Armour/Evasion
+# Decrease font size for "Armour" base items.
 Show
-	BaseType ==  "Atonement Mask" "Baroque Round Shield" "Battered Helm" "Battle Lamellar" "Bronzescale Boots" "Bronzescale Gauntlets" "Cardinal Round Shield" "Chimerascale Boots" "Chimerascale Gauntlets" "Commander's Brigandine" "Conquest Helmet" "Conquest Lamellar" "Crimson Round Shield" "Desert Brigandine" "Dragonscale Boots" "Dragonscale Doublet" "Dragonscale Gauntlets" "Elegant Round Shield" "Fencer Helm" "Field Lamellar" "Fir Round Shield" "Fishscale Gauntlets" "Fluted Bascinet" "Full Dragonscale" "Full Scale Armour" "Full Wyrmscale" "Full Wyvernscale" "General's Brigandine" "Gilded Sallet" "Haunted Bascinet" "Hussar Brigandine" "Hydrascale Boots" "Hydrascale Gauntlets" "Infantry Brigandine" "Ironscale Boots" "Ironscale Gauntlets" "Knight Helm" "Lacquered Helmet" "Leatherscale Boots" "Light Brigandine" "Maple Round Shield" "Marshall's Brigandine" "Nightmare Bascinet" "Penitent Mask" "Pig-Faced Bascinet" "Rotted Round Shield" "Sallet" "Scale Doublet" "Scale Vest" "Scarlet Round Shield" "Secutor Helm" "Serpentscale Boots" "Serpentscale Gauntlets" "Soldier's Brigandine" "Sorrow Mask" "Spiked Round Shield" "Spiny Round Shield" "Splendid Round Shield" "Steelscale Boots" "Steelscale Gauntlets" "Studded Round Shield" "Teak Round Shield" "Triumphant Lamellar" "Two-Toned Boots" "Visored Sallet" "Wyrmscale Boots" "Wyrmscale Doublet" "Wyrmscale Gauntlets" "Wyvernscale Boots" "Wyvernscale Gauntlets"
+	BaseType == "Ancient Gauntlets" "Ancient Greaves" "Antique Gauntlets" "Antique Greaves" "Arena Plate" "Astral Plate" "Barbute Helmet" "Basemetal Treads" "Battle Plate" "Brimstone Treads" "Bronze Gauntlets" "Bronze Plate" "Bronze Tower Shield" "Buckskin Tower Shield" "Cedar Tower Shield" "Chestplate" "Close Helmet" "Colossal Tower Shield" "Colosseum Plate" "Cone Helmet" "Conqueror's Helmet" "Copper Plate" "Copper Tower Shield" "Corroded Tower Shield" "Crested Tower Shield" "Crusader Plate" "Darksteel Treads" "Ebony Tower Shield" "Eternal Burgonet" "Exothermic Tower Shield" "Ezomyte Burgonet" "Ezomyte Tower Shield" "Full Plate" "General's Helmet" "Giantslayer Helmet" "Girded Tower Shield" "Gladiator Helmet" "Gladiator Plate" "Glorious Plate" "Golden Plate" "Goliath Gauntlets" "Goliath Greaves" "Guarding Gauntlets" "Heat-attuned Tower Shield" "Iron Gauntlets" "Iron Greaves" "Iron Hat" "Legion Plate" "Leviathan Gauntlets" "Leviathan Greaves" "Lordly Plate" "Magmatic Tower Shield" "Mahogany Tower Shield" "Majestic Plate" "Painted Tower Shield" "Pinnacle Tower Shield" "Plate Vest" "Plated Gauntlets" "Plated Greaves" "Precursor Gauntlets" "Precursor Greaves" "Preserving Gauntlets" "Rawhide Tower Shield" "Reaver Helmet" "Reinforced Greaves" "Reinforced Tower Shield" "Royal Burgonet" "Royal Plate" "Samnite Helmet" "Shagreen Tower Shield" "Siege Helmet" "Spiked Gloves" "Splintered Tower Shield" "Steel Gauntlets" "Steel Greaves" "Sun Plate" "Thwarting Gauntlets" "Titan Gauntlets" "Titan Greaves" "Titan Plate" "Vaal Gauntlets" "Vaal Greaves" "War Plate" 
 	SetFontSize 20
 
-# Evasion
+# Decrease font size for "Armour/Energy Shield" base items.
 Show
-	BaseType ==  "Apprentice Gloves" "Assassin's Garb" "Astral Leather" "Battle Buckler" "Buckskin Tunic" "Cloudwhisper Boots" "Cold-attuned Buckler" "Coronal Leather" "Corrugated Buckler" "Crusader Buckler" "Cutthroat's Garb" "Deerskin Boots" "Deerskin Gloves" "Destiny Leather" "Dire Pelt" "Eelskin Boots" "Eelskin Gloves" "Eelskin Tunic" "Enameled Buckler" "Endothermic Buckler" "Exquisite Leather" "Frontier Leather" "Full Leather" "Gilded Buckler" "Glorious Leather" "Goathide Boots" "Goathide Buckler" "Goathide Gloves" "Golden Buckler" "Gripped Gloves" "Grizzly Pelt" "Hammered Buckler" "Harpyskin Boots" "Harpyskin Gloves" "Hunter Hood" "Imperial Buckler" "Ironwood Buckler" "Lacquered Buckler" "Leather Cap" "Leather Hood" "Lion Pelt" "Majestic Pelt" "Noble Tricorne" "Nubuck Boots" "Nubuck Gloves" "Oak Buckler" "Painted Buckler" "Pine Buckler" "Polar Buckler" "Rawhide Boots" "Rawhide Gloves" "Shabby Jerkin" "Shagreen Boots" "Shagreen Gloves" "Sharkskin Boots" "Sharkskin Gloves" "Sharkskin Tunic" "Silken Hood" "Sinner Tricorne" "Slink Boots" "Slink Gloves" "Stealth Boots" "Stealth Gloves" "Stormrider Boots" "Strapped Leather" "Sun Leather" "Supreme Leather" "Syndicate's Garb" "Thief's Garb" "Tinker Gloves" "Trapsetter Gloves" "Tricorne" "Ursine Pelt" "Vaal Buckler" "Velour Boots" "Velour Gloves" "War Buckler" "Wild Leather" "Windbreak Boots" "Wolf Pelt" "Zodiac Leather"
+	BaseType == "Angelic Kite Shield" "Apothecary's Gloves" "Archdemon Crown" "Archon Kite Shield" "Aventail Helmet" "Bone Helmet" "Branded Kite Shield" "Ceremonial Kite Shield" "Chain Boots" "Chain Gloves" "Chain Hauberk" "Chainmail Doublet" "Chainmail Tunic" "Chainmail Vest" "Champion Kite Shield" "Conquest Chainmail" "Crusader Boots" "Crusader Chainmail" "Crusader Gloves" "Crusader Helmet" "Demon Crown" "Devout Chainmail" "Divine Crown" "Elegant Ringmail" "Etched Kite Shield" "Faithful Helmet" "Full Chainmail" "Full Ringmail" "Grand Ringmail" "Great Crown" "Great Helmet" "Holy Chainmail" "Imp Crown" "Laminated Kite Shield" "Latticed Ringmail" "Layered Kite Shield" "Legion Boots" "Legion Gloves" "Linden Kite Shield" "Loricated Ringmail" "Magistrate Crown" "Martyr Boots" "Martyr Gloves" "Mesh Boots" "Mesh Gloves" "Mosaic Kite Shield" "Ornate Ringmail" "Paladin Boots" "Paladin Crown" "Paladin Gloves" "Paladin's Hauberk" "Plank Kite Shield" "Praetor Crown" "Prophet Crown" "Reinforced Kite Shield" "Ringmail Boots" "Ringmail Coat" "Ringmail Gloves" "Riveted Boots" "Riveted Gloves" "Rusted Coif" "Sacred Chainmail" "Saint's Hauberk" "Saintly Chainmail" "Soldier Boots" "Soldier Gloves" "Soldier Helmet" "Steel Kite Shield" "Two-Toned Boots" "Zealot Boots" "Zealot Gloves" "Zealot Helmet" 
 	SetFontSize 20
 
+# Decrease font size for "Armour/Evasion" base items.
+Show
+	BaseType == "Atonement Mask" "Baroque Round Shield" "Battered Helm" "Battle Lamellar" "Bronzescale Boots" "Bronzescale Gauntlets" "Cardinal Round Shield" "Chimerascale Boots" "Chimerascale Gauntlets" "Commander's Brigandine" "Conquest Helmet" "Conquest Lamellar" "Crimson Round Shield" "Desert Brigandine" "Dragonscale Boots" "Dragonscale Doublet" "Dragonscale Gauntlets" "Elegant Round Shield" "Fencer Helm" "Field Lamellar" "Fir Round Shield" "Fishscale Gauntlets" "Fluted Bascinet" "Full Dragonscale" "Full Scale Armour" "Full Wyrmscale" "Full Wyvernscale" "General's Brigandine" "Gilded Sallet" "Haunted Bascinet" "Hussar Brigandine" "Hydrascale Boots" "Hydrascale Gauntlets" "Infantry Brigandine" "Ironscale Boots" "Ironscale Gauntlets" "Knight Helm" "Lacquered Helmet" "Leatherscale Boots" "Light Brigandine" "Maple Round Shield" "Marshall's Brigandine" "Nightmare Bascinet" "Penitent Mask" "Pig-Faced Bascinet" "Rotted Round Shield" "Sallet" "Scale Doublet" "Scale Vest" "Scarlet Round Shield" "Secutor Helm" "Serpentscale Boots" "Serpentscale Gauntlets" "Soldier's Brigandine" "Sorrow Mask" "Spiked Round Shield" "Spiny Round Shield" "Splendid Round Shield" "Steelscale Boots" "Steelscale Gauntlets" "Studded Round Shield" "Teak Round Shield" "Triumphant Lamellar" "Two-Toned Boots" "Visored Sallet" "Wyrmscale Boots" "Wyrmscale Doublet" "Wyrmscale Gauntlets" "Wyvernscale Boots" "Wyvernscale Gauntlets" 
+	SetFontSize 20
+
+# Decrease font size for "Energy Shield" base items.
+Show
+	BaseType == "Aetherwind Gloves" "Ancient Spirit Shield" "Arcane Vestment" "Arcanist Gloves" "Arcanist Slippers" "Bone Circlet" "Bone Spirit Shield" "Brass Spirit Shield" "Cabalist Regalia" "Chiming Spirit Shield" "Conjurer Boots" "Conjurer Gloves" "Conjurer's Vestment" "Destroyer Regalia" "Dreamquest Slippers" "Duskwalk Slippers" "Embroidered Gloves" "Exhausting Spirit Shield" "Fingerless Silk Gloves" "Fossilised Spirit Shield" "Harmonic Spirit Shield" "Hubris Circlet" "Iron Circlet" "Ivory Spirit Shield" "Jingling Spirit Shield" "Lacewood Spirit Shield" "Leyline Gloves" "Lich's Circlet" "Lunaris Circlet" "Mage's Vestment" "Mind Cage" "Moonlit Circlet" "Necromancer Circlet" "Necromancer Silks" "Nexus Gloves" "Nightweave Robe" "Nightwind Slippers" "Occultist's Vestment" "Sage Gloves" "Sage Slippers" "Sage's Robe" "Samite Gloves" "Samite Slippers" "Satin Gloves" "Satin Slippers" "Savant's Robe" "Scholar Boots" "Scholar's Robe" "Silk Gloves" "Silk Robe" "Silk Slippers" "Silken Garb" "Silken Vest" "Silken Wrap" "Simple Robe" "Solaris Circlet" "Sorcerer Boots" "Sorcerer Gloves" "Spidersilk Robe" "Steel Circlet" "Subsuming Spirit Shield" "Sunfire Circlet" "Tarnished Spirit Shield" "Thorium Spirit Shield" "Titanium Spirit Shield" "Torture Cage" "Transfer-attuned Spirit Shield" "Tribal Circlet" "Twig Spirit Shield" "Twilight Regalia" "Vaal Regalia" "Vaal Spirit Shield" "Velvet Gloves" "Velvet Slippers" "Vine Circlet" "Walnut Spirit Shield" "Warlock Boots" "Warlock Gloves" "Widowsilk Robe" "Wool Gloves" "Wool Shoes" "Yew Spirit Shield" 
+	SetFontSize 20
+
+# Decrease font size for "Evasion" base items.
+Show
+	BaseType == "Apprentice Gloves" "Assassin's Garb" "Astral Leather" "Battle Buckler" "Buckskin Tunic" "Cloudwhisper Boots" "Cold-attuned Buckler" "Coronal Leather" "Corrugated Buckler" "Crusader Buckler" "Cutthroat's Garb" "Deerskin Boots" "Deerskin Gloves" "Destiny Leather" "Dire Pelt" "Eelskin Boots" "Eelskin Gloves" "Eelskin Tunic" "Enameled Buckler" "Endothermic Buckler" "Exquisite Leather" "Frontier Leather" "Full Leather" "Gilded Buckler" "Glorious Leather" "Goathide Boots" "Goathide Buckler" "Goathide Gloves" "Golden Buckler" "Gripped Gloves" "Grizzly Pelt" "Hammered Buckler" "Harpyskin Boots" "Harpyskin Gloves" "Hunter Hood" "Imperial Buckler" "Ironwood Buckler" "Lacquered Buckler" "Leather Cap" "Leather Hood" "Lion Pelt" "Majestic Pelt" "Noble Tricorne" "Nubuck Boots" "Nubuck Gloves" "Oak Buckler" "Painted Buckler" "Pine Buckler" "Polar Buckler" "Rawhide Boots" "Rawhide Gloves" "Shabby Jerkin" "Shagreen Boots" "Shagreen Gloves" "Sharkskin Boots" "Sharkskin Gloves" "Sharkskin Tunic" "Silken Hood" "Sinner Tricorne" "Slink Boots" "Slink Gloves" "Stealth Boots" "Stealth Gloves" "Stormrider Boots" "Strapped Leather" "Sun Leather" "Supreme Leather" "Syndicate's Garb" "Thief's Garb" "Tinker Gloves" "Trapsetter Gloves" "Tricorne" "Ursine Pelt" "Vaal Buckler" "Velour Boots" "Velour Gloves" "War Buckler" "Wild Leather" "Windbreak Boots" "Wolf Pelt" "Zodiac Leather" 
+	SetFontSize 20
+
+# Decrease font size for "Evasion/Energy Shield" base items.
+Show
+	BaseType == "Alder Spiked Shield" "Alloyed Spiked Shield" "Ambush Boots" "Ambush Mitts" "Ancient Mask" "Assassin's Boots" "Assassin's Mitts" "Blizzard Crown" "Blood Raiment" "Bone Armour" "Burnished Spiked Shield" "Callous Mask" "Carnal Armour" "Carnal Boots" "Carnal Mitts" "Clasped Boots" "Clasped Mitts" "Compound Spiked Shield" "Crimson Raiment" "Crypt Armour" "Deicide Mask" "Driftwood Spiked Shield" "Ezomyte Spiked Shield" "Festival Mask" "Fugitive Boots" "Gale Crown" "Golden Mask" "Harlequin Mask" "Infiltrator Boots" "Infiltrator Mitts" "Iron Mask" "Jester Mask" "Lacquered Garb" "Mirrored Spiked Shield" "Murder Boots" "Murder Mitts" "Necrotic Armour" "Oiled Coat" "Oiled Vest" "Ornate Spiked Shield" "Padded Jacket" "Padded Vest" "Phantom Boots" "Phantom Mitts" "Plague Mask" "Polished Spiked Shield" "Quilted Jacket" "Raven Mask" "Redwood Spiked Shield" "Regicide Mask" "Sadist Garb" "Sanguine Raiment" "Scare Mask" "Scarlet Raiment" "Sentinel Jacket" "Shackled Boots" "Sleek Coat" "Sovereign Spiked Shield" "Spiked Bundle" "Strapped Boots" "Strapped Mitts" "Supreme Spiked Shield" "Torturer Garb" "Torturer's Mask" "Trapper Boots" "Trapper Mitts" "Two-Toned Boots" "Vaal Mask" "Varnished Coat" "Waxed Garb" "Winter Crown" "Wrapped Boots" "Wrapped Mitts" 
+	SetFontSize 20
+
+# Decrease font size for items with classes.
+Show
+	Classes == "Bows" "Claws" "Corpses" "Daggers" "One Hand Axes" "One Hand Maces" "One Hand Swords" "Quivers" "Rune Daggers" "Sceptres" "Staves" "Thrusting One Hand Swords" "Two Hand Axes" "Two Hand Maces" "Two Hand Swords" "Wands" "Warstaves" 
+	SetFontSize 20
+
+# Highlight border of best crafting bases.
 Show
 	ItemLevel >= 82
 	SetBorderColor 74 230 58 255
 	Continue
+
+# Highlight 2500 or more gold.
+Show
+	StackSize >= 2500
+	BaseType == "Gold" 
+	MiniMapIcon 1 Yellow Cross
+
+# Stop apply rules to gold.
+Show
+	BaseType == "Gold" 
+
+# Stop apply rules to scrolls.
+Show
+	BaseType == "Scroll of Wisdom" 
+
+# Highlight not identified items.
+Show
+	SetBackgroundColor 86 0 0 230
+	Rarity Magic Rare Unique
+	Identified False
+	Continue
+
+# Decrease identified items font size.
+Show
+	SetFontSize 20
+	Identified True
+	Continue
+
+# Highlight high level gems.
+Show
+	GemLevel >= 20
+	Classes == "Skill Gems" "Uncut Skill Gems" "Uncut Spirit Gems" 
+	MiniMapIcon 0 Red Star
+	SetBorderColor 255 0 0 255
+	SetBackgroundColor 255 255 255 229
+	SetTextColor 255 0 0 255
+	PlayAlertSound 6 300
+	PlayEffect Red
+
+# Highlight unique items.
+Show
+	MiniMapIcon 1 Brown Star
+	SetBorderColor 188 96 37 255
+	SetBackgroundColor 53 13 13 229
+	SetTextColor 188 96 37 255
+	Rarity Unique
+	PlayAlertSound 3 300
+	PlayEffect Brown
