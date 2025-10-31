@@ -86,3 +86,13 @@ Show
 	Rarity Unique
 	PlayAlertSound 3 300
 	PlayEffect Brown
+
+# Highlight high value currency.
+Show
+	MiniMapIcon 0 Red Star
+	SetFontSize 45
+	SetBorderColor 255 0 0 255
+	SetBackgroundColor 255 255 255 255
+	SetTextColor 255 0 0 255
+	PlayAlertSound 6 300
+	PlayEffect Red

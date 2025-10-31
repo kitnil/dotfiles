@@ -510,7 +510,59 @@
                             (volume 300)))
                           (play-effect
                            (poe-item-filter-play-effect-configuration
-                            (colour 'Brown))))))))
+                            (colour 'Brown))))
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight high value currency.")
+                          (base-types '("Albino Rhoa Feather"
+                                        "Awakener's Orb"
+                                        "Blessing of Chayula"
+                                        "Blessing of Xoph"
+                                        "Crusader's Exalted Orb"
+                                        "Divine Orb"
+                                        "Eternal Orb"
+                                        "Fracturing Orb"
+                                        "Hinekora's Lock"
+                                        "Hunter's Exalted Orb"
+                                        "Mirror of Kalandra"
+                                        "Mirror Shard"
+                                        "Orb of Dominance"
+                                        "Redeemer's Exalted Orb"
+                                        "Reflecting Mist"
+                                        "Tainted Divine Teardrop"
+                                        "Valdo's Puzzle Box"
+                                        "Warlord's Exalted Orb"))
+                          (set-font-size 45)
+                          (set-text-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 255)
+                            (blue 255)
+                            (alpha 255)))
+                          (play-alert-sound
+                           (poe-item-filter-play-alert-sound-configuration
+                            (id 6)
+                            (volume 300)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'Red)))
+                          (mini-map-icon
+                           (poe-item-filter-mini-map-icon-configuration
+                            (enabled? #t)
+                            (size 0)
+                            (colour 'Red)
+                            (shape 'Star))))))))
          poe-item-filter-configuration-fields)))
 
 (run-with-store (open-connection)
