@@ -72,8 +72,7 @@
 (define (serialize-classes field-name value)
   #~(if (null? '#$value)
         ""
-        (format #f "\t~a == ~{~s ~}~%"
-                #$(uglify-field-name field-name)
+        (format #f "\tClass == ~{~s ~}~%"
                 '#$value)))
 
 (define commentary? string?)
