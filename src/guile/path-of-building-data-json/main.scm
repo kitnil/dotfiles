@@ -755,30 +755,6 @@
                             (shape 'Pentagon))))
 
                          (poe-item-filter-block-configuration
-                          (base-types '("Cobalt Jewel"
-                                        "Crimson Jewel"
-                                        "Viridian Jewel"))
-                          (set-font-size 40)
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 75)
-                            (blue 250)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 75)
-                            (blue 250)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 75)
-                            (blue 250)
-                            (alpha 255))))
-
-                         (poe-item-filter-block-configuration
                           (base-types '("Scarab"))
                           (set-font-size 45)
                           (set-text-color
@@ -841,6 +817,44 @@
                             (size 0)
                             (colour 'Red)
                             (shape 'Square)))))
+
+                   (let ((jewel (poe-item-filter-block-configuration
+                                 (set-font-size 40)
+                                 (set-text-color
+                                  (poe-item-filter-color-configuration
+                                   (red 0)
+                                   (green 75)
+                                   (blue 250)
+                                   (alpha 255)))
+                                 (set-border-color
+                                  (poe-item-filter-color-configuration
+                                   (red 0)
+                                   (green 75)
+                                   (blue 250)
+                                   (alpha 255)))
+                                 (set-background-color
+                                  (poe-item-filter-color-configuration
+                                   (red 0)
+                                   (green 75)
+                                   (blue 250)
+                                   (alpha 255))))))
+                     (list (poe-item-filter-block-configuration
+                            (inherit jewel)
+                            (base-types '("Cobalt Jewel"
+                                          "Crimson Jewel"
+                                          "Viridian Jewel")))
+                           (poe-item-filter-block-configuration
+                            (inherit jewel)
+                            (classes '("Abyss Jewels"))
+                            (play-effect
+                             (poe-item-filter-play-effect-configuration
+                              (colour 'Grey)))
+                            (mini-map-icon
+                             (poe-item-filter-mini-map-icon-configuration
+                              (enabled? #t)
+                              (size 2)
+                              (colour 'Grey)
+                              (shape 'Diamond))))))
 
                    (let ((gem (poe-item-filter-block-configuration
                                (set-font-size 45)
