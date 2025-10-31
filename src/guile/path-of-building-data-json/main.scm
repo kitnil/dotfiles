@@ -811,7 +811,36 @@
                             (enabled? #t)
                             (size 0)
                             (colour 'Pink)
-                            (shape 'Circle)))))
+                            (shape 'Circle))))
+
+                         (poe-item-filter-block-configuration
+                          (base-types '("Maps"))
+                          (set-font-size 45)
+                          (set-text-color
+                           (poe-item-filter-color-configuration
+                            (red 0)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 235)
+                            (green 235)
+                            (blue 235)
+                            (alpha 255)))
+                          (play-alert-sound
+                           (poe-item-filter-play-alert-sound-configuration
+                            (id 5)
+                            (volume 300)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'Yellow)))
+                          (mini-map-icon
+                           (poe-item-filter-mini-map-icon-configuration
+                            (enabled? #t)
+                            (size 0)
+                            (colour 'Red)
+                            (shape 'Square)))))
 
                    (let ((gem (poe-item-filter-block-configuration
                                (set-font-size 45)
