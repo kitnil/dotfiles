@@ -428,9 +428,9 @@
 
                          (poe-item-filter-block-configuration
                           (commentary "Highlight sockets vendor recipe.")
-                          (sockets (poe-item-filter-conditional-value-configuration
-                                    (value '3RGB)
-                                    (operator '>=)))
+                          (socket-group (poe-item-filter-conditional-value-configuration
+                                         (value '3RGB)
+                                         (operator '>=)))
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 30)
