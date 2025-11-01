@@ -16,7 +16,35 @@ Show
 
 # Stop apply rules to scrolls.
 Show
-	BaseType "Scroll of Wisdom" 
+	BaseType == "Portal Scroll" "Scroll of Wisdom" 
+
+# Highlight sockets vendor recipe.
+Show
+	SocketGroup >= 3RGB
+	MinimapIcon 1 White Triangle
+	SetBorderColor 30 190 190 255
+	SetTextColor 30 190 190 255
+	PlayAlertSound 2 300
+	PlayEffect Grey
+
+# Highlight 6 sockets vendor recipe.
+Show
+	Sockets = 6
+	MinimapIcon 1 White Triangle
+	SetBorderColor 30 190 190 255
+	SetTextColor 30 190 190 255
+	PlayAlertSound 2 300
+	PlayEffect Grey
+
+# Highlight 6 linked sockets.
+Show
+	LinkedSockets = 6
+	MinimapIcon 0 Red Star
+	SetBorderColor 255 0 0 255
+	SetBackgroundColor 255 255 255 255
+	SetTextColor 255 0 0 255
+	PlayAlertSound 6 300
+	PlayEffect Red
 
 # Highlight unique items.
 Show
@@ -27,6 +55,26 @@ Show
 	Rarity Unique
 	PlayAlertSound 3 300
 	PlayEffect Brown
+
+# Highlight not identified items.
+Show
+	SetBackgroundColor 86 0 0 230
+	Rarity Magic Rare Unique
+	Identified False
+	Continue
+
+# Decrease identified items font size.
+Show
+	SetFontSize 20
+	Identified True
+	Continue
+
+# Highlight good percentage.
+Show
+	BaseDefencePercentile >= 70
+	Class == "Body Armours" "Helmets" "Gloves" "Boots" "Shields" 
+	SetBorderColor 0 255 0 255
+	Continue
 
 # Highlight high value currency.
 Show
@@ -53,15 +101,15 @@ Show
 	SetBorderColor 175 120 230 240
 	SetTextColor 178 120 230 240
 
-# Highlight oils.
+# Highlight wombgifts.
 Show
-	BaseType "Oil" 
-	MinimapIcon 0 Pink Circle
-	SetBorderColor 255 0 255 255
-	SetBackgroundColor 100 0 100 255
-	SetTextColor 255 0 255 255
-	PlayAlertSound 3 300
-	PlayEffect Pink
+	Class == "Wombgifts" 
+	MinimapIcon 0 Yellow Moon
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 120 200 160 255
+	SetTextColor 0 0 0 255
+	PlayAlertSound 2 300
+	PlayEffect Yellow
 
 # Highlight Idols.
 Show
@@ -73,10 +121,14 @@ Show
 
 Show
 	Class == "Currency" 
-	MinimapIcon 0 Yellow Circle
+	MinimapIcon 2 White Circle
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 213 159 0 255
+	SetTextColor 0 0 0 255
+	PlayEffect White
 
 Show
-	Class == "Utility Flasks" 
+	Class == "Amulet" "Belt" "Life Flasks" "Mana Flasks" "Ring" "Utility Flasks" 
 	SetBorderColor 0 0 0 255
 	SetBackgroundColor 25 100 75 255
 
@@ -107,26 +159,20 @@ Show
 	PlayEffect Yellow
 
 Show
-	Quality >= 1
-	MinimapIcon 1 White Triangle
-	SetBorderColor 30 190 190 255
-	SetTextColor 30 190 190 255
-	PlayAlertSound 2 300
-	PlayEffect Grey
-
-Show
 	BaseType == "Cobalt Jewel" "Crimson Jewel" "Viridian Jewel" 
-	SetBorderColor 0 75 250 255
-	SetBackgroundColor 0 75 250 255
-	SetTextColor 0 75 250 255
+	MinimapIcon 1 Purple Diamond
+	SetBorderColor 0 240 190 255
+	SetBackgroundColor 47 0 74 255
+	SetTextColor 0 240 190 255
+	PlayEffect Purple
 
 Show
 	Class == "Abyss Jewels" 
-	MinimapIcon 2 Grey Diamond
-	SetBorderColor 0 75 250 255
-	SetBackgroundColor 0 75 250 255
-	SetTextColor 0 75 250 255
-	PlayEffect Grey
+	MinimapIcon 1 Purple Diamond
+	SetBorderColor 0 240 190 255
+	SetBackgroundColor 47 0 74 255
+	SetTextColor 0 240 190 255
+	PlayEffect Purple
 
 Show
 	GemLevel >= 20
@@ -140,6 +186,14 @@ Show
 Show
 	Quality >= 1
 	Class == "Skill Gems" "Support Gems" 
+	MinimapIcon 1 White Triangle
+	SetBorderColor 30 190 190 255
+	SetTextColor 30 190 190 255
+	PlayAlertSound 2 300
+	PlayEffect Grey
+
+Show
+	Quality >= 20
 	MinimapIcon 1 White Triangle
 	SetBorderColor 30 190 190 255
 	SetTextColor 30 190 190 255
@@ -169,19 +223,9 @@ Show
 	BaseType == "Arena Plate" "Astral Plate" "Battle Plate" "Bronze Plate" "Chestplate" "Colosseum Plate" "Copper Plate" "Crusader Plate" "Full Plate" "Gladiator Plate" "Glorious Plate" "Golden Plate" "Legion Plate" "Lordly Plate" "Majestic Plate" "Plate Vest" "Royal Plate" "Sun Plate" "Titan Plate" "War Plate" 
 	SetFontSize 20
 
-# Decrease font size for "Body Armour" "Armour/Energy Shield" base items.
-Show
-	BaseType == "Chain Hauberk" "Chainmail Doublet" "Chainmail Tunic" "Chainmail Vest" "Conquest Chainmail" "Crusader Chainmail" "Devout Chainmail" "Elegant Ringmail" "Full Chainmail" "Full Ringmail" "Grand Ringmail" "Holy Chainmail" "Latticed Ringmail" "Loricated Ringmail" "Ornate Ringmail" "Paladin's Hauberk" "Ringmail Coat" "Sacred Chainmail" "Saint's Hauberk" "Saintly Chainmail" 
-	SetFontSize 20
-
 # Decrease font size for "Body Armour" "Armour/Evasion" base items.
 Show
 	BaseType == "Battle Lamellar" "Commander's Brigandine" "Conquest Lamellar" "Desert Brigandine" "Dragonscale Doublet" "Field Lamellar" "Full Dragonscale" "Full Scale Armour" "Full Wyrmscale" "Full Wyvernscale" "General's Brigandine" "Hussar Brigandine" "Infantry Brigandine" "Light Brigandine" "Marshall's Brigandine" "Scale Doublet" "Scale Vest" "Soldier's Brigandine" "Triumphant Lamellar" "Wyrmscale Doublet" 
-	SetFontSize 20
-
-# Decrease font size for "Body Armour" "Energy Shield" base items.
-Show
-	BaseType == "Arcane Vestment" "Cabalist Regalia" "Conjurer's Vestment" "Destroyer Regalia" "Mage's Vestment" "Necromancer Silks" "Nightweave Robe" "Occultist's Vestment" "Sage's Robe" "Savant's Robe" "Scholar's Robe" "Silk Robe" "Silken Garb" "Silken Vest" "Silken Wrap" "Simple Robe" "Spidersilk Robe" "Twilight Regalia" "Vaal Regalia" "Widowsilk Robe" 
 	SetFontSize 20
 
 # Decrease font size for "Body Armour" "Evasion" base items.
@@ -197,11 +241,6 @@ Show
 # Decrease font size for "Boots" "Armour" base items.
 Show
 	BaseType == "Ancient Greaves" "Antique Greaves" "Basemetal Treads" "Brimstone Treads" "Darksteel Treads" "Goliath Greaves" "Iron Greaves" "Leviathan Greaves" "Plated Greaves" "Precursor Greaves" "Reinforced Greaves" "Steel Greaves" "Titan Greaves" "Vaal Greaves" 
-	SetFontSize 20
-
-# Decrease font size for "Boots" "Armour/Energy Shield" base items.
-Show
-	BaseType == "Chain Boots" "Crusader Boots" "Legion Boots" "Martyr Boots" "Mesh Boots" "Paladin Boots" "Ringmail Boots" "Riveted Boots" "Soldier Boots" "Two-Toned Boots" "Zealot Boots" 
 	SetFontSize 20
 
 # Decrease font size for "Boots" "Armour/Evasion" base items.
@@ -229,11 +268,6 @@ Show
 	BaseType == "Ancient Gauntlets" "Antique Gauntlets" "Bronze Gauntlets" "Goliath Gauntlets" "Guarding Gauntlets" "Iron Gauntlets" "Leviathan Gauntlets" "Plated Gauntlets" "Precursor Gauntlets" "Preserving Gauntlets" "Spiked Gloves" "Steel Gauntlets" "Thwarting Gauntlets" "Titan Gauntlets" "Vaal Gauntlets" 
 	SetFontSize 20
 
-# Decrease font size for "Gloves" "Armour/Energy Shield" base items.
-Show
-	BaseType == "Apothecary's Gloves" "Chain Gloves" "Crusader Gloves" "Legion Gloves" "Martyr Gloves" "Mesh Gloves" "Paladin Gloves" "Ringmail Gloves" "Riveted Gloves" "Soldier Gloves" "Zealot Gloves" 
-	SetFontSize 20
-
 # Decrease font size for "Gloves" "Armour/Evasion" base items.
 Show
 	BaseType == "Bronzescale Gauntlets" "Chimerascale Gauntlets" "Dragonscale Gauntlets" "Fishscale Gauntlets" "Hydrascale Gauntlets" "Ironscale Gauntlets" "Serpentscale Gauntlets" "Steelscale Gauntlets" "Wyrmscale Gauntlets" "Wyvernscale Gauntlets" 
@@ -259,11 +293,6 @@ Show
 	BaseType == "Barbute Helmet" "Close Helmet" "Cone Helmet" "Conqueror's Helmet" "Eternal Burgonet" "Ezomyte Burgonet" "General's Helmet" "Giantslayer Helmet" "Gladiator Helmet" "Iron Hat" "Reaver Helmet" "Royal Burgonet" "Samnite Helmet" "Siege Helmet" 
 	SetFontSize 20
 
-# Decrease font size for "Helmet" "Armour/Energy Shield" base items.
-Show
-	BaseType == "Archdemon Crown" "Aventail Helmet" "Bone Helmet" "Crusader Helmet" "Demon Crown" "Divine Crown" "Faithful Helmet" "Great Crown" "Great Helmet" "Imp Crown" "Magistrate Crown" "Paladin Crown" "Praetor Crown" "Prophet Crown" "Rusted Coif" "Soldier Helmet" "Zealot Helmet" 
-	SetFontSize 20
-
 # Decrease font size for "Helmet" "Armour/Evasion" base items.
 Show
 	BaseType == "Atonement Mask" "Battered Helm" "Conquest Helmet" "Fencer Helm" "Fluted Bascinet" "Gilded Sallet" "Haunted Bascinet" "Knight Helm" "Lacquered Helmet" "Nightmare Bascinet" "Penitent Mask" "Pig-Faced Bascinet" "Sallet" "Secutor Helm" "Sorrow Mask" "Visored Sallet" 
@@ -286,18 +315,5 @@ Show
 
 # Decrease font size for items with classes.
 Show
-	Class == "Bows" "Claws" "Corpses" "Daggers" "One Hand Axes" "One Hand Maces" "One Hand Swords" "Quivers" "Rune Daggers" "Sceptres" "Staves" "Thrusting One Hand Swords" "Two Hand Axes" "Two Hand Maces" "Two Hand Swords" "Wands" "Warstaves" 
+	Class == "Bows" "Claws" "Corpses" "Daggers" "One Hand Axes" "One Hand Maces" "One Hand Swords" "Quivers" "Rune Daggers" "Thrusting One Hand Swords" "Two Hand Axes" "Two Hand Maces" "Two Hand Swords" 
 	SetFontSize 20
-
-# Highlight not identified items.
-Show
-	SetBackgroundColor 86 0 0 230
-	Rarity Magic Rare Unique
-	Identified False
-	Continue
-
-# Decrease identified items font size.
-Show
-	SetFontSize 20
-	Identified True
-	Continue
