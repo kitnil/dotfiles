@@ -935,37 +935,7 @@
                             (enabled? #t)
                             (size 0)
                             (colour 'Red)
-                            (shape 'Square))))
-
-                         (poe-item-filter-block-configuration
-                          (quality (poe-item-filter-conditional-value-configuration
-                                    (value 1)
-                                    (operator '>=)))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 30)
-                            (green 190)
-                            (blue 190)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 30)
-                            (green 190)
-                            (blue 190)
-                            (alpha 255)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 1)
-                            (colour 'White)
-                            (shape 'Triangle)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 2)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Grey)))))
+                            (shape 'Square)))))
 
                    (let ((jewel (poe-item-filter-block-configuration
                                  (set-text-color
@@ -1046,6 +1016,36 @@
                                  (operator '>=))))))
 
                    (list
+                    (poe-item-filter-block-configuration
+                     (quality (poe-item-filter-conditional-value-configuration
+                               (value 20)
+                               (operator '>=)))
+                     (set-text-color
+                      (poe-item-filter-color-configuration
+                       (red 30)
+                       (green 190)
+                       (blue 190)
+                       (alpha 255)))
+                     (set-border-color
+                      (poe-item-filter-color-configuration
+                       (red 30)
+                       (green 190)
+                       (blue 190)
+                       (alpha 255)))
+                     (minimap-icon
+                      (poe-item-filter-minimap-icon-configuration
+                       (enabled? #t)
+                       (size 1)
+                       (colour 'White)
+                       (shape 'Triangle)))
+                     (play-alert-sound
+                      (poe-item-filter-play-alert-sound-configuration
+                       (id 2)
+                       (volume 300)))
+                     (play-effect
+                      (poe-item-filter-play-effect-configuration
+                       (colour 'Grey))))
+
                     (poe-item-filter-block-configuration
                      (commentary "Highlight Rogue markers.")
                      (base-types '("Rogue's Marker"))
