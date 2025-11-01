@@ -737,39 +737,39 @@
                             (alpha 240))))
 
                          (poe-item-filter-block-configuration
-                          (commentary "Highlight oils.")
-                          (base-types '("Oil"))
+                          (commentary "Highlight wombgifts.")
+                          (classes '("Wombgifts"))
                           (set-text-color
                            (poe-item-filter-color-configuration
-                            (red 255)
+                            (red 0)
                             (green 0)
-                            (blue 255)
+                            (blue 0)
                             (alpha 255)))
                           (set-border-color
                            (poe-item-filter-color-configuration
-                            (red 255)
+                            (red 0)
                             (green 0)
-                            (blue 255)
+                            (blue 0)
                             (alpha 255)))
                           (set-background-color
                            (poe-item-filter-color-configuration
-                            (red 100)
-                            (green 0)
-                            (blue 100)
+                            (red 120)
+                            (green 200)
+                            (blue 160)
                             (alpha 255)))
                           (play-alert-sound
                            (poe-item-filter-play-alert-sound-configuration
-                            (id 3)
+                            (id 2)
                             (volume 300)))
                           (play-effect
                            (poe-item-filter-play-effect-configuration
-                            (colour 'Pink)))
+                            (colour 'Yellow)))
                           (minimap-icon
                            (poe-item-filter-minimap-icon-configuration
                             (enabled? #t)
                             (size 0)
-                            (colour 'Pink)
-                            (shape 'Circle))))
+                            (colour 'Yellow)
+                            (shape 'Moon))))
 
                          (poe-item-filter-block-configuration
                           (commentary "Highlight Idols.")
