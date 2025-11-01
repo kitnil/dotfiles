@@ -806,7 +806,7 @@
                             (shape 'Circle))))
 
                          (poe-item-filter-block-configuration
-                          (classes '("Life Flasks" "Mana Flasks" "Utility Flasks"))
+                          (classes '("Amulet" "Belt" "Life Flasks" "Mana Flasks" "Ring" "Utility Flasks"))
                           (set-border-color
                            (poe-item-filter-color-configuration
                             (red 0)
