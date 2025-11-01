@@ -798,12 +798,33 @@
 
                          (poe-item-filter-block-configuration
                           (classes '("Currency"))
+                          (set-text-color
+                           (poe-item-filter-color-configuration
+                            (red 0)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 0)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 213)
+                            (green 159)
+                            (blue 0)
+                            (alpha 255)))
                           (minimap-icon
                            (poe-item-filter-minimap-icon-configuration
                             (enabled? #t)
-                            (size 0)
-                            (colour 'Yellow)
-                            (shape 'Circle))))
+                            (size 2)
+                            (colour 'White)
+                            (shape 'Circle)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'White))))
 
                          (poe-item-filter-block-configuration
                           (classes '("Amulet" "Belt" "Life Flasks" "Mana Flasks" "Ring" "Utility Flasks"))
