@@ -971,21 +971,30 @@
                                  (set-text-color
                                   (poe-item-filter-color-configuration
                                    (red 0)
-                                   (green 75)
-                                   (blue 250)
+                                   (green 240)
+                                   (blue 190)
                                    (alpha 255)))
                                  (set-border-color
                                   (poe-item-filter-color-configuration
                                    (red 0)
-                                   (green 75)
-                                   (blue 250)
+                                   (green 240)
+                                   (blue 190)
                                    (alpha 255)))
                                  (set-background-color
                                   (poe-item-filter-color-configuration
-                                   (red 0)
-                                   (green 75)
-                                   (blue 250)
-                                   (alpha 255))))))
+                                   (red 47)
+                                   (green 0)
+                                   (blue 74)
+                                   (alpha 255)))
+                                 (play-effect
+                                  (poe-item-filter-play-effect-configuration
+                                   (colour 'Purple)))
+                                 (minimap-icon
+                                  (poe-item-filter-minimap-icon-configuration
+                                   (enabled? #t)
+                                   (size 1)
+                                   (colour 'Purple)
+                                   (shape 'Diamond))))))
                      (list (poe-item-filter-block-configuration
                             (inherit jewel)
                             (base-types '("Cobalt Jewel"
@@ -993,16 +1002,7 @@
                                           "Viridian Jewel")))
                            (poe-item-filter-block-configuration
                             (inherit jewel)
-                            (classes '("Abyss Jewels"))
-                            (play-effect
-                             (poe-item-filter-play-effect-configuration
-                              (colour 'Grey)))
-                            (minimap-icon
-                             (poe-item-filter-minimap-icon-configuration
-                              (enabled? #t)
-                              (size 2)
-                              (colour 'Grey)
-                              (shape 'Diamond))))))
+                            (classes '("Abyss Jewels")))))
 
                    (let ((gem (poe-item-filter-block-configuration
                                (set-text-color
