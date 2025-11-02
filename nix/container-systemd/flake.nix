@@ -136,6 +136,8 @@
                                 "IPMIView"
                                 "ndi"
                                 "teamspeak3"
+                                "steam"
+                                "steam-unwrapped"
                               ];
                           };
                         } // {

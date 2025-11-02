@@ -40,6 +40,8 @@ in
       path-of-building-data-json
 
       teamspeak3
+
+      steam
     ];
   };
   programs.firefox = {
