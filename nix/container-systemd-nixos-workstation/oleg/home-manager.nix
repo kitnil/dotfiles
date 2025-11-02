@@ -38,6 +38,8 @@ in
 
       path-of-building
       path-of-building-data-json
+
+      teamspeak6-client
     ];
   };
   programs.firefox = {
