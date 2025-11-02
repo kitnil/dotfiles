@@ -410,6 +410,43 @@
                                         "Scroll of Wisdom")))
 
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight 5 linked sockets.")
+                          (linked-sockets (poe-item-filter-conditional-value-configuration
+                                           (value 5)
+                                           (operator '>=)))
+                          (set-text-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 255)
+                            (green 255)
+                            (blue 255)
+                            (alpha 255)))
+                          (play-alert-sound
+                           (poe-item-filter-play-alert-sound-configuration
+                            (id 6)
+                            (volume 300)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'Red)))
+                          (minimap-icon
+                           (poe-item-filter-minimap-icon-configuration
+                            (enabled? #t)
+                            (size 0)
+                            (colour 'Red)
+                            (shape 'Star))))
+
+                         (poe-item-filter-block-configuration
                           (commentary "Highlight sockets vendor recipe.")
                           (socket-group (poe-item-filter-conditional-value-configuration
                                          (value '3RGB)
@@ -470,43 +507,6 @@
                           (play-effect
                            (poe-item-filter-play-effect-configuration
                             (colour 'Grey))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight 5 linked sockets.")
-                          (linked-sockets (poe-item-filter-conditional-value-configuration
-                                           (value 5)
-                                           (operator '>=)))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 255)
-                            (blue 255)
-                            (alpha 255)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 6)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Red)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 0)
-                            (colour 'Red)
-                            (shape 'Star))))
 
                          (poe-item-filter-block-configuration
                           (commentary "Highlight unique items.")
