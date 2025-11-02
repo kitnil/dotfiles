@@ -405,23 +405,6 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
-                          (commentary "Highlight 2500 or more gold.")
-                          (base-types '("Gold"))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 1)
-                            (colour 'Yellow)
-                            (shape 'Cross)))
-                          (stack-size (poe-item-filter-conditional-value-configuration
-                                       (value 2500)
-                                       (operator '>=))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Stop apply rules to gold.")
-                          (base-types '("Gold")))
-
-                         (poe-item-filter-block-configuration
                           (commentary "Stop apply rules to scrolls.")
                           (base-types '("Portal Scroll"
                                         "Scroll of Wisdom")))
@@ -1142,7 +1125,24 @@
                    (list (poe-item-filter-block-configuration
                           (commentary "Decrease font size for items with classes.")
                           (classes %weapon-classes)
-                          (set-font-size 20))))))
+                          (set-font-size 20))
+
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight 2500 or more gold.")
+                          (base-types '("Gold"))
+                          (minimap-icon
+                           (poe-item-filter-minimap-icon-configuration
+                            (enabled? #t)
+                            (size 1)
+                            (colour 'Yellow)
+                            (shape 'Cross)))
+                          (stack-size (poe-item-filter-conditional-value-configuration
+                                       (value 2500)
+                                       (operator '>=))))
+
+                         (poe-item-filter-block-configuration
+                          (commentary "Stop apply rules to gold.")
+                          (base-types '("Gold")))))))
          poe-item-filter-configuration-fields)))
 
 (run-with-store (open-connection)
