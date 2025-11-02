@@ -797,7 +797,7 @@
                             (colour 'Orange))))
 
                          (poe-item-filter-block-configuration
-                          (classes '("Currency"))
+                          (classes '("Currency" "Incubators"))
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 0)
