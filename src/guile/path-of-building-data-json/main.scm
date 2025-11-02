@@ -472,10 +472,10 @@
                             (colour 'Grey))))
 
                          (poe-item-filter-block-configuration
-                          (commentary "Highlight 6 linked sockets.")
+                          (commentary "Highlight 5 linked sockets.")
                           (linked-sockets (poe-item-filter-conditional-value-configuration
-                                           (value 6)
-                                           (operator '=)))
+                                           (value 5)
+                                           (operator '>=)))
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 255)
