@@ -10,6 +10,7 @@ in {
 
   home.packages = with packages; [
     binutils
+    file
 
     viddy
 
