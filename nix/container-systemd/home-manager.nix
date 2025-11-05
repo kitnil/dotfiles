@@ -35,6 +35,8 @@ in {
     nixpkgs-fmt
 
     jq
+
+    rsync
   ];
 
   home.file = {
