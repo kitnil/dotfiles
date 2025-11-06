@@ -1942,62 +1942,6 @@ opensearch()
     esac
 }
 
-curl()
-{
-    new_args=()
-    for var in "$@"
-    do
-        if [[ "$var" == *"https://api.majordomo.ru/"* ]] || [[ "$var" == *"https://api.maxhost.ru/"* ]]
-        then
-            json=true
-            new_args+=(
-                --header "Authorization: Bearer $(mjru-auth)"
-                --header 'Content-Type: application/json'
-                "$var"
-            )
-        elif [[ "$var" == *"https://api.hms.development.corp1.majordomo.ru/"* ]] || [[ "$var" == *"http://api.hms.development.corp1.majordomo.ru/"* ]]
-        then
-            json=true
-            new_args+=(
-                --header "Authorization: Bearer $(IHS_ENDPOINT=http://api.hms.development.corp1.majordomo.ru mjru-auth)"
-                --header 'Content-Type: application/json'
-                "$var"
-            )
-        elif [[ "$var" == *"https://api-dev.intr/"* ]] || [[ "$var" == *"https://api-dev.maxhost.ru/"* ]]
-        then
-            json=true
-            new_args+=(
-                --header "Authorization: Bearer $(IHS_ENDPOINT=https://api-dev.intr mjru-auth)"
-                --header 'Content-Type: application/json'
-                "$var"
-            )
-        elif [[ "$var" == *"https://kubernetes.intr"* ]] || [[ "$var" == *"https://kubernetes-cluster2.intr"* ]]
-        then
-            new_args+=(
-                --cacert "${HOME}/src/gitlab.intr/office/ssl-certificates/kubernetes/ca.pem"
-                --cert "${HOME}/src/gitlab.intr/office/ssl-certificates/kubernetes/admin.pem"
-                --key "${HOME}/src/gitlab.intr/office/ssl-certificates/kubernetes/admin-key.pem"
-                "$var"
-            )
-        elif [[ "$var" == *"https://kubernetes.home:6443"* ]]
-        then
-            new_args+=(
-                --cacert /etc/kubernetes/pki/ca.pem
-                --cert /etc/kubernetes/pki/admin.pem
-                --key /etc/kubernetes/pki/admin-key.pem
-                "$var"
-            )
-        else
-            new_args+=($var)
-        fi
-    done
-    command curl "${new_args[@]}"
-    if [[ $json == true ]]
-    then
-        echo
-    fi
-}
-
 dig()
 {
     for var in "$@"
