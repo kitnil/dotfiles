@@ -28,8 +28,7 @@
                                 `(".local/share/bash-completion/completions/herd" ,(local-file (string-append %distro-directory "/dot_local/share/bash-completion/completions/herd")))
                                 `(".local/share/bash-completion/completions/mail" ,(local-file (string-append %distro-directory "/dot_local/share/bash-completion/completions/mail")))
                                 `(".local/share/bash-completion/completions/connect" ,(local-file (string-append %distro-directory "/dot_local/share/bash-completion/completions/connect")))
-                                `(".bash.d/bash.scm" ,(local-file (string-append %distro-directory "/dot_bash.d/bash.tmpl")))
-                                `(".bash.d/mjru.bash" ,(local-file (string-append %distro-directory "/dot_bash.d/mjru.bash")))))))
+                                `(".bash.d/bash.scm" ,(local-file (string-append %distro-directory "/dot_bash.d/bash.tmpl")))))))
 
 (define home-inputrc-service
   (simple-service 'inputrc-config

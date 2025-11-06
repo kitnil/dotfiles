@@ -1358,12 +1358,6 @@ then
     source "$HOME/.bash.d/slack.bash"
 fi
 
-if [ -f "$HOME/.bash.d/mjru.bash" ]
-then
-    # shellcheck source=.bash.d/mjru.bash
-    source "$HOME/.bash.d/mjru.bash"
-fi
-
 chezmoi()
 {
     case "$1" in

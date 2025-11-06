@@ -17,6 +17,12 @@
     };
   };
 
+  programs.bash = {
+    bashrcExtra = ''
+      . ${./mjru.bash}
+    '';
+  };
+
   programs.ssh = {
     extraConfig = ''
       Host gitlab.intr
