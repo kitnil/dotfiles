@@ -6,9 +6,9 @@
   (list (channel
          (name 'guix)
          (url "https://cgit.wugi.info/git/guix/guix")
-         (branch "master")
+         (branch "notebook-guix-workstation")
          (commit
-          "32bd53cdb28cf35310f9067d4450e0113071a900")
+          "aec50b65d5aad6f5df7ed4f5d26438b27ccb7244")
          (introduction
           (make-channel-introduction
            "9edb3f66fd807b096b48283debdcddccfea34bad"
@@ -16,10 +16,10 @@
             "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
         (channel
          (name 'nonguix)
-         (url "https://gitlab.com/nonguix/nonguix")
+         (url "https://cgit.wugi.info/git/guix/nonguix")
          (branch "master")
          (commit
-          "9446bf27a40a429baf98248ffa5d1b6942ac7f16")
+          "3f4a1907cae9b0def09d1549c491bb4e307b9097")
          (introduction
           (make-channel-introduction
            "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
