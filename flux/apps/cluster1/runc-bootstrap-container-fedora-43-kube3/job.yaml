@@ -20,3 +20,8 @@ spec:
         hostPath:
           path: /srv/runc/fedora
           type: Directory
+      tolerations:
+      - key: "workstation.cluster.local"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
