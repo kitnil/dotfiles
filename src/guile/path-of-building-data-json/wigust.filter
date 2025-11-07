@@ -4,19 +4,19 @@ Show
 	SetBorderColor 74 230 58 255
 	Continue
 
-# Highlight 2500 or more gold.
-Show
-	StackSize >= 2500
-	BaseType "Gold" 
-	MinimapIcon 1 Yellow Cross
-
-# Stop apply rules to gold.
-Show
-	BaseType "Gold" 
-
 # Stop apply rules to scrolls.
 Show
 	BaseType == "Portal Scroll" "Scroll of Wisdom" 
+
+# Highlight 5 linked sockets.
+Show
+	LinkedSockets >= 5
+	MinimapIcon 0 Red Star
+	SetBorderColor 255 0 0 255
+	SetBackgroundColor 255 255 255 255
+	SetTextColor 255 0 0 255
+	PlayAlertSound 6 300
+	PlayEffect Red
 
 # Highlight sockets vendor recipe.
 Show
@@ -35,16 +35,6 @@ Show
 	SetTextColor 30 190 190 255
 	PlayAlertSound 2 300
 	PlayEffect Grey
-
-# Highlight 6 linked sockets.
-Show
-	LinkedSockets = 6
-	MinimapIcon 0 Red Star
-	SetBorderColor 255 0 0 255
-	SetBackgroundColor 255 255 255 255
-	SetTextColor 255 0 0 255
-	PlayAlertSound 6 300
-	PlayEffect Red
 
 # Highlight unique items.
 Show
@@ -120,7 +110,7 @@ Show
 	PlayEffect Orange
 
 Show
-	Class == "Currency" 
+	Class == "Currency" "Incubators" 
 	MinimapIcon 2 White Circle
 	SetBorderColor 0 0 0 255
 	SetBackgroundColor 213 159 0 255
@@ -317,3 +307,13 @@ Show
 Show
 	Class == "Bows" "Claws" "Corpses" "Daggers" "One Hand Axes" "One Hand Maces" "One Hand Swords" "Quivers" "Rune Daggers" "Thrusting One Hand Swords" "Two Hand Axes" "Two Hand Maces" "Two Hand Swords" 
 	SetFontSize 20
+
+# Highlight 2500 or more gold.
+Show
+	StackSize >= 2500
+	BaseType "Gold" 
+	MinimapIcon 1 Yellow Cross
+
+# Stop apply rules to gold.
+Show
+	BaseType "Gold" 
