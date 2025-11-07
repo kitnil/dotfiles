@@ -31,6 +31,7 @@
   #:use-module (gnu packages ssh)
   #:use-module (gnu packages suckless)
   #:use-module (gnu packages textutils)
+  #:use-module (gnu packages telephony)
   #:use-module (gnu packages tmux)
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages video)
@@ -91,4 +92,5 @@
          v4l-utils
          virt-manager
          wl-clipboard
-         xdot)))
+         xdot
+         mumble)))

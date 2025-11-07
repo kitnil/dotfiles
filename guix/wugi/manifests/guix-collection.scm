@@ -116,6 +116,7 @@
   #:use-module (guix packages)
   #:use-module (guix profiles)
   #:use-module (gnu packages xorg)
+  #:use-module (gnu packages telephony)
   #:export (%guix-collection-manifest))
 
 (define (%guix-collection-manifest)
@@ -414,7 +415,9 @@
 
                  virt-manager
 
-                 freeipmi)
+                 freeipmi
+
+                 mumble)
 
            guix-collection-packages-multiout
            %large-packages
