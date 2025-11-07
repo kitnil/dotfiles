@@ -19,4 +19,4 @@ spec:
       - name: runc-bootstrap-container-directory
         hostPath:
           path: /srv/runc/fedora
-        type: Directory
+          type: Directory
