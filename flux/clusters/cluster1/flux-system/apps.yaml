@@ -1573,7 +1573,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/cluster1/runc-bootstrap-container-fedora-43-kube3
+  path: ./flux/apps/cluster1/runc-bootstrap-container-fedora-43-kube3
   prune: true
   sourceRef:
     kind: GitRepository
