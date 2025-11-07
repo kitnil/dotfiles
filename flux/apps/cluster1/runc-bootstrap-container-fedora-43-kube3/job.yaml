@@ -10,13 +10,13 @@ metadata:
       containers:
       - name: bootstrap
         volumeMounts:
-          - mountPath: /srv/runc/fedora
-            name: runc-bootstrap-container-directory
+        - mountPath: /srv/runc/fedora
+          name: runc-bootstrap-container-directory
         env:
         - name: RUNC_BOOTSTRAP_CONTAINER_DIRECTORY
           value: /srv/runc/fedora
           volumes:
-            - name: runc-bootstrap-container-directory
+          - name: runc-bootstrap-container-directory
         hostPath:
           path: /srv/runc/fedora
           type: Directory
