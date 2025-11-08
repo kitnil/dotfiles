@@ -219,8 +219,7 @@
                       (setenv "LINUX_MODULE_DIRECTORY" "/run/booted-system/kernel/lib/modules")
                       (invoke "modprobe" "kvmfr" "static_size_mb=128")
                       (invoke "chown" "oleg:kvm" "/dev/kvmfr0")
-                      (invoke "modprobe" "vfio_iommu_type1")
-                      (invoke "virsh" "start" "win10")))))
+                      (invoke "modprobe" "vfio_iommu_type1")))))
 
 (define system-provision-program-file
   (program-file "system-provision"
