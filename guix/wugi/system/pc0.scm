@@ -127,6 +127,24 @@
                       (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "addr" "add" "192.168.0.175/24" "dev" "eth0")
                       (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
+(define fedora-program-file
+  (program-file "fedora"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "fedora")
+                      (invoke "ip" "link" "add" "name" "fedora0" "type" "veth" "peer" "name" "fedora1")
+                      (invoke "ip" "link" "set" "dev" "fedora1" "netns" "fedora")
+                      (invoke "ip" "netns" "exec" "fedora" "ip" "link" "set" "fedora1" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "fedora" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "fedora0" "master" "br0")
+                      (invoke "ip" "link" "set" "fedora0" "up")
+                      (invoke "ip" "netns" "exec" "fedora" "ip" "addr" "add" "192.168.0.155/24" "dev" "eth0")
+                      (invoke "ip" "netns" "exec" "fedora" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+
 (define guix-workstation-program-file
   (program-file "guix-workstation"
                 (with-imported-modules (source-module-closure '((guix build utils)))
@@ -515,6 +533,16 @@ cgroup_device_acl = [
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-constructor
                                                              (list #$guix-workstation-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
+
+                            (simple-service 'fedora shepherd-root-service-type
+                                            (list (shepherd-service
+                                                   (provision '(fedora))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-constructor
+                                                             (list #$fedora-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
