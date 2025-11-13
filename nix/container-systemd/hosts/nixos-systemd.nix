@@ -150,7 +150,7 @@
     channel.enable = false; # remove nix-channel related tools & configs, we use flakes instead.
 
     settings = {
-      trusted-users = [ "root" ];
+      trusted-users = [ "oleg" "root" ];
       # https://github.com/NixOS/nix/issues/9574
       nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
     };
