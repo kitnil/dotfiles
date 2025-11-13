@@ -135,6 +135,7 @@
                                 "google-chrome"
                                 "IPMIView"
                                 "ndi"
+                                "teamspeak3"
                               ];
                           };
                         } // {
