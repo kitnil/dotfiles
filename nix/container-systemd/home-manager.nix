@@ -37,6 +37,7 @@ in {
 
     jq
     gron
+    yq
 
     rsync
   ];
