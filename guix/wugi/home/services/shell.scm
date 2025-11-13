@@ -28,8 +28,7 @@
                                 `(".local/share/bash-completion/completions/herd" ,(local-file (string-append %distro-directory "/dot_local/share/bash-completion/completions/herd")))
                                 `(".local/share/bash-completion/completions/mail" ,(local-file (string-append %distro-directory "/dot_local/share/bash-completion/completions/mail")))
                                 `(".local/share/bash-completion/completions/connect" ,(local-file (string-append %distro-directory "/dot_local/share/bash-completion/completions/connect")))
-                                `(".bash.d/bash.scm" ,(local-file (string-append %distro-directory "/dot_bash.d/bash.tmpl")))
-                                `(".bash.d/mjru.bash" ,(local-file (string-append %distro-directory "/dot_bash.d/mjru.bash")))))))
+                                `(".bash.d/bash.scm" ,(local-file (string-append %distro-directory "/dot_bash.d/bash.tmpl")))))))
 
 (define home-inputrc-service
   (simple-service 'inputrc-config
@@ -148,20 +147,7 @@
                           "llm"
                           "magit"
                           "mail"
-                          "Majordomo_LLC_Root_CA.crt.sh"
                           "messages2notify-send"
-                          "mj-hosts.sh"
-                          "mjru-auth"
-                          "mjru-alerta"
-                          "mjru-dns"
-                          "mjru-docker"
-                          "mjru-fetch-history"
-                          "mjru-flake"
-                          "mjru-git-clone.sh"
-                          "mjru-grafana"
-                          "mjru-infa"
-                          "mjru-office"
-                          "mjru-vpn.sh"
                           "monitor"
                           "monitoror"
                           "mpvctl"

@@ -4,7 +4,23 @@
     pkgs.ipmitool
     pkgs.ipmiview
     robo3t
-  ];
+  ]
+  ++ (map (file: pkgs.writeScriptBin (builtins.baseNameOf file) (builtins.readFile file)) [
+    ./bash/Majordomo_LLC_Root_CA.crt.sh
+    ./bash/mj-hosts.sh
+    ./bash/mjru-alerta
+    ./bash/mjru-auth
+    ./bash/mjru-dns
+    ./bash/mjru-docker
+    ./bash/mjru-fetch-history
+    ./bash/mjru-flake
+    ./bash/mjru-git-clone.sh
+    ./bash/mjru-grafana
+    ./bash/mjru-hms-migrate-web-account
+    ./bash/mjru-infa
+    ./bash/mjru-office
+    ./bash/mjru-vpn.sh
+  ]);
 
   home.file = {
     ".ssh/known_hosts" = {
@@ -15,6 +31,12 @@
         gitlab.intr ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJw9vd+rL+MwVdVKSKW32+k6irAULLUFv5dmRUve2nUW
       '';
     };
+  };
+
+  programs.bash = {
+    bashrcExtra = ''
+      . ${./mjru.bash}
+    '';
   };
 
   programs.ssh = {
@@ -30,6 +52,8 @@
       Host *.intr
       User root
       IdentityFile /home/oleg/.ssh/id_rsa_majordomo_eng
+      PubkeyAcceptedKeyTypes=+ssh-rsa
+      HostKeyAlgorithms=+ssh-rsa
     '';
   };
 }

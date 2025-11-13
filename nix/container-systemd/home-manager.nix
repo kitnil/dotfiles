@@ -10,6 +10,7 @@ in {
 
   home.packages = with packages; [
     binutils
+    file
 
     viddy
 
@@ -35,6 +36,10 @@ in {
     nixpkgs-fmt
 
     jq
+    gron
+    yq
+
+    rsync
   ];
 
   home.file = {
