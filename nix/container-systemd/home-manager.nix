@@ -36,6 +36,7 @@ in {
     nixpkgs-fmt
 
     jq
+    gron
 
     rsync
   ];
