@@ -32,7 +32,7 @@ in
   programs.obs-studio = {
     enable = true;
     plugins = with pkgs; [
-      espanso
+      espanso-wayland
 
       obs-studio-plugins.obs-multi-rtmp
       obs-studio-plugins.obs-ndi
