@@ -52,6 +52,8 @@
       Host *.intr
       User root
       IdentityFile /home/oleg/.ssh/id_rsa_majordomo_eng
+      PubkeyAcceptedKeyTypes=+ssh-rsa
+      HostKeyAlgorithms=+ssh-rsa
     '';
   };
 }
