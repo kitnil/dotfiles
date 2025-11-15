@@ -144,28 +144,37 @@ program.")))
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-zapret")
-                   (name "nixos-zapret")))
+                   (name "nixos-zapret")
+                   (requirement '(file-system-/sys/fs/cgroup))
+                   (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-majordomo")
-                   (name "nixos-majordomo")))
+                   (name "nixos-majordomo")
+                   (requirement '(file-system-/sys/fs/cgroup))
+                   (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-workstation")
                    (name "nixos-workstation")
+                   (requirement '(file-system-/sys/fs/cgroup))
                    (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/guix-nanokvm")
-                   (name "guix-nanokvm")))
+                   (name "guix-nanokvm")
+                   (requirement '(file-system-/sys/fs/cgroup))
+                   (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/fedora")
-                   (name "fedora"))))
+                   (name "fedora")
+                   (requirement '(file-system-/sys/fs/cgroup))
+                   (auto-start? #t))))
 
         (modify-services %base-services
           (delete console-font-service-type)
