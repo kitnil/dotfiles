@@ -73,18 +73,6 @@
                       (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.194/24" "dev" "eth0")
                       (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
-(define system-provision-program-file
-  (program-file "system-provision"
-                (with-imported-modules (source-module-closure '((guix build utils)))
-                  #~(begin
-                      (use-modules (guix build utils))
-
-                      (setenv "PATH"
-                              (string-append "/run/current-system/profile/bin:"
-                                             "/run/current-system/profile/sbin"))
-
-                      (invoke "iptables" "-P" "FORWARD" "ACCEPT")))))
-
 (define (%pc0)
   (operating-system
     (host-name "pc0")
@@ -366,16 +354,6 @@ cgroup_device_acl = [
    \"/dev/kvmfr0\"
 ]
 "))))))
-
-                            (simple-service 'system-provision shepherd-root-service-type
-                                            (list (shepherd-service
-                                                   (provision '(system-provision))
-                                                   (requirement '())
-                                                   (start #~(make-forkexec-constructor
-                                                             (list #$system-provision-program-file)))
-                                                   (respawn? #f)
-                                                   (auto-start? #t)
-                                                   (one-shot? #t))))
 
                             (simple-service 'guix-workstation shepherd-root-service-type
                                             (list (shepherd-service
