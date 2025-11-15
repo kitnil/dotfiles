@@ -55,15 +55,6 @@
 (define %private-ip-address
   "192.168.0.192")
 
-(define container-guix-program
-  (program-file "container-guix-program"
-                #~(begin
-                    (setenv "PATH"
-                            "/run/setuid-programs:/root/.config/guix/current/bin:/run/current-system/profile/bin:/run/current-system/profile/sbin")
-                    (execl #$(local-file (string-append %distro-directory "/dotfiles/run/pc0/13-guix-workstation-run.sh")
-                                         #:recursive? #t)
-                           "13-guix-workstation-run.sh"))))
-
 (define nixos-majordomo-program-file
   (program-file "nixos-majordomo"
                 (with-imported-modules (source-module-closure '((guix build utils)))
