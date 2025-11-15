@@ -453,16 +453,6 @@ cgroup_device_acl = [
 ]
 "))))))
 
-                            (simple-service 'system-provision shepherd-root-service-type
-                                            (list (shepherd-service
-                                                   (provision '(system-provision))
-                                                   (requirement '())
-                                                   (start #~(make-forkexec-constructor
-                                                             (list #$system-provision-program-file)))
-                                                   (respawn? #f)
-                                                   (auto-start? #t)
-                                                   (one-shot? #t))))
-
                             (simple-service 'nixos-majordomo shepherd-root-service-type
                                             (list (shepherd-service
                                                    (provision '(nixos-majordomo))
