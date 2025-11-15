@@ -210,19 +210,6 @@
 
                       (invoke "mount" "/dev/vg0/guixnanokvm" "/srv/runc/guix-nanokvm")))))
 
-(define windows-program-file
-  (program-file "windows"
-                (with-imported-modules (source-module-closure '((guix build utils)))
-                  #~(begin
-                      (use-modules (guix build utils))
-                      (setenv "PATH"
-                              (string-append "/run/current-system/profile/bin:"
-                                             "/run/current-system/profile/sbin"))
-                      (setenv "LINUX_MODULE_DIRECTORY" "/run/booted-system/kernel/lib/modules")
-                      (invoke "modprobe" "kvmfr" "static_size_mb=128")
-                      (invoke "chown" "oleg:kvm" "/dev/kvmfr0")
-                      (invoke "modprobe" "vfio_iommu_type1")))))
-
 (define system-provision-program-file
   (program-file "system-provision"
                 (with-imported-modules (source-module-closure '((guix build utils)))
@@ -408,7 +395,9 @@
 
                                        ;; ddc to backlight interface.
                                        "ddcci"
-                                       "ddcci_backlight"))
+                                       "ddcci_backlight"
+
+                                       "vfio_iommu_type1"))
                             (service containerd-service-type)
 
                             (service runc-container-service-type
@@ -566,16 +555,6 @@ cgroup_device_acl = [
                                                              (list #$guix-nanokvm-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
-                                                   (one-shot? #t))))
-
-                            (simple-service 'windows shepherd-root-service-type
-                                            (list (shepherd-service
-                                                   (provision '(windows))
-                                                   (requirement '(networking libvirtd))
-                                                   (start #~(make-forkexec-constructor
-                                                             (list #$windows-program-file)))
-                                                   (respawn? #f)
-                                                   (auto-start? #f)
                                                    (one-shot? #t))))
 
                             (service virtlog-service-type
