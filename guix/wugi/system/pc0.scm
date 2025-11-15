@@ -6,6 +6,7 @@
   #:use-module (gnu bootloader)
   #:use-module (gnu bootloader grub)
   #:use-module (gnu packages admin)
+  #:use-module (gnu packages fonts)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages video)
   #:use-module (gnu packages ssh)
@@ -47,6 +48,7 @@
   #:use-module (wugi services virtualization)
   #:use-module (wugi utils)
   #:use-module (wugi utils package)
+  #:use-module (ice-9 match)
   #:use-module (srfi srfi-26)
   #:export (%pc0))
 
@@ -590,17 +592,6 @@ cgroup_device_acl = [
                                                  "99-kvmfr.rules"
                                                  "SUBSYSTEM==\"kvmfr\", OWNER=\"oleg\", GROUP=\"kvm\", MODE=\"0660\"\n"))
 
-                            (service console-font-service-type
-                                     (map (lambda (tty)
-                                            (append (list tty)
-                                                    %default-console-font))
-                                          '("tty1"
-                                            "tty2"
-                                            "tty3"
-                                            "tty4"
-                                            "tty5"
-                                            "tty6")))
-
                             (service knot-resolver-service-type
                                      (knot-resolver-configuration
                                       (kresd-config-file
@@ -673,4 +664,27 @@ cgroup_device_acl = [
                                                                   ;; for runc containers and libvirt virtual machines
                                                                   ("net.ipv4.conf.br0.forwarding" . "1"))
                                                                 %default-sysctl-settings))))
-                        (delete console-font-service-type))))))
+                        (console-font-service-type
+                         configuration =>
+                         (map
+                          (match-lambda
+                            (("tty1" . f)
+                             `("tty1" . ,(file-append font-terminus
+                                                      "/share/consolefonts/ter-132n")))
+                            (("tty2" . f)
+                             `("tty2" . ,(file-append font-terminus
+                                                      "/share/consolefonts/ter-132n")))
+                            (("tty3" . f)
+                             `("tty3" . ,(file-append font-terminus
+                                                      "/share/consolefonts/ter-132n")))
+                            (("tty4" . f)
+                             `("tty4" . ,(file-append font-terminus
+                                                      "/share/consolefonts/ter-132n")))
+                            (("tty5" . f)
+                             `("tty5" . ,(file-append font-terminus
+                                                      "/share/consolefonts/ter-132n")))
+                            (("tty6" . f)
+                             `("tty6" . ,(file-append font-terminus
+                                                      "/share/consolefonts/ter-132n")))
+                            ((tty . font) `(,tty . ,font)))
+                          configuration)))))))
