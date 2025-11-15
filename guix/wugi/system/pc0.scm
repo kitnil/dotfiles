@@ -64,15 +64,6 @@
                                          #:recursive? #t)
                            "13-guix-workstation-run.sh"))))
 
-(define container-guix-sway-autostart-program
-  (program-file "container-guix-sway-autostart-program"
-                #~(begin
-                    (setenv "PATH"
-                            "/run/setuid-programs:/root/.config/guix/current/bin:/run/current-system/profile/bin:/run/current-system/profile/sbin")
-                    (execl #$(local-file (string-append %distro-directory "/dotfiles/run/pc0/14-sway-run-all.sh")
-                                         #:recursive? #t)
-                           "sway-run-all"))))
-
 (define nixos-majordomo-program-file
   (program-file "nixos-majordomo"
                 (with-imported-modules (source-module-closure '((guix build utils)))
