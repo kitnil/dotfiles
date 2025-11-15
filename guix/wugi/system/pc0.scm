@@ -89,9 +89,7 @@
                       (invoke "ip" "link" "set" "nixos2" "master" "br0")
                       (invoke "ip" "link" "set" "nixos2" "up")
                       (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "addr" "add" "192.168.0.197/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "route" "add" "default" "via" "192.168.0.1")
-
-                      (invoke "mount" "/dev/vg0/nixosmajordomo" "/srv/runc/nixos-majordomo")))))
+                      (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
 (define nixos-workstation-program-file
   (program-file "nixos-workstation"
@@ -163,12 +161,7 @@
                       (invoke "ip" "link" "set" "guix0" "master" "br0")
                       (invoke "ip" "link" "set" "guix0" "up")
                       (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.194/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")
-
-                      (invoke "mount" "-t" "tmpfs" "-o" "rw,relatime,size=100M,rshared" "none" "/mnt/guix-workstation/run")
-                      (invoke "mount" "-t" "tmpfs" "-o" "rw,relatime,size=100M,rshared" "none" "/mnt/guix-workstation/tmp")
-
-                      (invoke "mount" "/dev/vg0/guixworkstation" "/srv/runc/guix-workstation")))))
+                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
 (define guix-rde-program-file
   (program-file "guix-rde"
@@ -206,9 +199,7 @@
                       (invoke "ip" "link" "set" "guix4" "master" "br0")
                       (invoke "ip" "link" "set" "guix4" "up")
                       (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "addr" "add" "192.168.0.198/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "route" "add" "default" "via" "192.168.0.1")
-
-                      (invoke "mount" "/dev/vg0/guixnanokvm" "/srv/runc/guix-nanokvm")))))
+                      (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
 (define system-provision-program-file
   (program-file "system-provision"
@@ -263,8 +254,7 @@
                            (device "/dev/mapper/vg0-guixroot")
                            (mount-point "/")
                            (dependencies mapped-devices)
-                           (type "ext4")
-                           (flags '(shared)))
+                           (type "ext4"))
                          (file-system
                            (device (uuid "25E3-69CD" 'fat))
                            (mount-point "/boot/efi")
@@ -281,18 +271,37 @@
                            (mount-point "/mnt/guix-workstation/tmp")
                            (type "tmpfs")
                            (check? #f)
-                           (flags '(no-dev))
                            (options "mode=1777,size=10%"))
+                         (file-system
+                           (device "tmpfs")
+                           (mount-point "/mnt/guix-workstation/run")
+                           (type "tmpfs")
+                           (check? #f)
+                           (options "rw,relatime,size=100M,rshared"))
                          (file-system
                            (device "hugetlbfs")
                            (mount-point "/hugepages")
                            (type "hugetlbfs"))
                          (file-system
-                           (device "/dev/mapper/vg0-fedora")
+                           (device (file-system-label "fedora"))
                            (mount-point "/srv/runc/fedora")
                            (dependencies mapped-devices)
-                           (type "ext4")
-                           (flags '(shared))))
+                           (type "ext4"))
+                         (file-system
+                           (device (file-system-label "nixosmajordomo"))
+                           (mount-point "/srv/runc/nixos-majordomo")
+                           (dependencies mapped-devices)
+                           (type "ext4"))
+                         (file-system
+                           (device (file-system-label "guixworkstation"))
+                           (mount-point "/srv/runc/guix-workstation")
+                           (dependencies mapped-devices)
+                           (type "btrfs"))
+                         (file-system
+                           (device (file-system-label "guixnanokvm"))
+                           (mount-point "/srv/runc/guix-nanokvm")
+                           (dependencies mapped-devices)
+                           (type "ext4")))
                    %control-groups
                    %base-file-systems))
 
@@ -409,8 +418,9 @@
                             (service runc-container-service-type
                                      (runc-container-configuration
                                       (bundle "/srv/runc/guix-workstation")
-                                      ;; (requirement '(guix-workstation))
-                                      (name "guix-workstation")))
+                                      (requirement '(guix-workstation))
+                                      (name "guix-workstation")
+                                      (auto-start? #t)))
 
                             (service kubelet-service-type
                                      (kubelet-configuration
