@@ -286,7 +286,13 @@
                          (file-system
                            (device "hugetlbfs")
                            (mount-point "/hugepages")
-                           (type "hugetlbfs")))
+                           (type "hugetlbfs"))
+                         (file-system
+                           (device "/dev/mapper/vg0-fedora")
+                           (mount-point "/srv/runc/fedora")
+                           (dependencies mapped-devices)
+                           (type "ext4")
+                           (flags '(shared))))
                    %control-groups
                    %base-file-systems))
 
