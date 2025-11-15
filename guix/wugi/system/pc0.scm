@@ -247,6 +247,11 @@
                            (dependencies mapped-devices)
                            (type "ext4"))
                          (file-system
+                           (device (file-system-label "nixoszapret"))
+                           (mount-point "/srv/runc/nixos-zapret")
+                           (dependencies mapped-devices)
+                           (type "btrfs"))
+                         (file-system
                            (device (file-system-label "guixworkstation"))
                            (mount-point "/srv/runc/guix-workstation")
                            (dependencies mapped-devices)
