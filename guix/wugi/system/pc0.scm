@@ -593,6 +593,7 @@ cgroup_device_acl = [
                                                     (value "127.0.0.2/8")))))
                                       (static-networking
                                        (provision '(br0))
+                                       (requirement '(eth0))
                                        (links (list
                                                (network-link
                                                 (name "br0")
