@@ -6,6 +6,7 @@
   #:use-module (gnu bootloader)
   #:use-module (gnu bootloader grub)
   #:use-module (gnu packages admin)
+  #:use-module (gnu packages fonts)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages video)
   #:use-module (gnu packages ssh)
@@ -47,103 +48,12 @@
   #:use-module (wugi services virtualization)
   #:use-module (wugi utils)
   #:use-module (wugi utils package)
+  #:use-module (ice-9 match)
   #:use-module (srfi srfi-26)
   #:export (%pc0))
 
 (define %private-ip-address
   "192.168.0.192")
-
-(define container-guix-program
-  (program-file "container-guix-program"
-                #~(begin
-                    (setenv "PATH"
-                            "/run/setuid-programs:/root/.config/guix/current/bin:/run/current-system/profile/bin:/run/current-system/profile/sbin")
-                    (execl #$(local-file (string-append %distro-directory "/dotfiles/run/pc0/13-guix-workstation-run.sh")
-                                         #:recursive? #t)
-                           "13-guix-workstation-run.sh"))))
-
-(define container-guix-sway-autostart-program
-  (program-file "container-guix-sway-autostart-program"
-                #~(begin
-                    (setenv "PATH"
-                            "/run/setuid-programs:/root/.config/guix/current/bin:/run/current-system/profile/bin:/run/current-system/profile/sbin")
-                    (execl #$(local-file (string-append %distro-directory "/dotfiles/run/pc0/14-sway-run-all.sh")
-                                         #:recursive? #t)
-                           "sway-run-all"))))
-
-(define nixos-majordomo-program-file
-  (program-file "nixos-majordomo"
-                (with-imported-modules (source-module-closure '((guix build utils)))
-                  #~(begin
-                      (use-modules (guix build utils))
-                      (setenv "PATH"
-                              (string-append "/run/current-system/profile/bin:"
-                                             "/run/current-system/profile/sbin"))
-                      (invoke "ip" "netns" "add" "nixos-majordomo")
-                      (invoke "ip" "link" "add" "name" "nixos2" "type" "veth" "peer" "name" "nixos3")
-                      (invoke "ip" "link" "set" "dev" "nixos3" "netns" "nixos-majordomo")
-                      (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "link" "set" "nixos3" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "nixos2" "master" "br0")
-                      (invoke "ip" "link" "set" "nixos2" "up")
-                      (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "addr" "add" "192.168.0.197/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "route" "add" "default" "via" "192.168.0.1")
-
-                      (invoke "mount" "/dev/vg0/nixosmajordomo" "/srv/runc/nixos-majordomo")))))
-
-(define nixos-workstation-program-file
-  (program-file "nixos-workstation"
-                (with-imported-modules (source-module-closure '((guix build utils)))
-                  #~(begin
-                      (use-modules (guix build utils))
-                      (setenv "PATH"
-                              (string-append "/run/current-system/profile/bin:"
-                                             "/run/current-system/profile/sbin"))
-                      (invoke "ip" "netns" "add" "nixos-workstation")
-                      (invoke "ip" "link" "add" "name" "nixos0" "type" "veth" "peer" "name" "nixos1")
-                      (invoke "ip" "link" "set" "dev" "nixos1" "netns" "nixos-workstation")
-                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "link" "set" "nixos1" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "nixos0" "master" "br0")
-                      (invoke "ip" "link" "set" "nixos0" "up")
-                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "addr" "add" "192.168.0.195/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")))))
-
-(define nixos-zapret-program-file
-  (program-file "nixos-zapret"
-                (with-imported-modules (source-module-closure '((guix build utils)))
-                  #~(begin
-                      (use-modules (guix build utils))
-                      (setenv "PATH"
-                              (string-append "/run/current-system/profile/bin:"
-                                             "/run/current-system/profile/sbin"))
-                      (invoke "ip" "netns" "add" "nixos-zapret")
-                      (invoke "ip" "link" "add" "name" "nixos4" "type" "veth" "peer" "name" "nixos5")
-                      (invoke "ip" "link" "set" "dev" "nixos5" "netns" "nixos-zapret")
-                      (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "link" "set" "nixos5" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "nixos4" "master" "br0")
-                      (invoke "ip" "link" "set" "nixos4" "up")
-                      (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "addr" "add" "192.168.0.175/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "route" "add" "default" "via" "192.168.0.1")))))
-
-(define fedora-program-file
-  (program-file "fedora"
-                (with-imported-modules (source-module-closure '((guix build utils)))
-                  #~(begin
-                      (use-modules (guix build utils))
-                      (setenv "PATH"
-                              (string-append "/run/current-system/profile/bin:"
-                                             "/run/current-system/profile/sbin"))
-                      (invoke "ip" "netns" "add" "fedora")
-                      (invoke "ip" "link" "add" "name" "fedora0" "type" "veth" "peer" "name" "fedora1")
-                      (invoke "ip" "link" "set" "dev" "fedora1" "netns" "fedora")
-                      (invoke "ip" "netns" "exec" "fedora" "ip" "link" "set" "fedora1" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "fedora" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "fedora0" "master" "br0")
-                      (invoke "ip" "link" "set" "fedora0" "up")
-                      (invoke "ip" "netns" "exec" "fedora" "ip" "addr" "add" "192.168.0.155/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "fedora" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
 (define guix-workstation-program-file
   (program-file "guix-workstation"
@@ -161,87 +71,13 @@
                       (invoke "ip" "link" "set" "guix0" "master" "br0")
                       (invoke "ip" "link" "set" "guix0" "up")
                       (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.194/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")
-
-                      (invoke "mount" "-t" "tmpfs" "-o" "rw,relatime,size=100M,rshared" "none" "/mnt/guix-workstation/run")
-                      (invoke "mount" "-t" "tmpfs" "-o" "rw,relatime,size=100M,rshared" "none" "/mnt/guix-workstation/tmp")
-
-                      (invoke "mount" "/dev/vg0/guixworkstation" "/srv/runc/guix-workstation")))))
-
-(define guix-rde-program-file
-  (program-file "guix-rde"
-                (with-imported-modules (source-module-closure '((guix build utils)))
-                  #~(begin
-                      (use-modules (guix build utils))
-                      (setenv "PATH"
-                              (string-append "/run/current-system/profile/bin:"
-                                             "/run/current-system/profile/sbin"))
-                      (invoke "ip" "netns" "add" "guix-rde")
-                      (invoke "ip" "link" "add" "name" "guix2" "type" "veth" "peer" "name" "guix3")
-                      (invoke "ip" "link" "set" "dev" "guix3" "netns" "guix-rde")
-                      (invoke "ip" "netns" "exec" "guix-rde" "ip" "link" "set" "guix3" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-rde" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "guix2" "master" "br0")
-                      (invoke "ip" "link" "set" "guix2" "up")
-                      (invoke "ip" "netns" "exec" "guix-rde" "ip" "addr" "add" "192.168.0.193/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-rde" "ip" "route" "add" "default" "via" "192.168.0.1")))))
-
-(define guix-nanokvm-program-file
-  (program-file "nixos-majordomo"
-                (with-imported-modules (source-module-closure '((guix build utils)))
-                  #~(begin
-                      (use-modules (guix build utils))
-
-                      (setenv "PATH"
-                              (string-append "/run/current-system/profile/bin:"
-                                             "/run/current-system/profile/sbin"))
-
-                      (invoke "ip" "netns" "add" "guix-nanokvm")
-                      (invoke "ip" "link" "add" "name" "guix4" "type" "veth" "peer" "name" "guix5")
-                      (invoke "ip" "link" "set" "dev" "guix5" "netns" "guix-nanokvm")
-                      (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "link" "set" "guix5" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "guix4" "master" "br0")
-                      (invoke "ip" "link" "set" "guix4" "up")
-                      (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "addr" "add" "192.168.0.198/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "route" "add" "default" "via" "192.168.0.1")
-
-                      (invoke "mount" "/dev/vg0/guixnanokvm" "/srv/runc/guix-nanokvm")))))
-
-(define windows-program-file
-  (program-file "windows"
-                (with-imported-modules (source-module-closure '((guix build utils)))
-                  #~(begin
-                      (use-modules (guix build utils))
-                      (setenv "PATH"
-                              (string-append "/run/current-system/profile/bin:"
-                                             "/run/current-system/profile/sbin"))
-                      (setenv "LINUX_MODULE_DIRECTORY" "/run/booted-system/kernel/lib/modules")
-                      (invoke "modprobe" "kvmfr" "static_size_mb=128")
-                      (invoke "chown" "oleg:kvm" "/dev/kvmfr0")
-                      (invoke "modprobe" "vfio_iommu_type1")))))
-
-(define system-provision-program-file
-  (program-file "system-provision"
-                (with-imported-modules (source-module-closure '((guix build utils)))
-                  #~(begin
-                      (use-modules (guix build utils))
-
-                      (setenv "PATH"
-                              (string-append "/run/current-system/profile/bin:"
-                                             "/run/current-system/profile/sbin"))
-
-                      (invoke "iptables" "-P" "FORWARD" "ACCEPT")
-
-                      (invoke "swapon" "/dev/vg0/swap")))))
+                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
 (define (%pc0)
   (operating-system
     (host-name "pc0")
     (timezone "Europe/Moscow")
     (locale "en_US.utf8")
-
-
     (initrd microcode-initrd)
     (initrd-modules (append '("vfio-pci") %base-initrd-modules))
     (kernel linux-6.12)
@@ -274,8 +110,7 @@
                            (device "/dev/mapper/vg0-guixroot")
                            (mount-point "/")
                            (dependencies mapped-devices)
-                           (type "ext4")
-                           (flags '(shared)))
+                           (type "ext4"))
                          (file-system
                            (device (uuid "25E3-69CD" 'fat))
                            (mount-point "/boot/efi")
@@ -288,18 +123,37 @@
                            (flags '(no-dev))
                            (options "mode=1777,size=10%"))
                          (file-system
-                           (device "tmpfs")
-                           (mount-point "/mnt/guix-workstation/tmp")
-                           (type "tmpfs")
-                           (check? #f)
-                           (flags '(no-dev))
-                           (options "mode=1777,size=10%"))
-                         (file-system
                            (device "hugetlbfs")
                            (mount-point "/hugepages")
-                           (type "hugetlbfs")))
+                           (type "hugetlbfs"))
+                         (file-system
+                           (device (file-system-label "fedora"))
+                           (mount-point "/srv/runc/fedora")
+                           (dependencies mapped-devices)
+                           (type "ext4"))
+                         (file-system
+                           (device (file-system-label "nixosmajordomo"))
+                           (mount-point "/srv/runc/nixos-majordomo")
+                           (dependencies mapped-devices)
+                           (type "ext4"))
+                         (file-system
+                           (device (file-system-label "guixworkstation"))
+                           (mount-point "/srv/runc/guix-workstation")
+                           (dependencies mapped-devices)
+                           (type "btrfs"))
+                         (file-system
+                           (device (file-system-label "guixnanokvm"))
+                           (mount-point "/srv/runc/guix-nanokvm")
+                           (dependencies mapped-devices)
+                           (type "ext4")))
                    %control-groups
                    %base-file-systems))
+
+    (swap-devices
+     (list
+      (swap-space
+       (target (file-system-label "swap"))
+       (dependencies mapped-devices))))
 
     (kernel-arguments '("net.ifnames=0"
                         "biosdevname=0"
@@ -406,14 +260,17 @@
 
                                        ;; ddc to backlight interface.
                                        "ddcci"
-                                       "ddcci_backlight"))
+                                       "ddcci_backlight"
+
+                                       "vfio_iommu_type1"))
                             (service containerd-service-type)
 
                             (service runc-container-service-type
                                      (runc-container-configuration
                                       (bundle "/srv/runc/guix-workstation")
-                                      ;; (requirement '(guix-workstation))
-                                      (name "guix-workstation")))
+                                      (requirement '(guix-workstation))
+                                      (name "guix-workstation")
+                                      (auto-start? #t)))
 
                             (service kubelet-service-type
                                      (kubelet-configuration
@@ -486,46 +343,6 @@ cgroup_device_acl = [
 ]
 "))))))
 
-                            (simple-service 'system-provision shepherd-root-service-type
-                                            (list (shepherd-service
-                                                   (provision '(system-provision))
-                                                   (requirement '())
-                                                   (start #~(make-forkexec-constructor
-                                                             (list #$system-provision-program-file)))
-                                                   (respawn? #f)
-                                                   (auto-start? #t)
-                                                   (one-shot? #t))))
-
-                            (simple-service 'nixos-majordomo shepherd-root-service-type
-                                            (list (shepherd-service
-                                                   (provision '(nixos-majordomo))
-                                                   (requirement '(networking))
-                                                   (start #~(make-forkexec-constructor
-                                                             (list #$nixos-majordomo-program-file)))
-                                                   (respawn? #f)
-                                                   (auto-start? #t)
-                                                   (one-shot? #t))))
-
-                            (simple-service 'nixos-workstation shepherd-root-service-type
-                                            (list (shepherd-service
-                                                   (provision '(nixos-workstation))
-                                                   (requirement '(networking))
-                                                   (start #~(make-forkexec-constructor
-                                                             (list #$nixos-workstation-program-file)))
-                                                   (respawn? #f)
-                                                   (auto-start? #t)
-                                                   (one-shot? #t))))
-
-                            (simple-service 'nixos-zapret shepherd-root-service-type
-                                            (list (shepherd-service
-                                                   (provision '(nixos-zapret))
-                                                   (requirement '(networking))
-                                                   (start #~(make-forkexec-constructor
-                                                             (list #$nixos-zapret-program-file)))
-                                                   (respawn? #f)
-                                                   (auto-start? #t)
-                                                   (one-shot? #t))))
-
                             (simple-service 'guix-workstation shepherd-root-service-type
                                             (list (shepherd-service
                                                    (provision '(guix-workstation))
@@ -534,46 +351,6 @@ cgroup_device_acl = [
                                                              (list #$guix-workstation-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
-                                                   (one-shot? #t))))
-
-                            (simple-service 'fedora shepherd-root-service-type
-                                            (list (shepherd-service
-                                                   (provision '(fedora))
-                                                   (requirement '(networking))
-                                                   (start #~(make-forkexec-constructor
-                                                             (list #$fedora-program-file)))
-                                                   (respawn? #f)
-                                                   (auto-start? #t)
-                                                   (one-shot? #t))))
-
-                            (simple-service 'guix-rde shepherd-root-service-type
-                                            (list (shepherd-service
-                                                   (provision '(guix-rde))
-                                                   (requirement '(networking))
-                                                   (start #~(make-forkexec-constructor
-                                                             (list #$guix-rde-program-file)))
-                                                   (respawn? #f)
-                                                   (auto-start? #t)
-                                                   (one-shot? #t))))
-
-                            (simple-service 'guix-nanokvm shepherd-root-service-type
-                                            (list (shepherd-service
-                                                   (provision '(guix-nanokvm))
-                                                   (requirement '(networking))
-                                                   (start #~(make-forkexec-constructor
-                                                             (list #$guix-nanokvm-program-file)))
-                                                   (respawn? #f)
-                                                   (auto-start? #t)
-                                                   (one-shot? #t))))
-
-                            (simple-service 'windows shepherd-root-service-type
-                                            (list (shepherd-service
-                                                   (provision '(windows))
-                                                   (requirement '(networking libvirtd))
-                                                   (start #~(make-forkexec-constructor
-                                                             (list #$windows-program-file)))
-                                                   (respawn? #f)
-                                                   (auto-start? #f)
                                                    (one-shot? #t))))
 
                             (service virtlog-service-type
@@ -589,17 +366,6 @@ cgroup_device_acl = [
                                                 (udev-rule
                                                  "99-kvmfr.rules"
                                                  "SUBSYSTEM==\"kvmfr\", OWNER=\"oleg\", GROUP=\"kvm\", MODE=\"0660\"\n"))
-
-                            (service console-font-service-type
-                                     (map (lambda (tty)
-                                            (append (list tty)
-                                                    %default-console-font))
-                                          '("tty1"
-                                            "tty2"
-                                            "tty3"
-                                            "tty4"
-                                            "tty5"
-                                            "tty6")))
 
                             (service knot-resolver-service-type
                                      (knot-resolver-configuration
@@ -617,6 +383,7 @@ cgroup_device_acl = [
                                                     (value "127.0.0.2/8")))))
                                       (static-networking
                                        (provision '(br0))
+                                       (requirement '(eth0))
                                        (links (list
                                                (network-link
                                                 (name "br0")
@@ -673,4 +440,27 @@ cgroup_device_acl = [
                                                                   ;; for runc containers and libvirt virtual machines
                                                                   ("net.ipv4.conf.br0.forwarding" . "1"))
                                                                 %default-sysctl-settings))))
-                        (delete console-font-service-type))))))
+                        (console-font-service-type
+                         configuration =>
+                         (map
+                          (match-lambda
+                            (("tty1" . f)
+                             `("tty1" . ,(file-append font-terminus
+                                                      "/share/consolefonts/ter-132n")))
+                            (("tty2" . f)
+                             `("tty2" . ,(file-append font-terminus
+                                                      "/share/consolefonts/ter-132n")))
+                            (("tty3" . f)
+                             `("tty3" . ,(file-append font-terminus
+                                                      "/share/consolefonts/ter-132n")))
+                            (("tty4" . f)
+                             `("tty4" . ,(file-append font-terminus
+                                                      "/share/consolefonts/ter-132n")))
+                            (("tty5" . f)
+                             `("tty5" . ,(file-append font-terminus
+                                                      "/share/consolefonts/ter-132n")))
+                            (("tty6" . f)
+                             `("tty6" . ,(file-append font-terminus
+                                                      "/share/consolefonts/ter-132n")))
+                            ((tty . font) `(,tty . ,font)))
+                          configuration)))))))
