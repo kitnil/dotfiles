@@ -83,17 +83,13 @@
                               (string-append "/run/current-system/profile/bin:"
                                              "/run/current-system/profile/sbin"))
 
-                      (invoke "iptables" "-P" "FORWARD" "ACCEPT")
-
-                      (invoke "swapon" "/dev/vg0/swap")))))
+                      (invoke "iptables" "-P" "FORWARD" "ACCEPT")))))
 
 (define (%pc0)
   (operating-system
     (host-name "pc0")
     (timezone "Europe/Moscow")
     (locale "en_US.utf8")
-
-
     (initrd microcode-initrd)
     (initrd-modules (append '("vfio-pci") %base-initrd-modules))
     (kernel linux-6.12)
@@ -176,6 +172,12 @@
                            (type "ext4")))
                    %control-groups
                    %base-file-systems))
+
+    (swap-devices
+     (list
+      (swap-space
+       (target (file-system-label "swap"))
+       (dependencies mapped-devices))))
 
     (kernel-arguments '("net.ifnames=0"
                         "biosdevname=0"
