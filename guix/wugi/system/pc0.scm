@@ -123,18 +123,6 @@
                            (flags '(no-dev))
                            (options "mode=1777,size=10%"))
                          (file-system
-                           (device "tmpfs")
-                           (mount-point "/mnt/guix-workstation/tmp")
-                           (type "tmpfs")
-                           (check? #f)
-                           (options "mode=1777,size=10%"))
-                         (file-system
-                           (device "tmpfs")
-                           (mount-point "/mnt/guix-workstation/run")
-                           (type "tmpfs")
-                           (check? #f)
-                           (options "rw,relatime,size=100M,rshared"))
-                         (file-system
                            (device "hugetlbfs")
                            (mount-point "/hugepages")
                            (type "hugetlbfs"))
