@@ -110,8 +110,14 @@ program.")))
          (service elogind-service-type)
          seatd-service
          (service dbus-root-service-type)
-         (service container-mingetty-service-type
-                  (mingetty-configuration (tty "tty8")))
+         (service greetd-service-type
+                  (greetd-configuration
+                   (terminals
+                    (list
+                     (greetd-terminal-configuration
+                      (terminal-vt "8")
+                      (terminal-switch #t)
+                      (default-session-user "oleg"))))))
          (service (@ (wugi services desktop) bluetooth-service-type)
                   (bluetooth-configuration
                     (auto-enable? #t)
