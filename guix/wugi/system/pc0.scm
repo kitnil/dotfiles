@@ -127,8 +127,8 @@
                       (invoke "ip" "netns" "exec" "fedora" "ip" "addr" "add" "192.168.0.155/24" "dev" "eth0")
                       (invoke "ip" "netns" "exec" "fedora" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
-(define guix-workstation-program-file
-  (program-file "guix-workstation"
+(define ns-net-guix-workstation-program-file
+  (program-file "ns-net-guix-workstation"
                 (with-imported-modules (source-module-closure '((guix build utils)))
                   #~(begin
                       (use-modules (guix build utils))
@@ -249,6 +249,11 @@
                          (file-system
                            (device (file-system-label "nixoszapret"))
                            (mount-point "/srv/runc/nixos-zapret")
+                           (dependencies mapped-devices)
+                           (type "btrfs"))
+                         (file-system
+                           (device (file-system-label "nixosworkstation"))
+                           (mount-point "/srv/runc/nixos-workstation")
                            (dependencies mapped-devices)
                            (type "btrfs"))
                          (file-system
@@ -383,7 +388,11 @@
                             (service runc-container-service-type
                                      (runc-container-configuration
                                       (bundle "/srv/runc/guix-workstation")
-                                      (requirement '(guix-workstation))
+                                      (requirement '(ns-net-guix-workstation
+                                                     file-system-/srv/runc/fedora
+                                                     file-system-/srv/runc/guix-nanokvm
+                                                     file-system-/srv/runc/guix-workstation
+                                                     file-system-/srv/runc/nixos-majordomo))
                                       (name "guix-workstation")
                                       (auto-start? #t)))
 
@@ -488,12 +497,12 @@ cgroup_device_acl = [
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
 
-                            (simple-service 'guix-workstation shepherd-root-service-type
+                            (simple-service 'ns-net-guix-workstation shepherd-root-service-type
                                             (list (shepherd-service
-                                                   (provision '(guix-workstation))
+                                                   (provision '(ns-net-guix-workstation))
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-constructor
-                                                             (list #$guix-workstation-program-file)))
+                                                             (list #$ns-net-guix-workstation-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
