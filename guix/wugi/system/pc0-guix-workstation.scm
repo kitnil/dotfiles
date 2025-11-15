@@ -148,7 +148,8 @@ program.")))
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-workstation")
-                   (name "nixos-workstation")))
+                   (name "nixos-workstation")
+                   (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
