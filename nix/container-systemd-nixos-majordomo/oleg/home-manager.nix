@@ -3,6 +3,7 @@
   home.packages = [
     pkgs.ipmitool
     pkgs.ipmiview
+    pkgs.skopeo
     robo3t
   ]
   ++ (map (file: pkgs.writeScriptBin (builtins.baseNameOf file) (builtins.readFile file)) [
