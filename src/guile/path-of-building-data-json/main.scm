@@ -142,17 +142,18 @@
   #~(#$value))
 
 (define-configuration poe-item-filter-color-configuration
+  ;; XXX: Refactor poe-item-filter-color-configuration less than 256 hack.
   (red
-   (integer 0)
+   (integer 256)
    "")
   (green
-   (integer 0)
+   (integer 256)
    "")
   (blue
-   (integer 0)
+   (integer 256)
    "")
   (alpha
-   (integer 0)
+   (integer 256)
    ""))
 
 (define (color? x)
@@ -160,10 +161,19 @@
       (poe-item-filter-color-configuration? x)))
 
 (define (serialize-color field-name value)
-  #~(if (or (> #$(poe-item-filter-color-configuration-red value) 0)
-            (> #$(poe-item-filter-color-configuration-green value) 0)
-            (> #$(poe-item-filter-color-configuration-blue value) 0)
-            (> #$(poe-item-filter-color-configuration-alpha value) 0))
+  ;; XXX: Refactor poe-item-filter-color-configuration less than 256 hack.
+  #~(if (or (and (or (> #$(poe-item-filter-color-configuration-red value) 0)
+                     (> #$(poe-item-filter-color-configuration-green value) 0)
+                     (> #$(poe-item-filter-color-configuration-blue value) 0)
+                     (> #$(poe-item-filter-color-configuration-alpha value) 0))
+                 (or (< #$(poe-item-filter-color-configuration-red value) 256)
+                     (< #$(poe-item-filter-color-configuration-green value) 256)
+                     (< #$(poe-item-filter-color-configuration-blue value) 256)
+                     (< #$(poe-item-filter-color-configuration-alpha value) 256)))
+            (or (= #$(poe-item-filter-color-configuration-red value) 0)
+                (= #$(poe-item-filter-color-configuration-green value) 0)
+                (= #$(poe-item-filter-color-configuration-blue value) 0)
+                (= #$(poe-item-filter-color-configuration-alpha value) 0)))
         (string-append "\t"
                        (string-join (list #$(uglify-field-name field-name)
                                           #$(number->string (poe-item-filter-color-configuration-red value))
@@ -558,6 +568,12 @@
                           (commentary "Decrease identified items font size.")
                           (identified? #t)
                           (set-font-size 20)
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 0)
+                            (green 0)
+                            (blue 0)
+                            (alpha 0)))
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
@@ -1115,7 +1131,13 @@
                                                                                                ""))
                                                                    items))
                                                             string<))
-                                                     (set-font-size 20))))
+                                                     (set-font-size 20)
+                                                     (set-background-color
+                                                      (poe-item-filter-color-configuration
+                                                       (red 0)
+                                                       (green 0)
+                                                       (blue 0)
+                                                       (alpha 0))))))
                                               sub-types))
                                        '("Body Armour"
                                          "Boots"
@@ -1125,7 +1147,13 @@
                    (list (poe-item-filter-block-configuration
                           (commentary "Decrease font size for items with classes.")
                           (classes %weapon-classes)
-                          (set-font-size 20))
+                          (set-font-size 20)
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 0)
+                            (green 0)
+                            (blue 0)
+                            (alpha 0))))
 
                          (poe-item-filter-block-configuration
                           (commentary "Highlight 2500 or more gold.")
