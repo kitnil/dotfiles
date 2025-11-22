@@ -56,6 +56,7 @@ Show
 # Decrease identified items font size.
 Show
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 	Identified True
 	Continue
 
@@ -212,101 +213,121 @@ Show
 Show
 	BaseType == "Arena Plate" "Astral Plate" "Battle Plate" "Bronze Plate" "Chestplate" "Colosseum Plate" "Copper Plate" "Crusader Plate" "Full Plate" "Gladiator Plate" "Glorious Plate" "Golden Plate" "Legion Plate" "Lordly Plate" "Majestic Plate" "Plate Vest" "Royal Plate" "Sun Plate" "Titan Plate" "War Plate" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Body Armour" "Armour/Evasion" base items.
 Show
 	BaseType == "Battle Lamellar" "Commander's Brigandine" "Conquest Lamellar" "Desert Brigandine" "Dragonscale Doublet" "Field Lamellar" "Full Dragonscale" "Full Scale Armour" "Full Wyrmscale" "Full Wyvernscale" "General's Brigandine" "Hussar Brigandine" "Infantry Brigandine" "Light Brigandine" "Marshall's Brigandine" "Scale Doublet" "Scale Vest" "Soldier's Brigandine" "Triumphant Lamellar" "Wyrmscale Doublet" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Body Armour" "Evasion" base items.
 Show
 	BaseType == "Assassin's Garb" "Astral Leather" "Buckskin Tunic" "Coronal Leather" "Cutthroat's Garb" "Destiny Leather" "Eelskin Tunic" "Exquisite Leather" "Frontier Leather" "Full Leather" "Glorious Leather" "Shabby Jerkin" "Sharkskin Tunic" "Strapped Leather" "Sun Leather" "Supreme Leather" "Syndicate's Garb" "Thief's Garb" "Wild Leather" "Zodiac Leather" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Body Armour" "Evasion/Energy Shield" base items.
 Show
 	BaseType == "Blood Raiment" "Bone Armour" "Carnal Armour" "Crimson Raiment" "Crypt Armour" "Lacquered Garb" "Necrotic Armour" "Oiled Coat" "Oiled Vest" "Padded Jacket" "Padded Vest" "Quilted Jacket" "Sadist Garb" "Sanguine Raiment" "Scarlet Raiment" "Sentinel Jacket" "Sleek Coat" "Torturer Garb" "Varnished Coat" "Waxed Garb" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Boots" "Armour" base items.
 Show
 	BaseType == "Ancient Greaves" "Antique Greaves" "Basemetal Treads" "Brimstone Treads" "Darksteel Treads" "Goliath Greaves" "Iron Greaves" "Leviathan Greaves" "Plated Greaves" "Precursor Greaves" "Reinforced Greaves" "Steel Greaves" "Titan Greaves" "Vaal Greaves" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Boots" "Armour/Evasion" base items.
 Show
 	BaseType == "Bronzescale Boots" "Chimerascale Boots" "Dragonscale Boots" "Hydrascale Boots" "Ironscale Boots" "Leatherscale Boots" "Serpentscale Boots" "Steelscale Boots" "Two-Toned Boots" "Wyrmscale Boots" "Wyvernscale Boots" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Boots" "Energy Shield" base items.
 Show
 	BaseType == "Arcanist Slippers" "Conjurer Boots" "Dreamquest Slippers" "Duskwalk Slippers" "Nightwind Slippers" "Sage Slippers" "Samite Slippers" "Satin Slippers" "Scholar Boots" "Silk Slippers" "Sorcerer Boots" "Velvet Slippers" "Warlock Boots" "Wool Shoes" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Boots" "Evasion" base items.
 Show
 	BaseType == "Cloudwhisper Boots" "Deerskin Boots" "Eelskin Boots" "Goathide Boots" "Harpyskin Boots" "Nubuck Boots" "Rawhide Boots" "Shagreen Boots" "Sharkskin Boots" "Slink Boots" "Stealth Boots" "Stormrider Boots" "Velour Boots" "Windbreak Boots" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Boots" "Evasion/Energy Shield" base items.
 Show
 	BaseType == "Ambush Boots" "Assassin's Boots" "Carnal Boots" "Clasped Boots" "Fugitive Boots" "Infiltrator Boots" "Murder Boots" "Phantom Boots" "Shackled Boots" "Strapped Boots" "Trapper Boots" "Two-Toned Boots" "Wrapped Boots" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Gloves" "Armour" base items.
 Show
 	BaseType == "Ancient Gauntlets" "Antique Gauntlets" "Bronze Gauntlets" "Goliath Gauntlets" "Guarding Gauntlets" "Iron Gauntlets" "Leviathan Gauntlets" "Plated Gauntlets" "Precursor Gauntlets" "Preserving Gauntlets" "Spiked Gloves" "Steel Gauntlets" "Thwarting Gauntlets" "Titan Gauntlets" "Vaal Gauntlets" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Gloves" "Armour/Evasion" base items.
 Show
 	BaseType == "Bronzescale Gauntlets" "Chimerascale Gauntlets" "Dragonscale Gauntlets" "Fishscale Gauntlets" "Hydrascale Gauntlets" "Ironscale Gauntlets" "Serpentscale Gauntlets" "Steelscale Gauntlets" "Wyrmscale Gauntlets" "Wyvernscale Gauntlets" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Gloves" "Energy Shield" base items.
 Show
 	BaseType == "Aetherwind Gloves" "Arcanist Gloves" "Conjurer Gloves" "Embroidered Gloves" "Fingerless Silk Gloves" "Leyline Gloves" "Nexus Gloves" "Sage Gloves" "Samite Gloves" "Satin Gloves" "Silk Gloves" "Sorcerer Gloves" "Velvet Gloves" "Warlock Gloves" "Wool Gloves" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Gloves" "Evasion" base items.
 Show
 	BaseType == "Apprentice Gloves" "Deerskin Gloves" "Eelskin Gloves" "Goathide Gloves" "Gripped Gloves" "Harpyskin Gloves" "Nubuck Gloves" "Rawhide Gloves" "Shagreen Gloves" "Sharkskin Gloves" "Slink Gloves" "Stealth Gloves" "Tinker Gloves" "Trapsetter Gloves" "Velour Gloves" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Gloves" "Evasion/Energy Shield" base items.
 Show
 	BaseType == "Ambush Mitts" "Assassin's Mitts" "Carnal Mitts" "Clasped Mitts" "Infiltrator Mitts" "Murder Mitts" "Phantom Mitts" "Strapped Mitts" "Trapper Mitts" "Wrapped Mitts" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Helmet" "Armour" base items.
 Show
 	BaseType == "Barbute Helmet" "Close Helmet" "Cone Helmet" "Conqueror's Helmet" "Eternal Burgonet" "Ezomyte Burgonet" "General's Helmet" "Giantslayer Helmet" "Gladiator Helmet" "Iron Hat" "Reaver Helmet" "Royal Burgonet" "Samnite Helmet" "Siege Helmet" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Helmet" "Armour/Evasion" base items.
 Show
 	BaseType == "Atonement Mask" "Battered Helm" "Conquest Helmet" "Fencer Helm" "Fluted Bascinet" "Gilded Sallet" "Haunted Bascinet" "Knight Helm" "Lacquered Helmet" "Nightmare Bascinet" "Penitent Mask" "Pig-Faced Bascinet" "Sallet" "Secutor Helm" "Sorrow Mask" "Visored Sallet" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Helmet" "Energy Shield" base items.
 Show
 	BaseType == "Bone Circlet" "Hubris Circlet" "Iron Circlet" "Lich's Circlet" "Lunaris Circlet" "Mind Cage" "Moonlit Circlet" "Necromancer Circlet" "Solaris Circlet" "Steel Circlet" "Sunfire Circlet" "Torture Cage" "Tribal Circlet" "Vine Circlet" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Helmet" "Evasion" base items.
 Show
 	BaseType == "Dire Pelt" "Grizzly Pelt" "Hunter Hood" "Leather Cap" "Leather Hood" "Lion Pelt" "Majestic Pelt" "Noble Tricorne" "Silken Hood" "Sinner Tricorne" "Tricorne" "Ursine Pelt" "Wolf Pelt" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for "Helmet" "Evasion/Energy Shield" base items.
 Show
 	BaseType == "Ancient Mask" "Blizzard Crown" "Callous Mask" "Deicide Mask" "Festival Mask" "Gale Crown" "Golden Mask" "Harlequin Mask" "Iron Mask" "Jester Mask" "Plague Mask" "Raven Mask" "Regicide Mask" "Scare Mask" "Torturer's Mask" "Vaal Mask" "Winter Crown" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Decrease font size for items with classes.
 Show
 	Class == "Bows" "Claws" "Corpses" "Daggers" "One Hand Axes" "One Hand Maces" "One Hand Swords" "Quivers" "Rune Daggers" "Thrusting One Hand Swords" "Two Hand Axes" "Two Hand Maces" "Two Hand Swords" 
 	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
 
 # Highlight 2500 or more gold.
 Show
