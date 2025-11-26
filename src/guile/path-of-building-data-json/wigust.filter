@@ -46,13 +46,6 @@ Show
 	PlayAlertSound 3 300
 	PlayEffect Brown
 
-# Highlight not identified items.
-Show
-	SetBackgroundColor 86 0 0 230
-	Rarity Magic Rare Unique
-	Identified False
-	Continue
-
 # Decrease identified items font size.
 Show
 	SetFontSize 20
@@ -357,3 +350,10 @@ Show
 # Stop apply rules to gold.
 Show
 	BaseType "Gold" 
+
+# Highlight not identified items.
+Show
+	SetBackgroundColor 86 0 0 230
+	Rarity Magic Rare Unique
+	Identified False
+	Continue
