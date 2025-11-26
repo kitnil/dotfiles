@@ -1137,7 +1137,8 @@
                                                        (red 0)
                                                        (green 0)
                                                        (blue 0)
-                                                       (alpha 0))))))
+                                                       (alpha 0)))
+                                                     (continue? #t))))
                                               sub-types))
                                        '("Body Armour"
                                          "Boots"
