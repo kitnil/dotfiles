@@ -24,6 +24,7 @@ in {
       epkgs: [
         epkgs.magit
         epkgs.nix-mode
+        epkgs.wgrep
       ]
     ))
 
