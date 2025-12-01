@@ -571,6 +571,7 @@ in {
         epkgs.nix-mode
         epkgs.projectile
         epkgs.yaml-mode
+        epkgs.wgrep
       ]
     ));
     client = {
