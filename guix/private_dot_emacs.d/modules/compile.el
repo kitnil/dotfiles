@@ -58,7 +58,7 @@ situation, you should also set the following option in your
 
 (setq compilation-environment '("TERM=xterm-256color"))
 
-(defun my/advice-compilation-filter (f proc string)
-  (funcall f proc (xterm-color-filter string)))
-
-(advice-add 'compilation-filter :around #'my/advice-compilation-filter)
+(when (functionp #'xterm-color-filter)
+  (defun my/advice-compilation-filter (f proc string)
+    (funcall f proc (xterm-color-filter string)))
+  (advice-add 'compilation-filter :around #'my/advice-compilation-filter))
