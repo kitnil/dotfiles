@@ -70,7 +70,7 @@
                          %base-file-systems))
 
     (initrd microcode-initrd)
-    (kernel linux-6.6)
+    (kernel linux-6.12)
     (firmware (append (list linux-firmware)
                       %base-firmware))
 
