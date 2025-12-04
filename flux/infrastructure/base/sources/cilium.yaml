@@ -9,3 +9,12 @@ spec:
   ref:
     commit: fb5e988af22348bda1187dfa2f8c4e4df7681064
   url: https://cgit.wugi.info/git/cilium/cilium
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: cilium
+  namespace: flux-system
+spec:
+  interval: 60m0s
+  url: https://helm.cilium.io/
