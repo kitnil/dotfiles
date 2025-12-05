@@ -5,7 +5,7 @@ Kubernetes: true
 operator:
   resources:
     limits:
-      memory: 60Mi
+      memory: 120Mi
 
 fluentbit:
   output:
