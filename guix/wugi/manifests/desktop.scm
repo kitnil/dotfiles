@@ -54,7 +54,6 @@
           font-chiron-sung-hk
           font-chivo
           font-cica
-          font-cns11643
           font-cns11643-swjz
           font-comic-neue
           font-cormorant
