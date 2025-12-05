@@ -3,6 +3,7 @@
   #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages image)
+  #:use-module (gnu packages linux)
   #:use-module (gnu packages terminals)
   #:use-module (gnu packages vnc)
   #:use-module (gnu packages wm)
@@ -20,12 +21,16 @@
   (define clipboard
     (list wl-clipboard))
 
+  (define audio
+    (list wireplumber))
+
   (define wayland-utils
     (list wayvnc
           wl-mirror
           wtype))
 
-  (packages->manifest (append clipboard
+  (packages->manifest (append audio
+                              clipboard
                               wm
                               sway-utils
                               wayland-utils)))
