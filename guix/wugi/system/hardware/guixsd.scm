@@ -85,7 +85,10 @@
                         "kvm.report_ignored_msrs=0"
 
                         ;; Enable LUKS TRIM/DISCARD pass-through.
-                        "rd.luks.options=discard"))
+                        "rd.luks.options=discard"
+
+                        ;; Fix CPU 399 MHz.
+                        "amd_pstate=passive"))
     (users (append (list (user-account
                           (name "oleg")
                           (uid 1000)
