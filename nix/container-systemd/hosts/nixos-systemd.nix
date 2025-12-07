@@ -186,8 +186,6 @@
       '';
     in ''
       ln -s ${entrypoint} $out/entrypoint.sh
-      mkdir -p $out/bin
-      ln -s ${bashInteractive}/bin/bash $out/bin/bash
     '';
 
   fonts = {
