@@ -322,6 +322,7 @@ nix-update-inputs:
 	$(MAKE) -C nix/container-systemd-nixos-majordomo original
 	$(MAKE) -C nix/container-systemd-nixos-workstation original
 	$(MAKE) -C nix/container-systemd-nixos-workstation-guixsd original
+	$(MAKE) -C nix/container-systemd-nixos-workstation-pc0 original
 	$(MAKE) -C nix/container-systemd-nixos-zapret original
 
 container-systemd-taskexecutor: $(DECRYPT_TARGETS)
