@@ -32,6 +32,6 @@
 
   services.ollama = {
     enable = true;
-    acceleration = "vulkan";
+    package = pkgs.ollama-vulkan;
   };
 }
