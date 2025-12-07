@@ -1,14 +1,9 @@
 # see https://github.com/sigoden/aichat/blob/main/config.example.yaml
 
-model: lm-studio:gemma-3-12b-it
-light_theme: true
+light_theme: false
 clients:
 - type: openai-compatible
-  name: lm-studio
-  # api_base: https://lm-studio.home.wugi.info/v1
-  api_base: http://192.168.0.178:1234/v1
+  name: ollama
+  api_base: http://192.168.0.185:11434/v1
   models:
-  - name: deepseek-r1-distill-llama-8b
-  - name: gemma-3-12b-it
-  - name: llama-3.2-3b-instruct
-  - name: qwen2.5-7b-instruct-1m
+  - name: gemma3:12b
