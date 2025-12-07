@@ -2,7 +2,7 @@
   description = "";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "nixpkgs/nixos-25.11";
     dotfiles-home-manager.url = "git+file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles?dir=nix";
     flake-utils.url = "github:numtide/flake-utils";
     firejail-disable-sandbox-check.url = "github:wigust/nixpkgs?ref=firejail-disable-sandbox-check";
