@@ -88,7 +88,11 @@
                         "rd.luks.options=discard"
 
                         ;; Fix CPU 399 MHz.
-                        "amd_pstate=passive"))
+                        "amd_pstate=passive"
+
+                        ;; Required to unlock access to adjust clocks and
+                        ;; voltages.
+                        "amdgpu.ppfeaturemask=0xffffffff"))
     (users (append (list (user-account
                           (name "oleg")
                           (uid 1000)
