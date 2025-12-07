@@ -46,11 +46,11 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1764605813,
-        "narHash": "sha256-oy54vHVM9CyxIQ4y1m6oHwjDR2yp7yCEwgGnTUK+XrQ=",
+        "lastModified": 1765136638,
+        "narHash": "sha256-XFH93XAKX/g8QLO4aEKN1l1b8jFoajU3RA7IWyHXNew=",
         "ref": "refs/heads/master",
-        "rev": "806f67df9e91aa72ba69b0d770bebf004d33b6f7",
-        "revCount": 16213,
+        "rev": "fa7cfb5a492a959cb4a890a675158b4764b1cbd6",
+        "revCount": 16254,
         "type": "git",
         "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
       },
@@ -991,16 +991,16 @@
     },
     "nixpkgs_8": {
       "locked": {
-        "lastModified": 1752436162,
-        "narHash": "sha256-Kt1UIPi7kZqkSc5HVj6UY5YLHHEzPBkgpNUByuyxtlw=",
+        "lastModified": 1764983851,
+        "narHash": "sha256-y7RPKl/jJ/KAP/VKLMghMgXTlvNIJMHKskl8/Uuar7o=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "dfcd5b901dbab46c9c6e80b265648481aafb01f8",
+        "rev": "d9bc5c7dceb30d8d6fafa10aeb6aa8a48c218454",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "nixos-25.05",
+        "ref": "nixos-25.11",
         "type": "indirect"
       }
     },
@@ -1049,11 +1049,11 @@
       },
       "locked": {
         "dir": "nix/container-systemd",
-        "lastModified": 1764605836,
-        "narHash": "sha256-mvI7xla4HhwygThj20kMuqYsqMSzJJBSyT+z5esrQTk=",
+        "lastModified": 1765137770,
+        "narHash": "sha256-odaGTMui64ezuu1dBHfXU2P1+gdoXvffUxk5IPNdINc=",
         "ref": "refs/heads/master",
-        "rev": "e9cc29b1e4adb08ad5e65d847cea52e89b277f06",
-        "revCount": 16214,
+        "rev": "00f3db3636fca55f2a4c350bdf1201461a384d31",
+        "revCount": 16255,
         "type": "git",
         "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
       },
