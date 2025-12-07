@@ -2098,7 +2098,9 @@ namespaces = [ ]
                                                     ("vm.max_map_count" . "262144")
                                                     ;; piraeus piraeus-op-ns-node requirement
                                                     ("fs.inotify.max_user_watches" . "100000")
-                                                    ("fs.inotify.max_user_instances" . "100000"))
+                                                    ("fs.inotify.max_user_instances" . "100000")
+
+                                                    ("kernel.sysrq" . "1"))
                                                   %default-sysctl-settings)))))))
 
       (setuid-programs %my-setuid-programs)
