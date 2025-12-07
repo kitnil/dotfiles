@@ -134,7 +134,7 @@
                               builtins.elem (nixpkgs.lib.getName pkg) [
                                 "google-chrome"
                                 "IPMIView"
-                                "ndi"
+                                "ndi-6"
                                 "steam"
                                 "steam-unwrapped"
                                 "teamspeak3"
