@@ -29,30 +29,4 @@ in
     enable = true;
     commandLineArgs = [ "--ozone-platform=wayland" ];
   };
-  programs.obs-studio = {
-    enable = true;
-    plugins = with pkgs; [
-      espanso-wayland
-
-      obs-studio-plugins.obs-multi-rtmp
-      obs-studio-plugins.obs-ndi
-      obs-studio-plugins.obs-pipewire-audio-capture
-
-      path-of-building
-      path-of-building-data-json
-
-      teamspeak3
-
-      steam
-    ];
-  };
-  programs.firefox = {
-    profiles = {
-      stream-manager = (firefoxBaseProfile { ech = false; }) // {
-        name = "stream-manager";
-        id = 18243;
-        isDefault = false;
-      };
-    };
-  };
 }
