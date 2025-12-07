@@ -102,7 +102,7 @@ GUIX_SYSTEM_CONFIGURATIONS =			\
   workstation
 
 define guix-pull
-$(GUIX) pull "--channels=$(abs_top_srcdir)/guix/wugi/etc/guix/channels/$(1).scm" --allow-downgrades --cores=$(shell nproc)
+$(GUIX) pull "--channels=$(abs_top_srcdir)/guix/wugi/etc/guix/channels/$(1).scm" --allow-downgrades --cores=$(shell nproc) --substitute-urls=$(SUBSTITUTE_URLS)
 endef
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-pull-$(configuration)):
