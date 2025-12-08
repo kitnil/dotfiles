@@ -15,7 +15,7 @@
     (list sway))
 
   (define sway-utils
-    (list bemenu grim fnott mako slurp swayidle waybar))
+    (list bemenu grim fnott fyi mako slurp swayidle waybar))
 
   (define clipboard
     (list wl-clipboard))
