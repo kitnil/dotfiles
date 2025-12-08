@@ -5,18 +5,41 @@ set -o errexit -o pipefail
 PATH="/gnu/store/8s03yp79faafp1vnjp8xggrqsf22xxp9-fyi-1.0.4/bin:${PATH}"
 export PATH
 
+NOTIFY="${LLM_AICHAT_NOTIFY:-false}"
+WINDOW_MANAGER="${LLM_AICHAT_WINDOW_MANAGER:-niri}"
+
+current_window_name()
+{
+    if [[ $WINDOW_MANAGER == niri ]]
+    then
+        niri msg --json focused-window | jq --raw-output .title
+    elif [[ $WINDOW_MANAGER == sway ]]
+    then
+        swaymsg -t get_tree | jq --raw-output '.. | select(.focused?) | .name'
+    fi
+}
+
+notify()
+{
+    if [[ $NOTIFY == true ]]
+    then
+        fyi "$@"
+    else
+        echo "$@"
+    fi
+}
+
 main()
 {
     local content="$(cat)"
     printf "%s\n" "$content"
-    current_window_name="$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .name')"
     if [[ -n $LLM_PROMPT ]]
     then
         local prompts=(
             "$LLM_PROMPT"
         )
     else
-        case "$current_window_name" in
+        case "$(current_window_name)" in
             Alacritty)
                 local prompts=(
                     "Explain in English. In not more than 5 sentences without new lines and without saying what you are doing."
@@ -44,11 +67,11 @@ main()
     do
         if [[ -n $content ]]
         then
-            local output="$(printf "$content" | /home/oleg/src/cgit.wugi.info/wigust/dotfiles/dot_local/bin/aichat --prompt "$prompt")"
+            local output="$(printf "$content" | aichat --prompt "$prompt")"
             echo "$output"
             russian()
             {
-                fyi "LLM output (copied to primary clipboard)" "$output"
+                notify "LLM output (copied to primary clipboard)" "$output"
                 if [[ $LLM_COPY == true ]]
                 then
                     wl-copy "$output"
@@ -76,7 +99,7 @@ main()
                     russian
                     ;;
                 *)
-                    fyi "LLM output" "$output"
+                    notify "LLM output" "$output"
                     ;;
             esac
         fi
