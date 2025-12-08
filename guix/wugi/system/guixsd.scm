@@ -318,6 +318,13 @@
                                    (ice-9 popen)
                                    (ice-9 rdelim)
                                    (srfi srfi-34))
+                      ;; Downclock RX 7600XT AMD GPU to increase stability.
+                      ;;
+                      ;; This is a work around stability issues.  The specific
+                      ;; values may need to be adjusted based on the system.
+                      (system* "sudo" "/bin/sh" "-c" "echo 's 1 2200 > /sys/class/drm/card0/device/pp_od_clk_voltage")
+                      (system* "sudo" "/bin/sh" "-c" "echo 'c' > /sys/class/drm/card0/device/pp_od_clk_voltage")
+
                       (guard (c ((invoke-error? c)
                                  (report-invoke-error c)
                                  #f))
