@@ -77,10 +77,12 @@
                                                                  `(("stream" . #f)
                                                                    ("system" . ,prompt)
                                                                    ("prompt" . ,input)
-                                                                   ("model" . "gemma3:12b"))))))
+                                                                   ("model" . "gemma3:12b")))))
+                            (body (assoc-ref (json-string->scm (utf8->string port))
+                                             "response")))
                        (newline)
-                       (display (assoc-ref (json-string->scm (utf8->string port))
-                                           "response"))))
+                       (display body)
+                       (system* "fyi" "LLM output" body)))
                    prompts))))))
 
 ;;; Buffer name ‘llm-aichat’ is in use ends here
