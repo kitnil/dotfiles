@@ -32,6 +32,10 @@ notify()
 main()
 {
     local content="$(cat)"
+    if [[ -z $content ]]
+    then
+        exit 0
+    fi
     printf "%s\n" "$content"
     if [[ -n $LLM_PROMPT ]]
     then
