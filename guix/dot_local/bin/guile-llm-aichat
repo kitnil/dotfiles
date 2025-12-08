@@ -82,7 +82,7 @@
                                              "response")))
                        (newline)
                        (display body)
-                       (system* "fyi" "LLM output" body)))
+                       (system* "fyi" "--app-name=llm-aichat" "LLM output" body)))
                    prompts))))))
 
 ;;; Buffer name ‘llm-aichat’ is in use ends here
