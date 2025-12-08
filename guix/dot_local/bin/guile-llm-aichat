@@ -11,7 +11,12 @@
   #:use-module (ice-9 rdelim)
   #:use-module (ice-9 match)
   #:use-module (ice-9 popen)
+  #:use-module (srfi srfi-71)
   #:use-module (srfi srfi-37)
+  #:use-module (rnrs bytevectors)
+  #:use-module (web client)
+  #:use-module (web request)
+  #:use-module (web response)
   #:export (main))
 
 ;;; Commentary:
@@ -58,16 +63,24 @@
              '("Explain in English. In not more than 5 sentences without new lines and without saying what you are doing."))
             ((string-prefix? window-title "COMMIT_EDITMSG")
              '("Generate Git commit message following Changelog style. First commit line should end with a period as a sentence. Each modified file should be described as in example \"* /a/b/c.txt: Add something.\". Without saying what you are doing. Limit is 200 characters."))
-            ;; todo
+            ;; TODO: Twitch prompt.
             ((string= window-title "twitch")
              '("Respond in Russian. In one sentence without new lines and without saying what you are doing. Maybe include a joke."))
             (else
              '("Respond in English. In one sentence without new lines and without saying what you are doing."
                "Respond in Russian. In one sentence without new lines and without saying what you are doing."))))
          (for-each (lambda (prompt)
-                     (let* ((pipe (open-pipe* OPEN_WRITE
-                                              "aichat" "--no-stream" "--prompt" prompt)))
-                       (display input pipe)))
+                     (let* ((response port (http-request "http://192.168.0.185:11434/api/generate"
+                                                         #:method 'POST
+                                                         #:streaming? #f
+                                                         #:body (scm->json-string
+                                                                 `(("stream" . #f)
+                                                                   ("system" . ,prompt)
+                                                                   ("prompt" . ,input)
+                                                                   ("model" . "gemma3:12b"))))))
+                       (newline)
+                       (display (assoc-ref (json-string->scm (utf8->string port))
+                                           "response"))))
                    prompts))))))
 
 ;;; Buffer name ‘llm-aichat’ is in use ends here
