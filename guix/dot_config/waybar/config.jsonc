@@ -29,7 +29,8 @@
         "keyboard-state",
         "clock#utc",
         "clock#msk",
-        "tray"
+        "tray",
+        "custom/notification"
     ],
     // Modules configuration
     "keyboard-state": {
@@ -40,6 +41,25 @@
             "locked": "",
             "unlocked": ""
         }
+    },
+    "custom/notification": {
+        "tooltip": true,
+        "format": "<span size='16pt'>{icon}</span>",
+        "format-icons": {
+          "notification": "󱅫",
+          "none": "󰂜",
+          "dnd-notification": "󰂠",
+          "dnd-none": "󰪓",
+          "inhibited-notification": "󰂛",
+          "inhibited-none": "󰪑",
+          "dnd-inhibited-notification": "󰂛",
+          "dnd-inhibited-none": "󰪑"
+        },
+        "return-type": "json",
+        "exec": "/home/oleg/bin/swaync-client -swb",
+        "on-click": "/home/oleg/bin/swaync-client -t -sw",
+        "on-click-right": "/home/oleg/bin/swaync-client -d -sw",
+        "escape": true
     },
     "custom/lm-studio-models": {
         "exec": "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/dot_local/bin/lm-studio-loaded-models.sh",
