@@ -358,8 +358,53 @@ window-rule {
 }
 
 window-rule {
-    match title="Social Stream - Dashboard"
-    max-width 480
+    match app-id="firefox-socialstream"
+    match app-id="com.chatterino."
+    default-column-width { fixed 480; }
+}
+
+window-rule {
+    match app-id=r#"^nixos-zapret-.*$"#
+
+    focus-ring {
+        active-color "#00bfff"
+        inactive-color "#191970"
+    }
+
+    border {
+        inactive-color "#191970"
+    }
+
+    shadow {
+        color "#19197070"
+    }
+
+    tab-indicator {
+        active-color "#00bfff"
+        inactive-color "#191970"
+    }
+}
+
+window-rule {
+    match app-id=r#"^guix-workstation-.*$"#
+
+    focus-ring {
+        active-color "#ee9a49"
+        inactive-color "#8b5a2b"
+    }
+
+    border {
+        inactive-color "#8b5a2b"
+    }
+
+    shadow {
+        color "#8b5a2b70"
+    }
+
+    tab-indicator {
+        active-color "#ee9a49"
+        inactive-color "#8b5a2b"
+    }
 }
 
 binds {
@@ -379,6 +424,7 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
+    Mod+E hotkey-overlay-title="Open an Editor: emacs" { spawn "emacs"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+Shift+s hotkey-overlay-title="Password Store: pass" { spawn "bemenu-passmenu"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
@@ -388,13 +434,18 @@ binds {
     // For example, this is a standard bind to toggle the screen reader (orca).
     Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
 
+    Mod+a { spawn-sh "wl-paste | ~/src/cgit.wugi.info/wigust/dotfiles/guix/dot_local/bin/guile-llm-aichat"; }
+    Mod+Shift+a { spawn-sh "exec alacritty --command aichat"; }
+
     // Example volume keys mappings for PipeWire & WirePlumber.
     // The allow-when-locked=true property makes them work even when the session is locked.
     // Using spawn-sh allows to pass multiple arguments together with the command.
-    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "pactl set-sink-volume @DEFAULT_SINK@ +5%"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "pactl set-sink-volume @DEFAULT_SINK@ -5%"; }
-    XF86AudioMute        allow-when-locked=true { spawn-sh "pactl set-sink-mute @DEFAULT_SINK@ toggle"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "pactl set-sink-volume alsa_output.pci-0000_12_00.6.analog-stereo +5%"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "pactl set-sink-volume alsa_output.pci-0000_12_00.6.analog-stereo -5%"; }
+    XF86AudioMute        allow-when-locked=true { spawn-sh "pactl set-sink-mute alsa_output.pci-0000_12_00.6.analog-stereo toggle"; }
+    XF86Tools            allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86Calculator allow-when-locked=true { spawn-sh "pactl set-sink-volume bluez_output.14_3F_A6_77_C9_3C.1 +5%"; }
+    XF86HomePage allow-when-locked=true { spawn-sh "pactl set-sink-volume bluez_output.14_3F_A6_77_C9_3C.1 -5%"; }
 
     // Example brightness key mappings for brightnessctl.
     // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
