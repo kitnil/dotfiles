@@ -18,9 +18,10 @@ spec:
       - name: busybox
         volumeMounts:
         - name: data
-          mountPath: /home/oleg/src/github.com/kamranahmedse/githunt/githunt-3.0-7
+          mountPath: /var/www
           readOnly: true
       volumes:
-      - name: data
-        emptyDir:
-          sizeLimit: 10M
+      - hostPath:
+          path: /home/oleg/src/github.com/kamranahmedse/githunt/githunt-3.0-7
+          type: Directory
+        name: data
