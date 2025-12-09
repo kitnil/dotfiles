@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: githunt
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: githunt
+      app.kubernetes.io/part-of: githunt
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: githunt
+        app.kubernetes.io/part-of: githunt
+    spec:
+      containers:
+      - image: nixery.dev/shell/busybox
+        name: busybox
+        command: ["/bin/httpd"]
+        args: ["-f", "-p", "0.0.0.0:8080", "-h", "/var/www"]
+        resources:
+          limits:
+            cpu: 10m
+            memory: 15Mi
+          requests:
+            cpu: 1m
+            memory: 10Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - "ALL"
+            add:
+            - "CHOWN"
+            - "DAC_OVERRIDE"
+            - "SETGID"
+            - "SETUID"
+            - "NET_BIND_service"
+            - "SYS_CHROOT"
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+          runAsGroup: 1000
+        livenessProbe:
+          httpGet:
+            port: 8080
+        readinessProbe:
+          httpGet:
+            port: 8080
