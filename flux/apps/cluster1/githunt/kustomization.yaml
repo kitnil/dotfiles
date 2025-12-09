@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: githunt
 resources:
 - ../../base/githunt
+- ingress.yaml
 patchesStrategicMerge:
 - deployment.yaml
