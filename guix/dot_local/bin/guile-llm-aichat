@@ -69,23 +69,30 @@
             (else
              '("Respond in English. In one sentence without new lines and without saying what you are doing."
                "Respond in Russian. In one sentence without new lines and without saying what you are doing."))))
-         (for-each (lambda (model)
-                     (for-each (lambda (prompt)
-                                 (let* ((response port (http-request "http://192.168.0.185:11434/api/generate"
-                                                                     #:method 'POST
-                                                                     #:streaming? #f
-                                                                     #:body (scm->json-string
-                                                                             `(("stream" . #f)
-                                                                               ("system" . ,prompt)
-                                                                               ("prompt" . ,input)
-                                                                               ("model" . ,model)))))
-                                        (body (assoc-ref (json-string->scm (utf8->string port))
-                                                         "response")))
-                                   (newline)
-                                   (display body)
-                                   (system* "fyi" "--app-name=llm-aichat" "--expire-time=300000" model body)))
-                               prompts))
-                   '("gemma3:12b"
-                     "qwen3:8b")))))))
+         (for-each (lambda (prompt)
+                     (for-each (lambda (endpoint)
+                                 (for-each (lambda (model)
+                                             (let* ((response port (http-request endpoint
+                                                                                 #:method 'POST
+                                                                                 #:streaming? #f
+                                                                                 #:body (scm->json-string
+                                                                                         `(("stream" . #f)
+                                                                                           ("system" . ,prompt)
+                                                                                           ("prompt" . ,input)
+                                                                                           ("model" . ,model)))))
+                                                    (body (assoc-ref (json-string->scm (utf8->string port))
+                                                                     "response")))
+                                               (newline)
+                                               (display body)
+                                               (system* "fyi" "--app-name=llm-aichat" "--expire-time=300000" model body)))
+                                           (cond
+                                            ((string= endpoint "http://192.168.0.156:11434/api/generate")
+                                             '("deepseek-r1:8b"))
+                                            ((string= endpoint "http://192.168.0.185:11434/api/generate")
+                                             '("gemma3:12b"
+                                               "qwen3:8b")))))
+                               '("http://192.168.0.156:11434/api/generate"
+                                 "http://192.168.0.185:11434/api/generate")))
+                   prompts))))))
 
 ;;; Buffer name ‘llm-aichat’ is in use ends here
