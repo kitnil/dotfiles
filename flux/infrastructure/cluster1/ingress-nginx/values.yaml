@@ -1,2 +1,6 @@
 tcp:
   9050: "tor-controller-instance/example-tor-instance-tor-svc:9050"
+
+controller:
+  service:
+    loadBalancerIP: 192.168.0.139
