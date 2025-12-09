@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: githunt
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - kube1
+      containers:
+      - name: busybox
+        volumeMounts:
+        - name: data
+          mountPath: /home/oleg/src/github.com/kamranahmedse/githunt/githunt-3.0-7
+          readOnly: true
+      volumes:
+      - name: data
+        emptyDir:
+          sizeLimit: 10M
