@@ -157,7 +157,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    gitAndTools.git
+    git
   ];
 
   system.extraSystemBuilderCmds =

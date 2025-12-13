@@ -172,12 +172,6 @@
 
     zeal
 
-    gitAndTools.delta
-    gitAndTools.git-extras
-    gitAndTools.git-open
-    gitAndTools.git-recent
-    gitAndTools.pre-commit
-
     libsForQt5.qtstyleplugins
     libsForQt5.kde-gtk-config
 
