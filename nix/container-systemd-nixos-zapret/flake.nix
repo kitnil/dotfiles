@@ -2,9 +2,16 @@
   description = "";
 
   inputs = {
+    nixpkgs = {
+      url = "nixpkgs/nixos-25.11";
+    };
+    home-manager = {
+      url = "git+https://github.com/nix-community/home-manager?ref=release-25.11";
+    };
     original = {
       url = "git+file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles?dir=nix/container-systemd";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.dotfiles-home-manager.inputs.home-manager.follows = "home-manager";
     };
   };
 
