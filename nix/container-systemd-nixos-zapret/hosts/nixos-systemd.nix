@@ -26,7 +26,7 @@
   virtualisation.docker.enable = lib.mkForce false;
 
   services.sunshine = {
-    enable = true;
+    enable = false;
     autoStart = false;
     capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
     # openFirewall = true;
