@@ -575,8 +575,6 @@ in {
 
   services.foot.enable = true;
   services.google-chrome.enable = true;
-  services.pycharm-community.enable = true;
-  services.idea-community.enable = true;
   services.vendir.enable = true;
   services.wayland.enable = true;
 
