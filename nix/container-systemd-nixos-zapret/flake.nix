@@ -2,10 +2,13 @@
   description = "";
 
   inputs = {
-    original.url = "git+file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles?dir=nix/container-systemd";
+    original = {
+      url = "git+file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles?dir=nix/container-systemd";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, original, ... }:
+  outputs = { self, original, nixpkgs, ... }:
     let
       system = "x86_64-linux";
     in
