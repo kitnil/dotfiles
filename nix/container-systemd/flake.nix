@@ -83,6 +83,69 @@
             };
             modules = [
               inputs.dotfiles-home-manager.inputs.home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  users = {
+                    oleg = ./home-manager.nix;
+                  };
+                  sharedModules = [
+                    inputs.dotfiles-home-manager.nixosModules.home-manager-firefox
+                    inputs.dotfiles-home-manager.nixosModules.home-manager-foot
+                    inputs.dotfiles-home-manager.nixosModules.home-manager-google-chrome
+                    inputs.dotfiles-home-manager.nixosModules.home-manager-idea-community
+                    inputs.dotfiles-home-manager.nixosModules.home-manager-pycharm-community
+                    inputs.dotfiles-home-manager.nixosModules.home-manager-vendir
+                    inputs.dotfiles-home-manager.nixosModules.home-manager-wayland
+                  ];
+                  extraSpecialArgs =
+                    let
+                      packages = with inputs.dotfiles-home-manager.inputs;
+                        let
+                          inherit (dotfiles-home-manager) overlay;
+                        in
+                          import inputs.dotfiles-home-manager.inputs.nixpkgs {
+                            overlays = [
+                              nur.overlays.default
+                              flake-utils-plus.overlay
+                              overlay
+                            ];
+                            inherit system;
+                            config = {
+                              allowUnfreePredicate = pkg:
+                                builtins.elem (nixpkgs.lib.getName pkg) [
+                                  "betterttv"
+                                  "google-chrome"
+                                ];
+                              permittedInsecurePackages = [
+                                "qtwebkit-5.212.0-alpha4"
+                              ];
+                            };
+                          };
+                    in
+                      rec {
+                        inherit (self) nixosConfigurations;
+                        inherit inputs system;
+                        pkgs = import nixpkgs {
+                          inherit system;
+                          config = {
+                            allowUnfreePredicate = pkg:
+                              builtins.elem (nixpkgs.lib.getName pkg) [
+                                "google-chrome"
+                                "IPMIView"
+                                "ndi"
+                              ];
+                          };
+                        } // {
+                          inherit (packages) google-chrome;
+                          inherit (inputs.firejail-disable-sandbox-check.legacyPackages.${system})
+                            firejail-disable-sandbox-check;
+                        };
+                        inherit packages customLib;
+                      };
+                };
+              }
               ./hosts/nixos-systemd.nix
             ];
           };
