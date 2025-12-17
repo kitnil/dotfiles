@@ -23,6 +23,8 @@
     group = "users";
   };
 
+  virtualisation.docker.enable = lib.mkForce false;
+
   services.sunshine = {
     enable = true;
     autoStart = false;
