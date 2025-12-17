@@ -17,5 +17,5 @@ in
       };
     };
   };
-  home.stateVersion = "25.11";
+  home.stateVersion = lib.mkForce "25.11";
 }
