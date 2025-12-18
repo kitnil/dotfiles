@@ -126,13 +126,13 @@ in {
         firefoxBaseProfileWithExtensions = { ech ? true }: (firefoxBaseProfile { inherit ech; }) // {
           extensions = {
             packages = with pkgs.nur.repos.rycee.firefox-addons; [
-              certificate-pinner
-              container-proxy
-              copy-all-tab-urls-we
-              copy-as-org-mode
-              multi-account-containers
-              snaplinksplus
-              soundfixer
+              # certificate-pinner
+              # container-proxy
+              # copy-all-tab-urls-we
+              # copy-as-org-mode
+              # multi-account-containers
+              # snaplinksplus
+              # soundfixer
               ublock-origin
               redirector
             ];
@@ -196,7 +196,7 @@ in {
                 (firefoxBaseProfileWithExtensions { ech = false; }).extensions.packages
                 (with pkgs; with pkgs.nur.repos.rycee.firefox-addons; [
                   auto-tab-discard
-                  hello-goodbye
+                  # hello-goodbye
                 ]);
           };
         };
@@ -212,13 +212,13 @@ in {
                   betterttv
                   return-youtube-dislikes
                   sponsorblock
-                  hide-twitch-chat-users
-                  metube-downloader
-                  night-video-tuner
+                  # hide-twitch-chat-users
+                  # metube-downloader
+                  # night-video-tuner
                   tab-reloader
-                  twitch-error-autorefresher
-                  visited-link-enabler
-                  ultrawidify
+                  # twitch-error-autorefresher
+                  # visited-link-enabler
+                  # ultrawidify
                   web-scrobbler
                 ])
             ;
