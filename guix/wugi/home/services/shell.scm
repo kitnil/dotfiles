@@ -212,7 +212,6 @@
                           "symlink-to-file.sh"
                           "toggle-input-method.sh"
                           "tome4-docker"
-                          "mjru-hms-migrate-web-account"
                           "ubuntu"
                           "vault"
                           "vfio.sh"

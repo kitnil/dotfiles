@@ -124,7 +124,6 @@
          emacs-nginx-mode
          emacs-nix-mode           ; Nix language mode
          emacs-notmuch
-         emacs-kdl-mode
          tree-sitter-kdl
          emacs-olivetti
          emacs-org-appear
