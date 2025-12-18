@@ -140,9 +140,6 @@
                                 "steam-unwrapped"
                                 "teamspeak3"
                               ];
-                              permittedInsecurePackages = [
-                                "qtwebengine-5.15.19"
-                              ];
                           };
                         } // {
                           inherit (packages) google-chrome;
