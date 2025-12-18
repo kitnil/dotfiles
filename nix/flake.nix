@@ -132,6 +132,13 @@
             containerSystemdNixosWorkstationModules
             [
               ./container-systemd-nixos-workstation-pc0/hosts/nixos-systemd.nix
+              {
+                home-manager = {
+                  users = {
+                    oleg = ./container-systemd-nixos-workstation-pc0/oleg/home-manager.nix;
+                  };
+                };
+              }
             ]
           ];
         in
