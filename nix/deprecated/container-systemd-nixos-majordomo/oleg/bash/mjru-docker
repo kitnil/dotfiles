@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+help_main()
+{
+    echo "\
+Usage: mjru-docker COMMANDS ARGS...
+RUN mjru-docker with ARGS
+
+COMMAND must be one of the sub-commands listed below:
+
+  general commands
+    registry      list images on internal registry
+    tags          list tags of images
+    tag           describe image tag
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+case "$1" in
+    --help|-h)
+        help_main
+        ;;
+    registry)
+        docker-ls repositories --registry https://docker-registry.intr/ --allow-insecure "${@:2}"
+        ;;
+    tags)
+        docker-ls tags --registry https://docker-registry.intr/ --allow-insecure "${@:2}"
+        ;;
+    tag)
+        docker-ls tag --registry https://docker-registry.intr/ --allow-insecure "${@:2}"
+        ;;
+    *)
+        help_main
+        ;;
+esac

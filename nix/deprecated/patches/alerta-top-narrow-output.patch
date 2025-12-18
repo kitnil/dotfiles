@@ -1,0 +1,82 @@
+From 187a065c56180055e3ea3ba210d9c5e00bd3e098 Mon Sep 17 00:00:00 2001
+From: Oleg Pykhalov <go.wigust@gmail.com>
+Date: Thu, 14 Nov 2019 01:26:51 +0300
+Subject: [PATCH] top.py: Update.
+
+---
+ top.py | 31 +++++++++++++------------------
+ 1 file changed, 13 insertions(+), 18 deletions(-)
+
+diff --git a/top.py b/top.py
+index 2cb484a..5fc26f9 100644
+--- a/alertaclient/top.py
++++ b/alertaclient/top.py
+@@ -73,7 +73,7 @@ class Screen:
+             else:
+                 if event == curses.KEY_RESIZE:
+                     self.update()
+-            time.sleep(2)
++            time.sleep(10)
+ 
+     def update(self):
+         self.lines, self.cols = self.screen.getmaxyx()
+@@ -84,16 +84,16 @@ class Screen:
+         version = status['version']
+ 
+         # draw header
+-        self._addstr(0, 0, self.client.endpoint, curses.A_BOLD)
+-        self._addstr(0, 'C', 'alerta {}'.format(version), curses.A_BOLD)
+-        self._addstr(0, 'R', '{}'.format(now.strftime('%H:%M:%S %d/%m/%y')), curses.A_BOLD)
++        # self._addstr(0, 0, self.client.endpoint, curses.A_BOLD)
++        # self._addstr(0, 'C', 'alerta {}'.format(version), curses.A_BOLD)
++        # self._addstr(0, 'R', '{}'.format(now.strftime('%H:%M:%S %d/%m/%y')), curses.A_BOLD)
+ 
+         # TODO - draw bars
+ 
+         # draw alerts
+-        text_width = self.cols - 95 if self.cols >= 95 else 0
+-        self._addstr(2, 1, 'Sev. Time     Dupl. Customer Env.         Service      Resource     Group Event'
+-                     + '        Value Text' + ' ' * (text_width - 4), curses.A_UNDERLINE)
++        text_width = self.cols - 45
++        # self._addstr(0, 1, 'Sev. Time     Dupl. Service              Resource                    Group  Event' +
++        #              '        Value Text' + ' ' * (text_width - 4))
+ 
+         def short_sev(severity):
+             return self.SEVERITY_MAP.get(severity, self.SEVERITY_MAP['unknown'])[0]
+@@ -102,27 +102,22 @@ class Screen:
+             return self.SEVERITY_MAP.get(severity, self.SEVERITY_MAP['unknown'])[1]
+ 
+         r = self.client.http.get('/alerts')
+-        alerts = [Alert.parse(a) for a in r['alerts']]
++        alerts = filter(lambda a: a.severity != 'ok' and a.environment == 'Production' and a.status != 'closed', [Alert.parse(a) for a in r['alerts']])
+         last_time = DateTime.parse(r['lastTime'])
+ 
+         for i, alert in enumerate(alerts):
+-            row = i + 3
+-            if row >= self.lines - 2:  # leave room for footer
++            row = i
++            if row >= self.lines - 1:  # leave room for footer
+                 break
+ 
+-            text = '{:<4} {} {:5d} {:8.8} {:<12} {:<12} {:<12.12} {:5.5} {:<12.12} {:<5.5} {:.{width}}'.format(
+-                short_sev(alert.severity),
+-                DateTime.localtime(alert.last_receive_time, self.timezone, fmt='%H:%M:%S'),
++            text = '{} {:5d} {:<7.7} {:<12.12} {:<5.5} {:.{width}}'.format(
++                DateTime.localtime(alert.last_receive_time, self.timezone, fmt='%H:%M'),
+                 alert.duplicate_count,
+-                alert.customer or '-',
+-                alert.environment,
+-                ','.join(alert.service),
+                 alert.resource,
+-                alert.group,
+                 alert.event,
+                 alert.value or 'n/a',
+                 alert.text,
+-                width=text_width
++                width=text_width - 1
+             )
+             # XXX - needed to support python2 and python3
+             if not isinstance(text, str):
+-- 
+2.28.0
+

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# autossh -M0 -t work
+xterm -title alerta -fa Monospace -fs 6 +sb -e 'while true; do .local/bin/alerta top; done'

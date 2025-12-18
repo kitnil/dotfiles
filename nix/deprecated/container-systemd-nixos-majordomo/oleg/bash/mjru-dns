@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+
+import requests
+import argparse
+import os
+import json
+import sys
+import time
+from random import choice
+from string import ascii_letters, digits
+
+# Ссылка на API Majordomo
+api_url = 'https://api.majordomo.ru'
+
+# Авторизация по паре логин-пароль
+def get_hms_token(hms_login, hms_passwd):
+    response = requests.post(api_url + "/oauth/token",
+                             data={'grant_type': 'password',
+                                   'client_id': 'service',
+                                   'client_secret': 'service_secret',
+                                   'username':hms_login,
+                                   'password':hms_passwd})
+    return json.loads(response.text)
+
+def main():
+    parser = argparse.ArgumentParser(description="Добавление dns-записей на веб-странице https://hms.majordomo.ru/domain")
+    parser.add_argument('-i', '--login', required=True, 
+                        help='логин вводимый на веб-странице https://www.majordomo.ru/login')
+    parser.add_argument('-p', '--password', required=True, 
+                        help='пароль вводимый на веб-странице https://www.majordomo.ru/login')
+    parser.add_argument('-d', '--domain', required=True, 
+                        help='Имя домена, для которого создается запись, например example.ru')
+    parser.add_argument('-o', '--owner', required=True, 
+                        help='Fully qualified domain name (FQDN), например test.example.ru')
+    parser.add_argument('-t', '--type', required=True, 
+                        help='Type, тип dns-записи ("A", "MX", "TEXT", "CNAME" и т.д.)')
+    parser.add_argument('-v', '--value', required=True, 
+                        help='Значение dns-записи')
+    parser.add_argument('-T', '--ttl', default='3600', 
+                        help='TTL dns-записи')
+    parser.add_argument('-P', '--prio', default='10', 
+                        help='Приоритет dns-записи, по умолчанию отсутствует')
+    parser.add_argument('-q', '--quite', action='store_true',
+                        help='Режим тишины.  Скрывает предупреждения и диагностические сообщения')
+    args = parser.parse_args()
+
+    token = get_hms_token(args.login, args.password)
+    not args.quite and print(token) # Вывод полученого токена или ошибки
+    user_token = token['access_token']
+
+    # Отправка DNS записи API
+    response = requests.post(api_url + "/dns-record",
+    headers={'Authorization': 'Bearer {}'.format(user_token)},
+    json={"operationIdentity": None, 
+          "params": {"ownerName": args.owner,
+                     "type": args.type,
+                     "data": args.value,
+                     "ttl": int(args.ttl),
+                     "prio": int(args.prio),
+                     "name": args.domain}})
+    # Вывод состояния операции
+    not args.quite and print(json.loads(response.text))
+
+    
+if __name__ == "__main__":
+    main()
