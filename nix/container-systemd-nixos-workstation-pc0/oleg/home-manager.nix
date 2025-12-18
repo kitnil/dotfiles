@@ -14,7 +14,6 @@ in
       espanso-wayland
 
       obs-studio-plugins.obs-multi-rtmp
-      obs-studio-plugins.distroav
       obs-studio-plugins.obs-pipewire-audio-capture
 
       steam
