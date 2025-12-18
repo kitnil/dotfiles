@@ -120,6 +120,7 @@
                                 ];
                               permittedInsecurePackages = [
                                 "qtwebkit-5.212.0-alpha4"
+                                "qtwebengine-5.15.19"
                               ];
                             };
                           };
