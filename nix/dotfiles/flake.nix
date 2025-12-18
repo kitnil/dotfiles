@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "nixpkgs/nixos-25.11";
   };
   outputs = { self, nixpkgs, ... }: {
     packages.x86_64-linux = rec {
@@ -27,7 +27,7 @@
             git
             guile
             guile.dev
-            nixVersions.git
+            nixVersions.stable
             pkg-config
             skopeo
             yamlfmt
