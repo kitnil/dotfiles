@@ -25,7 +25,6 @@
         "flake-utils-plus": "flake-utils-plus",
         "github-com-9999years-nix-config": "github-com-9999years-nix-config",
         "home-manager": [
-          "original",
           "home-manager"
         ],
         "kamadorueda-alejandra": "kamadorueda-alejandra",
@@ -66,7 +65,6 @@
     "fenix": {
       "inputs": {
         "nixpkgs": [
-          "original",
           "original",
           "dotfiles-home-manager",
           "naersk",
@@ -123,7 +121,6 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
-          "original",
           "original",
           "dotfiles-home-manager",
           "nur",
@@ -606,43 +603,20 @@
     },
     "original": {
       "inputs": {
-        "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs_2",
-        "original": "original_2"
-      },
-      "locked": {
-        "dir": "nix/container-systemd-nixos-workstation",
-        "lastModified": 1766061604,
-        "narHash": "sha256-apuWDuRZnY0b4k3CCPZEbm4DWeh1vnWU9tDTHpHWNXs=",
-        "ref": "refs/heads/master",
-        "rev": "7d7967aafd2d9668c734d65ad68eb22a795db4e5",
-        "revCount": 16372,
-        "type": "git",
-        "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
-      },
-      "original": {
-        "dir": "nix/container-systemd-nixos-workstation",
-        "type": "git",
-        "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
-      }
-    },
-    "original_2": {
-      "inputs": {
         "dotfiles-home-manager": "dotfiles-home-manager",
         "firejail-disable-sandbox-check": "firejail-disable-sandbox-check",
         "flake-utils": "flake-utils_2",
         "nixpkgs": [
-          "original",
           "nixpkgs"
         ]
       },
       "locked": {
         "dir": "nix/container-systemd",
-        "lastModified": 1766061603,
-        "narHash": "sha256-NCVxp6KSGvArfDPlc7sUYNhXFZa6AH9WpMKeYclLd1c=",
+        "lastModified": 1766061803,
+        "narHash": "sha256-ksbz0TUeY5u1XwFEZ0qjcxEpgvxmnaR2DBfR0l9yqcI=",
         "ref": "refs/heads/master",
-        "rev": "686c07219c44d43f68d634f78a7d88a6037ae0c4",
-        "revCount": 16370,
+        "rev": "2e79e712b800036e76f6ce472bc8077f3eee507a",
+        "revCount": 16375,
         "type": "git",
         "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
       },
@@ -666,6 +640,8 @@
     },
     "root": {
       "inputs": {
+        "home-manager": "home-manager",
+        "nixpkgs": "nixpkgs_2",
         "original": "original"
       }
     },
