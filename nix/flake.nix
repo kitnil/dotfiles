@@ -78,8 +78,29 @@
           };
           modules = [
             {
-              nixpkgs.overlays = [ nur.overlays.default ];
+              nixpkgs.overlays = [
+                nur.overlays.default
+              ];
               nixpkgs.config.allowUnfree = true;
+            }
+            {
+              # But NIX_PATH is still used by many useful tools, so we set it
+              # to the same value as the one used by this flake.
+              # Make `nix repl '<nixpkgs>'` use the same nixpkgs as the one
+              # used by this flake.
+              environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
+              nix = {
+                # Make `nix run nixpkgs#nixpkgs` use the same nixpkgs as the
+                # one used by this flake.
+                registry.nixpkgs.flake = nixpkgs;
+                # Remove nix-channel related tools & configs, we use flakes
+                # instead.
+                channel.enable = false;
+                settings = {
+                  # https://github.com/NixOS/nix/issues/9574
+                  nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
+                };
+              };
             }
             ./container-systemd/hosts/nixos-systemd.nix
             ./container-systemd-nixos-workstation/hosts/nixos-systemd.nix
@@ -99,9 +120,6 @@
         {
           nixos-systemd = nixpkgs.lib.nixosSystem {
             inherit modules system;
-            specialArgs = {
-              inherit nixpkgs;
-            };
           };
         }
       );

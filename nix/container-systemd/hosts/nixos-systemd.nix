@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, modulesPath, pkgs, nixpkgs, ... }:
+{ config, lib, modulesPath, pkgs, ... }:
 
 {
   imports = [
@@ -134,21 +134,11 @@
 
   services.getty.autologinUser = "oleg";
 
-  # but NIX_PATH is still used by many useful tools, so we set it to the same value as the one used by this flake.
-  # Make `nix repl '<nixpkgs>'` use the same nixpkgs as the one used by this flake.
-  environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
   nix = {
     package = pkgs.nixVersions.git;
     extraOptions = "experimental-features = nix-command flakes";
-
-    # make `nix run nixpkgs#nixpkgs` use the same nixpkgs as the one used by this flake.
-    registry.nixpkgs.flake = nixpkgs;
-    channel.enable = false; # remove nix-channel related tools & configs, we use flakes instead.
-
     settings = {
       trusted-users = [ "oleg" "root" ];
-      # https://github.com/NixOS/nix/issues/9574
-      nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
     };
   };
 
