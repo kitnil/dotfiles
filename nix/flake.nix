@@ -119,6 +119,13 @@
             commonModules
             [
               ./container-systemd-nixos-workstation/hosts/nixos-systemd.nix
+              {
+                home-manager = {
+                  users = {
+                    oleg = ./container-systemd-nixos-workstation/oleg/home-manager.nix;
+                  };
+                };
+              }
             ]
           ];
           containerSystemdNixosWorkstationPc0Modules = builtins.concatLists [
