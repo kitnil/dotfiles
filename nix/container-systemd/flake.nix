@@ -137,7 +137,6 @@
                                 "ndi-6"
                                 "steam"
                                 "steam-unwrapped"
-                                "teamspeak3"
                               ];
                           };
                         } // {

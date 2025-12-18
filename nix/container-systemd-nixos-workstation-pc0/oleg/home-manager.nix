@@ -17,8 +17,6 @@ in
       obs-studio-plugins.distroav
       obs-studio-plugins.obs-pipewire-audio-capture
 
-      teamspeak3
-
       steam
     ];
   };
