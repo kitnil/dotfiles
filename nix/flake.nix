@@ -77,9 +77,13 @@
             customModulesPath = ./modules;
           };
           modules = [
-            ({ config, pkgs, ... }: { nixpkgs.overlays = [ nur.overlays.default ]; })
-            home-manager.nixosModules.home-manager
+            {
+              nixpkgs.overlays = [ nur.overlays.default ];
+              nixpkgs.config.allowUnfree = true;
+            }
+            ./container-systemd/hosts/nixos-systemd.nix
             ./container-systemd-nixos-workstation/hosts/nixos-systemd.nix
+            home-manager.nixosModules.home-manager
             {
               home-manager = {
                 inherit sharedModules extraSpecialArgs;
