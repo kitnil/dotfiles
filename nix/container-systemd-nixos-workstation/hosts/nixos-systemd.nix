@@ -29,9 +29,4 @@
     capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
     # openFirewall = true;
   };
-
-  services.ollama = {
-    enable = true;
-    package = pkgs.ollama-vulkan;
-  };
 }

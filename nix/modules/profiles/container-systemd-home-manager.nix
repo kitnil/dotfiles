@@ -1,13 +1,55 @@
-{ pkgs, lib, config, customLib, overlays, ... }:
+{ pkgs, packages, lib, config, ... }:
 
 let
   inherit (lib) fold;
-  inherit (customLib) firefoxBaseProfile;
+  firefoxBaseProfile = { ech ? false }: {
+    # TODO: Manage ~/.mozilla/firefox/nix/containers.json file with Nix.
+    # TODO: Manage ~/.mozilla/firefox/nix/cookies.sqlite somehow.
+    # TODO: Import ~/src/ssl/cert.p12 file with Nix.
+    settings = {
+      "browser.aboutConfig.showWarning" = false;
+      "browser.search.region" = "GB";
+      "browser.shell.checkDefaultBrowser" = false;
+      "browser.startup.homepage" = "about:newtab";
+      "browser.startup.page" = 3;
+      "browser.urlbar.placeholderName" = "DuckDuckGo";
+      "browser.urlbar.placeholderName.private" = "DuckDuckGo";
+      "distribution.searchplugins.defaultLocale" = "en-GB";
+      "doh-rollout.disable-heuristics" = true; # disable DNS over HTTPS
+      "extensions.pocket.enabled" = false;
+      "extensions.update.enabled" = false;
+      "general.useragent.locale" = "en-GB";
+      "general.warnOnAboutConfig" = false;
+      "startup.homepage_welcome_url" = "about:newtab";
+      "toolkit.telemetry.reportingpolicy.firstRun" = false;
+    } // (if ech then {} else {
+      "network.dns.echconfig.enabled" = false;
+      "network.dns.http3_echconfig.enabled" = false;
+    });
+    search = {
+      force = true;
+      default = "searxng";
+      engines = {
+        searxng = {
+          name = "SearxNG";
+          urls = [
+            {
+              template =
+                "https://searxng.home.wugi.info"
+                + "/search?q={searchTerms}&categories=general";
+            }
+          ];
+          definedAliases = [ "@sng" ];
+        };
+      };
+    };
+  }
 in {
   home.username = "oleg";
+  home.homeDirectory = "/home/oleg";
   manual.manpages.enable = false;
 
-  home.packages = with pkgs; [
+  home.packages = with packages; [
     binutils
     file
 
@@ -58,63 +100,63 @@ in {
           name = Oleg Pykhalov
       '';
     };
-    ".emacs".source = ../../guix/dot_emacs;
-    ".emacs.d/modules/audio.el".source = ../../guix/private_dot_emacs.d/modules/audio.el;
-    ".emacs.d/modules/blog.el".source = ../../guix/private_dot_emacs.d/modules/blog.el;
-    ".emacs.d/modules/c.el".source = ../../guix/private_dot_emacs.d/modules/c.el;
-    ".emacs.d/modules/ci.el".source = ../../guix/private_dot_emacs.d/modules/ci.el;
-    ".emacs.d/modules/compile.el".source = ../../guix/private_dot_emacs.d/modules/compile.el;
-    ".emacs.d/modules/completion.el".source = ../../guix/private_dot_emacs.d/modules/completion.el;
-    ".emacs.d/modules/copyright.el".source = ../../guix/private_dot_emacs.d/modules/copyright.el;
-    ".emacs.d/modules/debbugs.el".source = ../../guix/private_dot_emacs.d/modules/debbugs.el;
-    ".emacs.d/modules/debug.el".source = ../../guix/private_dot_emacs.d/modules/debug.el;
-    ".emacs.d/modules/dired.el".source = ../../guix/private_dot_emacs.d/modules/dired.el;
-    ".emacs.d/modules/elfeed.el".source = ../../guix/private_dot_emacs.d/modules/elfeed.el;
-    ".emacs.d/modules/erc.el".source = ../../guix/private_dot_emacs.d/modules/erc.el;
-    ".emacs.d/modules/ffap.el".source = ../../guix/private_dot_emacs.d/modules/ffap.el;
-    ".emacs.d/modules/files.el".source = ../../guix/private_dot_emacs.d/modules/files.el;
-    ".emacs.d/modules/ftp.el".source = ../../guix/private_dot_emacs.d/modules/ftp.el;
-    ".emacs.d/modules/groovy.el".source = ../../guix/private_dot_emacs.d/modules/groovy.el;
-    ".emacs.d/modules/guix.el".source = ../../guix/private_dot_emacs.d/modules/guix.el;
-    ".emacs.d/modules/haskell.el".source = ../../guix/private_dot_emacs.d/modules/haskell.el;
-    ".emacs.d/modules/hooks.el".source = ../../guix/private_dot_emacs.d/modules/hooks.el;
-    ".emacs.d/modules/info.el".source = ../../guix/private_dot_emacs.d/modules/info.el;
-    ".emacs.d/modules/java.el".source = ../../guix/private_dot_emacs.d/modules/java.el;
-    ".emacs.d/modules/js.el".source = ../../guix/private_dot_emacs.d/modules/js.el;
-    ".emacs.d/modules/keys.el".source = ../../guix/private_dot_emacs.d/modules/keys.el;
-    ".emacs.d/modules/kubernetes.el".source = ../../guix/private_dot_emacs.d/modules/kubernetes.el;
-    ".emacs.d/modules/lisp.el".source = ../../guix/private_dot_emacs.d/modules/lisp.el;
-    ".emacs.d/modules/llm.el".source = ../../guix/private_dot_emacs.d/modules/llm.el;
-    ".emacs.d/modules/lsp.el".source = ../../guix/private_dot_emacs.d/modules/lsp.el;
-    ".emacs.d/modules/lsp-nixd.el".source = ../../guix/private_dot_emacs.d/modules/lsp-nixd.el;
-    ".emacs.d/modules/mail.el".source = ../../guix/private_dot_emacs.d/modules/mail.el;
-    ".emacs.d/modules/majordomo.el".source = ../../guix/private_dot_emacs.d/modules/majordomo.el;
-    ".emacs.d/modules/ml.el".source = ../../guix/private_dot_emacs.d/modules/ml.el;
-    ".emacs.d/modules/nav.el".source = ../../guix/private_dot_emacs.d/modules/nav.el;
-    ".emacs.d/modules/nix.el".source = ../../guix/private_dot_emacs.d/modules/nix.el;
-    ".emacs.d/modules/org.el".source = ../../guix/private_dot_emacs.d/modules/org.el;
-    ".emacs.d/modules/outline.el".source = ../../guix/private_dot_emacs.d/modules/outline.el;
-    ".emacs.d/modules/perl.el".source = ../../guix/private_dot_emacs.d/modules/perl.el;
-    ".emacs.d/modules/po.el".source = ../../guix/private_dot_emacs.d/modules/po.el;
-    ".emacs.d/modules/python.el".source = ../../guix/private_dot_emacs.d/modules/python.el;
-    ".emacs.d/modules/rfc.el".source = ../../guix/private_dot_emacs.d/modules/rfc.el;
-    ".emacs.d/modules/rust.el".source = ../../guix/private_dot_emacs.d/modules/rust.el;
-    ".emacs.d/modules/scheme.el".source = ../../guix/private_dot_emacs.d/modules/scheme.el;
-    ".emacs.d/modules/slack.el".source = ../../guix/private_dot_emacs.d/modules/slack.el;
-    ".emacs.d/modules/snippets.el".source = ../../guix/private_dot_emacs.d/modules/snippets.el;
-    ".emacs.d/modules/term.el".source = ../../guix/private_dot_emacs.d/modules/term.el;
-    ".emacs.d/modules/text.el".source = ../../guix/private_dot_emacs.d/modules/text.el;
-    ".emacs.d/modules/theme.el".source = ../../guix/private_dot_emacs.d/modules/theme.el;
-    ".emacs.d/modules/time.el".source = ../../guix/private_dot_emacs.d/modules/time.el;
-    ".emacs.d/modules/tramp.el".source = ../../guix/private_dot_emacs.d/modules/tramp.el;
-    ".emacs.d/modules/twitch.el".source = ../../guix/private_dot_emacs.d/modules/twitch.el;
-    ".emacs.d/modules/utils.el".source = ../../guix/private_dot_emacs.d/modules/utils.el;
-    ".emacs.d/modules/version-control.el".source = ../../guix/private_dot_emacs.d/modules/version-control.el;
-    ".emacs.d/modules/version-control-lexical.el".source = ../../guix/private_dot_emacs.d/modules/version-control-lexical.el;
-    ".emacs.d/modules/web.el".source = ../../guix/private_dot_emacs.d/modules/web.el;
-    ".emacs.d/modules/window.el".source = ../../guix/private_dot_emacs.d/modules/window.el;
-    ".emacs.d/modules/yaml.el".source = ../../guix/private_dot_emacs.d/modules/yaml.el;
-    ".emacs.d/modules/youtube.el".source = ../../guix/private_dot_emacs.d/modules/youtube.el;
+    ".emacs".source = ../../../guix/dot_emacs;
+    ".emacs.d/modules/audio.el".source = ../../../guix/private_dot_emacs.d/modules/audio.el;
+    ".emacs.d/modules/blog.el".source = ../../../guix/private_dot_emacs.d/modules/blog.el;
+    ".emacs.d/modules/c.el".source = ../../../guix/private_dot_emacs.d/modules/c.el;
+    ".emacs.d/modules/ci.el".source = ../../../guix/private_dot_emacs.d/modules/ci.el;
+    ".emacs.d/modules/compile.el".source = ../../../guix/private_dot_emacs.d/modules/compile.el;
+    ".emacs.d/modules/completion.el".source = ../../../guix/private_dot_emacs.d/modules/completion.el;
+    ".emacs.d/modules/copyright.el".source = ../../../guix/private_dot_emacs.d/modules/copyright.el;
+    ".emacs.d/modules/debbugs.el".source = ../../../guix/private_dot_emacs.d/modules/debbugs.el;
+    ".emacs.d/modules/debug.el".source = ../../../guix/private_dot_emacs.d/modules/debug.el;
+    ".emacs.d/modules/dired.el".source = ../../../guix/private_dot_emacs.d/modules/dired.el;
+    ".emacs.d/modules/elfeed.el".source = ../../../guix/private_dot_emacs.d/modules/elfeed.el;
+    ".emacs.d/modules/erc.el".source = ../../../guix/private_dot_emacs.d/modules/erc.el;
+    ".emacs.d/modules/ffap.el".source = ../../../guix/private_dot_emacs.d/modules/ffap.el;
+    ".emacs.d/modules/files.el".source = ../../../guix/private_dot_emacs.d/modules/files.el;
+    ".emacs.d/modules/ftp.el".source = ../../../guix/private_dot_emacs.d/modules/ftp.el;
+    ".emacs.d/modules/groovy.el".source = ../../../guix/private_dot_emacs.d/modules/groovy.el;
+    ".emacs.d/modules/guix.el".source = ../../../guix/private_dot_emacs.d/modules/guix.el;
+    ".emacs.d/modules/haskell.el".source = ../../../guix/private_dot_emacs.d/modules/haskell.el;
+    ".emacs.d/modules/hooks.el".source = ../../../guix/private_dot_emacs.d/modules/hooks.el;
+    ".emacs.d/modules/info.el".source = ../../../guix/private_dot_emacs.d/modules/info.el;
+    ".emacs.d/modules/java.el".source = ../../../guix/private_dot_emacs.d/modules/java.el;
+    ".emacs.d/modules/js.el".source = ../../../guix/private_dot_emacs.d/modules/js.el;
+    ".emacs.d/modules/keys.el".source = ../../../guix/private_dot_emacs.d/modules/keys.el;
+    ".emacs.d/modules/kubernetes.el".source = ../../../guix/private_dot_emacs.d/modules/kubernetes.el;
+    ".emacs.d/modules/lisp.el".source = ../../../guix/private_dot_emacs.d/modules/lisp.el;
+    ".emacs.d/modules/llm.el".source = ../../../guix/private_dot_emacs.d/modules/llm.el;
+    ".emacs.d/modules/lsp.el".source = ../../../guix/private_dot_emacs.d/modules/lsp.el;
+    ".emacs.d/modules/lsp-nixd.el".source = ../../../guix/private_dot_emacs.d/modules/lsp-nixd.el;
+    ".emacs.d/modules/mail.el".source = ../../../guix/private_dot_emacs.d/modules/mail.el;
+    ".emacs.d/modules/majordomo.el".source = ../../../guix/private_dot_emacs.d/modules/majordomo.el;
+    ".emacs.d/modules/ml.el".source = ../../../guix/private_dot_emacs.d/modules/ml.el;
+    ".emacs.d/modules/nav.el".source = ../../../guix/private_dot_emacs.d/modules/nav.el;
+    ".emacs.d/modules/nix.el".source = ../../../guix/private_dot_emacs.d/modules/nix.el;
+    ".emacs.d/modules/org.el".source = ../../../guix/private_dot_emacs.d/modules/org.el;
+    ".emacs.d/modules/outline.el".source = ../../../guix/private_dot_emacs.d/modules/outline.el;
+    ".emacs.d/modules/perl.el".source = ../../../guix/private_dot_emacs.d/modules/perl.el;
+    ".emacs.d/modules/po.el".source = ../../../guix/private_dot_emacs.d/modules/po.el;
+    ".emacs.d/modules/python.el".source = ../../../guix/private_dot_emacs.d/modules/python.el;
+    ".emacs.d/modules/rfc.el".source = ../../../guix/private_dot_emacs.d/modules/rfc.el;
+    ".emacs.d/modules/rust.el".source = ../../../guix/private_dot_emacs.d/modules/rust.el;
+    ".emacs.d/modules/scheme.el".source = ../../../guix/private_dot_emacs.d/modules/scheme.el;
+    ".emacs.d/modules/slack.el".source = ../../../guix/private_dot_emacs.d/modules/slack.el;
+    ".emacs.d/modules/snippets.el".source = ../../../guix/private_dot_emacs.d/modules/snippets.el;
+    ".emacs.d/modules/term.el".source = ../../../guix/private_dot_emacs.d/modules/term.el;
+    ".emacs.d/modules/text.el".source = ../../../guix/private_dot_emacs.d/modules/text.el;
+    ".emacs.d/modules/theme.el".source = ../../../guix/private_dot_emacs.d/modules/theme.el;
+    ".emacs.d/modules/time.el".source = ../../../guix/private_dot_emacs.d/modules/time.el;
+    ".emacs.d/modules/tramp.el".source = ../../../guix/private_dot_emacs.d/modules/tramp.el;
+    ".emacs.d/modules/twitch.el".source = ../../../guix/private_dot_emacs.d/modules/twitch.el;
+    ".emacs.d/modules/utils.el".source = ../../../guix/private_dot_emacs.d/modules/utils.el;
+    ".emacs.d/modules/version-control.el".source = ../../../guix/private_dot_emacs.d/modules/version-control.el;
+    ".emacs.d/modules/version-control-lexical.el".source = ../../../guix/private_dot_emacs.d/modules/version-control-lexical.el;
+    ".emacs.d/modules/web.el".source = ../../../guix/private_dot_emacs.d/modules/web.el;
+    ".emacs.d/modules/window.el".source = ../../../guix/private_dot_emacs.d/modules/window.el;
+    ".emacs.d/modules/yaml.el".source = ../../../guix/private_dot_emacs.d/modules/yaml.el;
+    ".emacs.d/modules/youtube.el".source = ../../../guix/private_dot_emacs.d/modules/youtube.el;
   };
 
   programs.home-manager.enable = true;
@@ -125,17 +167,20 @@ in {
       let
         firefoxBaseProfileWithExtensions = { ech ? true }: (firefoxBaseProfile { inherit ech; }) // {
           extensions = {
-            packages = with pkgs.nur.repos.rycee.firefox-addons; [
-              certificate-pinner
-              container-proxy
-              copy-all-tab-urls-we
-              copy-as-org-mode
-              multi-account-containers
-              snaplinksplus
-              soundfixer
-              ublock-origin
-              redirector
-            ];
+            packages =
+              with packages;
+              with packages.nur.repos.rycee.firefox-addons;
+              [
+                certificate-pinner
+                container-proxy
+                copy-all-tab-urls-we
+                copy-as-org-mode
+                multi-account-containers
+                snaplinksplus
+                soundfixer
+                ublock-origin
+                redirector
+              ];
           };
         };
       in {
@@ -194,7 +239,7 @@ in {
               fold
                 (extension: extensions: extensions ++ [extension])
                 (firefoxBaseProfileWithExtensions { ech = false; }).extensions.packages
-                (with pkgs; with pkgs.nur.repos.rycee.firefox-addons; [
+                (with packages; with packages.nur.repos.rycee.firefox-addons; [
                   auto-tab-discard
                   hello-goodbye
                 ]);
@@ -208,7 +253,7 @@ in {
               fold
                 (extension: extensions: extensions ++ [extension])
                 (firefoxBaseProfileWithExtensions { ech = false; }).extensions.packages
-                (with pkgs; with pkgs.nur.repos.rycee.firefox-addons; [
+                (with packages; with packages.nur.repos.rycee.firefox-addons; [
                   betterttv
                   return-youtube-dislikes
                   sponsorblock
@@ -276,7 +321,7 @@ in {
           id = 7;
           isDefault = false;
           extensions = {
-            packages = (with pkgs; with pkgs.nur.repos.rycee.firefox-addons; [
+            packages = (with packages; with packages.nur.repos.rycee.firefox-addons; [
               auto-tab-discard
             ]);
           };
@@ -553,7 +598,7 @@ in {
 
   services.emacs = {
     enable = true;
-    package = with pkgs; ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
+    package = with packages; ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
       epkgs: [
         epkgs.deadgrep
         epkgs.edit-indirect
