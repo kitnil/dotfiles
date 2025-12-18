@@ -6,7 +6,7 @@ pkgs.dockerTools.buildLayeredImage rec {
   contents = [
     pkgs.dockerTools.caCertificates
     pkgs.vendir
-    pkgs.gitAndTools.git
+    pkgs.git
   ];
   config = {
     Entrypoint = [ "/bin/vendir" ];

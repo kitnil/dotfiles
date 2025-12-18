@@ -581,8 +581,6 @@ in {
 
   services.foot.enable = true;
   services.google-chrome.enable = true;
-  services.pycharm-community.enable = true;
-  services.idea-community.enable = true;
   services.vendir.enable = true;
   services.wayland.enable = true;
 
@@ -630,21 +628,6 @@ in {
         };
       };
     };
-  };
-
-  # https://wiki.nixos.org/wiki/Sway
-  wayland.windowManager.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true; # Fixes common issues with GTK 3 apps
-    config = rec {
-      modifier = "Mod4";
-      # Use kitty as default terminal
-      terminal = "${pkgs.alacritty}/bin/alacritty";
-    };
-      # extraConfig = ''
-      #   exec ${pkgs.sway}/bin/swaymsg create_output HEADLESS-1
-      #   output HEADLESS-1 resolution 3840x2160 scale 2
-      # '';
   };
 
   programs.bash = {

@@ -2,10 +2,20 @@
   description = "";
 
   inputs = {
-    original.url = "git+file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles?dir=nix/container-systemd";
+    nixpkgs = {
+      url = "nixpkgs/nixpkgs-unstable";
+    };
+    home-manager = {
+      url = "git+https://github.com/nix-community/home-manager?ref=release-25.11";
+    };
+    original = {
+      url = "git+file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles?dir=nix/container-systemd";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.dotfiles-home-manager.inputs.home-manager.follows = "home-manager";
+    };
   };
 
-  outputs = { self, original, ... }:
+  outputs = { self, original, nixpkgs, ... }:
     let
       system = "x86_64-linux";
     in
