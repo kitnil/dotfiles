@@ -121,6 +121,12 @@
               ./container-systemd-nixos-workstation/hosts/nixos-systemd.nix
             ]
           ];
+          containerSystemdNixosWorkstationPc0Modules = builtins.concatLists [
+            containerSystemdNixosWorkstationModules
+            [
+              ./container-systemd-nixos-workstation-pc0/hosts/nixos-systemd.nix
+            ]
+          ];
         in
         {
           container-systemd = nixpkgs.lib.nixosSystem {
@@ -130,6 +136,10 @@
           container-systemd-nixos-workstation = nixpkgs.lib.nixosSystem {
             inherit system;
             modules = containerSystemdNixosWorkstationModules;
+          };
+          container-systemd-nixos-workstation-pc0 = nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = containerSystemdNixosWorkstationPc0Modules;
           };
         }
       );
