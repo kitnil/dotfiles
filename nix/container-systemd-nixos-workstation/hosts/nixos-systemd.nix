@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ ... }:
+{ pkgs, ... }:
 
 {
   console.enable = true;
@@ -28,5 +28,10 @@
     autoStart = false;
     capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
     # openFirewall = true;
+  };
+
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-vulkan;
   };
 }

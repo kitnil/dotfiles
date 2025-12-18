@@ -64,6 +64,7 @@
       "inputs": {
         "nixpkgs": [
           "original",
+          "original",
           "dotfiles-home-manager",
           "naersk",
           "nixpkgs"
@@ -119,6 +120,7 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
+          "original",
           "original",
           "dotfiles-home-manager",
           "nur",
@@ -600,6 +602,26 @@
       }
     },
     "original": {
+      "inputs": {
+        "original": "original_2"
+      },
+      "locked": {
+        "dir": "nix/container-systemd-nixos-workstation",
+        "lastModified": 1765137771,
+        "narHash": "sha256-mu8qHjXLc1YObAbf75YSJHsxS/Bwl6Q3sMTjp3t1HH0=",
+        "ref": "refs/heads/master",
+        "rev": "36b80fc7895177b07a46e2a12242e8ba541fe1a9",
+        "revCount": 16258,
+        "type": "git",
+        "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
+      },
+      "original": {
+        "dir": "nix/container-systemd-nixos-workstation",
+        "type": "git",
+        "url": "file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles"
+      }
+    },
+    "original_2": {
       "inputs": {
         "dotfiles-home-manager": "dotfiles-home-manager",
         "firejail-disable-sandbox-check": "firejail-disable-sandbox-check",

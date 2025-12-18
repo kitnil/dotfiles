@@ -157,7 +157,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    gitAndTools.git
+    git
   ];
 
   system.extraSystemBuilderCmds =
@@ -186,7 +186,6 @@
       '';
     in ''
       ln -s ${entrypoint} $out/entrypoint.sh
-      ln -s ${bashInteractive}/bin/bash $out/bin/bash
     '';
 
   fonts = {

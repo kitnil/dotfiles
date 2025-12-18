@@ -2,7 +2,7 @@
   description = "";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-25.05";
+    nixpkgs.url = "nixpkgs/nixos-25.11";
     dotfiles-home-manager.url = "git+file:/home/oleg/src/cgit.wugi.info/wigust/dotfiles?dir=nix";
     flake-utils.url = "github:numtide/flake-utils";
     firejail-disable-sandbox-check.url = "github:wigust/nixpkgs?ref=firejail-disable-sandbox-check";
@@ -134,7 +134,10 @@
                               builtins.elem (nixpkgs.lib.getName pkg) [
                                 "google-chrome"
                                 "IPMIView"
-                                "ndi"
+                                "ndi-6"
+                                "steam"
+                                "steam-unwrapped"
+                                "teamspeak3"
                               ];
                           };
                         } // {

@@ -46,7 +46,7 @@ in
             "/run/wrappers/bin"
             "/run/current-system/sw/bin"
             "${config.home.homeDirectory}/.nix-profile/bin"
-            "${pkgs.gitAndTools.git}/bin"
+            "${pkgs.git}/bin"
           ]
         }";
         Type = "simple";
