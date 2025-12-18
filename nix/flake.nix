@@ -76,7 +76,7 @@
             inherit customLib system;
             customModulesPath = ./modules;
           };
-          modules = [
+          commonModules = [
             {
               nixpkgs.overlays = [
                 nur.overlays.default
@@ -115,10 +115,21 @@
               };
             }
           ];
+          containerSystemdNixosWorkstationModules = builtins.concatLists [
+            commonModules
+            [
+              ./container-systemd-nixos-workstation/hosts/nixos-systemd.nix
+            ]
+          ];
         in
         {
           container-systemd = nixpkgs.lib.nixosSystem {
-            inherit modules system;
+            inherit system;
+            modules = commonModules;
+          };
+          container-systemd-nixos-workstation = nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = containerSystemdNixosWorkstationModules;
           };
         }
       );
