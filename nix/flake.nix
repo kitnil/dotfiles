@@ -103,7 +103,6 @@
               };
             }
             ./container-systemd/hosts/nixos-systemd.nix
-            ./container-systemd-nixos-workstation/hosts/nixos-systemd.nix
             home-manager.nixosModules.home-manager
             {
               home-manager = {
@@ -111,14 +110,14 @@
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 users = {
-                  oleg = ./container-systemd-nixos-workstation/oleg/home-manager.nix;
+                  oleg = ./container-systemd/home-manager.nix;
                 };
               };
             }
           ];
         in
         {
-          nixos-systemd = nixpkgs.lib.nixosSystem {
+          container-systemd = nixpkgs.lib.nixosSystem {
             inherit modules system;
           };
         }
