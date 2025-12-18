@@ -1,0 +1,38 @@
+#!@GUILE@ \
+--no-auto-compile -e main -s
+!#
+
+(use-modules (ice-9 format)
+             (ice-9 popen)
+             (ice-9 rdelim))
+
+(define %git-remotes
+  '(("guix-guixsd" . "oleg@guixsd:src/cgit.wugi.info/wigust/dotfiles")
+    ("guix-nanokvm" . "oleg@pc0:/srv/runc/guix-nanokvm/rootfs/home/oleg/src/cgit.wugi.info/wigust/dotfiles")
+    ("guix-pc0" . "oleg@pc0:/home/oleg/src/cgit.wugi.info/wigust/dotfiles")
+    ("nixos-majordomo" . "oleg@pc0:/srv/runc/nixos-majordomo/rootfs/home/oleg/src/cgit.wugi.info/wigust/dotfiles")
+    ("nixos-workstation-guixsd" . "oleg@guixsd:/srv/runc/nixos-workstation/rootfs/home/oleg/src/cgit.wugi.info/wigust/dotfiles")
+    ("nixos-workstation" . "oleg@pc0:/srv/runc/nixos-workstation/rootfs/home/oleg/src/cgit.wugi.info/wigust/dotfiles")
+    ("nixos-zapret" . "oleg@pc0:/srv/runc/nixos-zapret/rootfs/home/oleg/src/cgit.wugi.info/wigust/dotfiles")
+    ("origin" . "https://cgit.wugi.info/git/wigust/dotfiles")
+    ;; ("codeberg" . "https://codeberg.org/wigust/dotfiles.git")
+    ;; ("github" . "https://github.com/kitnil/dotfiles")
+    ;; ("gitlab" . "git@gitlab.com:wigust/dotfiles.git")
+    ;; ("guix-notebook" . "oleg@192.168.0.137:/home/oleg/src/cgit.wugi.info/wigust/dotfiles")
+    ;; ("guix-rde" . "oleg@pc0:/srv/runc/guix-rde/rootfs/home/oleg/src/cgit.wugi.info/wigust/dotfiles")
+    ;; ("origin" . "oleg@cgit.wugi.info:/srv/git/wigust/dotfiles.git")
+    ))
+
+(define (invoke program . args)
+  "Invoke PROGRAM with the given ARGS.  Raise an error if the exit
+code is non-zero; otherwise return #t."
+  (let ((status (apply system* program args)))
+    (unless (zero? status)
+      (error (format #f "program ~s exited with non-zero code" program)
+             status))
+    #t))
+
+(define (main . args)
+  (for-each (lambda (remote)
+              (invoke "git" "fetch" (car remote)))
+            %git-remotes))

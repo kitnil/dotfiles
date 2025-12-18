@@ -42,6 +42,7 @@
 /install-sh
 /src/emacs/benchmark/benchmark.el
 /src/guile/format-yaml/format-yaml
+/src/guile/git-fetch-remotes/git-fetch-remotes
 /src/guile/guix-guile-next-compile-file/guix-guile-next-compile-file
 /src/bash/guile-clean-modules/guile-clean-modules.sh
 /*.dot

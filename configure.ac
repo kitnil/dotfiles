@@ -24,6 +24,8 @@ else
 AC_SUBST([GUILE])
 AC_CONFIG_FILES([src/guile/format-yaml/format-yaml], [chmod +x src/guile/format-yaml/format-yaml])
 AC_CONFIG_FILES([src/guile/guix-guile-next-compile-file/guix-guile-next-compile-file], [chmod +x src/guile/guix-guile-next-compile-file/guix-guile-next-compile-file])
+AC_CONFIG_FILES([src/guile/git-fetch-remotes/git-fetch-remotes], [chmod +x src/guile/git-fetch-remotes/git-fetch-remotes])
+
 fi
 
 AC_PATH_PROG([GUIX], [guix])
