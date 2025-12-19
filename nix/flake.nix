@@ -11,7 +11,7 @@
   outputs = { self, nixpkgs, home-manager, nur, flake-utils-plus }:
     let
       lib = nixpkgs.lib;
-      forAllSystems = lib.genAttrs lib.systems.flakeExposed;
+      system = "x86_64-linux";
       customLib = {
         firefoxBaseProfile = { ech ? false }: {
           # TODO: Manage ~/.mozilla/firefox/nix/containers.json file with Nix.
@@ -56,9 +56,7 @@
           };
         };
       };
-    in
-    {
-      nixosConfigurations = forAllSystems (system:
+      commonModules =
         let
           sharedModules = [
             ./modules/services/chatterino.nix
@@ -76,86 +74,85 @@
             inherit customLib system;
             customModulesPath = ./modules;
           };
-          commonModules = [
-            {
-              nixpkgs.overlays = [
-                nur.overlays.default
-              ];
-              nixpkgs.config.allowUnfree = true;
-            }
-            {
-              # But NIX_PATH is still used by many useful tools, so we set it
-              # to the same value as the one used by this flake.
-              # Make `nix repl '<nixpkgs>'` use the same nixpkgs as the one
-              # used by this flake.
-              environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
-              nix = {
-                # Make `nix run nixpkgs#nixpkgs` use the same nixpkgs as the
-                # one used by this flake.
-                registry.nixpkgs.flake = nixpkgs;
-                # Remove nix-channel related tools & configs, we use flakes
-                # instead.
-                channel.enable = false;
-                settings = {
-                  # https://github.com/NixOS/nix/issues/9574
-                  nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
-                };
-              };
-            }
-            ./container-systemd/hosts/nixos-systemd.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                inherit sharedModules extraSpecialArgs;
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users = {
-                  oleg = ./container-systemd/home-manager.nix;
-                };
-              };
-            }
-          ];
-          containerSystemdNixosWorkstationModules = builtins.concatLists [
-            commonModules
-            [
-              ./container-systemd-nixos-workstation/hosts/nixos-systemd.nix
-              {
-                home-manager = {
-                  users = {
-                    oleg = ./container-systemd-nixos-workstation/oleg/home-manager.nix;
-                  };
-                };
-              }
-            ]
-          ];
-          containerSystemdNixosWorkstationPc0Modules = builtins.concatLists [
-            containerSystemdNixosWorkstationModules
-            [
-              ./container-systemd-nixos-workstation-pc0/hosts/nixos-systemd.nix
-              {
-                home-manager = {
-                  users = {
-                    oleg = ./container-systemd-nixos-workstation-pc0/oleg/home-manager.nix;
-                  };
-                };
-              }
-            ]
-          ];
         in
-        {
-          container-systemd = nixpkgs.lib.nixosSystem {
-            inherit system;
-            modules = commonModules;
-          };
-          container-systemd-nixos-workstation = nixpkgs.lib.nixosSystem {
-            inherit system;
-            modules = containerSystemdNixosWorkstationModules;
-          };
-          container-systemd-nixos-workstation-pc0 = nixpkgs.lib.nixosSystem {
-            inherit system;
-            modules = containerSystemdNixosWorkstationPc0Modules;
-          };
-        }
-      );
+        [
+          {
+            nixpkgs.overlays = [
+              nur.overlays.default
+            ];
+            nixpkgs.config.allowUnfree = true;
+            nixpkgs.system = system;
+          }
+          {
+            # But NIX_PATH is still used by many useful tools, so we set it
+            # to the same value as the one used by this flake.
+            # Make `nix repl '<nixpkgs>'` use the same nixpkgs as the one
+            # used by this flake.
+            environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
+            nix = {
+              # Make `nix run nixpkgs#nixpkgs` use the same nixpkgs as the
+              # one used by this flake.
+              registry.nixpkgs.flake = nixpkgs;
+              # Remove nix-channel related tools & configs, we use flakes
+              # instead.
+              channel.enable = false;
+              settings = {
+                # https://github.com/NixOS/nix/issues/9574
+                nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
+              };
+            };
+          }
+          ./container-systemd/hosts/nixos-systemd.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              inherit sharedModules extraSpecialArgs;
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users = {
+                oleg = ./container-systemd/home-manager.nix;
+              };
+            };
+          }
+        ];
+      containerSystemdNixosWorkstationModules = builtins.concatLists [
+        commonModules
+        [
+          ./container-systemd-nixos-workstation/hosts/nixos-systemd.nix
+          {
+            home-manager = {
+              users = {
+                oleg = ./container-systemd-nixos-workstation/oleg/home-manager.nix;
+              };
+            };
+          }
+        ]
+      ];
+      containerSystemdNixosWorkstationPc0Modules = builtins.concatLists [
+        containerSystemdNixosWorkstationModules
+        [
+          ./container-systemd-nixos-workstation-pc0/hosts/nixos-systemd.nix
+          {
+            home-manager = {
+              users = {
+                oleg = ./container-systemd-nixos-workstation-pc0/oleg/home-manager.nix;
+              };
+            };
+          }
+        ]
+      ];
+    in
+    {
+      nixosConfigurations = {
+        container-systemd = nixpkgs.lib.nixosSystem {
+          modules = commonModules;
+        };
+        container-systemd-nixos-workstation = nixpkgs.lib.nixosSystem {
+          modules = containerSystemdNixosWorkstationModules;
+        };
+        container-systemd-nixos-workstation-pc0 = nixpkgs.lib.nixosSystem {
+          modules = containerSystemdNixosWorkstationPc0Modules;
+        };
+      };
     };
 }
