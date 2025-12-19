@@ -17,6 +17,8 @@ in
       obs-studio-plugins.obs-pipewire-audio-capture
 
       steam
+
+      vulkan-tools
     ];
   };
   programs.firefox = {
