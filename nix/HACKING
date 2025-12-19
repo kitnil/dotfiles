@@ -1,0 +1,1 @@
+VK_ICD_FILENAMES="/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json" WAYLAND_DISPLAY=wayland-1 XDG_RUNTIME_DIR=/mnt/guix/run/user/1000 gamescope -W 3840 -H 2160 -r 240.084 --force-grab-cursor -- sway

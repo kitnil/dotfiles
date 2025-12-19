@@ -17,9 +17,6 @@ in
       obs-studio-plugins.obs-pipewire-audio-capture
 
       steam
-
-      gamescope
-      sway
     ];
   };
   programs.firefox = {
