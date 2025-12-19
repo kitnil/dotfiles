@@ -3,8 +3,14 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-25.05";
-    home-manager.url = "git+https://github.com/nix-community/home-manager?ref=release-25.05";
-    nur.url = "github:nix-community/NUR";
+    home-manager = {
+      url = "git+https://github.com/nix-community/home-manager?ref=release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, nur }:
