@@ -2,8 +2,8 @@
   description = "Dotfiles";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-25.11";
-    home-manager.url = "git+https://github.com/nix-community/home-manager?ref=release-25.11";
+    nixpkgs.url = "nixpkgs/nixos-25.05";
+    home-manager.url = "git+https://github.com/nix-community/home-manager?ref=release-25.05";
     nur.url = "github:nix-community/NUR";
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
   };
