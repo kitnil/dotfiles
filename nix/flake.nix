@@ -145,6 +145,19 @@
           }
         ]
       ];
+      containerSystemdNixosZapretModules = builtins.concatLists [
+        containerSystemdNixosWorkstationModules
+        [
+          ./container-systemd-nixos-zapret/hosts/nixos-systemd.nix
+          {
+            home-manager = {
+              users = {
+                oleg = ./container-systemd-nixos-zapret/oleg/home-manager.nix;
+              };
+            };
+          }
+        ]
+      ];
     in
     {
       nixosConfigurations = {
@@ -156,6 +169,9 @@
         };
         container-systemd-nixos-workstation-pc0 = nixpkgs.lib.nixosSystem {
           modules = containerSystemdNixosWorkstationPc0Modules;
+        };
+        container-systemd-nixos-zapret = nixpkgs.lib.nixosSystem {
+          modules = containerSystemdNixosZapretModules;
         };
       };
     };

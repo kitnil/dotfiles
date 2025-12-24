@@ -25,13 +25,6 @@
 
   virtualisation.docker.enable = lib.mkForce false;
 
-  services.sunshine = {
-    enable = false;
-    autoStart = false;
-    capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
-    # openFirewall = true;
-  };
-
   networking.firewall.enable = lib.mkForce true;
   services.zapret = {
     enable = true;
