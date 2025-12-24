@@ -1,261 +1,9 @@
-{ pkgs, packages, lib, ... }:
+{ pkgs, lib, ... }:
 
 {
   home.username = "oleg";
   home.homeDirectory = "/home/oleg";
   manual.manpages.enable = false;
-
-  home.packages = with packages; [
-    act
-
-    ansifilter
-    bat
-    bandwidth
-    bandwhich
-
-    binwalk
-
-    btfs
-
-    chatterino2
-
-    clipboard-jh
-
-    clipman wtype
-
-    difftastic
-
-    # alacritty
-
-    # assh
-    ssh-tools
-
-    # browserpass
-    brave
-    buku
-    # cabal-install
-    cached-nix-shell
-    catimg
-    ctop
-    diskus
-    dive
-    # dmg2img
-    dnsperf
-    # docker-compose
-    docker-ls
-    dogdns
-    duf
-    espanso
-    # ferm
-    filezilla
-    # firefox
-    adoptopenjdk-icedtea-web
-
-    viddy
-
-    fzf
-    goldendict
-    # geckodriver
-    bfg-repo-cleaner
-    git-secrets
-    glab
-    fac
-
-    buildPackages.glibcLocales
-
-    ghidra-bin
-
-    go2nix
-    glow
-    groovy
-    hexyl
-    httpie
-    mitmproxy
-    hy
-    hyperfine
-    knot-resolver
-    # lexicon
-    ldns
-    litecli
-    navi
-    lnav
-    pastel
-    procs
-    zenith
-    tokei
-    lua
-    luarocks
-    sumneko-lua-language-server # renamed to lua-language-server
-    mycli
-    mypaint
-    nix-bash-completions
-    nix-generate-from-cpan
-    nix-prefetch-docker
-    nix-serve
-    noti
-    clang-tools # for clangd in lsp-mode
-
-    tmpmail
-
-    tribler
-
-    nixd
-    yaml-language-server
-
-    logstalgia
-
-    nix
-    nixos-install-tools
-    nixos-rebuild
-    nixpkgs-lint
-    # nodePackages_12_x.node2nix
-    fup-repl
-
-    nodejs
-
-    cachix
-
-    mongodb
-    mongodb-tools
-
-    gron
-    pup # HTML parsing
-
-    ioping
-    iotop-c
-
-    black
-
-    nodePackages.vscode-json-languageserver-bin
-    phpactor
-
-    audacity
-    scrcpy
-    oh
-    openjdk11
-    packer
-    passff-host
-    pgcli
-    prettyping
-    sampler
-    screenkey
-    skopeo
-    # slack
-    # slack-term
-    # tdesktop
-    thc-hydra
-    thunderbird
-    tldr
-    ttyd
-    ttyplot
-    visidata
-    webhook
-    wrk
-    wtf
-    yq
-    vmtouch
-
-    adwaita-qt
-    quassel
-
-    gping
-
-    rust-analyzer
-
-    bit
-
-    yarn
-
-    # TODO: Add xcolor after nixpkgs update.
-
-    python-selenium
-
-    zeal
-
-    libsForQt5.qtstyleplugins
-    libsForQt5.kde-gtk-config
-
-    lxqt.qterminal
-
-    vaultenv
-
-    vagrant
-
-    prometheus
-    prometheus-pushgateway
-    prometheus-alertmanager
-    prometheus-dnsmasq-exporter
-    prometheus-json-exporter
-
-    OVMF.fd # UEFI for virtual machines in libvirt
-
-    dhall
-    dhall-nix
-    dhall-json
-    (haskell.lib.justStaticExecutables haskellPackages.dhall-yaml)
-
-    json2hcl
-
-    alerta
-    deploy-rs
-    discord
-    elktail
-    firefox-52-wrapper
-    mozilla-addons-to-nix
-    fx_cast_bridge
-    google-chrome
-    chromium-wrapper # wraps google-chrome as chromium
-    idea-ultimate
-    idea-community
-    jenkins
-    jenkins-job-builder
-    # logstash
-
-    jc
-
-    # nim_1_0
-
-    nixfmt
-    alejandra
-    nixpkgs-fmt
-    node2nix
-    onefetch
-    pycharm-professional
-    robo3t
-    yamllint
-
-    restic-rest-server
-
-    eiskaltdcpp
-
-    sunshine
-
-    ddcutil
-  ];
-
-  home.file = {
-    ".bash.d/nix.bash" = {
-      text = ''
-        . ${packages.nix}/share/bash-completion/completions/nix
-
-        . ${packages.vault-bin}/share/bash-completion/completions/vault
-        complete -C ${packages.vault-bin}/bin/vault vault1
-        complete -C ${packages.vault-bin}/bin/vault vault2
-        complete -C ${packages.vault-bin}/bin/vault vault3
-        complete -C ${packages.vault-bin}/bin/vault vault4
-        complete -C ${packages.vault-bin}/bin/vault vault-ci
-      '';
-    };
-    ".mozilla/native-messaging-hosts/passff.json" = {
-      text = builtins.toJSON {
-        allowed_extensions = [ "passff@wugi.info" ];
-        description = "Host for communicating with zx2c4 pass";
-        name = "passff";
-        path = "${packages.passff-host}/share/passff-host/passff.py";
-        type = "stdio";
-      };
-    };
-  };
 
   programs.firefox = {
     enable = true;
@@ -266,8 +14,8 @@
           # TODO: Manage ~/.mozilla/firefox/nix/cookies.sqlite somehow.
           # TODO: Import ~/src/ssl/cert.p12 file with Nix.
           extensions =
-            with packages;
-            with packages.nur.repos.rycee.firefox-addons;
+            with pkgs;
+            with pkgs.nur.repos.rycee.firefox-addons;
             [
               auto_highlight
               auto-tab-discard
@@ -312,16 +60,15 @@
               sitedelta-watch
               sponsorblock
               ublock-origin
-              packages.access-control-allow-origin
-              packages.snaplinksplus
-              packages.prometheus-formatter
+              pkgs.access-control-allow-origin
+              pkgs.snaplinksplus
+              pkgs.prometheus-formatter
               single-file
               stylus
               tab-reloader
               tab-slideshow-we
               temporary-containers
               view-image
-              view-page-archive
               visited-link-enabler
               ublacklist
               ultrawidify
@@ -341,13 +88,6 @@
           };
         };
       in {
-        default = {
-          # This profile not managed by Nix.
-          name = "default";
-          path = "j56dvo43.default-1520714705340";
-          isDefault = false;
-          id = 0;
-        };
         nix = nix // {
           name = "nix";
           id = 1;
@@ -357,8 +97,8 @@
           name = "twitch";
           id = 2;
           extensions =
-            with packages;
-            with packages.nur.repos.rycee.firefox-addons;
+            with pkgs;
+            with pkgs.nur.repos.rycee.firefox-addons;
             [
               return-youtube-dislikes
               sponsorblock
@@ -373,40 +113,12 @@
               betterttv
             ];
           settings = {
-            "browser.startup.homepage" = "about:addons";
             "browser.search.region" = "GB";
             "extensions.pocket.enabled" = false;
             "distribution.searchplugins.defaultLocale" = "en-GB";
             "general.useragent.locale" = "en-GB";
             "browser.search.defaultenginename" = "Google";
           };
-        };
-        react = {
-          name = "react";
-          id = 3;
-          extensions =
-            with packages;
-            with packages.nur.repos.rycee.firefox-addons;
-            [
-              react-devtools
-            ];
-          settings = {
-            "browser.search.defaultenginename" = "Google";
-            "browser.search.region" = "GB";
-            "browser.shell.checkDefaultBrowser" = false;
-            "browser.startup.homepage" = "about:newtab";
-            "browser.startup.page" = 3;
-            "distribution.searchplugins.defaultLocale" = "en-GB";
-            "extensions.pocket.enabled" = false;
-            "general.useragent.locale" = "en-GB";
-            "general.warnOnAboutConfig" = false;
-            "startup.homepage_welcome_url" = "about:newtab";
-            "toolkit.telemetry.reportingpolicy.firstRun" = false;
-          };
-        };
-        vnc = nix // {
-          name = "vnc";
-          id = 4;
         };
       };
   };

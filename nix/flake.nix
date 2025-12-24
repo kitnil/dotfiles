@@ -10,9 +10,12 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    rycee-nur-expressions = {
+      url = "git+https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, nur }:
+  outputs = { self, nixpkgs, home-manager, nur, rycee-nur-expressions }:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -80,13 +83,15 @@
           };
         in
         [
-          {
-            nixpkgs.overlays = [
-              nur.overlays.default
-            ];
-            nixpkgs.config.allowUnfree = true;
-            nixpkgs.system = system;
-          }
+          ({ pkgs, ... }:
+            {
+              nixpkgs.overlays = [
+                nur.overlays.default
+                self.overlay
+              ];
+              nixpkgs.config.allowUnfree = true;
+              nixpkgs.system = system;
+            })
           {
             # But NIX_PATH is still used by many useful tools, so we set it
             # to the same value as the one used by this flake.
@@ -113,6 +118,13 @@
               inherit sharedModules extraSpecialArgs;
               useGlobalPkgs = true;
               useUserPackages = true;
+              users = {
+                oleg = ./home-manager.nix;
+              };
+            };
+          }
+          {
+            home-manager = {
               users = {
                 oleg = ./container-systemd/home-manager.nix;
               };
@@ -147,6 +159,39 @@
       ];
     in
     {
+      overlay = final: prev: {
+        inherit (prev.callPackage ./firefox/generated-firefox-addons.nix {
+          inherit (rycee-nur-expressions.lib.${system})
+            buildFirefoxXpiAddon;
+        })
+          access-control-allow-origin
+          auto_highlight
+          certificate-pinner
+          cookie-quick-manager
+          copy-all-tab-urls-we
+          copy-as-org-mode
+          foxscroller
+          google-container
+          metube-downloader
+          night-video-tuner
+          hello-goodbye
+          hide-twitch-chat-users
+          prometheus-formatter
+          right-click-search
+          rocker_gestures
+          russian-ru-language-pack
+          scroll_anywhere
+          sitedelta-watch
+          snaplinksplus
+          soundfixer
+          tab-slideshow-we
+          twitch-error-autorefresher
+          view-page-archive
+          visited-link-enabler
+          ultrawidify;
+        firefox-addon-libredirect =
+          rycee-nur-expressions.packages.${system}.libredirect;
+      };
       nixosConfigurations = {
         container-systemd = nixpkgs.lib.nixosSystem {
           modules = commonModules;
