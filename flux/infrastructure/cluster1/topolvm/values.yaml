@@ -58,14 +58,14 @@ storageClasses:
     # "topolvm.io/device-class": "ssd"
     # mount options
     mountOptions: []
-  - name: topolvm-provisioner-pool0
-    storageClass:
-      fsType: xfs
-      isDefaultClass: false
-      volumeBindingMode: WaitForFirstConsumer
-      allowVolumeExpansion: true
-      additionalParameters:
-        '{{ include "topolvm.pluginName" . }}/device-class': "pool0"
+- name: topolvm-provisioner-pool0
+  storageClass:
+    fsType: xfs
+    isDefaultClass: false
+    volumeBindingMode: WaitForFirstConsumer
+    allowVolumeExpansion: true
+    additionalParameters:
+      '{{ include "topolvm.pluginName" . }}/device-class': "pool0"
 
 node:
   # lvmd.affinity -- Specify affinity.
