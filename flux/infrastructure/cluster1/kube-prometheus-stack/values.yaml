@@ -318,7 +318,7 @@ additionalPrometheusRulesMap:
     - rules:
       - labels:
           severity: critical
-        expr: 100 - lvm_lv_data_percent{lv_name="thinpool2"} < 10
+        expr: 100 - lvm_lv_data_percent{lv_name="pool0"} < 10
         annotations:
           summary: Logical Thin Volume has less than 10% space left.
           description: Logical Thin Volume {{ $labels.lv_name }} at {{ $labels.instance
@@ -327,7 +327,7 @@ additionalPrometheusRulesMap:
       - labels:
           severity: critical
         for: 10m
-        expr: absent(lvm_lv_data_percent{lv_name="thinpool2"})
+        expr: absent(lvm_lv_data_percent{lv_name="pool0"})
         annotations:
           summary: Absent metrics for Logical Thin Volume.
           description: Absent metrics for Logical Thin Volume at {{ $labels.instance

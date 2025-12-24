@@ -36,7 +36,7 @@ lvcreate -l 100%FREE -Zn --type thin-pool --thinpool pool0 vg0
 Run nix-shell to get `kubectl linstor`.
 
 ```
-$ kubectl linstor storage-pool create lvmthin kube1 pool0 lvm2/thinpool2
+$ kubectl linstor storage-pool create lvmthin kube1 pool0 vg0/pool0
 SUCCESS:
     Successfully set property key(s): StorDriver/StorPoolName
 SUCCESS:
