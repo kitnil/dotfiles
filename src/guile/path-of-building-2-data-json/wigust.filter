@@ -1,0 +1,298 @@
+Show
+	SetBorderColor 0 0 0 230
+	SetBackgroundColor 0 0 0 230
+	Continue
+
+Show
+	Class == "Waystones" "Tablet"
+	SetBackgroundColor 128 0 128 230
+	SetBorderColor 38 0 86
+	PlayAlertSound 3 300
+	PlayEffect Pink
+	MinimapIcon 0 Pink Pentagon
+
+Show
+	StackSize >= 5000
+	BaseType == "Gold"
+	MinimapIcon 1 Yellow Cross
+	PlayEffect Orange
+
+Show
+	StackSize >= 2500
+	BaseType == "Gold"
+	MinimapIcon 1 White Cross
+	PlayEffect Orange
+
+Show
+	BaseType == "Gold"
+
+Show
+	BaseType == "Scroll of Wisdom"
+
+Show
+	Rarity Unique
+	SetTextColor 188 96 37 255
+	SetBorderColor 188 96 37 255
+	SetBackgroundColor 53 13 13 229
+	PlayAlertSound 3 300
+	PlayEffect Brown
+	MinimapIcon 1 Brown Star
+
+Show
+	Identified False
+	SetBackgroundColor 86 0 0 230
+	Rarity Magic Rare Unique
+	Continue
+
+Show
+	Identified True
+	SetFontSize 20
+	Continue
+
+Show
+	Class == "Stackable Currency"
+	MinimapIcon 1 Yellow Circle
+	PlayEffect Yellow
+	SetBackgroundColor 254 213 0 230
+	SetTextColor 0 0 0 255
+	Continue
+
+Show
+	Class == "Stackable Currency"
+	BaseType == "Albino Rhoa Feather" "Ancient Collarbone" "Ancient Jawbone" "Ancient Rib" "Divine Orb" "Hinekora's Lock" "Mirror of Kalandra" "Perfect Chaos Orb" "Perfect Exalted Orb" "Perfect Jeweller's Orb"
+	SetTextColor 255 0 0 255
+	SetBorderColor 255 0 0 255
+	SetBackgroundColor 255 255 255 229
+	PlayAlertSound 6 300
+	PlayEffect Red
+	MinimapIcon 0 Red Star
+
+Show
+	Quality > 20
+	SetTextColor 0 240 190 255
+	SetBorderColor 0 240 190 255
+	SetBackgroundColor 0 75 30 229
+	PlayAlertSound 3 300
+	PlayEffect Blue
+	MinimapIcon 0 Blue Diamond
+
+Show
+	ItemLevel >= 82
+	SetBorderColor 74 230 58 255
+	Continue
+
+Show
+	Rarity Normal
+	BaseType == "Heavy Belt" "Stellar Amulet"
+	SetTextColor 125 255 89 255
+	SetBorderColor 125 255 89 255
+	SetBackgroundColor 0 50 0 229
+	PlayAlertSound 1 300
+	PlayEffect Red
+	MinimapIcon 0 Red Diamond
+
+Show
+	GemLevel >= 20
+	Class == "Skill Gems" "Uncut Skill Gems" "Uncut Spirit Gems"
+	SetTextColor 255 0 0 255
+	SetBorderColor 255 0 0 255
+	SetBackgroundColor 255 255 255 229
+	PlayAlertSound 6 300
+	PlayEffect Red
+	MinimapIcon 0 Red Star
+
+Show
+	Class == "Skill Gems" "Support Gems" "Uncut Support Gems" "Uncut Skill Gems" "Uncut Spirit Gems"
+	SetTextColor 20 240 240
+	SetBorderColor 20 240 240
+	PlayAlertSound 2 300
+	PlayEffect Cyan
+	MinimapIcon 1 Cyan Triangle
+	SetBackgroundColor 0 0 0 206
+
+Show
+	Sockets > 0
+	PlayEffect White
+	Continue
+
+Show
+	Sockets > 1
+	SetTextColor 0 0 0 255
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 240 180 100 229
+	PlayAlertSound 2 300
+	MinimapIcon 2 White Circle
+
+Show
+	Quality > 0
+	PlayEffect White
+	Continue
+
+Show
+	Quality > 20
+	SetTextColor 0 0 0 255
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 240 180 100 229
+	PlayAlertSound 2 300
+	MinimapIcon 2 White Circle
+
+# armour str
+# Show
+# 	BaseType == "Ornate Plate" "Utzaal Cuirass" "Heavy Plate" "Juggernaut Plate" "Elegant Plate" "Stone Cuirass" "Soldier Cuirass" "Full Plate" "Warlord Cuirass" "Chieftain Cuirass"
+# 	SetFontSize 20
+
+# armour dex
+Show
+	BaseType == "Quilted Vest" "Layered Vest" "Leather Vest" "Shrouded Vest" "Pathfinder Coat" "Runner Vest" "Swiftstalker Coat" "Corsair Coat" "Dastard Armour" "Slipstrike Vest" "Smuggler Coat" "Lizardscale Coat" "Wyrmscale Coat" "Corsair Vest" "Studded Vest" "Rhoahide Coat" "Scout's Vest" "Serpentscale Coat"
+	SetFontSize 20
+
+# armour str dex
+Show
+	BaseType == "Plated Vestments" "Mantled Mail" "Shrouded Mail" "Thane Mail" "Golden Mail" "Cloaked Mail" "Trailblazer Armour" "Death Mail" "Knight Armour" "Ancestral Mail" "Explorer Armour" "Scale Mail"
+	SetFontSize 20
+
+# armour dex int
+Show
+	BaseType == "Hermit Garb" "Rogue Armour" "Waxed Jacket" "Vagabond Armour" "Chain Mail" "Wayfarer Jacket" "Marabout Garb" "Anchorite Garb" "Scalper's Jacket" "Scoundrel Jacket" "Ascetic Garb" "Itinerant Jacket" "Hatungo Garb" "Hawker's Jacket" "Sleek Jacket"
+	SetFontSize 20
+
+# # armour int
+# Show
+# 	BaseType == "Tattered Robe" "Feathered Robe"
+# 	SetFontSize 20
+
+# # shileds str
+# Show
+# 	BaseType == "Splintered Tower Shield"
+# 	SetFontSize 20
+
+# shileds dex
+Show
+	BaseType == "Wooden Buckler"
+	SetFontSize 20
+
+# shileds str dex
+Show
+	BaseType == "Hardwood Targe"
+	SetFontSize 20
+
+# gloves dex int
+Show
+	BaseType == "Gauze Wraps" "Barbed Bracers" "Layered Gauntlets" "Secured Wraps" "Sectioned Bracers" "Linen Wraps" "Spiral Wraps" "Buckled Wraps" "Adorned Wraps" "War Wraps"
+	SetFontSize 20
+
+# gloves str dex
+Show
+	BaseType == "Cultist Gauntlets" "Ringmail Gauntlets" "Commander Gauntlets" "Zealot Gauntlets" "Blacksteel Gauntlets" "Steelmail Gauntlets" "Doubled Gauntlets" "Plate Gauntlets"
+	SetFontSize 20
+
+# # gloves str
+# Show
+# 	BaseType == "Massive Mitts" "Plate Gauntlets" "Ancient Mitts" "Feathered Mitts" "Knightly Mitts" "Ornate Mitts" "Vaal Mitts"
+# 	SetFontSize 20
+
+# gloves dex
+Show
+	BaseType == "Stalking Bracers" "Spiked Bracers" "Barbed Bracers" "Grand Bracers" "Bound Bracers" "Suede Bracers" "Spined Bracers" "Fine Bracers" "Refined Bracers"
+	SetFontSize 20
+
+# # boots str
+# Show
+# 	BaseType == "Elegant Greaves" "Bulwark Greaves" "Carved Greaves" "Ornate Greaves"
+# 	SetFontSize 20
+
+# boots str dex
+Show
+	BaseType == "Blacksteel Sabatons" "Mail Sabatons" "Stacked Sabatons" "Fortress Sabatons" "Veteran Sabatons" "Braced Sabatons"
+	SetFontSize 20
+
+# # boots int
+# Show
+# 	BaseType == "Straw Sandals"
+# 	SetFontSize 20
+
+# boots dex int
+Show
+	BaseType == "Daggerfoot Shoes" "Threaded Shoes" "Hunting Shoes" "Steelpoint Shoes" "Covered Sabatons" "Treerunner Shoes"
+	SetFontSize 20
+
+# boots str dex
+Show
+	BaseType == "Serpentscale Boots"
+	SetFontSize 20
+
+# boots dex
+Show
+	BaseType == "Cinched Boots" "Cavalry Boots" "Embossed Boots" "Laced Boots" "Flared Boots" "Studded Boots" "Dragonscale Boots" "Drakeskin Boots" "Lizardscale Boots" "Steeltoe Boots" "Rawhide Boots"
+	SetFontSize 20
+
+# boots dex str
+Show
+	BaseType == "Frayed Shoes" "Noble Sabatons" "Bastion Sabatons"
+	SetFontSize 20
+
+# # helmets str
+# Show
+# 	BaseType == "Paragon Greathelm" "Closed Helm" "Warrior Greathelm" "Warmonger Greathelm" "Imperial Greathelm" "Commander Greathelm" "Fierce Greathelm" "Noble Greathelm" "Elegant Greathelm" "Masked Greathelm"
+# 	SetFontSize 20
+
+# helmets str dex
+Show
+	BaseType == "Brimmed Helm" "Champion Helm" "Gladiatoral Helm" "Cabalist Helm" "Cryptic Helm" "Shielded Helm" "Gladiatorial Helm" "Tribal Mask" "Closed Helm"
+	SetFontSize 20
+
+# helmets dex
+Show
+	BaseType == "Felt Cap" "Grinning Mask" "Lace Hood" "Visored Helm" "Desert Cap" "Trapper Hood" "Woven Cap" "Wrapped Cap" "Warded Helm" "Corsair Cap" "Freebooter Cap" "Deerstalker Hood" "Shabby Hood" "Swathed Cap" "Hunter Hood" "Viper Cap" "Leatherbound Hood"
+	SetFontSize 20
+
+# helmets dex int
+Show
+	BaseType == "Face Mask" "Hewn Mask" "Guarded Helm" "Hooded Mask" "Cowled Helm" "Veiled Mask" "Solid Mask" "Pariah Mask" "Avian Mask"
+	SetFontSize 20
+
+# # boots str
+# Show
+# 	BaseType == "Tasalian Greaves" "Vaal Greaves"
+# 	SetFontSize 20
+
+# "Shields"
+Show
+	Class == "Bows" "Crossbows" "Spears" "Quivers" "One Hand Maces" "Two Hand Maces" "Quarterstaves" "Bucklers"
+	SetFontSize 20
+
+Show
+	BaseType == "Djinn Barya" "Inscribed Ultimatum"
+	SetTextColor 0 0 0 255
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 180 75 225 204
+	PlayAlertSound 2 300
+	PlayEffect Purple Temp
+	MinimapIcon 1 White Hexagon
+
+Show
+	Class == "Omen"
+	SetTextColor 255 255 255 255
+	SetBorderColor 255 255 255 255
+	SetBackgroundColor 245 105 90 204
+	PlayAlertSound 1 300
+	PlayEffect Red
+	MinimapIcon 0 Red Circle
+
+Show
+	Class == "Expedition Logbooks"
+	SetTextColor 255 255 255 255
+	SetBorderColor 255 255 255 255
+	SetBackgroundColor 220 0 255 204
+	PlayAlertSound 1 300
+	PlayEffect Red
+	MinimapIcon 0 Red Hexagon
+
+Show
+	BaseType == "Twilight Reliquary Key"
+	SetTextColor 0 0 0 255
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 220 0 255 204
+	PlayAlertSound 2 300
+	PlayEffect Purple
+	MinimapIcon 1 Yellow Hexagon
