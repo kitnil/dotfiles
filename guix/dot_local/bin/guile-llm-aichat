@@ -86,13 +86,13 @@
                                                (display body)
                                                (system* "fyi" "--app-name=llm-aichat" "--expire-time=300000" model body)))
                                            (cond
-                                            ((string= endpoint "http://192.168.0.156:11434/api/generate")
+                                            ((string= endpoint "https://ollama-1.home.wugi.info/api/generate")
                                              '("deepseek-r1:8b"))
-                                            ((string= endpoint "http://192.168.0.185:11434/api/generate")
+                                            ((string= endpoint "https://ollama-0.home.wugi.info/api/generate")
                                              '("gemma3:12b"
                                                "qwen3:8b")))))
-                               '("http://192.168.0.156:11434/api/generate"
-                                 "http://192.168.0.185:11434/api/generate")))
+                               '("https://ollama-0.home.wugi.info/api/generate"
+                                 "https://ollama-1.home.wugi.info/api/generate")))
                    prompts))))))
 
 ;;; Buffer name ‘llm-aichat’ is in use ends here
