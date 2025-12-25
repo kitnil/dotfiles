@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
 - endpoints.yaml
 - service.yaml
+- ingress.yaml
