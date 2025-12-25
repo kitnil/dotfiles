@@ -4,7 +4,7 @@ metadata:
   name: ollama-0
 spec:
   ports:
-  - name: ollama
+  - name: ollama-0
     protocol: TCP
     port: 80
     targetPort: 11434
