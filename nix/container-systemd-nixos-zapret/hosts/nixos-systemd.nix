@@ -62,4 +62,10 @@
       "7tv.app"
     ];
   };
+
+  services.bird = {
+    enable = true;
+    config = builtins.readFile ./bird.conf;
+    checkConfig = false;
+  };
 }
