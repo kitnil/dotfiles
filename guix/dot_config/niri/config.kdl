@@ -105,7 +105,9 @@ output "DP-1" {
     // automatically.
     // position x=1280 y=0
 
-    background-color "#000000"
+    layout {
+        background-color "#000000"
+    }
 }
 
 // Settings that influence how windows are positioned and sized.
