@@ -7,4 +7,4 @@ subsets:
   - ip: 192.168.0.185
   ports:
   - port: 11434
-    name: ollama
+    name: ollama-0
