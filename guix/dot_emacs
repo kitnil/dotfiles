@@ -147,16 +147,28 @@
  ;; If there is more than one, they won't work right.
  '(build-farm-build-arguments '("jobset=guix-master" "system=x86_64-linux"))
  '(company-backends
-   '(company-abbrev company-bbdb company-eclim company-semantic company-xcode company-cmake company-capf company-files
-                    (company-dabbrev-code company-gtags company-etags company-keywords)
+   '(company-abbrev company-bbdb company-eclim company-semantic company-xcode
+                    company-cmake company-capf company-files
+                    (company-dabbrev-code company-gtags company-etags
+                                          company-keywords)
                     company-oddmuse company-dabbrev))
  '(custom-safe-themes
-   '("e1ad4299390cb3fc0cbf5a705442eaf08510aa947c90c8bc83b1d7308befb475" "0568a5426239e65aab5e7c48fa1abde81130a87ddf7f942613bf5e13bf79686b" "076ee9f2c64746aac7994b697eb7dbde23ac22988d41ef31b714fc6478fee224" "d9864caf2fc6cd9bc5bed941c526a4690bf6c27f0d8c1ca28ff7e05806b57204" "aa85228e4b6d188c3c0b8553548142c2c75726429614376c26255a51378982f5" "a10ca93d065921865932b9d7afae98362ce3c347f43cb0266d025d70bec57af1" "4ce515d79ef94f3b7651c8e2a7c7d81814b9ca911eb2a16955f45f4555faf524" "ba881f92a04cf56df49740324caea02d25442a327f1c33d1a1946f0b9a846f53" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
+   '("e1ad4299390cb3fc0cbf5a705442eaf08510aa947c90c8bc83b1d7308befb475"
+     "0568a5426239e65aab5e7c48fa1abde81130a87ddf7f942613bf5e13bf79686b"
+     "076ee9f2c64746aac7994b697eb7dbde23ac22988d41ef31b714fc6478fee224"
+     "d9864caf2fc6cd9bc5bed941c526a4690bf6c27f0d8c1ca28ff7e05806b57204"
+     "aa85228e4b6d188c3c0b8553548142c2c75726429614376c26255a51378982f5"
+     "a10ca93d065921865932b9d7afae98362ce3c347f43cb0266d025d70bec57af1"
+     "4ce515d79ef94f3b7651c8e2a7c7d81814b9ca911eb2a16955f45f4555faf524"
+     "ba881f92a04cf56df49740324caea02d25442a327f1c33d1a1946f0b9a846f53"
+     "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa"
+     "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e"
+     default))
  '(dap-auto-configure-mode nil)
  '(dap-tooltip-mode nil)
- '(dap-ui-controls-mode nil nil (dap-ui))
+ '(dap-ui-controls-mode nil)
  '(dap-ui-many-windows-mode nil)
- '(dap-ui-mode nil nil (dap-ui))
+ '(dap-ui-mode nil)
  '(debug-on-error nil)
  '(display-time-mode nil)
  '(indent-tabs-mode nil)
@@ -164,262 +176,199 @@
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
-   '((eval with-eval-after-load 'git-commit
+   '((eval progn (setq-local geiser-repl-add-project-paths nil))
+     (lisp-fill-paragraphs-as-doc-string nil)
+     (eval with-eval-after-load 'git-commit
            (add-to-list 'git-commit-trailers "Change-Id"))
-     (eval progn
-           (setq-local geiser-repl-add-project-paths nil)
-           (when
-               (functionp #'aggressive-indent-mode)
+     (eval progn (setq-local geiser-repl-add-project-paths nil)
+           (when (functionp #'aggressive-indent-mode)
              (aggressive-indent-mode)))
-     (eval progn
-           (setq-local geiser-repl-add-project-paths nil)
+     (eval progn (setq-local geiser-repl-add-project-paths nil)
            (aggressive-indent-mode))
      (eval progn
            (setq-local geiser-guile-load-path
                        (append
                         (list
-                         (concat
-                          (getenv "HOME")
-                          "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
+                         (concat (getenv "HOME")
+                                 "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
                         (list
-                         (concat
-                          (getenv "HOME")
-                          "/src/gitlab.com/nonguix/nonguix"))
-                        (if
-                            (boundp #'projectile-project-root)
-                            (list
-                             (concat
-                              (projectile-project-root)
-                              "/guix"))
+                         (concat (getenv "HOME")
+                                 "/src/gitlab.com/nonguix/nonguix"))
+                        (if (boundp #'projectile-project-root)
+                            (list (concat (projectile-project-root) "/guix"))
                           'nil)))
            (aggressive-indent-mode))
      (eval progn
            (setq-local geiser-guile-load-path
                        (append
                         (list
-                         (concat
-                          (getenv "HOME")
-                          "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
+                         (concat (getenv "HOME")
+                                 "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
                         (list
-                         (concat
-                          (getenv "HOME")
-                          "/src/gitlab.com/nonguix/nonguix"))
-                        (if
-                            (boundp #'projectile-project-root)
-                            (list
-                             (projectile-project-root))
+                         (concat (getenv "HOME")
+                                 "/src/gitlab.com/nonguix/nonguix"))
+                        (if (boundp #'projectile-project-root)
+                            (list (projectile-project-root))
                           'nil)))
            (aggressive-indent-mode))
      (eval with-eval-after-load 'tempel
-           (if
-               (stringp tempel-path)
-               (setq tempel-path
-                     (list tempel-path)))
+           (if (stringp tempel-path) (setq tempel-path (list tempel-path)))
            (let
                ((guix-tempel-snippets
                  (concat
                   (expand-file-name "etc/snippets/tempel"
-                                    (locate-dominating-file default-directory ".dir-locals.el"))
+                                    (locate-dominating-file default-directory
+                                                            ".dir-locals.el"))
                   "/*.eld")))
-             (unless
-                 (member guix-tempel-snippets tempel-path)
+             (unless (member guix-tempel-snippets tempel-path)
                (add-to-list 'tempel-path guix-tempel-snippets))))
      (eval progn
-           (when
-               (boundp #'projectile-project-root)
+           (when (boundp #'projectile-project-root)
              (setenv "GUIX_PACKAGE_PATH"
-                     (concat
-                      (projectile-project-root)
-                      "dotfiles/guixsd/modules")))
+                     (concat (projectile-project-root)
+                             "dotfiles/guixsd/modules")))
            (setq-local geiser-guile-load-path
                        (append
                         (list
-                         (concat
-                          (getenv "HOME")
-                          "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
+                         (concat (getenv "HOME")
+                                 "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
                         (list
-                         (concat
-                          (getenv "HOME")
-                          "/src/gitlab.com/nonguix/nonguix"))
-                        (if
-                            (boundp #'projectile-project-root)
+                         (concat (getenv "HOME")
+                                 "/src/gitlab.com/nonguix/nonguix"))
+                        (if (boundp #'projectile-project-root)
                             (list
-                             (concat
-                              (projectile-project-root)
-                              "dotfiles/guixsd/modules"))
+                             (concat (projectile-project-root)
+                                     "dotfiles/guixsd/modules"))
                           'nil)))
-           (git-auto-commit-mode)
-           (aggressive-indent-mode))
+           (git-auto-commit-mode) (aggressive-indent-mode))
      (eval progn
            (setq-local geiser-guile-load-path
                        (append
                         (list
-                         (concat
-                          (getenv "HOME")
-                          "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
+                         (concat (getenv "HOME")
+                                 "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
                         (list
-                         (concat
-                          (getenv "HOME")
-                          "/src/gitlab.com/nonguix/nonguix"))
-                        (if
-                            (boundp #'projectile-project-root)
-                            (list
-                             (projectile-project-root))
+                         (concat (getenv "HOME")
+                                 "/src/gitlab.com/nonguix/nonguix"))
+                        (if (boundp #'projectile-project-root)
+                            (list (projectile-project-root))
                           'nil)))
-           (git-auto-commit-mode)
-           (aggressive-indent-mode))
+           (git-auto-commit-mode) (aggressive-indent-mode))
      (geiser-insert-actual-lambda)
      (eval progn
-           (when
-               (boundp #'projectile-project-root)
+           (when (boundp #'projectile-project-root)
              (setenv "GUIX_PACKAGE_PATH"
-                     (concat
-                      (projectile-project-root)
-                      "dotfiles/guixsd/modules")))
+                     (concat (projectile-project-root)
+                             "dotfiles/guixsd/modules")))
            (setq-local geiser-guile-load-path
                        (append
                         (list
-                         (concat
-                          (getenv "HOME")
-                          "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
+                         (concat (getenv "HOME")
+                                 "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
                         (list
-                         (concat
-                          (getenv "HOME")
-                          "/src/gitlab.com/nonguix/nonguix"))
-                        (if
-                            (boundp #'projectile-project-root)
+                         (concat (getenv "HOME")
+                                 "/src/gitlab.com/nonguix/nonguix"))
+                        (if (boundp #'projectile-project-root)
                             (list
-                             (concat
-                              (projectile-project-root)
-                              "dotfiles/guixsd/modules"))
+                             (concat (projectile-project-root)
+                                     "dotfiles/guixsd/modules"))
                           'nil)))
            (git-auto-commit-mode))
      (geiser-repl-per-project-p . t)
-     (eval progn
-           (setq-local create-lockfiles nil))
+     (eval progn (setq-local create-lockfiles nil))
      (eval let
            ((root-dir-unexpanded
              (locate-dominating-file default-directory ".dir-locals.el")))
            (when root-dir-unexpanded
              (let*
                  ((root-dir
-                   (file-local-name
-                    (expand-file-name root-dir-unexpanded)))
-                  (root-dir*
-                   (directory-file-name root-dir)))
-               (unless
-                   (boundp 'geiser-guile-load-path)
+                   (file-local-name (expand-file-name root-dir-unexpanded)))
+                  (root-dir* (directory-file-name root-dir)))
+               (unless (boundp 'geiser-guile-load-path)
                  (defvar geiser-guile-load-path 'nil))
-               (make-local-variable 'geiser-guile-load-path)
-               (require 'cl-lib)
-               (cl-pushnew root-dir* geiser-guile-load-path :test #'string-equal))))
-     (projectile-project-compilation-cmd . ".direnv/aliases/shell -- .direnv/aliases/build")
+               (make-local-variable 'geiser-guile-load-path) (require 'cl-lib)
+               (cl-pushnew root-dir* geiser-guile-load-path :test
+                           #'string-equal))))
+     (projectile-project-compilation-cmd
+      . ".direnv/aliases/shell -- .direnv/aliases/build")
      (eval progn
-           (when
-               (boundp #'projectile-project-root)
+           (when (boundp #'projectile-project-root)
              (setenv "GUIX_PACKAGE_PATH"
-                     (concat
-                      (projectile-project-root)
-                      "dotfiles/guixsd/modules")))
+                     (concat (projectile-project-root)
+                             "dotfiles/guixsd/modules")))
            (setq-local geiser-guile-load-path
                        (append
                         (list
-                         (concat
-                          (getenv "HOME")
-                          "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
+                         (concat (getenv "HOME")
+                                 "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
                         (list
-                         (concat
-                          (getenv "HOME")
-                          "/src/gitlab.com/nonguix/nonguix"))
-                        (if
-                            (boundp #'projectile-project-root)
+                         (concat (getenv "HOME")
+                                 "/src/gitlab.com/nonguix/nonguix"))
+                        (if (boundp #'projectile-project-root)
                             (list
-                             (concat
-                              (projectile-project-root)
-                              "dotfiles/guixsd/modules"))
+                             (concat (projectile-project-root)
+                                     "dotfiles/guixsd/modules"))
                           'nil))))
      (eval with-eval-after-load 'yasnippet
            (let
                ((guix-yasnippets
                  (expand-file-name "etc/snippets/yas"
-                                   (locate-dominating-file default-directory ".dir-locals.el"))))
-             (unless
-                 (member guix-yasnippets yas-snippet-dirs)
+                                   (locate-dominating-file default-directory
+                                                           ".dir-locals.el"))))
+             (unless (member guix-yasnippets yas-snippet-dirs)
                (add-to-list 'yas-snippet-dirs guix-yasnippets)
                (yas-reload-all))))
      (eval add-to-list 'completion-ignored-extensions ".go")
      (eval setq-local geiser-guile-load-path
            (append
             (list
-             (concat
-              (getenv "HOME")
-              "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
-            (list
-             (concat
-              (getenv "HOME")
-              "/src/gitlab.com/nonguix/nonguix"))
-            (if
-                (boundp #'projectile-project-root)
+             (concat (getenv "HOME")
+                     "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
+            (list (concat (getenv "HOME") "/src/gitlab.com/nonguix/nonguix"))
+            (if (boundp #'projectile-project-root)
                 (list
-                 (concat
-                  (projectile-project-root)
-                  "dotfiles/guixsd/modules"))
+                 (concat (projectile-project-root) "dotfiles/guixsd/modules"))
               'nil)))
-     (eval progn
-           (require 'lisp-mode)
-           (defun emacs27-lisp-fill-paragraph
-               (&optional justify)
+     (eval progn (require 'lisp-mode)
+           (defun emacs27-lisp-fill-paragraph (&optional justify)
              (interactive "P")
-             (or
-              (fill-comment-paragraph justify)
-              (let
-                  ((paragraph-start
-                    (concat paragraph-start "\\|\\s-*\\([(;\"]\\|\\s-:\\|`(\\|#'(\\)"))
-                   (paragraph-separate
-                    (concat paragraph-separate "\\|\\s-*\".*[,\\.]$"))
-                   (fill-column
-                    (if
-                        (and
-                         (integerp emacs-lisp-docstring-fill-column)
-                         (derived-mode-p 'emacs-lisp-mode))
-                        emacs-lisp-docstring-fill-column fill-column)))
-                (fill-paragraph justify))
-              t))
+             (or (fill-comment-paragraph justify)
+                 (let
+                     ((paragraph-start
+                       (concat paragraph-start
+                               "\\|\\s-*\\([(;\"]\\|\\s-:\\|`(\\|#'(\\)"))
+                      (paragraph-separate
+                       (concat paragraph-separate "\\|\\s-*\".*[,\\.]$"))
+                      (fill-column
+                       (if
+                           (and (integerp emacs-lisp-docstring-fill-column)
+                                (derived-mode-p 'emacs-lisp-mode))
+                           emacs-lisp-docstring-fill-column
+                         fill-column)))
+                   (fill-paragraph justify))
+                 t))
            (setq-local fill-paragraph-function #'emacs27-lisp-fill-paragraph))
      (eval setq-local geiser-guile-load-path
            (append
             (list
-             (concat
-              (getenv "HOME")
-              "/src/cgit.duckdns.org/git/guix/guix-wigust/guix"))
-            (list
-             (concat
-              (getenv "HOME")
-              "/src/gitlab.com/nonguix/nonguix"))
-            (if
-                (boundp #'projectile-project-root)
+             (concat (getenv "HOME")
+                     "/src/cgit.duckdns.org/git/guix/guix-wigust/guix"))
+            (list (concat (getenv "HOME") "/src/gitlab.com/nonguix/nonguix"))
+            (if (boundp #'projectile-project-root)
                 (list
-                 (concat
-                  (projectile-project-root)
-                  "dotfiles/guixsd/modules"))
+                 (concat (projectile-project-root) "dotfiles/guixsd/modules"))
               'nil)))
      (eval setq-local geiser-guile-load-path
            (append
             (list
-             (concat
-              (getenv "HOME")
-              "/src/cgit.duckdns.org/git/guix/guix-wigust"))
-            (if
-                (boundp #'projectile-project-root)
+             (concat (getenv "HOME")
+                     "/src/cgit.duckdns.org/git/guix/guix-wigust"))
+            (if (boundp #'projectile-project-root)
                 (list
-                 (concat
-                  (projectile-project-root)
-                  "dotfiles/guixsd/modules"))
+                 (concat (projectile-project-root) "dotfiles/guixsd/modules"))
               'nil)))
-     (magit-todos-depth)
-     (magit-todos-exclude-globs "*.go" "*.info" "*.po")
-     (magit-todos-update)
-     (magit-todos-depth . 1)
+     (magit-todos-depth) (magit-todos-exclude-globs "*.go" "*.info" "*.po")
+     (magit-todos-update) (magit-todos-depth . 1)
      (eval progn
            (let
                ((top
@@ -429,25 +378,25 @@
      (eval c-set-offset 'arglist-cont-nonempty
            '(c-lineup-gcc-asm-reg c-lineup-arglist))
      (eval c-set-offset 'arglist-close 0)
-     (eval c-set-offset 'arglist-intro '++)
-     (eval c-set-offset 'case-label 0)
+     (eval c-set-offset 'arglist-intro '++) (eval c-set-offset 'case-label 0)
      (eval c-set-offset 'statement-case-open 0)
      (eval setq-local geiser-guile-load-path
-           (list
-            (concat
-             (projectile-project-root)
-             "dotfiles/guixsd/modules")
-            (concat
-             (getenv "HOME")
-             "/src/cgit.duckdns.org/git/guix/guix-wigust/guix")))
+           (list (concat (projectile-project-root) "dotfiles/guixsd/modules")
+                 (concat (getenv "HOME")
+                         "/src/cgit.duckdns.org/git/guix/guix-wigust/guix")))
      (projectile-project-compilation-cmd . "nix-shell --run 'nix build -L'")
      (eval add-hook 'before-save-hook 'time-stamp)
-     (projectile-project-test-cmd . "/home/oleg/src/git.savannah.gnu.org/git/guix/pre-inst-env ./test.sh")
-     (projectile-project-compilation-cmd . "/home/oleg/src/git.savannah.gnu.org/git/guix/pre-inst-env guix build --with-source=file://$PWD guile-bash")
-     (projectile-project-install-cmd . "/home/oleg/src/git.savannah.gnu.org/git/guix/pre-inst-env guix package --with-source=file://$PWD -i guile-bash")
+     (projectile-project-test-cmd
+      . "/home/oleg/src/git.savannah.gnu.org/git/guix/pre-inst-env ./test.sh")
+     (projectile-project-compilation-cmd
+      . "/home/oleg/src/git.savannah.gnu.org/git/guix/pre-inst-env guix build --with-source=file://$PWD guile-bash")
+     (projectile-project-install-cmd
+      . "/home/oleg/src/git.savannah.gnu.org/git/guix/pre-inst-env guix package --with-source=file://$PWD -i guile-bash")
      (projectile-project-test-cmd . "./test.sh")
-     (projectile-project-compilation-cmd . "guix build --with-source=file://$PWD guile-bash")
-     (projectile-project-install-cmd . "guix package --with-source=file://$PWD -i guile-bash")
+     (projectile-project-compilation-cmd
+      . "guix build --with-source=file://$PWD guile-bash")
+     (projectile-project-install-cmd
+      . "guix package --with-source=file://$PWD -i guile-bash")
      (projectile-project-configure-cmd . "./configure")
      (projectile-project-install-cmd . "make install")
      (eval let
@@ -457,95 +406,71 @@
               "guix/")))
            (when root-dir-unexpanded
              (let*
-                 ((root-dir
-                   (expand-file-name root-dir-unexpanded))
-                  (root-dir*
-                   (directory-file-name root-dir)))
-               (unless
-                   (boundp 'geiser-guile-load-path)
+                 ((root-dir (expand-file-name root-dir-unexpanded))
+                  (root-dir* (directory-file-name root-dir)))
+               (unless (boundp 'geiser-guile-load-path)
                  (defvar geiser-guile-load-path 'nil))
-               (make-local-variable 'geiser-guile-load-path)
-               (require 'cl-lib)
-               (cl-pushnew root-dir* geiser-guile-load-path :test #'string-equal))))
+               (make-local-variable 'geiser-guile-load-path) (require 'cl-lib)
+               (cl-pushnew root-dir* geiser-guile-load-path :test
+                           #'string-equal))))
      (eval setq-local guix-directory
-           (concat
-            (locate-dominating-file default-directory ".dir-locals.el")
-            "guix/"))
+           (concat (locate-dominating-file default-directory ".dir-locals.el")
+                   "guix/"))
      (eval setq-local geiser-guile-load-path
-           (list
-            (concat
-             (projectile-project-root)
-             "dotfiles/guixsd/modules")))
-     (eval c-set-offset 'inlambda 0)
-     (c-block-comment-prefix . "  ")
+           (list (concat (projectile-project-root) "dotfiles/guixsd/modules")))
+     (eval c-set-offset 'inlambda 0) (c-block-comment-prefix . "  ")
      (eval let
            ((root-dir-unexpanded
              (locate-dominating-file default-directory ".dir-locals.el")))
            (when root-dir-unexpanded
              (let*
-                 ((root-dir
-                   (expand-file-name root-dir-unexpanded))
-                  (root-dir*
-                   (directory-file-name root-dir)))
-               (unless
-                   (boundp 'geiser-guile-load-path)
+                 ((root-dir (expand-file-name root-dir-unexpanded))
+                  (root-dir* (directory-file-name root-dir)))
+               (unless (boundp 'geiser-guile-load-path)
                  (defvar geiser-guile-load-path 'nil))
-               (make-local-variable 'geiser-guile-load-path)
-               (require 'cl-lib)
-               (cl-pushnew root-dir* geiser-guile-load-path :test #'string-equal))))
+               (make-local-variable 'geiser-guile-load-path) (require 'cl-lib)
+               (cl-pushnew root-dir* geiser-guile-load-path :test
+                           #'string-equal))))
      (eval setq-local guix-directory
            (locate-dominating-file default-directory ".dir-locals.el"))
      (eval let*
            ((root-dir
              (expand-file-name
               (locate-dominating-file default-directory ".dir-locals.el")))
-            (root-dir*
-             (directory-file-name root-dir)))
-           (unless
-               (boundp 'geiser-guile-load-path)
+            (root-dir* (directory-file-name root-dir)))
+           (unless (boundp 'geiser-guile-load-path)
              (defvar geiser-guile-load-path 'nil))
-           (make-local-variable 'geiser-guile-load-path)
-           (require 'cl-lib)
+           (make-local-variable 'geiser-guile-load-path) (require 'cl-lib)
            (cl-pushnew root-dir* geiser-guile-load-path :test #'string-equal))
      (eval let*
            ((root-dir
              (expand-file-name
               (locate-dominating-file default-directory ".dir-locals.el")))
-            (root-dir*
-             (directory-file-name root-dir)))
-           (unless
-               (boundp 'geiser-guile-load-path)
+            (root-dir* (directory-file-name root-dir)))
+           (unless (boundp 'geiser-guile-load-path)
              (defvar geiser-guile-load-path 'nil))
            (make-local-variable 'geiser-guile-load-path)
            (cl-pushnew root-dir* geiser-guile-load-path :test #'string-equal))
      (eval setq guix-directory
            (locate-dominating-file default-directory ".dir-locals.el"))
      (eval setq-local indent-tabs-mode t)
-     (projectile-project-test-cmd . "make check")
-     (git-auto-commit-mode . t)
-     (eval progn
-           (put 'with-directory 'scheme-indent-function 1)
+     (projectile-project-test-cmd . "make check") (git-auto-commit-mode . t)
+     (eval progn (put 'with-directory 'scheme-indent-function 1)
            (put 'with-repository 'scheme-indent-function 2))
-     (TeX-master . "guile.texi")
-     (eval c-set-offset 'access-label '-)
+     (TeX-master . "guile.texi") (eval c-set-offset 'access-label '-)
      (eval c-set-offset 'substatement-open 0)
      (eval c-set-offset 'arglist-cont-nonempty '+)
-     (eval c-set-offset 'arglist-cont 0)
-     (eval c-set-offset 'arglist-intro '+)
-     (eval c-set-offset 'inline-open 0)
-     (eval c-set-offset 'defun-open 0)
-     (eval c-set-offset 'innamespace 0)
-     (indicate-empty-lines . t)
-     (eval modify-syntax-entry 43 "'")
-     (eval modify-syntax-entry 36 "'")
+     (eval c-set-offset 'arglist-cont 0) (eval c-set-offset 'arglist-intro '+)
+     (eval c-set-offset 'inline-open 0) (eval c-set-offset 'defun-open 0)
+     (eval c-set-offset 'innamespace 0) (indicate-empty-lines . t)
+     (eval modify-syntax-entry 43 "'") (eval modify-syntax-entry 36 "'")
      (eval modify-syntax-entry 126 "'")
-     (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>")))
+     (bug-reference-bug-regexp
+      . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>")))
  '(tool-bar-mode nil)
  '(tramp-default-method "ssh")
  '(warning-suppress-types
-   '(((defvaralias losing-value geiser-debug-show-debug-p))
-     (emacs)
-     (comp))))
+   '(((defvaralias losing-value geiser-debug-show-debug-p)) (emacs) (comp))))
 
 (put 'list-timers 'disabled nil)
 
