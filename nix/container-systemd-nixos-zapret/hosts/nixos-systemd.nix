@@ -68,4 +68,5 @@
     config = builtins.readFile ./bird.conf;
     checkConfig = false;
   };
+  networking.firewall.allowedTCPPorts = [ 179 ];
 }
