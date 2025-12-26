@@ -11,4 +11,9 @@
     enable = true;
     capSysNice = false;
   };
+  services.bird = {
+    enable = true;
+    config = builtins.readFile ./bird.conf;
+    checkConfig = false;
+  };
 }
