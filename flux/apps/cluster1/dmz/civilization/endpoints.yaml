@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: civilization
+subsets:
+- addresses:
+  - ip: 192.168.0.195
+  ports:
+  - port: 2344
+    name: civilization-0
+  - port: 2345
+    name: civilization-1
