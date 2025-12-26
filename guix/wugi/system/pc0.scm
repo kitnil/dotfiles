@@ -91,6 +91,24 @@
                       (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "addr" "add" "192.168.0.195/24" "dev" "eth0")
                       (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
+(define nixos-tor-program-file
+  (program-file "nixos-tor"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "nixos-tor")
+                      (invoke "ip" "link" "add" "name" "nixos6" "type" "veth" "peer" "name" "nixos7")
+                      (invoke "ip" "link" "set" "dev" "nixos7" "netns" "nixos-tor")
+                      (invoke "ip" "netns" "exec" "nixos-tor" "ip" "link" "set" "nixos7" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-tor" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "nixos6" "master" "br0")
+                      (invoke "ip" "link" "set" "nixos6" "up")
+                      (invoke "ip" "netns" "exec" "nixos-tor" "ip" "addr" "add" "192.168.0.190/24" "dev" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-tor" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+
 (define nixos-zapret-program-file
   (program-file "nixos-zapret"
                 (with-imported-modules (source-module-closure '((guix build utils)))
@@ -483,6 +501,16 @@ cgroup_device_acl = [
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-constructor
                                                              (list #$nixos-workstation-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
+
+                            (simple-service 'nixos-tor shepherd-root-service-type
+                                            (list (shepherd-service
+                                                   (provision '(nixos-tor))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-constructor
+                                                             (list #$nixos-tor-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
