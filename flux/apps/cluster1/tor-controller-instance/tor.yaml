@@ -3,6 +3,7 @@ kind: Tor
 metadata:
   name: example-tor-instance
 spec:
+  replicas: 2
   configMapKeyRef:
   - name: tor-configuration
     key: torrc
