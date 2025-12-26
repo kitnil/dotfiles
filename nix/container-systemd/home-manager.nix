@@ -212,6 +212,7 @@ in {
                   betterttv
                   return-youtube-dislikes
                   sponsorblock
+                  soundfixer
                   # hide-twitch-chat-users
                   # metube-downloader
                   # night-video-tuner
