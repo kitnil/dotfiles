@@ -36,30 +36,9 @@
       "--dpi-desync-split-pos=midsld"
       "--dpi-desync-split-pos=host+1"
     ];
-    whitelist = [
-      "ggpht.com"
-      "googlevideo.com"
-      "jnn-pa.googleapis.com"
-      "stable.dl2.discordapp.net"
-      "wide-youtube.l.google.com"
-      "youtu.be"
-      "youtube.com"
-      "youtubeembeddedplayer.googleapis.com"
-      "youtubei.googleapis.com"
-      "youtubekids.com"
-      "youtube-nocookie.com"
-      "youtube-ui.l.google.com"
-      "yt3.ggpht.com"
-      "yt3.googleusercontent.com"
-      "yt4.ggpht.com"
-      "ytimg.com"
-      "ytimg.l.google.com"
-      "yt-video-upload.l.google.com"
-
-      "discord.com"
-      "discordapp.com"
-
-      "7tv.app"
+    blacklist = [
+      "ttvnw.net"
+      "twitch.tv"
     ];
   };
 
