@@ -1569,7 +1569,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./flux/apps/cluster1/maintenance-runc-bootstrap-container-nixos-tor-kube3
+  path: ./flux/apps/cluster1/runc-bootstrap-container-nixos-tor-kube3
   prune: true
   sourceRef:
     kind: GitRepository
