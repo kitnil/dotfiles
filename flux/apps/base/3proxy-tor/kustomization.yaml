@@ -8,7 +8,3 @@ configMapGenerator:
 - name: 3proxy-configuration
   files:
   - 3proxy.cfg=rootfs/etc/3proxy.cfg
-images:
-- name: docker-registry.wugi.info/networking/3proxy:latest
-  newName: harbor.home.wugi.info/library/3proxy
-  newTag: 0.9.5
