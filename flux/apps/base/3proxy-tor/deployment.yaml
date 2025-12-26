@@ -19,12 +19,6 @@ spec:
       containers:
       - image: docker-registry.wugi.info/networking/3proxy:latest
         name: 3proxy
-        command:
-        - /bin/3proxy
-        args:
-        - -Dibr0
-        - -Debr0
-        - /etc/3proxy.cfg
         resources:
           limits:
             memory: 512Mi
