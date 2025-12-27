@@ -43,4 +43,7 @@
     (add-hooks '(((makefile-mode
                    prog-mode-hook
                    yaml-mode-hook)
-                  . display-fill-column-indicator-mode)))))
+                  . display-fill-column-indicator-mode))))
+  (when (functionp 'git-auto-commit-mode)
+    (add-hooks '(((org-mode-hook)
+                  . git-auto-commit-mode)))))
