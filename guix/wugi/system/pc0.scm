@@ -109,6 +109,24 @@
                       (invoke "ip" "netns" "exec" "nixos-tor" "ip" "addr" "add" "192.168.0.190/24" "dev" "eth0")
                       (invoke "ip" "netns" "exec" "nixos-tor" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
+(define nixos-antifilter-program-file
+  (program-file "nixos-antifilter"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "nixos-antifilter")
+                      (invoke "ip" "link" "add" "name" "nixos8" "type" "veth" "peer" "name" "nixos9")
+                      (invoke "ip" "link" "set" "dev" "nixos9" "netns" "nixos-antifilter")
+                      (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "link" "set" "nixos9" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "nixos8" "master" "br0")
+                      (invoke "ip" "link" "set" "nixos8" "up")
+                      (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "addr" "add" "192.168.0.180/24" "dev" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+
 (define nixos-zapret-program-file
   (program-file "nixos-zapret"
                 (with-imported-modules (source-module-closure '((guix build utils)))
@@ -511,6 +529,16 @@ cgroup_device_acl = [
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-constructor
                                                              (list #$nixos-tor-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
+
+                            (simple-service 'nixos-antifilter shepherd-root-service-type
+                                            (list (shepherd-service
+                                                   (provision '(nixos-antifilter))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-construcantifilter
+                                                             (list #$nixos-antifilter-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
