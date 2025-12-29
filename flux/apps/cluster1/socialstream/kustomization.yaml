@@ -4,3 +4,4 @@ namespace: socialstream
 resources:
 - endpoints.yaml
 - service.yaml
+- ingress.yaml
