@@ -127,6 +127,25 @@
                       (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "addr" "add" "192.168.0.180/24" "dev" "eth0")
                       (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
+
+(define nixos-gw-program-file
+  (program-file "nixos-gw"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "nixos-gw")
+                      (invoke "ip" "link" "add" "name" "nixos10" "type" "veth" "peer" "name" "nixos11")
+                      (invoke "ip" "link" "set" "dev" "nixos11" "netns" "nixos-gw")
+                      (invoke "ip" "netns" "exec" "nixos-gw" "ip" "link" "set" "nixos11" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-gw" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "nixos10" "master" "br0")
+                      (invoke "ip" "link" "set" "nixos10" "up")
+                      (invoke "ip" "netns" "exec" "nixos-gw" "ip" "addr" "add" "192.168.0.170/24" "dev" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-gw" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+
 (define nixos-zapret-program-file
   (program-file "nixos-zapret"
                 (with-imported-modules (source-module-closure '((guix build utils)))
@@ -539,6 +558,16 @@ cgroup_device_acl = [
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-construcantifilter
                                                              (list #$nixos-antifilter-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
+
+                            (simple-service 'nixos-gw shepherd-root-service-type
+                                            (list (shepherd-service
+                                                   (provision '(nixos-gw))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-construcgw
+                                                             (list #$nixos-gw-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
