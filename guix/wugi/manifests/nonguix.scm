@@ -14,7 +14,7 @@
     (inferior-for-channels %channels-workstation
                            #:cache-directory "/home/oleg/.cache/guix/inferiors"))
 
-  (define inferior-packages
+  (define inferior-font-packages
     (inferior-eval `(begin
                       (use-modules (nongnu packages fonts)
                                    (srfi srfi-1))
@@ -43,8 +43,28 @@
                                   font-ubuntu)))
                    inferior))
 
-  (packages->manifest (map (match-lambda
-                             ((name version id)
-                              ((@@ (guix inferior)inferior-package)
-                               inferior name version id)))
-                           inferior-packages)))
+  (define inferior-k8s-packages
+    (inferior-eval `(begin
+                      (use-modules (nongnu packages k8s)
+                                   (srfi srfi-1))
+                      (fold (lambda (package result)
+                              (let ((id (object-address package)))
+                                (hashv-set! %package-table id package)
+                                (cons (list (package-name package)
+                                            (package-version package)
+                                            id)
+                                      result)))
+                            '()
+                            (list kubectl)))
+                   inferior))
+
+  (packages->manifest (append (map (match-lambda
+                                     ((name version id)
+                                      ((@@ (guix inferior)inferior-package)
+                                       inferior name version id)))
+                                   inferior-font-packages)
+                              (map (match-lambda
+                                     ((name version id)
+                                      ((@@ (guix inferior)inferior-package)
+                                       inferior name version id)))
+                                   inferior-k8s-packages))))
