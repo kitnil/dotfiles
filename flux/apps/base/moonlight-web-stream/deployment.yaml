@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moonlight-web-stream
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: moonlight-web-stream
+      app.kubernetes.io/part-of: moonlight
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: moonlight-web-stream
+        app.kubernetes.io/part-of: moonlight
+    spec:
+      containers:
+      - image: mrcreativ3001/moonlight-web-stream:v2.1-prerelease.1
+        name: moonlight-web-stream
