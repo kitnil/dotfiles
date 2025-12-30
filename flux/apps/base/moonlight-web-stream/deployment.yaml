@@ -13,6 +13,7 @@ spec:
         app.kubernetes.io/name: moonlight-web-stream
         app.kubernetes.io/part-of: moonlight
     spec:
+      hostNetwork: true
       containers:
       - image: mrcreativ3001/moonlight-web-stream:v2.1-prerelease.1
         name: moonlight-web-stream
