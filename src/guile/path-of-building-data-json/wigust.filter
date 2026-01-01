@@ -192,6 +192,13 @@ Show
 	PlayAlertSound 5 300
 	PlayEffect Yellow
 
+# Highlight not identified items.
+Show
+	SetBackgroundColor 86 0 0 230
+	Rarity Magic Rare Unique
+	Identified False
+	Continue
+
 # Decrease font size for "Body Armour" "Armour" base items.
 Hide
 	BaseType == "Arena Plate" "Astral Plate" "Battle Plate" "Bronze Plate" "Chestplate" "Colosseum Plate" "Copper Plate" "Crusader Plate" "Full Plate" "Gladiator Plate" "Glorious Plate" "Golden Plate" "Legion Plate" "Lordly Plate" "Majestic Plate" "Plate Vest" "Royal Plate" "Sun Plate" "Titan Plate" "War Plate" 
@@ -359,13 +366,6 @@ Show
 # Stop apply rules to gold.
 Show
 	BaseType "Gold" 
-
-# Highlight not identified items.
-Show
-	SetBackgroundColor 86 0 0 230
-	Rarity Magic Rare Unique
-	Identified False
-	Continue
 
 Show
 	Class == "Life Flasks" "Mana Flasks" "Utility Flasks" 

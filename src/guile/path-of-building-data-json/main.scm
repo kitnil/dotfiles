@@ -1092,7 +1092,18 @@
                        (enabled? #t)
                        (size 1)
                        (colour 'Yellow)
-                       (shape 'UpsideDownHouse)))))
+                       (shape 'UpsideDownHouse))))
+                    (poe-item-filter-block-configuration
+                     (commentary "Highlight not identified items.")
+                     (identified? #f)
+                     (rarity '(Magic Rare Unique))
+                     (set-background-color (poe-item-filter-color-configuration
+                                            (red 86)
+                                            (green 0)
+                                            (blue 0)
+                                            (alpha 230)))
+                     (continue? #t))
+)
 
                    (delete #f
                            (apply append
@@ -1164,17 +1175,6 @@
                          (poe-item-filter-block-configuration
                           (commentary "Stop apply rules to gold.")
                           (base-types '("Gold")))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight not identified items.")
-                          (identified? #f)
-                          (rarity '(Magic Rare Unique))
-                          (set-background-color (poe-item-filter-color-configuration
-                                                 (red 86)
-                                                 (green 0)
-                                                 (blue 0)
-                                                 (alpha 230)))
-                          (continue? #t))
 
                          (poe-item-filter-block-configuration
                           (classes '("Life Flasks" "Mana Flasks" "Utility Flasks"))
