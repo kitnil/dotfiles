@@ -815,7 +815,22 @@
                             (colour 'White))))
 
                          (poe-item-filter-block-configuration
-                          (classes '("Amulet" "Belt" "Life Flasks" "Mana Flasks" "Ring" "Utility Flasks"))
+                          (classes '("Amulet" "Belt" "Ring"))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 0)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 98)
+                            (green 128)
+                            (blue 0)
+                            (alpha 255))))
+
+                         (poe-item-filter-block-configuration
+                          (classes '("Life Flasks" "Mana Flasks" "Utility Flasks"))
                           (set-border-color
                            (poe-item-filter-color-configuration
                             (red 0)
