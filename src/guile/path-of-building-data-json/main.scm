@@ -842,7 +842,17 @@
                             (red 25)
                             (green 100)
                             (blue 75)
-                            (alpha 255))))
+                            (alpha 255)))
+                          (continue? #t))
+
+                         (poe-item-filter-block-configuration
+                          (classes '("Life Flasks" "Mana Flasks" "Utility Flasks"))
+                          (quality (poe-item-filter-conditional-value-configuration
+                                    (value 1)
+                                    (operator '>=)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'Green))))
 
                          (poe-item-filter-block-configuration
                           (classes '("Incursion Items" "Labyrinth Items"))

@@ -111,6 +111,12 @@ Show
 	Class == "Life Flasks" "Mana Flasks" "Utility Flasks" 
 	SetBorderColor 0 0 0 255
 	SetBackgroundColor 25 100 75 255
+	Continue
+
+Show
+	Quality >= 1
+	Class == "Life Flasks" "Mana Flasks" "Utility Flasks" 
+	PlayEffect Green
 
 Show
 	Class == "Incursion Items" "Labyrinth Items" 
