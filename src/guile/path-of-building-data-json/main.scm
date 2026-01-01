@@ -824,8 +824,8 @@
                             (alpha 255)))
                           (set-background-color
                            (poe-item-filter-color-configuration
-                            (red 98)
-                            (green 128)
+                            (red 90)
+                            (green 100)
                             (blue 0)
                             (alpha 255))))
 

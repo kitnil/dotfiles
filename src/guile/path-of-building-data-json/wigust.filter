@@ -105,7 +105,7 @@ Show
 Show
 	Class == "Amulet" "Belt" "Ring" 
 	SetBorderColor 0 0 0 255
-	SetBackgroundColor 98 128 0 255
+	SetBackgroundColor 90 100 0 255
 
 Show
 	Class == "Life Flasks" "Mana Flasks" "Utility Flasks" 
