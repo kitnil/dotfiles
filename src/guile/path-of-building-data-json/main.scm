@@ -830,31 +830,6 @@
                             (alpha 255))))
 
                          (poe-item-filter-block-configuration
-                          (classes '("Life Flasks" "Mana Flasks" "Utility Flasks"))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 25)
-                            (green 100)
-                            (blue 75)
-                            (alpha 255)))
-                          (continue? #t))
-
-                         (poe-item-filter-block-configuration
-                          (classes '("Life Flasks" "Mana Flasks" "Utility Flasks"))
-                          (quality (poe-item-filter-conditional-value-configuration
-                                    (value 1)
-                                    (operator '>=)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Green))))
-
-                         (poe-item-filter-block-configuration
                           (classes '("Incursion Items" "Labyrinth Items"))
                           (set-text-color
                            (poe-item-filter-color-configuration
@@ -1197,7 +1172,32 @@
                                                  (green 0)
                                                  (blue 0)
                                                  (alpha 230)))
-                          (continue? #t))))))
+                          (continue? #t))
+
+                         (poe-item-filter-block-configuration
+                          (classes '("Life Flasks" "Mana Flasks" "Utility Flasks"))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 0)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 25)
+                            (green 100)
+                            (blue 75)
+                            (alpha 255)))
+                          (continue? #t))
+
+                         (poe-item-filter-block-configuration
+                          (classes '("Life Flasks" "Mana Flasks" "Utility Flasks"))
+                          (quality (poe-item-filter-conditional-value-configuration
+                                    (value 1)
+                                    (operator '>=)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'Green))))))))
          poe-item-filter-configuration-fields)))
 
 (run-with-store (open-connection)
