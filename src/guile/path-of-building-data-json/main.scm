@@ -1104,6 +1104,7 @@
                                                     (poe-item-filter-block-configuration
                                                      (commentary (format #f "Decrease font size for ~s ~s base items."
                                                                          type base-type))
+                                                     (rarity '(Normal Magic Rare))
                                                      (base-types
                                                       (sort (let ((items
                                                                    (filter (lambda (item)
