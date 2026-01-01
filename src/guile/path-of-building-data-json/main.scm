@@ -1176,7 +1176,7 @@
                           (base-types '("Gold")))
 
                          (poe-item-filter-block-configuration
-                          (classes '("Life Flasks" "Mana Flasks" "Utility Flasks"))
+                          (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks"))
                           (set-border-color
                            (poe-item-filter-color-configuration
                             (red 0)
@@ -1192,7 +1192,7 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
-                          (classes '("Life Flasks" "Mana Flasks" "Utility Flasks"))
+                          (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks"))
                           (quality (poe-item-filter-conditional-value-configuration
                                     (value 1)
                                     (operator '>=)))

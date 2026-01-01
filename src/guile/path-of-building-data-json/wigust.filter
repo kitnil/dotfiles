@@ -4,6 +4,14 @@ Show
 	SetBorderColor 74 230 58 255
 	Continue
 
+Show
+	Quality >= 20
+	MinimapIcon 1 White Triangle
+	SetBorderColor 30 190 190 255
+	SetTextColor 30 190 190 255
+	PlayAlertSound 2 300
+	PlayEffect Grey
+
 # Stop apply rules to scrolls.
 Show
 	BaseType == "Portal Scroll" "Scroll of Wisdom" 
@@ -160,14 +168,6 @@ Show
 Show
 	Quality >= 1
 	Class == "Skill Gems" "Support Gems" 
-	MinimapIcon 1 White Triangle
-	SetBorderColor 30 190 190 255
-	SetTextColor 30 190 190 255
-	PlayAlertSound 2 300
-	PlayEffect Grey
-
-Show
-	Quality >= 20
 	MinimapIcon 1 White Triangle
 	SetBorderColor 30 190 190 255
 	SetTextColor 30 190 190 255
@@ -368,12 +368,12 @@ Show
 	BaseType "Gold" 
 
 Show
-	Class == "Life Flasks" "Mana Flasks" "Utility Flasks" 
+	Class == "Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks" 
 	SetBorderColor 0 0 0 255
 	SetBackgroundColor 25 100 75 255
 	Continue
 
 Show
 	Quality >= 1
-	Class == "Life Flasks" "Mana Flasks" "Utility Flasks" 
+	Class == "Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks" 
 	PlayEffect Green
