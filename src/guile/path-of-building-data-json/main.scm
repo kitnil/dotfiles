@@ -554,16 +554,16 @@
                             (colour 'Brown))))
 
                          (poe-item-filter-block-configuration
-                          (commentary "Decrease identified items font size.")
+                          (commentary "Hide identified items.")
                           (identified? #t)
                           (set-font-size 20)
+                          (show? #f)
                           (set-background-color
                            (poe-item-filter-color-configuration
                             (red 0)
                             (green 0)
                             (blue 0)
-                            (alpha 0)))
-                          (continue? #t))
+                            (alpha 0))))
 
                          (poe-item-filter-block-configuration
                           (commentary "Highlight good percentage.")

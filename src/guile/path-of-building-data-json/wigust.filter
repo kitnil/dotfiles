@@ -37,12 +37,11 @@ Show
 	PlayAlertSound 3 300
 	PlayEffect Brown
 
-# Decrease identified items font size.
-Show
+# Hide identified items.
+Hide
 	SetFontSize 20
 	SetBackgroundColor 0 0 0 0
 	Identified True
-	Continue
 
 # Highlight good percentage.
 Show
