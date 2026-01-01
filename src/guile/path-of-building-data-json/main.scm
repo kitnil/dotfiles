@@ -1128,6 +1128,7 @@
                                                        (green 0)
                                                        (blue 0)
                                                        (alpha 0)))
+                                                     (show? #f)
                                                      (continue? #t))))
                                               sub-types))
                                        '("Body Armour"
@@ -1139,6 +1140,7 @@
                           (commentary "Decrease font size for items with classes.")
                           (classes %weapon-classes)
                           (set-font-size 20)
+                          (show? #f)
                           (set-background-color
                            (poe-item-filter-color-configuration
                             (red 0)
