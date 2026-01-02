@@ -1171,7 +1171,8 @@
                             (red 0)
                             (green 0)
                             (blue 0)
-                            (alpha 0))))
+                            (alpha 0)))
+                          (continue? #t))
 
                          (poe-item-filter-block-configuration
                           (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks"))

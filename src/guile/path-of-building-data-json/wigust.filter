@@ -362,6 +362,7 @@ Hide
 	Class == "Bows" "Claws" "Corpses" "Daggers" "One Hand Axes" "One Hand Maces" "One Hand Swords" "Quivers" "Rune Daggers" "Thrusting One Hand Swords" "Two Hand Axes" "Two Hand Maces" "Two Hand Swords" 
 	SetFontSize 20
 	SetBackgroundColor 0 0 0 0
+	Continue
 
 Show
 	Class == "Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks" 
