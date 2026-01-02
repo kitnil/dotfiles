@@ -110,6 +110,11 @@ Show
 	Continue
 
 Show
+	BaseType "Vanguard Belt" 
+	PlayEffect Green
+	Continue
+
+Show
 	Class == "Incursion Items" "Labyrinth Items" 
 	MinimapIcon 0 Green Pentagon
 	SetBorderColor 74 230 58 255

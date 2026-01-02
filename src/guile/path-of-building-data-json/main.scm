@@ -851,6 +851,13 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
+                          (base-types '("Vanguard Belt"))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'Green)))
+                          (continue? #t))
+
+                         (poe-item-filter-block-configuration
                           (classes '("Incursion Items" "Labyrinth Items"))
                           (set-text-color
                            (poe-item-filter-color-configuration
