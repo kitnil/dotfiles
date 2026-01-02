@@ -847,7 +847,8 @@
                             (red 38)
                             (green 0)
                             (blue 86)
-                            (alpha 255))))
+                            (alpha 255)))
+                          (continue? #t))
 
                          (poe-item-filter-block-configuration
                           (classes '("Incursion Items" "Labyrinth Items"))
