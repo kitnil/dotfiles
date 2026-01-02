@@ -357,16 +357,6 @@ Hide
 	SetFontSize 20
 	SetBackgroundColor 0 0 0 0
 
-# Highlight 2500 or more gold.
-Show
-	StackSize >= 2500
-	BaseType "Gold" 
-	MinimapIcon 1 Yellow Cross
-
-# Stop apply rules to gold.
-Show
-	BaseType "Gold" 
-
 Show
 	Class == "Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks" 
 	SetBorderColor 0 0 0 255
@@ -377,3 +367,13 @@ Show
 	Quality >= 1
 	Class == "Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks" 
 	PlayEffect Green
+
+# Highlight 2500 or more gold.
+Show
+	StackSize >= 2500
+	BaseType "Gold" 
+	MinimapIcon 1 Yellow Cross
+
+# Stop apply rules to gold.
+Show
+	BaseType "Gold" 

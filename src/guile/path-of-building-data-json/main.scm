@@ -1159,23 +1159,6 @@
                             (alpha 0))))
 
                          (poe-item-filter-block-configuration
-                          (commentary "Highlight 2500 or more gold.")
-                          (base-types '("Gold"))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 1)
-                            (colour 'Yellow)
-                            (shape 'Cross)))
-                          (stack-size (poe-item-filter-conditional-value-configuration
-                                       (value 2500)
-                                       (operator '>=))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Stop apply rules to gold.")
-                          (base-types '("Gold")))
-
-                         (poe-item-filter-block-configuration
                           (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks"))
                           (set-border-color
                            (poe-item-filter-color-configuration
@@ -1198,7 +1181,24 @@
                                     (operator '>=)))
                           (play-effect
                            (poe-item-filter-play-effect-configuration
-                            (colour 'Green))))))))
+                            (colour 'Green))))
+
+                         (poe-item-filter-block-configuration
+                          (commentary "Highlight 2500 or more gold.")
+                          (base-types '("Gold"))
+                          (minimap-icon
+                           (poe-item-filter-minimap-icon-configuration
+                            (enabled? #t)
+                            (size 1)
+                            (colour 'Yellow)
+                            (shape 'Cross)))
+                          (stack-size (poe-item-filter-conditional-value-configuration
+                                       (value 2500)
+                                       (operator '>=))))
+
+                         (poe-item-filter-block-configuration
+                          (commentary "Stop apply rules to gold.")
+                          (base-types '("Gold")))))))
          poe-item-filter-configuration-fields)))
 
 (run-with-store (open-connection)
