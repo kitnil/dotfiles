@@ -45,12 +45,6 @@ Show
 	PlayAlertSound 3 300
 	PlayEffect Brown
 
-# Hide identified items.
-Hide
-	SetFontSize 20
-	SetBackgroundColor 0 0 0 0
-	Identified True
-
 # Highlight good percentage.
 Show
 	BaseDefencePercentile >= 70
@@ -351,6 +345,18 @@ Hide
 	Rarity Normal Magic Rare
 	Continue
 
+# Increase font size for high level "Armour/Energy Shield" base items.
+Show
+	BaseType == "Brimstone Treads" "Cerulean Ring" "Conquest Lamellar" "Crystal Belt" "Divine Crown" "Dreamquest Slippers" "Giantslayer Helmet" "Haunted Bascinet" "Iolite Ring" "Leviathan Gauntlets" "Leviathan Greaves" "Lich's Circlet" "Majestic Pelt" "Necrotic Armour" "Opal Ring" "Paladin Boots" "Paladin Gloves" "Phantom Boots" "Phantom Mitts" "Royal Plate" "Sacred Chainmail" "Steel Ring" "Stormrider Boots" "Syndicate's Garb" "Torturer's Mask" "Twilight Regalia" "Velour Boots" "Velour Gloves" "Vermillion Ring" "Warlock Boots" "Warlock Gloves" "Wyvernscale Boots" "Wyvernscale Gauntlets" 
+	SetFontSize 45
+	Continue
+
+# Increase font size for high level "Energy Shield" base items.
+Show
+	BaseType == "Brimstone Treads" "Cerulean Ring" "Conquest Lamellar" "Crystal Belt" "Divine Crown" "Dreamquest Slippers" "Giantslayer Helmet" "Haunted Bascinet" "Iolite Ring" "Leviathan Gauntlets" "Leviathan Greaves" "Lich's Circlet" "Majestic Pelt" "Necrotic Armour" "Opal Ring" "Paladin Boots" "Paladin Gloves" "Phantom Boots" "Phantom Mitts" "Royal Plate" "Sacred Chainmail" "Steel Ring" "Stormrider Boots" "Syndicate's Garb" "Torturer's Mask" "Twilight Regalia" "Velour Boots" "Velour Gloves" "Vermillion Ring" "Warlock Boots" "Warlock Gloves" "Wyvernscale Boots" "Wyvernscale Gauntlets" 
+	SetFontSize 45
+	Continue
+
 # Decrease font size for items with classes.
 Hide
 	Class == "Bows" "Claws" "Corpses" "Daggers" "One Hand Axes" "One Hand Maces" "One Hand Swords" "Quivers" "Rune Daggers" "Thrusting One Hand Swords" "Two Hand Axes" "Two Hand Maces" "Two Hand Swords" 
@@ -377,3 +383,7 @@ Show
 # Stop apply rules to gold.
 Show
 	BaseType "Gold" 
+
+# Hide identified items.
+Hide
+	Identified True

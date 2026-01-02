@@ -390,13 +390,16 @@
     (json-string->scm
      (with-input-from-file "input.json"
        read-string)))
-  (define sub-types
+  (define exclude-sub-types
     '("Armour"
       ;; "Armour/Energy Shield"
       "Armour/Evasion"
       "Energy Shield"
       "Evasion"
       "Evasion/Energy Shield"))
+    (define include-sub-types
+    '("Armour/Energy Shield"
+      "Energy Shield"))
   #~(begin
       (use-modules (ice-9 format))
       #$(serialize-configuration
@@ -581,18 +584,6 @@
                           (play-effect
                            (poe-item-filter-play-effect-configuration
                             (colour 'Brown))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Hide identified items.")
-                          (identified? #t)
-                          (set-font-size 20)
-                          (show? #f)
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 0)
-                            (blue 0)
-                            (alpha 0))))
 
                          (poe-item-filter-block-configuration
                           (commentary "Highlight good percentage.")
@@ -1140,11 +1131,35 @@
                                                        (alpha 0)))
                                                      (show? #f)
                                                      (continue? #t))))
-                                              sub-types))
+                                              exclude-sub-types))
                                        '("Body Armour"
                                          "Boots"
                                          "Gloves"
                                          "Helmet"))))
+
+                   (delete #f
+                           (map (lambda (base-type)
+                                  (poe-item-filter-block-configuration
+                                   (commentary (format #f "Increase font size for high level ~s base items."
+                                                       base-type))
+                                   (base-types
+                                    (sort (let ((items
+                                                 (filter (lambda (item)
+                                                           (and=> (assoc-ref item "req")
+                                                                  (lambda (req)
+                                                                    (and=> (assoc-ref req "level")
+                                                                           (lambda (level)
+                                                                             (>= level 79))))))
+                                                         base-items)))
+                                            (map (lambda (item)
+                                                   (string-replace-substring (first item)
+                                                                             (format #f " (~a)" base-type)
+                                                                             ""))
+                                                 items))
+                                          string<))
+                                   (set-font-size 45)
+                                   (continue? #t)))
+                                include-sub-types))
 
                    (list (poe-item-filter-block-configuration
                           (commentary "Decrease font size for items with classes.")
@@ -1198,7 +1213,12 @@
 
                          (poe-item-filter-block-configuration
                           (commentary "Stop apply rules to gold.")
-                          (base-types '("Gold")))))))
+                          (base-types '("Gold")))
+
+                         (poe-item-filter-block-configuration
+                          (commentary "Hide identified items.")
+                          (identified? #t)
+                          (show? #f))))))
          poe-item-filter-configuration-fields)))
 
 (run-with-store (open-connection)
