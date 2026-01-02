@@ -1201,23 +1201,6 @@
                             (colour 'Green))))
 
                          (poe-item-filter-block-configuration
-                          (commentary "Highlight 2500 or more gold.")
-                          (base-types '("Gold"))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 1)
-                            (colour 'Yellow)
-                            (shape 'Cross)))
-                          (stack-size (poe-item-filter-conditional-value-configuration
-                                       (value 2500)
-                                       (operator '>=))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Stop apply rules to gold.")
-                          (base-types '("Gold")))
-
-                         (poe-item-filter-block-configuration
                           (commentary "Hide identified items.")
                           (identified? #t)
                           (show? #f))))))

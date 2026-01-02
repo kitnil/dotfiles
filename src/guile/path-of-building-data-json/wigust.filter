@@ -376,16 +376,6 @@ Show
 	Class == "Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks" 
 	PlayEffect Green
 
-# Highlight 2500 or more gold.
-Show
-	StackSize >= 2500
-	BaseType "Gold" 
-	MinimapIcon 1 Yellow Cross
-
-# Stop apply rules to gold.
-Show
-	BaseType "Gold" 
-
 # Hide identified items.
 Hide
 	Identified True
