@@ -73,9 +73,11 @@ Show
 	PlayEffect White
 
 Show
-	BaseType == "Divine Vessel" "Sacrifice at Dawn" "Sacrifice at Dusk" "Sacrifice at Midnight" "Sacrifice at Noon" 
+	BaseType == "Divine Vessel" "Sacrifice at Dawn" "Sacrifice at Dusk" "Sacrifice at Midnight" "Sacrifice at Noon" "Offering To The Goddess" 
+	MinimapIcon 0 Red Square
 	SetBorderColor 175 120 230 240
 	SetTextColor 178 120 230 240
+	PlayEffect Yellow
 
 # Highlight wombgifts.
 Show

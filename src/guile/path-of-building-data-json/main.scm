@@ -730,7 +730,8 @@
                                         "Sacrifice at Dawn"
                                         "Sacrifice at Dusk"
                                         "Sacrifice at Midnight"
-                                        "Sacrifice at Noon"))
+                                        "Sacrifice at Noon"
+                                        "Offering To The Goddess"))
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 178)
@@ -742,7 +743,16 @@
                             (red 175)
                             (green 120)
                             (blue 230)
-                            (alpha 240))))
+                            (alpha 240)))
+                          (minimap-icon
+                           (poe-item-filter-minimap-icon-configuration
+                            (enabled? #t)
+                            (size 0)
+                            (colour 'Red)
+                            (shape 'Square)))
+                          (play-effect
+                           (poe-item-filter-play-effect-configuration
+                            (colour 'Yellow))))
 
                          (poe-item-filter-block-configuration
                           (commentary "Highlight wombgifts.")
