@@ -108,6 +108,12 @@ Show
 Show
 	Class == "Amulet" "Belt" "Ring" 
 	SetBorderColor 0 0 0 255
+	SetBackgroundColor 0 100 150 255
+	Continue
+
+Show
+	BaseType "Amethyst Ring" 
+	SetBorderColor 0 0 0 255
 	SetBackgroundColor 38 0 86 255
 	Continue
 
