@@ -1193,7 +1193,7 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
-                          (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks"))
+                          (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks"))
                           (set-border-color
                            (poe-item-filter-color-configuration
                             (red 0)
@@ -1207,6 +1207,17 @@
                             (blue 75)
                             (alpha 255)))
                           (continue? #t))
+
+                         (let ((color (poe-item-filter-color-configuration
+                                       (red 140)
+                                       (green 60)
+                                       (blue 25)
+                                       (alpha 255))))
+                             (poe-item-filter-block-configuration
+                          (classes '("Utility Flasks"))
+                          (set-border-color color)
+                          (set-background-color color)
+                          (continue? #t)))
 
                          (poe-item-filter-block-configuration
                           (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks"))
