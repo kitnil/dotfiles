@@ -731,7 +731,8 @@
                                         "Sacrifice at Dusk"
                                         "Sacrifice at Midnight"
                                         "Sacrifice at Noon"
-                                        "Offering To The Goddess"))
+                                        "Offering To The Goddess"
+                                        "Tribute To The Goddess"))
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 178)
