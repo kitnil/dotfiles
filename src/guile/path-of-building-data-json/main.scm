@@ -862,7 +862,7 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
-                          (base-types '("Amethyst Ring" "Gold Amulet" "Gold Ring"))
+                          (base-types '("Amethyst Ring" "Gold Amulet" "Gold Ring" "Onyx Amulet"))
                           (set-border-color
                            (poe-item-filter-color-configuration
                             (red 0)
