@@ -953,7 +953,7 @@
                             (shape 'Circle))))
 
                          (poe-item-filter-block-configuration
-                          (classes '("Maps"))
+                          (classes '("Maps" "Map Fragments"))
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 0)

@@ -141,7 +141,7 @@ Show
 	PlayEffect Pink
 
 Show
-	Class == "Maps" 
+	Class == "Maps" "Map Fragments" 
 	MinimapIcon 0 Red Square
 	SetBackgroundColor 235 235 235 255
 	SetTextColor 0 0 0 255
