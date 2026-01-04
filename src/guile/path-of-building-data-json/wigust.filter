@@ -390,6 +390,11 @@ Show
 	SetBackgroundColor 140 60 25 255
 	Continue
 
+Hide
+	Class == "Life Flasks" "Mana Flasks" "Hybrid Flasks" 
+	Rarity Normal
+	Continue
+
 Show
 	Quality >= 1
 	Class == "Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks" 

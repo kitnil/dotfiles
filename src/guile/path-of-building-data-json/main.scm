@@ -1237,6 +1237,12 @@
                           (continue? #t)))
 
                          (poe-item-filter-block-configuration
+                          (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks"))
+                          (rarity '(Normal))
+                          (show? #f)
+                          (continue? #t))
+
+                         (poe-item-filter-block-configuration
                           (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks"))
                           (quality (poe-item-filter-conditional-value-configuration
                                     (value 1)
