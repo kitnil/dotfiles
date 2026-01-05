@@ -1197,6 +1197,12 @@
                                 include-sub-types))
 
                    (list (poe-item-filter-block-configuration
+                          (commentary "Increase font size for high level sceptres base items.")
+                          (base-types '("Opal Sceptre" "Void Sceptre"))
+                          (set-font-size 45)
+                          (continue? #t))
+
+                         (poe-item-filter-block-configuration
                           (commentary "Decrease font size for items with classes.")
                           (classes %weapon-classes)
                           (set-font-size 20)
