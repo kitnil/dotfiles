@@ -196,6 +196,10 @@ in {
                 (firefoxBaseProfileWithExtensions { ech = false; }).extensions.packages
                 (with pkgs; with pkgs.nur.repos.rycee.firefox-addons; [
                   auto-tab-discard
+                  betterttv
+                  return-youtube-dislikes
+                  sponsorblock
+                  soundfixer
                   # hello-goodbye
                 ]);
           };
