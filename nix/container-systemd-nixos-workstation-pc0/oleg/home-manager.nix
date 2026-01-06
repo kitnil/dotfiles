@@ -16,6 +16,7 @@ in
       obs-studio-plugins.obs-multi-rtmp
       obs-studio-plugins.obs-pipewire-audio-capture
 
+      socialstream
       streamtitle
 
       steam
