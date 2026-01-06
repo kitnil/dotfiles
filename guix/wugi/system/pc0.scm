@@ -453,7 +453,8 @@
                                                      file-system-/srv/runc/fedora
                                                      file-system-/srv/runc/guix-nanokvm
                                                      file-system-/srv/runc/guix-workstation
-                                                     file-system-/srv/runc/nixos-majordomo))
+                                                     file-system-/srv/runc/nixos-majordomo
+                                                     file-system-/srv/runc/guix-rde))
                                       (name "guix-workstation")
                                       (auto-start? #t)))
 
