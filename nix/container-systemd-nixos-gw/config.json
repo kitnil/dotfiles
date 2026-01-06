@@ -97,7 +97,7 @@
     "root": {
         "path": "rootfs"
     },
-    "hostname": "nixos-gw",
+    "hostname": "nixos-antifilter",
     "mounts": [
         {
             "destination": "/proc",
@@ -195,7 +195,7 @@
             },
             {
                 "type": "network",
-                "path": "/var/run/netns/nixos-gw"
+                "path": "/var/run/netns/nixos-antifilter"
             },
             {
                 "type": "ipc"
