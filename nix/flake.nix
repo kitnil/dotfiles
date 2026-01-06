@@ -157,6 +157,19 @@
           }
         ]
       ];
+      containerSystemdNixosTorModules = builtins.concatLists [
+        containerSystemdNixosWorkstationModules
+        [
+          ./container-systemd-nixos-tor/hosts/nixos-systemd.nix
+          {
+            home-manager = {
+              users = {
+                oleg = ./container-systemd-nixos-tor/oleg/home-manager.nix;
+              };
+            };
+          }
+        ]
+      ];
     in
     {
       overlay = final: prev: {
