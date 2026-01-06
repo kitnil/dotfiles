@@ -10,4 +10,12 @@
     config = builtins.readFile ./bird.conf;
     checkConfig = false;
   };
+  services.tor = {
+    enable = true;
+    openFirewall = true;
+    client = {
+      enable = true;
+    };
+    settings.ControlPort = 9051;
+  };
 }
