@@ -56,132 +56,81 @@
 (define %private-ip-address
   "192.168.0.192")
 
-(define nixos-majordomo-program-file
-  (program-file "nixos-majordomo"
+(define ns-net-nixos-majordomo-program-file
+  (program-file "ns-net-nixos-majordomo"
                 (with-imported-modules (source-module-closure '((guix build utils)))
                   #~(begin
                       (use-modules (guix build utils))
                       (setenv "PATH"
                               (string-append "/run/current-system/profile/bin:"
                                              "/run/current-system/profile/sbin"))
-                      (invoke "ip" "netns" "add" "nixos-majordomo")
-                      (invoke "ip" "link" "add" "name" "nixos2" "type" "veth" "peer" "name" "nixos3")
-                      (invoke "ip" "link" "set" "dev" "nixos3" "netns" "nixos-majordomo")
-                      (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "link" "set" "nixos3" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "nixos2" "master" "br0")
-                      (invoke "ip" "link" "set" "nixos2" "up")
-                      (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "addr" "add" "192.168.0.197/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+                      (unless (file-exists? "/var/run/netns/nixos-majordomo")
+                        (invoke "ip" "netns" "add" "nixos-majordomo")
+                        (invoke "ip" "link" "add" "name" "nixos2" "type" "veth" "peer" "name" "nixos3")
+                        (invoke "ip" "link" "set" "dev" "nixos3" "netns" "nixos-majordomo")
+                        (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "link" "set" "nixos3" "name" "eth0")
+                        (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "link" "set" "eth0" "up")
+                        (invoke "ip" "link" "set" "nixos2" "master" "br0")
+                        (invoke "ip" "link" "set" "nixos2" "up")
+                        (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "addr" "add" "192.168.0.197/24" "dev" "eth0")
+                        (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "route" "add" "default" "via" "192.168.0.1"))))))
 
-(define nixos-workstation-program-file
-  (program-file "nixos-workstation"
+(define ns-net-nixos-workstation-program-file
+  (program-file "ns-net-nixos-workstation"
                 (with-imported-modules (source-module-closure '((guix build utils)))
                   #~(begin
                       (use-modules (guix build utils))
                       (setenv "PATH"
                               (string-append "/run/current-system/profile/bin:"
                                              "/run/current-system/profile/sbin"))
-                      (invoke "ip" "netns" "add" "nixos-workstation")
-                      (invoke "ip" "link" "add" "name" "nixos0" "type" "veth" "peer" "name" "nixos1")
-                      (invoke "ip" "link" "set" "dev" "nixos1" "netns" "nixos-workstation")
-                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "link" "set" "nixos1" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "nixos0" "master" "br0")
-                      (invoke "ip" "link" "set" "nixos0" "up")
-                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "addr" "add" "192.168.0.195/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+                      (unless (file-exists? "/var/run/netns/nixos-workstation")
+                        (invoke "ip" "netns" "add" "nixos-workstation")
+                        (invoke "ip" "link" "add" "name" "nixos0" "type" "veth" "peer" "name" "nixos1")
+                        (invoke "ip" "link" "set" "dev" "nixos1" "netns" "nixos-workstation")
+                        (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "link" "set" "nixos1" "name" "eth0")
+                        (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "link" "set" "eth0" "up")
+                        (invoke "ip" "link" "set" "nixos0" "master" "br0")
+                        (invoke "ip" "link" "set" "nixos0" "up")
+                        (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "addr" "add" "192.168.0.195/24" "dev" "eth0")
+                        (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "route" "add" "default" "via" "192.168.0.1"))))))
 
-(define nixos-tor-program-file
-  (program-file "nixos-tor"
+(define ns-net-nixos-zapret-program-file
+  (program-file "ns-net-nixos-zapret"
                 (with-imported-modules (source-module-closure '((guix build utils)))
                   #~(begin
                       (use-modules (guix build utils))
                       (setenv "PATH"
                               (string-append "/run/current-system/profile/bin:"
                                              "/run/current-system/profile/sbin"))
-                      (invoke "ip" "netns" "add" "nixos-tor")
-                      (invoke "ip" "link" "add" "name" "nixos6" "type" "veth" "peer" "name" "nixos7")
-                      (invoke "ip" "link" "set" "dev" "nixos7" "netns" "nixos-tor")
-                      (invoke "ip" "netns" "exec" "nixos-tor" "ip" "link" "set" "nixos7" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-tor" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "nixos6" "master" "br0")
-                      (invoke "ip" "link" "set" "nixos6" "up")
-                      (invoke "ip" "netns" "exec" "nixos-tor" "ip" "addr" "add" "192.168.0.190/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-tor" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+                      (unless (file-exists? "/var/run/netns/nixos-zapret")
+                        (invoke "ip" "netns" "add" "nixos-zapret")
+                        (invoke "ip" "link" "add" "name" "nixos4" "type" "veth" "peer" "name" "nixos5")
+                        (invoke "ip" "link" "set" "dev" "nixos5" "netns" "nixos-zapret")
+                        (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "link" "set" "nixos5" "name" "eth0")
+                        (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "link" "set" "eth0" "up")
+                        (invoke "ip" "link" "set" "nixos4" "master" "br0")
+                        (invoke "ip" "link" "set" "nixos4" "up")
+                        (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "addr" "add" "192.168.0.175/24" "dev" "eth0")
+                        (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "route" "add" "default" "via" "192.168.0.1"))))))
 
-(define nixos-antifilter-program-file
-  (program-file "nixos-antifilter"
+(define ns-net-fedora-program-file
+  (program-file "ns-net-fedora"
                 (with-imported-modules (source-module-closure '((guix build utils)))
                   #~(begin
                       (use-modules (guix build utils))
                       (setenv "PATH"
                               (string-append "/run/current-system/profile/bin:"
                                              "/run/current-system/profile/sbin"))
-                      (invoke "ip" "netns" "add" "nixos-antifilter")
-                      (invoke "ip" "link" "add" "name" "nixos8" "type" "veth" "peer" "name" "nixos9")
-                      (invoke "ip" "link" "set" "dev" "nixos9" "netns" "nixos-antifilter")
-                      (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "link" "set" "nixos9" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "nixos8" "master" "br0")
-                      (invoke "ip" "link" "set" "nixos8" "up")
-                      (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "addr" "add" "192.168.0.180/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "route" "add" "default" "via" "192.168.0.1")))))
-
-
-(define nixos-gw-program-file
-  (program-file "nixos-gw"
-                (with-imported-modules (source-module-closure '((guix build utils)))
-                  #~(begin
-                      (use-modules (guix build utils))
-                      (setenv "PATH"
-                              (string-append "/run/current-system/profile/bin:"
-                                             "/run/current-system/profile/sbin"))
-                      (invoke "ip" "netns" "add" "nixos-gw")
-                      (invoke "ip" "link" "add" "name" "nixos10" "type" "veth" "peer" "name" "nixos11")
-                      (invoke "ip" "link" "set" "dev" "nixos11" "netns" "nixos-gw")
-                      (invoke "ip" "netns" "exec" "nixos-gw" "ip" "link" "set" "nixos11" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-gw" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "nixos10" "master" "br0")
-                      (invoke "ip" "link" "set" "nixos10" "up")
-                      (invoke "ip" "netns" "exec" "nixos-gw" "ip" "addr" "add" "192.168.0.170/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-gw" "ip" "route" "add" "default" "via" "192.168.0.1")))))
-
-(define nixos-zapret-program-file
-  (program-file "nixos-zapret"
-                (with-imported-modules (source-module-closure '((guix build utils)))
-                  #~(begin
-                      (use-modules (guix build utils))
-                      (setenv "PATH"
-                              (string-append "/run/current-system/profile/bin:"
-                                             "/run/current-system/profile/sbin"))
-                      (invoke "ip" "netns" "add" "nixos-zapret")
-                      (invoke "ip" "link" "add" "name" "nixos4" "type" "veth" "peer" "name" "nixos5")
-                      (invoke "ip" "link" "set" "dev" "nixos5" "netns" "nixos-zapret")
-                      (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "link" "set" "nixos5" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "nixos4" "master" "br0")
-                      (invoke "ip" "link" "set" "nixos4" "up")
-                      (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "addr" "add" "192.168.0.175/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "route" "add" "default" "via" "192.168.0.1")))))
-
-(define fedora-program-file
-  (program-file "fedora"
-                (with-imported-modules (source-module-closure '((guix build utils)))
-                  #~(begin
-                      (use-modules (guix build utils))
-                      (setenv "PATH"
-                              (string-append "/run/current-system/profile/bin:"
-                                             "/run/current-system/profile/sbin"))
-                      (invoke "ip" "netns" "add" "fedora")
-                      (invoke "ip" "link" "add" "name" "fedora0" "type" "veth" "peer" "name" "fedora1")
-                      (invoke "ip" "link" "set" "dev" "fedora1" "netns" "fedora")
-                      (invoke "ip" "netns" "exec" "fedora" "ip" "link" "set" "fedora1" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "fedora" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "fedora0" "master" "br0")
-                      (invoke "ip" "link" "set" "fedora0" "up")
-                      (invoke "ip" "netns" "exec" "fedora" "ip" "addr" "add" "192.168.0.155/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "fedora" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+                      (unless (file-exists? "/var/run/netns/fedora")
+                        (invoke "ip" "netns" "add" "fedora")
+                        (invoke "ip" "link" "add" "name" "fedora0" "type" "veth" "peer" "name" "fedora1")
+                        (invoke "ip" "link" "set" "dev" "fedora1" "netns" "fedora")
+                        (invoke "ip" "netns" "exec" "fedora" "ip" "link" "set" "fedora1" "name" "eth0")
+                        (invoke "ip" "netns" "exec" "fedora" "ip" "link" "set" "eth0" "up")
+                        (invoke "ip" "link" "set" "fedora0" "master" "br0")
+                        (invoke "ip" "link" "set" "fedora0" "up")
+                        (invoke "ip" "netns" "exec" "fedora" "ip" "addr" "add" "192.168.0.155/24" "dev" "eth0")
+                        (invoke "ip" "netns" "exec" "fedora" "ip" "route" "add" "default" "via" "192.168.0.1"))))))
 
 (define ns-net-guix-workstation-program-file
   (program-file "ns-net-guix-workstation"
@@ -191,53 +140,54 @@
                       (setenv "PATH"
                               (string-append "/run/current-system/profile/bin:"
                                              "/run/current-system/profile/sbin"))
-                      (invoke "ip" "netns" "add" "guix-workstation")
-                      (invoke "ip" "link" "add" "name" "guix0" "type" "veth" "peer" "name" "guix1")
-                      (invoke "ip" "link" "set" "dev" "guix1" "netns" "guix-workstation")
-                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "link" "set" "guix1" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "guix0" "master" "br0")
-                      (invoke "ip" "link" "set" "guix0" "up")
-                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.194/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+                      (unless (file-exists? "/var/run/netns/guix-workstation")
+                        (invoke "ip" "netns" "add" "guix-workstation")
+                        (invoke "ip" "link" "add" "name" "guix0" "type" "veth" "peer" "name" "guix1")
+                        (invoke "ip" "link" "set" "dev" "guix1" "netns" "guix-workstation")
+                        (invoke "ip" "netns" "exec" "guix-workstation" "ip" "link" "set" "guix1" "name" "eth0")
+                        (invoke "ip" "netns" "exec" "guix-workstation" "ip" "link" "set" "eth0" "up")
+                        (invoke "ip" "link" "set" "guix0" "master" "br0")
+                        (invoke "ip" "link" "set" "guix0" "up")
+                        (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.194/24" "dev" "eth0")
+                        (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1"))))))
 
-(define guix-rde-program-file
-  (program-file "guix-rde"
+(define ns-net-guix-rde-program-file
+  (program-file "ns-net-guix-rde"
                 (with-imported-modules (source-module-closure '((guix build utils)))
                   #~(begin
                       (use-modules (guix build utils))
                       (setenv "PATH"
                               (string-append "/run/current-system/profile/bin:"
                                              "/run/current-system/profile/sbin"))
-                      (invoke "ip" "netns" "add" "guix-rde")
-                      (invoke "ip" "link" "add" "name" "guix2" "type" "veth" "peer" "name" "guix3")
-                      (invoke "ip" "link" "set" "dev" "guix3" "netns" "guix-rde")
-                      (invoke "ip" "netns" "exec" "guix-rde" "ip" "link" "set" "guix3" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-rde" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "guix2" "master" "br0")
-                      (invoke "ip" "link" "set" "guix2" "up")
-                      (invoke "ip" "netns" "exec" "guix-rde" "ip" "addr" "add" "192.168.0.193/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-rde" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+                      (unless (file-exists? "/var/run/netns/guix-rde")
+                        (invoke "ip" "netns" "add" "guix-rde")
+                        (invoke "ip" "link" "add" "name" "guix2" "type" "veth" "peer" "name" "guix3")
+                        (invoke "ip" "link" "set" "dev" "guix3" "netns" "guix-rde")
+                        (invoke "ip" "netns" "exec" "guix-rde" "ip" "link" "set" "guix3" "name" "eth0")
+                        (invoke "ip" "netns" "exec" "guix-rde" "ip" "link" "set" "eth0" "up")
+                        (invoke "ip" "link" "set" "guix2" "master" "br0")
+                        (invoke "ip" "link" "set" "guix2" "up")
+                        (invoke "ip" "netns" "exec" "guix-rde" "ip" "addr" "add" "192.168.0.193/24" "dev" "eth0")
+                        (invoke "ip" "netns" "exec" "guix-rde" "ip" "route" "add" "default" "via" "192.168.0.1"))))))
 
-(define guix-nanokvm-program-file
-  (program-file "nixos-majordomo"
+(define ns-net-guix-nanokvm-program-file
+  (program-file "ns-net-guix-nanokvm"
                 (with-imported-modules (source-module-closure '((guix build utils)))
                   #~(begin
                       (use-modules (guix build utils))
-
                       (setenv "PATH"
                               (string-append "/run/current-system/profile/bin:"
                                              "/run/current-system/profile/sbin"))
-
-                      (invoke "ip" "netns" "add" "guix-nanokvm")
-                      (invoke "ip" "link" "add" "name" "guix4" "type" "veth" "peer" "name" "guix5")
-                      (invoke "ip" "link" "set" "dev" "guix5" "netns" "guix-nanokvm")
-                      (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "link" "set" "guix5" "name" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "link" "set" "eth0" "up")
-                      (invoke "ip" "link" "set" "guix4" "master" "br0")
-                      (invoke "ip" "link" "set" "guix4" "up")
-                      (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "addr" "add" "192.168.0.198/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+                      (unless (file-exists? "/var/run/netns/guix-nanokvm")
+                        (invoke "ip" "netns" "add" "guix-nanokvm")
+                        (invoke "ip" "link" "add" "name" "guix4" "type" "veth" "peer" "name" "guix5")
+                        (invoke "ip" "link" "set" "dev" "guix5" "netns" "guix-nanokvm")
+                        (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "link" "set" "guix5" "name" "eth0")
+                        (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "link" "set" "eth0" "up")
+                        (invoke "ip" "link" "set" "guix4" "master" "br0")
+                        (invoke "ip" "link" "set" "guix4" "up")
+                        (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "addr" "add" "192.168.0.198/24" "dev" "eth0")
+                        (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "route" "add" "default" "via" "192.168.0.1"))))))
 
 (define (%pc0)
   (operating-system
@@ -548,62 +498,32 @@ cgroup_device_acl = [
 ]
 "))))))
 
-                            (simple-service 'nixos-majordomo shepherd-root-service-type
+                            (simple-service 'ns-net-nixos-majordomo shepherd-root-service-type
                                             (list (shepherd-service
-                                                   (provision '(nixos-majordomo))
+                                                   (provision '(ns-net-nixos-majordomo))
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-constructor
-                                                             (list #$nixos-majordomo-program-file)))
+                                                             (list #$ns-net-nixos-majordomo-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
 
-                            (simple-service 'nixos-workstation shepherd-root-service-type
+                            (simple-service 'ns-net-nixos-workstation shepherd-root-service-type
                                             (list (shepherd-service
-                                                   (provision '(nixos-workstation))
+                                                   (provision '(ns-net-nixos-workstation))
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-constructor
-                                                             (list #$nixos-workstation-program-file)))
+                                                             (list #$ns-net-nixos-workstation-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
 
-                            (simple-service 'nixos-tor shepherd-root-service-type
+                            (simple-service 'ns-net-nixos-zapret shepherd-root-service-type
                                             (list (shepherd-service
-                                                   (provision '(nixos-tor))
+                                                   (provision '(ns-net-nixos-zapret))
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-constructor
-                                                             (list #$nixos-tor-program-file)))
-                                                   (respawn? #f)
-                                                   (auto-start? #t)
-                                                   (one-shot? #t))))
-
-                            (simple-service 'nixos-antifilter shepherd-root-service-type
-                                            (list (shepherd-service
-                                                   (provision '(nixos-antifilter))
-                                                   (requirement '(networking))
-                                                   (start #~(make-forkexec-construcantifilter
-                                                             (list #$nixos-antifilter-program-file)))
-                                                   (respawn? #f)
-                                                   (auto-start? #t)
-                                                   (one-shot? #t))))
-
-                            (simple-service 'nixos-gw shepherd-root-service-type
-                                            (list (shepherd-service
-                                                   (provision '(nixos-gw))
-                                                   (requirement '(networking))
-                                                   (start #~(make-forkexec-construcgw
-                                                             (list #$nixos-gw-program-file)))
-                                                   (respawn? #f)
-                                                   (auto-start? #t)
-                                                   (one-shot? #t))))
-
-                            (simple-service 'nixos-zapret shepherd-root-service-type
-                                            (list (shepherd-service
-                                                   (provision '(nixos-zapret))
-                                                   (requirement '(networking))
-                                                   (start #~(make-forkexec-constructor
-                                                             (list #$nixos-zapret-program-file)))
+                                                             (list #$ns-net-nixos-zapret-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
@@ -618,32 +538,32 @@ cgroup_device_acl = [
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
 
-                            (simple-service 'fedora shepherd-root-service-type
+                            (simple-service 'ns-net-fedora shepherd-root-service-type
                                             (list (shepherd-service
-                                                   (provision '(fedora))
+                                                   (provision '(ns-net-fedora))
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-constructor
-                                                             (list #$fedora-program-file)))
+                                                             (list #$ns-net-fedora-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
 
-                            (simple-service 'guix-rde shepherd-root-service-type
+                            (simple-service 'ns-net-guix-rde shepherd-root-service-type
                                             (list (shepherd-service
-                                                   (provision '(guix-rde))
+                                                   (provision '(ns-net-guix-rde))
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-constructor
-                                                             (list #$guix-rde-program-file)))
+                                                             (list #$ns-net-guix-rde-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
 
-                            (simple-service 'guix-nanokvm shepherd-root-service-type
+                            (simple-service 'ns-net-guix-nanokvm shepherd-root-service-type
                                             (list (shepherd-service
-                                                   (provision '(guix-nanokvm))
+                                                   (provision '(ns-net-guix-nanokvm))
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-constructor
-                                                             (list #$guix-nanokvm-program-file)))
+                                                             (list #$ns-net-guix-nanokvm-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
