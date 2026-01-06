@@ -5,7 +5,7 @@
 (define %channels-pc0
   (list (channel
          (name 'guix)
-         (url "https://codeberg.org/guix/guix")
+         (url "https://cgit.wugi.info/git/guix/guix")
          (branch "master")
          (commit
           "6913fd701884fad3af579efdc298ae444aeaf57c")
@@ -16,7 +16,7 @@
             "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
         (channel
          (name 'nonguix)
-         (url "https://gitlab.com/nonguix/nonguix")
+         (url "https://cgit.wugi.info/git/guix/nonguix")
          (branch "master")
          (commit
           "bd8c5ca23e694be0b1a8cf72f05f81c70b1d7fc5")
