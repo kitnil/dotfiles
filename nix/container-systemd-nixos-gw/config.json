@@ -92,12 +92,12 @@
                 "soft": 1024
             }
         ],
-        "noNewPrivileges": true
+        "noNewPrivileges": false
     },
     "root": {
         "path": "rootfs"
     },
-    "hostname": "nixos-antifilter",
+    "hostname": "nixos-gw",
     "mounts": [
         {
             "destination": "/proc",
@@ -195,7 +195,7 @@
             },
             {
                 "type": "network",
-                "path": "/var/run/netns/nixos-antifilter"
+                "path": "/var/run/netns/nixos-gw"
             },
             {
                 "type": "ipc"
@@ -209,23 +209,6 @@
             {
                 "type": "cgroup"
             }
-        ],
-        "maskedPaths": [
-            "/proc/kcore",
-            "/proc/latency_stats",
-            "/proc/timer_list",
-            "/proc/timer_stats",
-            "/proc/sched_debug",
-            "/sys/firmware",
-            "/proc/scsi"
-        ],
-        "readonlyPaths": [
-            "/proc/asound",
-            "/proc/bus",
-            "/proc/fs",
-            "/proc/irq",
-            "/proc/sys",
-            "/proc/sysrq-trigger"
         ]
     }
 }
