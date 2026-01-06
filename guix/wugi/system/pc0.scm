@@ -44,6 +44,7 @@
   #:use-module (wugi bootloader grub)
   #:use-module (wugi config)
   #:use-module (wugi services backup)
+  #:use-module (wugi services bird)
   #:use-module (wugi services kubernetes)
   #:use-module (wugi services virtualization)
   #:use-module (wugi utils)
@@ -682,7 +683,14 @@ cgroup_device_acl = [
                                                (network-link
                                                 (name "eth0")
                                                 (arguments '((master . "br0"))))))
-                                       (addresses '())))))
+                                       (addresses '()))))
+                            (service bird-service-type
+                                     (bird-configuration
+                                      (config-file
+                                       (local-file
+                                        (string-append
+                                         %distro-directory
+                                         "/dotfiles/pc0/etc/bird/bird.conf"))))))
                       (modify-services %base-services
                         (delete shepherd-system-log-service-type)
                         (guix-service-type config =>
