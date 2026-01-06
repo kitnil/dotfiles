@@ -130,6 +130,9 @@ endef
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-build-$(configuration)):
 	$(GUIX) $(call guix-build-expression,$(call subst,guix-system-build-,,$@),$(call subst,guix-system-build-,,$@))
 
+$(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),sudo-guix-system-build-$(configuration)):
+	sudo -i $(GUIX) $(call guix-build-expression,$(call subst,sudo-guix-system-build-,,$@),$(call subst,sudo-guix-system-build-,,$@))
+
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-reconfigure-$(configuration)):
 	sudo -i $(GUIX) $(call guix-system-reconfigure-expression,$(call subst,guix-system-reconfigure-,,$@),$(call subst,guix-system-reconfigure-,,$@))
 
