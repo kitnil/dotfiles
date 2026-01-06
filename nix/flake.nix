@@ -170,6 +170,19 @@
           }
         ]
       ];
+      containerSystemdNixosAntifilterModules = builtins.concatLists [
+        commonModules
+        [
+          ./container-systemd-nixos-antifilter/hosts/nixos-systemd.nix
+          {
+            home-manager = {
+              users = {
+                oleg = ./container-systemd-nixos-antifilter/oleg/home-manager.nix;
+              };
+            };
+          }
+        ]
+      ];
     in
     {
       overlay = final: prev: {
@@ -219,6 +232,9 @@
         };
         container-systemd-nixos-tor = nixpkgs.lib.nixosSystem {
           modules = containerSystemdNixosTorModules;
+        };
+        container-systemd-nixos-antifilter = nixpkgs.lib.nixosSystem {
+          modules = containerSystemdNixosAntifilterModules;
         };
       };
     };
