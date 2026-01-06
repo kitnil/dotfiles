@@ -5,10 +5,10 @@
 (define %channels-pc0
   (list (channel
          (name 'guix)
-         (url "https://cgit.wugi.info/git/guix/guix")
-         (branch "pc0-guix-workstation")
+         (url "https://codeberg.org/guix/guix")
+         (branch "master")
          (commit
-          "aec50b65d5aad6f5df7ed4f5d26438b27ccb7244")
+          "6913fd701884fad3af579efdc298ae444aeaf57c")
          (introduction
           (make-channel-introduction
            "9edb3f66fd807b096b48283debdcddccfea34bad"
@@ -16,10 +16,10 @@
             "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
         (channel
          (name 'nonguix)
-         (url "https://cgit.wugi.info/git/guix/nonguix")
+         (url "https://gitlab.com/nonguix/nonguix")
          (branch "master")
          (commit
-          "3f4a1907cae9b0def09d1549c491bb4e307b9097")
+          "bd8c5ca23e694be0b1a8cf72f05f81c70b1d7fc5")
          (introduction
           (make-channel-introduction
            "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
