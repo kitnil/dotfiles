@@ -31,74 +31,16 @@
     '';
   };
 
-  services.udev = {
-    enable = lib.mkForce true;
-  };
-
-  programs.firejail = {
-    enable = true;
-  };
-
-  virtualisation.docker = {
-    enable = true;
-  };
-
   security.sudo = {
     enable = true;
     wheelNeedsPassword = false;
   };
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = false;
-  services.openssh.settings = {
-    PermitRootLogin = "prohibit-password";
-  };
-
-  services.openvpn.servers = {
-    client = {
-      config =
-        let
-          mjuh-utils-openvpn = pkgs.fetchFromGitHub {
-            owner = "mjuh";
-            repo = "utils-openvpn";
-            rev = "901b406f27035c641683f8e869919b9e0eb28153";
-            hash = "sha256-6cV7uPJbA5YHGgOu/xuKldUCSaiguzPc2nWQFsws3z8=";
-          };
-          caFile = "${mjuh-utils-openvpn}/etc/openvpn/majordomo-ca.cert";
-        in ''
-          client
-          proto udp
-          dev tapvpn
-          verb 3
-
-          remote 78.108.87.250 1194 udp
-          cipher AES-256-GCM
-          data-ciphers AES-256-GCM
-
-          remote-cert-tls server
-          ca "${caFile}"
-          auth SHA1
-          script-security 3
-          auth-nocache
-          auth-retry nointeract
-          ping 5
-          ping-restart 10
-          auth-user-pass /etc/openvpn/login.conf
-        '';
-    };
-  };
-
   systemd = {
     sockets = {
       systemd-rfkill.enable = false;
     };
     services = {
       systemd-rfkill.enable = false;
-      openvpn-client = {
-        unitConfig = {
-          ConditionPathExists = [ "/etc/openvpn/login.conf" ];
-        };
-      };
     };
   };
 
@@ -173,23 +115,6 @@
     in ''
       ln -s ${entrypoint} $out/entrypoint.sh
     '';
-
-  fonts = {
-    enableDefaultPackages = true;
-    packages = with pkgs; [
-      adwaita-fonts
-      dejavu_fonts
-      wqy_zenhei
-    ];
-    fontconfig = {
-      enable = true;
-    };
-  };
-
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
