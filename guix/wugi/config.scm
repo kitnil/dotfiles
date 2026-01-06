@@ -174,7 +174,6 @@ EndSection\n")
         ncurses
         net-tools
         openssh ;autofs
-        ovmf
         rsync
         smartmontools
         sshfs ;autofs
