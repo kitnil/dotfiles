@@ -313,6 +313,11 @@
                            (dependencies mapped-devices)
                            (type "ext4"))
                          (file-system
+                           (device (file-system-label "nixostor"))
+                           (mount-point "/srv/runc/nixos-tor")
+                           (dependencies mapped-devices)
+                           (type "btrfs"))
+                         (file-system
                            (device (file-system-label "nixoszapret"))
                            (mount-point "/srv/runc/nixos-zapret")
                            (dependencies mapped-devices)
@@ -466,6 +471,7 @@
                                                      file-system-/srv/runc/nixos-antifilter
                                                      file-system-/srv/runc/nixos-gw
                                                      file-system-/srv/runc/nixos-majordomo
+                                                     file-system-/srv/runc/nixos-tor
                                                      file-system-/srv/runc/nixos-zapret
                                                      file-system-/srv/runc/guix-rde))
                                       (name "guix-workstation")
