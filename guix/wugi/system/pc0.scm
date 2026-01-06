@@ -460,6 +460,7 @@
                                                      file-system-/srv/runc/guix-workstation
                                                      file-system-/srv/runc/nixos-antifilter
                                                      file-system-/srv/runc/nixos-majordomo
+                                                     file-system-/srv/runc/nixos-zapret
                                                      file-system-/srv/runc/guix-rde))
                                       (name "guix-workstation")
                                       (auto-start? #t)))
