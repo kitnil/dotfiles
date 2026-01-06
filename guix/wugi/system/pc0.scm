@@ -303,6 +303,11 @@
                            (dependencies mapped-devices)
                            (type "btrfs"))
                          (file-system
+                           (device (file-system-label "nixosgw"))
+                           (mount-point "/srv/runc/nixos-gw")
+                           (dependencies mapped-devices)
+                           (type "btrfs"))
+                         (file-system
                            (device (file-system-label "nixosmajordomo"))
                            (mount-point "/srv/runc/nixos-majordomo")
                            (dependencies mapped-devices)
@@ -459,6 +464,7 @@
                                                      file-system-/srv/runc/guix-nanokvm
                                                      file-system-/srv/runc/guix-workstation
                                                      file-system-/srv/runc/nixos-antifilter
+                                                     file-system-/srv/runc/nixos-gw
                                                      file-system-/srv/runc/nixos-majordomo
                                                      file-system-/srv/runc/nixos-zapret
                                                      file-system-/srv/runc/guix-rde))
