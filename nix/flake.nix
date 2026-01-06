@@ -191,6 +191,7 @@
           ultrawidify;
         firefox-addon-libredirect =
           rycee-nur-expressions.packages.${system}.libredirect;
+        socialstream = prev.callPackage ./pkgs/socialstream {};
         streamtitle = prev.callPackage ./pkgs/streamtitle {};
       };
       nixosConfigurations = {
