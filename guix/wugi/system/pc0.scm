@@ -321,6 +321,11 @@
                            (device (file-system-label "guixnanokvm"))
                            (mount-point "/srv/runc/guix-nanokvm")
                            (dependencies mapped-devices)
+                           (type "ext4"))
+                         (file-system
+                           (device (file-system-label "guixrde"))
+                           (mount-point "/srv/runc/guix-rde")
+                           (dependencies mapped-devices)
                            (type "ext4")))
                    %control-groups
                    %base-file-systems))
