@@ -156,30 +156,29 @@ EndSection\n")
         font-misc-misc font-wqy-zenhei))
 
 (define %admin-packages
-  (list
-   binutils
-   bridge-utils
-   btrfs-progs
-   cifs-utils
-   cryptsetup
-   dtach
-   file
-   fping
-   fuse ;mount -t fuse and autofs
-   iftop
-   ipset
-   iptables
-   libcgroup
-   lvm2
-   mtr
-   ncurses
-   net-tools
-   openssh ;autofs
-   ovmf
-   rsync
-   smartmontools
-   sshfs ;autofs
-   tcpdump))
+  (list binutils
+        bridge-utils
+        btrfs-progs
+        cifs-utils
+        cryptsetup
+        dtach
+        file
+        fping
+        fuse ;mount -t fuse and autofs
+        iftop
+        ipset
+        iptables
+        libcgroup
+        lvm2
+        mtr
+        ncurses
+        net-tools
+        openssh ;autofs
+        ovmf
+        rsync
+        smartmontools
+        sshfs ;autofs
+        tcpdump))
 
 (define %xorg-packages
   (list desktop-file-utils xrdb xset xsetroot xkill
