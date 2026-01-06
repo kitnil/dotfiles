@@ -191,6 +191,7 @@
           ultrawidify;
         firefox-addon-libredirect =
           rycee-nur-expressions.packages.${system}.libredirect;
+        streamtitle = prev.callPackage ./pkgs/streamtitle {};
       };
       nixosConfigurations = {
         container-systemd = nixpkgs.lib.nixosSystem {
