@@ -16,6 +16,8 @@ in
       obs-studio-plugins.obs-multi-rtmp
       obs-studio-plugins.obs-pipewire-audio-capture
 
+      streamtitle
+
       steam
 
       vulkan-tools
