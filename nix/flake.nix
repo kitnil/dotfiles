@@ -249,6 +249,9 @@
         container-systemd-nixos-antifilter = nixpkgs.lib.nixosSystem {
           modules = containerSystemdNixosAntifilterModules;
         };
+        container-systemd-nixos-gw = nixpkgs.lib.nixosSystem {
+          modules = containerSystemdNixosGwModules;
+        };
       };
     };
 }
