@@ -196,7 +196,7 @@
           }
         ]
       ];
-      containerSystemdNixosGwModules = builtins.concatLists [
+      containerSystemdNixosWanModules = builtins.concatLists [
         commonModules
         [
           ./container-systemd-nixos-wan/hosts/nixos-systemd.nix
