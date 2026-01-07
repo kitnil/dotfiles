@@ -4,3 +4,4 @@ namespace: tor-controller-instance
 resources:
 - namespace.yaml
 - endpoints.yaml
+- service.yaml
