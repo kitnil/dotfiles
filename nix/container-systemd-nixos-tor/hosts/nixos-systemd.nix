@@ -7,9 +7,25 @@
 {
   services.bird = {
     enable = true;
-    config = builtins.readFile ./bird.conf;
+    config = lib.readFile ./../bird.1.conf;
     checkConfig = false;
   };
+  environment.etc = {
+    "bird/bird.conf" = {
+      mode = "0644";
+    };
+    "bird/peers/nixos-antifilter.conf" = {
+      text = lib.readFile ./../peers/nixos-antifilter.conf;
+      mode = "0644";
+    };
+    "bird/peers/nixos-workstation.conf" = {
+      text = lib.readFile ./../peers/nixos-workstationconf;
+      mode = "0644";
+    };
+  };
+  systemd.tmpfiles.rules = [
+    "f /var/log/bird.log 0644 bird bird -"
+  ];
   services.tor = {
     enable = true;
     openFirewall = true;
