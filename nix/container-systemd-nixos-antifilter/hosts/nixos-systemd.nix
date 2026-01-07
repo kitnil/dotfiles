@@ -14,12 +14,12 @@
     "bird/bird.conf" = {
       mode = "0644";
     };
-    "bird/peers/nixos-antifilter.0.conf" = {
-      text = lib.readFile ./../peers/nixos-antifilter.0.conf;
+    "bird/peers/antifilter.0.conf" = {
+      text = lib.readFile ./../peers/antifilter.0.conf;
       mode = "0644";
     };
-    # "bird/peers/nixos-antifilter.1.conf" = {
-    #   text = lib.readFile ./../peers/nixos-antifilter.1.conf;
+    # "bird/peers/antifilter.1.conf" = {
+    #   text = lib.readFile ./../peers/antifilter.1.conf;
     #   mode = "0644";
     # };
     "bird/peers/nixos-gw.conf" = {
