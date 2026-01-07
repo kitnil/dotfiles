@@ -403,6 +403,7 @@ Show
 	Continue
 
 Hide
+	ItemLevel <= 83
 	Class == "Life Flasks" "Mana Flasks" "Hybrid Flasks" 
 	Rarity Normal
 	Continue

@@ -1252,6 +1252,9 @@
                           (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks"))
                           (rarity '(Normal))
                           (show? #f)
+                          (item-level (poe-item-filter-conditional-value-configuration
+                                       (value 83)
+                                       (operator '<=)))
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
