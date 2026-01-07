@@ -126,14 +126,6 @@
       containerSystemdNixosWorkstationModules = builtins.concatLists [
         commonModules
         [
-          ./modules/services/chatterino.nix
-          ./modules/services/firefox.nix
-          ./modules/services/foot.nix
-          ./modules/services/google-chrome.nix
-          ./modules/services/idea-community.nix
-          ./modules/services/pycharm-community.nix
-          ./modules/services/vendir.nix
-          ./modules/services/wayland.nix
           ./container-systemd-nixos-workstation/hosts/nixos-systemd.nix
           {
             home-manager = {
