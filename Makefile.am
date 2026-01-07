@@ -352,3 +352,6 @@ known_hosts:
 
 runc-nix-builder-nixos-rebuild-switch-flake:
 	$(MAKE) -C nix/container-systemd-builder nixos-rebuild-switch-flake
+
+latest-bview.gz:
+	wget https://data.ris.ripe.net/rrc10/latest-bview.gz
