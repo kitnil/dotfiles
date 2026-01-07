@@ -24,6 +24,10 @@
       text = lib.readFile ./../peers/guixsd.conf;
       mode = "0644";
     };
+    "bird/peers/pc0.conf" = {
+      text = lib.readFile ./../peers/pc0.conf;
+      mode = "0644";
+    };
     "bird/peers/nixos-gw.conf" = {
       text = lib.readFile ./../peers/nixos-gw.conf;
       mode = "0644";
