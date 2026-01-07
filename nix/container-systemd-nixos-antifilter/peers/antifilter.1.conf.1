@@ -1,0 +1,13 @@
+protocol bgp antifilter1 {
+      description "https://antifilter.download";
+      local as OWNAS;
+      local 192.168.0.180;
+      ipv4 {
+         next hop self;
+         import all;
+         export none;
+      };
+      neighbor 45.154.73.71 as 65432;
+      hold time 240;
+      multihop;
+}
