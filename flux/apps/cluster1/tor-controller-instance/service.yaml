@@ -5,6 +5,6 @@ metadata:
 spec:
   ports:
   - name: tor-controller-instance
-    protocol: tor-controller-instance
+    protocol: TCP
     port: 9050
     targetPort: 9050
