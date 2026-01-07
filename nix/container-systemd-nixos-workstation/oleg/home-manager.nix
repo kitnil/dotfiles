@@ -136,7 +136,7 @@ in {
       let
         firefoxBaseProfileWithExtensions = { ech ? true }: (firefoxBaseProfile { inherit ech; }) // {
           extensions = {
-            packages = with pkgs.nur.repos.rycee.firefox-addons; [
+            packages = with pkgs.nur.repos.rycee.firefox-addons; with pkgs; [
               auto_highlight
               auto-tab-discard
               clearurls
