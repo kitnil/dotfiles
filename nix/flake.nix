@@ -258,6 +258,22 @@
           rycee-nur-expressions.packages.${system}.libredirect;
         socialstream = prev.callPackage ./pkgs/socialstream {};
         streamtitle = prev.callPackage ./pkgs/streamtitle {};
+        yt-title-updater = prev.callPackage ./pkgs/yt-title-updater {};
+        yt-title-updater-python = with prev;
+          let
+            python = python3.withPackages
+              (python-packages: with python-packages; [
+                urllib3
+                google-api-python-client
+                google-auth-oauthlib
+                google-auth-httplib2
+                pytz
+                pyqt6
+              ]);
+          in writeScriptBin "python-yt-title-updater" ''
+            #!${runtimeShell} -e
+            exec ${python}/bin/python "$@"
+          '';
       };
       nixosConfigurations = {
         container-systemd = nixpkgs.lib.nixosSystem {

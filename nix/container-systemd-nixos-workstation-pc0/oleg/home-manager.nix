@@ -17,11 +17,15 @@ in
       obs-studio-plugins.obs-pipewire-audio-capture
 
       socialstream
+
+      yt-title-updater-python
       streamtitle
 
       steam
 
       vulkan-tools
+
+      jetbrains.pycharm-community
     ];
   };
   programs.firefox = {
