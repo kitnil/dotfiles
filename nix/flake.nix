@@ -263,9 +263,6 @@
         container-systemd = nixpkgs.lib.nixosSystem {
           modules = commonModules;
         };
-        container-systemd-nixos-workstation = nixpkgs.lib.nixosSystem {
-          modules = containerSystemdNixosWorkstationModules;
-        };
         container-systemd-nixos-workstation-pc0 = nixpkgs.lib.nixosSystem {
           modules = containerSystemdNixosWorkstationPc0Modules;
         };
