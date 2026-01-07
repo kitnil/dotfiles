@@ -126,6 +126,13 @@
       containerSystemdNixosWorkstationModules = builtins.concatLists [
         commonModules
         [
+          {
+            home-manager = {
+              users = {
+                oleg = ./container-systemd-nixos-workstation/oleg/home-manager.nix;
+              };
+            };
+          }
           ./modules/services/chatterino.nix
           ./modules/services/firefox.nix
           ./modules/services/foot.nix
@@ -135,13 +142,6 @@
           ./modules/services/vendir.nix
           ./modules/services/wayland.nix
           ./container-systemd-nixos-workstation/hosts/nixos-systemd.nix
-          {
-            home-manager = {
-              users = {
-                oleg = ./container-systemd-nixos-workstation/oleg/home-manager.nix;
-              };
-            };
-          }
         ]
       ];
       containerSystemdNixosWorkstationPc0Modules = builtins.concatLists [
