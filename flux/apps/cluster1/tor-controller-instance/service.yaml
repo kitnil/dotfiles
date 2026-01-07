@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tor-controller-instance
+spec:
+  ports:
+  - name: tor-controller-instance
+    protocol: tor-controller-instance
+    port: 9050
+    targetPort: 9050
