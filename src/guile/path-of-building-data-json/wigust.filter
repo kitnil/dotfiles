@@ -377,6 +377,12 @@ Show
 	SetFontSize 45
 	Continue
 
+# Increase font size for high level wands base items.
+Show
+	BaseType == "Opal Wand" "Profane Wand" 
+	SetFontSize 45
+	Continue
+
 # Decrease font size for items with classes.
 Hide
 	Class == "Bows" "Claws" "Corpses" "Daggers" "One Hand Axes" "One Hand Maces" "One Hand Swords" "Quivers" "Rune Daggers" "Thrusting One Hand Swords" "Two Hand Axes" "Two Hand Maces" "Two Hand Swords" 
