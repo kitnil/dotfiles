@@ -214,6 +214,19 @@
           }
         ]
       ];
+      containerSystemdNixosBviewModules = builtins.concatLists [
+        commonModules
+        [
+          ./container-systemd-nixos-bview/hosts/nixos-systemd.nix
+          {
+            home-manager = {
+              users = {
+                oleg = ./container-systemd-nixos-bview/oleg/home-manager.nix;
+              };
+            };
+          }
+        ]
+      ];
     in
     {
       overlay = final: prev: {
@@ -288,6 +301,9 @@
         };
         container-systemd-nixos-zapret = nixpkgs.lib.nixosSystem {
           modules = containerSystemdNixosZapretModules;
+        };
+        container-systemd-nixos-bview = nixpkgs.lib.nixosSystem {
+          modules = containerSystemdNixosBviewModules;
         };
       };
     };
