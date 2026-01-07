@@ -26,6 +26,10 @@
       text = lib.readFile ./../peers/nixos-gw.conf;
       mode = "0644";
     };
+    "bird/peers/nixos-wan.conf" = {
+      text = lib.readFile ./../peers/nixos-wan.conf;
+      mode = "0644";
+    };
     "bird/peers/nixos-tor.conf" = {
       text = lib.readFile ./../peers/nixos-tor.conf;
       mode = "0644";
