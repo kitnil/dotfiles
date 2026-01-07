@@ -13,4 +13,17 @@
     config = builtins.readFile ./bird.conf;
     checkConfig = false;
   };
+  environment.etc = {
+    "bird/bird.1.conf" = {
+      text = lib.readFile ./../bird.1.conf;
+      mode = "0644";
+    };
+    "bird/peers/pc0.conf" = {
+      text = lib.readFile ./../peers/pc0.conf;
+      mode = "0644";
+    };
+  };
+  systemd.tmpfiles.rules = [
+    "f /var/log/bird.log 0644 bird bird -"
+  ];
 }
