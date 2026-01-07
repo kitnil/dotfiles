@@ -378,6 +378,11 @@
                            (device (file-system-label "nixoswan"))
                            (mount-point "/srv/runc/nixos-wan")
                            (dependencies mapped-devices)
+                           (type "btrfs"))
+                         (file-system
+                           (device (file-system-label "nixosbview"))
+                           (mount-point "/srv/runc/nixos-bview")
+                           (dependencies mapped-devices)
                            (type "btrfs")))
                    %control-groups
                    %base-file-systems))
