@@ -178,6 +178,23 @@
                       (invoke "ip" "link" "set" "nixos12" "up")
                       (invoke "ip" "netns" "exec" "nixos-wan" "ip" "addr" "add" "192.168.0.160/24" "dev" "eth0")))))
 
+(define ns-net-nixos-bview-program-file
+  (program-file "ns-net-nixos-bview"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "nixos-bview")
+                      (invoke "ip" "link" "add" "name" "nixos14" "type" "veth" "peer" "name" "nixos15")
+                      (invoke "ip" "link" "set" "dev" "nixos15" "netns" "nixos-bview")
+                      (invoke "ip" "netns" "exec" "nixos-bview" "ip" "link" "set" "nixos15" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-bview" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "nixos14" "master" "br0")
+                      (invoke "ip" "link" "set" "nixos14" "up")
+                      (invoke "ip" "netns" "exec" "nixos-bview" "ip" "addr" "add" "192.168.0.150/24" "dev" "eth0")))))
+
 (define ns-net-fedora-program-file
   (program-file "ns-net-fedora"
                 (with-imported-modules (source-module-closure '((guix build utils)))
@@ -636,6 +653,16 @@ cgroup_device_acl = [
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-construcwan
                                                              (list #$ns-net-nixos-wan-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
+
+                            (simple-service 'ns-net-nixos-bview shepherd-root-service-type
+                                            (list (shepherd-service
+                                                   (provision '(ns-net-nixos-bview))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-construcbview
+                                                             (list #$ns-net-nixos-bview-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
