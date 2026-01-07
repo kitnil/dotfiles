@@ -150,6 +150,34 @@ program.")))
 
          (service runc-container-service-type
                   (runc-container-configuration
+                   (bundle "/srv/runc/nixos-tor")
+                   (name "nixos-tor")
+                   (requirement '(file-system-/sys/fs/cgroup))
+                   (auto-start? #t)))
+
+         (service runc-container-service-type
+                  (runc-container-configuration
+                   (bundle "/srv/runc/nixos-gw")
+                   (name "nixos-gw")
+                   (requirement '(file-system-/sys/fs/cgroup))
+                   (auto-start? #t)))
+
+         (service runc-container-service-type
+                  (runc-container-configuration
+                   (bundle "/srv/runc/nixos-wan")
+                   (name "nixos-wan")
+                   (requirement '(file-system-/sys/fs/cgroup))
+                   (auto-start? #t)))
+
+         (service runc-container-service-type
+                  (runc-container-configuration
+                   (bundle "/srv/runc/nixos-antifilter")
+                   (name "nixos-antifilter")
+                   (requirement '(file-system-/sys/fs/cgroup))
+                   (auto-start? #t)))
+
+         (service runc-container-service-type
+                  (runc-container-configuration
                    (bundle "/srv/runc/nixos-majordomo")
                    (name "nixos-majordomo")
                    (requirement '(file-system-/sys/fs/cgroup))
