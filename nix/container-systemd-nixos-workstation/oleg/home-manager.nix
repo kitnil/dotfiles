@@ -137,15 +137,61 @@ in {
         firefoxBaseProfileWithExtensions = { ech ? true }: (firefoxBaseProfile { inherit ech; }) // {
           extensions = {
             packages = with pkgs.nur.repos.rycee.firefox-addons; [
-              # certificate-pinner
-              # container-proxy
-              # copy-all-tab-urls-we
-              # copy-as-org-mode
-              # multi-account-containers
-              # snaplinksplus
-              # soundfixer
-              ublock-origin
+              auto_highlight
+              auto-tab-discard
+              clearurls
+              container-proxy
+              copy-all-tab-urls-we
+              copy-link-text
+              copy-selection-as-markdown
+              cookie-quick-manager
+              copy-as-org-mode
+              darkreader
+              foxscroller
+              foxyproxy-standard
+              gesturefy
+              ghosttext
+              google-container
+              greasemonkey
+              (firefox-addon-libredirect.overrideAttrs (old: {
+                version = "2.1.0";
+                src = pkgs.fetchurl {
+                  url = "https://addons.mozilla.org/firefox/downloads/file/3960568/libredirect-2.1.0.xpi";
+                  sha256 = "01zz4j85mlvsw41iwycw7zbyllx6q9j0i2l85sd47k0c8cf9jc14";
+                };
+              }))
+              hello-goodbye
+              (link-gopher.overrideAttrs (old: {
+                version = "2.0.1";
+                src = pkgs.fetchurl {
+                  url = "https://addons.mozilla.org/firefox/downloads/file/3834730/link_gopher-2.0.1.xpi";
+                  sha256 = "0kn5jl9nj6sp48ra0s75cla39w05rs40smvfsark3zdxankkmzry";
+                };
+              }))
+              lovely-forks
+              i-dont-care-about-cookies
+              old-reddit-redirect
+              metube-downloader
+              new-window-without-toolbar
               redirector
+              right-click-search
+              rocker_gestures
+              scroll_anywhere
+              sitedelta-watch
+              sponsorblock
+              ublock-origin
+              pkgs.access-control-allow-origin
+              pkgs.snaplinksplus
+              pkgs.prometheus-formatter
+              single-file
+              stylus
+              tab-reloader
+              tab-slideshow-we
+              temporary-containers
+              view-image
+              visited-link-enabler
+              ublacklist
+              ultrawidify
             ];
           };
         };
