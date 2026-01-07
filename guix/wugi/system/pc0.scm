@@ -167,6 +167,24 @@
                       (invoke "ip" "netns" "exec" "nixos-gw" "ip" "addr" "add" "192.168.0.170/24" "dev" "eth0")
                       (invoke "ip" "netns" "exec" "nixos-gw" "ip" "route" "add" "default" "via" "192.168.0.1")))))
 
+(define ns-net-nixos-wan-program-file
+  (program-file "ns-net-nixos-wan"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "nixos-wan")
+                      (invoke "ip" "link" "add" "name" "nixos12" "type" "veth" "peer" "name" "nixos13")
+                      (invoke "ip" "link" "set" "dev" "nixos13" "netns" "nixos-wan")
+                      (invoke "ip" "netns" "exec" "nixos-wan" "ip" "link" "set" "nixos13" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-wan" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "nixos12" "master" "br0")
+                      (invoke "ip" "link" "set" "nixos12" "up")
+                      (invoke "ip" "netns" "exec" "nixos-wan" "ip" "addr" "add" "192.168.0.160/24" "dev" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-wan" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+
 (define ns-net-fedora-program-file
   (program-file "ns-net-fedora"
                 (with-imported-modules (source-module-closure '((guix build utils)))
@@ -615,6 +633,16 @@ cgroup_device_acl = [
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-construcgw
                                                              (list #$ns-net-nixos-gw-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
+
+                            (simple-service 'ns-net-nixos-wan shepherd-root-service-type
+                                            (list (shepherd-service
+                                                   (provision '(ns-net-nixos-wan))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-construcwan
+                                                             (list #$ns-net-nixos-wan-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
