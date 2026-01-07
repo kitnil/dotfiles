@@ -254,6 +254,7 @@ in {
                 (with pkgs; with pkgs.nur.repos.rycee.firefox-addons; [
                   auto-tab-discard
                   betterttv
+                  hide-twitch-chat-users
                   return-youtube-dislikes
                   sponsorblock
                   soundfixer
