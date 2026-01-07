@@ -131,7 +131,7 @@ $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-build-$(config
 	$(GUIX) $(call guix-build-expression,$(call subst,guix-system-build-,,$@),$(call subst,guix-system-build-,,$@))
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),sudo-guix-system-build-$(configuration)):
-	sudo -i guix $(call guix-build-expression,$(call subst,sudo-guix-system-build-,,$@),$(call subst,sudo-guix-system-build-,,$@))
+	sudo -i $(GUIX) $(call guix-build-expression,$(call subst,sudo-guix-system-build-,,$@),$(call subst,sudo-guix-system-build-,,$@))
 
 $(foreach configuration,$(GUIX_SYSTEM_CONFIGURATIONS),guix-system-reconfigure-$(configuration)):
 	sudo -i $(GUIX) $(call guix-system-reconfigure-expression,$(call subst,guix-system-reconfigure-,,$@),$(call subst,guix-system-reconfigure-,,$@))
