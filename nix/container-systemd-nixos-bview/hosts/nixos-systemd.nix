@@ -16,7 +16,7 @@
       global = {
         config = {
           as = 64989;
-          router-id = "192.168.0.160";
+          router-id = "192.168.0.150";
         };
       };
       neighbors = [
