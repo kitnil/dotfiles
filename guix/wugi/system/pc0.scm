@@ -72,8 +72,7 @@
                         (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "link" "set" "eth0" "up")
                         (invoke "ip" "link" "set" "nixos2" "master" "br0")
                         (invoke "ip" "link" "set" "nixos2" "up")
-                        (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "addr" "add" "192.168.0.197/24" "dev" "eth0")
-                        (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "route" "add" "default" "via" "192.168.0.1"))))))
+                        (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "addr" "add" "192.168.0.197/24" "dev" "eth0"))))))
 
 (define ns-net-nixos-workstation-program-file
   (program-file "ns-net-nixos-workstation"
@@ -91,8 +90,7 @@
                         (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "link" "set" "eth0" "up")
                         (invoke "ip" "link" "set" "nixos0" "master" "br0")
                         (invoke "ip" "link" "set" "nixos0" "up")
-                        (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "addr" "add" "192.168.0.195/24" "dev" "eth0")
-                        (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "route" "add" "default" "via" "192.168.0.1"))))))
+                        (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "addr" "add" "192.168.0.195/24" "dev" "eth0"))))))
 
 (define ns-net-nixos-zapret-program-file
   (program-file "ns-net-nixos-zapret"
@@ -110,8 +108,7 @@
                         (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "link" "set" "eth0" "up")
                         (invoke "ip" "link" "set" "nixos4" "master" "br0")
                         (invoke "ip" "link" "set" "nixos4" "up")
-                        (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "addr" "add" "192.168.0.175/24" "dev" "eth0")
-                        (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "route" "add" "default" "via" "192.168.0.1"))))))
+                        (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "addr" "add" "192.168.0.175/24" "dev" "eth0"))))))
 
 (define ns-net-nixos-tor-program-file
   (program-file "ns-net-nixos-tor"
@@ -128,8 +125,7 @@
                       (invoke "ip" "netns" "exec" "nixos-tor" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "nixos6" "master" "br0")
                       (invoke "ip" "link" "set" "nixos6" "up")
-                      (invoke "ip" "netns" "exec" "nixos-tor" "ip" "addr" "add" "192.168.0.190/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-tor" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+                      (invoke "ip" "netns" "exec" "nixos-tor" "ip" "addr" "add" "192.168.0.190/24" "dev" "eth0")))))
 
 (define ns-net-nixos-antifilter-program-file
   (program-file "ns-net-nixos-antifilter"
@@ -146,8 +142,7 @@
                       (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "nixos8" "master" "br0")
                       (invoke "ip" "link" "set" "nixos8" "up")
-                      (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "addr" "add" "192.168.0.180/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+                      (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "addr" "add" "192.168.0.180/24" "dev" "eth0")))))
 
 (define ns-net-nixos-gw-program-file
   (program-file "ns-net-nixos-gw"
@@ -164,8 +159,7 @@
                       (invoke "ip" "netns" "exec" "nixos-gw" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "nixos10" "master" "br0")
                       (invoke "ip" "link" "set" "nixos10" "up")
-                      (invoke "ip" "netns" "exec" "nixos-gw" "ip" "addr" "add" "192.168.0.170/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-gw" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+                      (invoke "ip" "netns" "exec" "nixos-gw" "ip" "addr" "add" "192.168.0.170/24" "dev" "eth0")))))
 
 (define ns-net-nixos-wan-program-file
   (program-file "ns-net-nixos-wan"
