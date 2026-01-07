@@ -10,12 +10,11 @@
   };
   services.bird = {
     enable = true;
-    config = builtins.readFile ./bird.conf;
+    config = lib.readFile ./../bird.1.conf;
     checkConfig = false;
   };
   environment.etc = {
-    "bird/bird.1.conf" = {
-      text = lib.readFile ./../bird.1.conf;
+    "bird/bird.conf" = {
       mode = "0644";
     };
     "bird/peers/pc0.conf" = {
