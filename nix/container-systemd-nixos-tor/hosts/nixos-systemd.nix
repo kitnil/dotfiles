@@ -19,7 +19,7 @@
       mode = "0644";
     };
     "bird/peers/nixos-workstation.conf" = {
-      text = lib.readFile ./../peers/nixos-workstationconf;
+      text = lib.readFile ./../peers/nixos-workstation.conf;
       mode = "0644";
     };
   };
