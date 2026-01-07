@@ -31,6 +31,11 @@
     openFirewall = true;
     client = {
       enable = true;
+      socksListenAddress = {
+        addr = "0.0.0.0";
+        port = 9050;
+        IsolateDestAddr = true;
+      };
     };
     settings.ControlPort = 9051;
   };
