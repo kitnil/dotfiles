@@ -291,6 +291,11 @@
                            (device (file-system-label "nixoszapret"))
                            (mount-point "/srv/runc/nixos-zapret")
                            (dependencies mapped-devices)
+                           (type "btrfs"))
+                         (file-system
+                           (device (file-system-label "nixoswan"))
+                           (mount-point "/srv/runc/nixos-wan")
+                           (dependencies mapped-devices)
                            (type "btrfs")))
                    %control-groups
                    %base-file-systems))
@@ -423,6 +428,7 @@
                                                      file-system-/srv/runc/nixos-majordomo
                                                      file-system-/srv/runc/nixos-tor
                                                      file-system-/srv/runc/nixos-zapret
+                                                     file-system-/srv/runc/nixos-wan
                                                      ns-net-guix-workstation))
                                       (name "guix-workstation")
                                       (auto-start? #t)))
