@@ -176,8 +176,7 @@
                       (invoke "ip" "netns" "exec" "nixos-wan" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "nixos12" "master" "br0")
                       (invoke "ip" "link" "set" "nixos12" "up")
-                      (invoke "ip" "netns" "exec" "nixos-wan" "ip" "addr" "add" "192.168.0.160/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "nixos-wan" "ip" "route" "add" "default" "via" "192.168.0.1")))))
+                      (invoke "ip" "netns" "exec" "nixos-wan" "ip" "addr" "add" "192.168.0.160/24" "dev" "eth0")))))
 
 (define ns-net-fedora-program-file
   (program-file "ns-net-fedora"
