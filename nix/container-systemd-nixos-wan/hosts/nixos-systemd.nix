@@ -17,8 +17,12 @@
     "bird/bird.conf" = {
       mode = "0644";
     };
-    "bird/peers/pc0.conf" = {
-      text = lib.readFile ./../peers/pc0.conf;
+    "bird/peers/nixos-antifilter.conf" = {
+      text = lib.readFile ./../peers/nixos-antifilter.conf;
+      mode = "0644";
+    };
+    "bird/peers/nixos-gw.conf" = {
+      text = lib.readFile ./../peers/nixos-gw.conf;
       mode = "0644";
     };
   };
