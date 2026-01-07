@@ -8,4 +8,25 @@
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = 1;
   };
+  environment.systemPackages = [ pkgs.gobgp ];
+  networking.firewall.allowedTCPPorts = [ 179 ];
+  services.gobgpd = {
+    enable = true;
+    settings = {
+      global = {
+        config = {
+          as = 64989;
+          router-id = "192.168.0.160";
+        };
+      };
+      neighbors = [
+        {
+          config = {
+            neighbor-address = "192.168.0.195";
+            peer-as = 64998;
+          };
+        }
+      ];
+    };
+  };
 }
