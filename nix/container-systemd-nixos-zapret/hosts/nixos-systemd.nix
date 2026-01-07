@@ -25,13 +25,6 @@
 
   virtualisation.docker.enable = lib.mkForce false;
 
-  services.sunshine = {
-    enable = false;
-    autoStart = false;
-    capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
-    # openFirewall = true;
-  };
-
   networking.firewall.enable = lib.mkForce true;
   services.zapret = {
     enable = true;
@@ -63,10 +56,54 @@
       "ytimg.l.google.com"
       "yt-video-upload.l.google.com"
 
-      "discord.com"
-      "discordapp.com"
-
       "7tv.app"
     ];
+  };
+
+  services.bird = {
+    enable = true;
+    config = lib.readFile ./../bird.1.conf;
+    checkConfig = false;
+  };
+  environment.etc = {
+    "bird/bird.conf" = {
+      mode = "0644";
+    };
+    "bird/peers/nixos-antifilter.conf" = {
+      text = lib.readFile ./../peers/nixos-antifilter.conf;
+      mode = "0644";
+    };
+    "bird/peers/nixos-workstation.conf" = {
+      text = lib.readFile ./../peers/nixos-workstation.conf;
+      mode = "0644";
+    };
+  };
+  systemd.tmpfiles.rules = [
+    "f /var/log/bird.log 0644 bird bird -"
+  ];
+  networking.firewall.allowedTCPPorts = [ 179 ];
+
+  services.openvpn.servers = {
+    client = {
+      config = ''
+        client
+        proto udp
+        dev tapvpn1
+        ca /home/oleg/ssl/openvpn-certs/demoCA/cacert.pem
+        cert /home/oleg/ssl/openvpn-certs/server.crt
+        key /home/oleg/ssl/openvpn-certs/server.key
+        dh /home/oleg/ssl/openvpn-certs/dh2048.pem
+        comp-lzo
+        persist-key
+        persist-tun
+        verb 3
+        nobind
+        ping 5
+        ping-restart 10
+        resolv-retry infinite
+        remote vm2.wugi.info 1195
+        remote-random
+      '';
+    };
   };
 }
