@@ -17,8 +17,8 @@
     "bird/bird.conf" = {
       mode = "0644";
     };
-    "bird/peers/pc0.conf" = {
-      text = lib.readFile ./../peers/pc0.conf;
+    "bird/peers/wan.conf" = {
+      text = lib.readFile ./../peers/wan.conf;
       mode = "0644";
     };
     "bird/peers/nixos-workstation.conf" = {
