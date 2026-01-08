@@ -1,0 +1,10 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: prometheus-blackbox-exporter
+spec:
+  valuesFrom:
+  - kind: ConfigMap
+    name: prometheus-blackbox-exporter-values
+  - kind: ConfigMap
+    name: prometheus-blackbox-exporter-values-cluster1
