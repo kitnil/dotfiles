@@ -38,3 +38,7 @@ spec:
       - https://substitutes.nonguix.org/
 
       - https://cache.nixos.org/
+
+      - https://github.com/
+      - https://about.gitlab.com/
+      - https://codeberg.org/
