@@ -42,3 +42,17 @@ spec:
       - https://github.com/
       - https://about.gitlab.com/
       - https://codeberg.org/
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: probe-task-success-2
+spec:
+  interval: 60m
+  module: http_2xx
+  prober:
+    url: prometheus-blackbox-exporter.prometheus-blackbox-exporter:9115
+  targets:
+    staticConfig:
+      static:
+      - https://cgit.wugi.info/
