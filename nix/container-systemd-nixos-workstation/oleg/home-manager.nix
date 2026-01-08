@@ -7,7 +7,6 @@ in {
   imports = [
     ../../modules/services/chatterino.nix
     ../../modules/services/firefox.nix
-    ../../modules/services/foot.nix
     ../../modules/services/google-chrome.nix
     ../../modules/services/idea-community.nix
     ../../modules/services/pycharm-community.nix
@@ -638,7 +637,6 @@ in {
     };
   };
 
-  services.foot.enable = true;
   services.google-chrome.enable = true;
   services.vendir.enable = true;
   services.wayland.enable = true;
