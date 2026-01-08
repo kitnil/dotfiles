@@ -80,21 +80,6 @@
           ("for" . "1m")
           ("expr"
            .
-           "avg_over_time(probe_http_duration_seconds{instance!=\"http://ci.guix.gnu.org.intr\"}[1m]) > 3")
-          ("annotations"
-           ("summary"
-            .
-            "Blackbox probe slow HTTP (instance {{ $labels.instance }})")
-           ("description"
-            .
-            "HTTP request took more than 3s
-  VALUE = {{ $value }}
-  LABELS = {{ $labels }}"))
-          ("alert" . "BlackboxProbeSlowHttp"))
-         (("labels" ("severity" . "warning"))
-          ("for" . "1m")
-          ("expr"
-           .
            "avg_over_time(probe_icmp_duration_seconds[1m]) > 1")
           ("annotations"
            ("summary"

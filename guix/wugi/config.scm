@@ -959,7 +959,6 @@ zone:
         "192.168.100.120 cuirass.tld"
         "172.16.100.60 ws1.wugi.info"
         "178.250.247.125 gitlab.mjtest jenkins.mjtest"
-        "172.16.103.238 ci.guix.gnu.org.intr"
 
         "192.168.25.2 windows.home"
         "192.168.25.1 vm1.corp"
