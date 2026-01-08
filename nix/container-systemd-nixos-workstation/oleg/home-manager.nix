@@ -655,7 +655,7 @@ in {
         TERM = "xterm-256color";
       };
       font = {
-        size = 13;
+        size = 10;
       };
       general = {
         live_config_reload = false;
