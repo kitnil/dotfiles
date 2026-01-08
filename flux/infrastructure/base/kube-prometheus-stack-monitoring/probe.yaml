@@ -6,7 +6,7 @@ spec:
   interval: 60s
   module: http_2xx
   prober:
-    url: prometheus.intr:9115
+    url: prometheus-blackbox-exporter.prometheus-blackbox-exporter:9115
   targets:
     ingress:
       namespaceSelector:
