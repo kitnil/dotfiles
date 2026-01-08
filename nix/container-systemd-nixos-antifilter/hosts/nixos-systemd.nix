@@ -5,6 +5,9 @@
 { pkgs, lib, ... }:
 
 {
+  boot.kernel.sysctl = {
+    "net.ipv4.conf.all.forwarding" = 1;
+  };
   services.bird = {
     enable = true;
     config = lib.readFile ./../bird.1.conf;
