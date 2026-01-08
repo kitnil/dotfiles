@@ -4,6 +4,8 @@ metadata:
   name: peertube
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+  labels:
+    ingress.cluster.local/probe: "false"
 spec:
   ingressClassName: nginx
   tls:
