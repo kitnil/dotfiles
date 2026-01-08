@@ -15,19 +15,6 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: windows-novnc-firefox
-  namespace: flux-system
-spec:
-  interval: 30m0s
-  path: ./flux/apps/cluster1/windows-novnc-firefox
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
   name: peertube
   namespace: flux-system
 spec:
