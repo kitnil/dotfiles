@@ -50,7 +50,7 @@
     config.environment.etc."bird/peers/nixos-wan.conf".source
     config.environment.etc."bird/peers/nixos-tor.conf".source
     config.environment.etc."bird/peers/nixos-zapret.conf".source
-  ]
+  ];
   systemd.tmpfiles.rules = [
     "f /var/log/bird.log 0644 bird bird -"
   ];
