@@ -1,4 +1,14 @@
-replicas: 2
+replicas: 1
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchFields:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - kube3
 
 tolerations:
 - key: "workstation.cluster.local"
