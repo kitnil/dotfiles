@@ -26,6 +26,8 @@ in
       vulkan-tools
 
       jetbrains.pycharm-community
+
+      helm
     ];
   };
   programs.firefox = {
