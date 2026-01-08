@@ -9,6 +9,8 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "900"
     nginx.ingress.kubernetes.io/proxy-timeout: "900"
+  labels:
+    ingress.cluster.local/probe: "false"
 spec:
   ingressClassName: nginx
   tls:
