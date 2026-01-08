@@ -76,7 +76,7 @@ prometheus:
         - https://substitutes.nonguix.org
         - https://cgit.wugi.info
         - http://ci.guix.trop.in
-      scrape_interval: 30s
+      scrape_interval: 60m
       metrics_path: /probe
       params:
         module:
