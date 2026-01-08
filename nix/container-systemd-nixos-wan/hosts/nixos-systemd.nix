@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
 {
   boot.kernel.sysctl = {
@@ -26,6 +26,11 @@
       mode = "0644";
     };
   };
+  systemd.services.bird.reloadTriggers = [
+    config.environment.etc."bird/bird.conf".source
+    config.environment.etc."bird/peers/nixos-antifilter.conf".source
+    config.environment.etc."bird/peers/nixos-gw.conf".source
+  ];
   systemd.tmpfiles.rules = [
     "f /var/log/bird.log 0644 bird bird -"
   ];
