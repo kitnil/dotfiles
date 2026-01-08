@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: podinfo
+  labels:
+    keda.cluster.local/scale-to-zero: true
 spec:
   ingressClassName: nginx
   rules:
