@@ -36,6 +36,7 @@ spec:
       - https://bordeaux.guix.gnu.org/
       - https://mirrors.sjtug.sjtu.edu.cn/guix/
       - https://substitutes.nonguix.org/
+      - https://mirror.yandex.ru/mirrors/guix/
 
       - https://cache.nixos.org/
 
