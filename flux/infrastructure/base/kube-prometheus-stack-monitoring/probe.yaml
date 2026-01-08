@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: ingress
+spec:
+  interval: 60s
+  module: http_2xx
+  prober:
+    url: prometheus.intr:9115
+  targets:
+    ingress:
+      namespaceSelector:
+        any: true
+      selector:
+        matchExpressions:
+        - key: keda.cluster.local/scale-to-zero
+          operator: NotIn
+          values:
+          - "true"
+        - key: ingress.cluster.local/probe
+          operator: NotIn
+          values:
+          - "false"
