@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
 metadata:
-  name: probe-task-success
+  name: probe-task-success-0
 spec:
   interval: 10m
   module: http_2xx
@@ -11,3 +11,17 @@ spec:
     staticConfig:
       static:
       - https://gitlab.corp1.majordomo.ru/
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: probe-task-success-1
+spec:
+  interval: 60m
+  module: http_2xx
+  prober:
+    url: prometheus-blackbox-exporter.prometheus-blackbox-exporter:9115
+  targets:
+    staticConfig:
+      static:
+      - https://ci.guix.gnu.org/
