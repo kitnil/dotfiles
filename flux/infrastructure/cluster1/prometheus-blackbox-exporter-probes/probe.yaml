@@ -25,3 +25,6 @@ spec:
     staticConfig:
       static:
       - https://ci.guix.gnu.org/
+      - https://bordeaux.guix.gnu.org/
+      - https://mirrors.sjtug.sjtu.edu.cn/guix/
+      - https://substitutes.nonguix.org/
