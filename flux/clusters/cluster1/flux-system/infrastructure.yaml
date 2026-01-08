@@ -297,6 +297,19 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
+  name: kube-prometheus-stack-monitoring
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./flux/infrastructure/base/kube-prometheus-stack-monitoring
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
   name: prometheus-blackbox-exporter
   namespace: flux-system
 spec:
