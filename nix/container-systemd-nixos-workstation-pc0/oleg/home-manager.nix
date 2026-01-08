@@ -27,7 +27,7 @@ in
 
       jetbrains.pycharm-community
 
-      helm
+      kubernetes-helm
     ];
   };
   programs.firefox = {
