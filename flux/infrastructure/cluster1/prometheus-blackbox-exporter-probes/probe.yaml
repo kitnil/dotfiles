@@ -3,7 +3,7 @@ kind: Probe
 metadata:
   name: probe-task-success
 spec:
-  interval: 1m
+  interval: 10m
   module: http_2xx
   prober:
     url: prometheus-blackbox-exporter.prometheus-blackbox-exporter:9115
