@@ -17,7 +17,7 @@ spec:
       - https://harbor.corp1.majordomo.ru/
 
       - https://grafana.corp2.majordomo.ru/
-      - https://prometheus.corp2.majordomo.ru/status
+      # - https://prometheus.corp2.majordomo.ru/status # 503
       - https://harbor.corp2.majordomo.ru/
 ---
 apiVersion: monitoring.coreos.com/v1
