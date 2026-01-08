@@ -25,8 +25,6 @@
 
     difftastic
 
-    # alacritty
-
     # assh
     ssh-tools
 
