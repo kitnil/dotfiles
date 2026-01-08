@@ -301,7 +301,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./infrastructure/cluster1/prometheus-blackbox-exporter
+  path: ./flux/infrastructure/cluster1/prometheus-blackbox-exporter
   prune: true
   sourceRef:
     kind: GitRepository
