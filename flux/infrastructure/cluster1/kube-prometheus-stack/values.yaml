@@ -71,7 +71,6 @@ prometheus:
         - https://wugi.info/
         - https://guix.wugi.info/
         - https://blog.wugi.info/
-        - https://peertube.home.wugi.info/
         - https://ci.guix.gnu.org
         - https://bordeaux.guix.gnu.org
         - https://substitutes.nonguix.org
