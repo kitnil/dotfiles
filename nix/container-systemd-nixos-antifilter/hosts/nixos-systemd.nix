@@ -45,7 +45,7 @@
   systemd.services.bird.reloadTriggers = [
     config.environment.etc."bird/bird.conf".source
     config.environment.etc."bird/peers/antifilter.0.conf".source
-    config.environment.etc."bird/peers/antifilter.1.conf".source
+    # config.environment.etc."bird/peers/antifilter.1.conf".source
     config.environment.etc."bird/peers/nixos-gw.conf".source
     config.environment.etc."bird/peers/nixos-wan.conf".source
     config.environment.etc."bird/peers/nixos-tor.conf".source
