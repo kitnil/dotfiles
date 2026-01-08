@@ -1,5 +1,11 @@
 replicas: 2
 
+tolerations:
+- key: "workstation.cluster.local"
+  operator: "Equal"
+  value: "true"
+  effect: "NoSchedule"
+
 resources:
   limits:
     cpu: 100m
