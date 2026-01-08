@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: podinfo
   labels:
-    keda.cluster.local/scale-to-zero: true
+    keda.cluster.local/scale-to-zero: "true"
 spec:
   ingressClassName: nginx
   rules:
