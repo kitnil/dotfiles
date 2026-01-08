@@ -27,6 +27,6 @@
         config =>
         (guix-configuration
          (inherit config)
-         (substitute-urls '("http://ci.guix.trop.in"
-                            "https://bordeaux.guix.gnu.org"
+         (substitute-urls '("https://bordeaux.guix.gnu.org"
+                            "https://mirrors.sjtug.sjtu.edu.cn/guix"
                             "https://substitutes.nonguix.org"))))))))

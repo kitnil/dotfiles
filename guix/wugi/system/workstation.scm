@@ -167,10 +167,9 @@ program.")))
                                                      "vm2.wugi.info.pub"
                                                      "guix-builder.pub"))
                                               %default-authorized-guix-keys))
-                                            (substitute-urls '("http://runc-kube1-guix-builder.guix:5556"
+                                            (substitute-urls '("https://mirrors.sjtug.sjtu.edu.cn/guix"
                                                                "https://bordeaux.guix.gnu.org"
-                                                               "https://substitutes.nonguix.org"
-                                                               "http://ci.guix.trop.in"))))
+                                                               "https://substitutes.nonguix.org"))))
                         (delete shepherd-system-log-service-type))))
 
     (sudoers-file (plain-file "sudoers"

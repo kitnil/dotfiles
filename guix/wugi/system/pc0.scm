@@ -794,10 +794,8 @@ cgroup_device_acl = [
                                                              (local-file (substitute-file "/substitutes.nonguix.org.pub"))
                                                              (local-file (substitute-file "/bordeaux.guix.gnu.org.pub")))
                                                        %default-authorized-guix-keys)))
-                                            (substitute-urls '("http://runc-kube1-guix-builder.guix.svc.cluster.local:5556"
-                                                               "https://bordeaux.guix.gnu.org"
-                                                               "https://substitutes.nonguix.org"
-                                                               "http://ci.guix.trop.in"))))
+                                            (substitute-urls '("https://bordeaux.guix.gnu.org"
+                                                               "https://substitutes.nonguix.org"))))
                         (sysctl-service-type _ =>
                                              (sysctl-configuration
                                               (settings (append '(("kernel.sysrq" . "1")
