@@ -82,6 +82,9 @@
     "f /var/log/bird.log 0644 bird bird -"
   ];
   networking.firewall.allowedTCPPorts = [ 179 ];
+  services.prometheus.exporters.bird = {
+    enable = true;
+  };
 
   services.openvpn.servers = {
     client = {
