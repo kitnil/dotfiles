@@ -38,13 +38,29 @@ prometheus:
     # ref: https://github.com/prometheus-operator/prometheus-operator/issues/2890
     ruleSelector: {}
     ruleNamespaceSelector: {}
+
+    ## If true, a nil or {} value for prometheus.prometheusSpec.ruleSelector will cause the
+    ## prometheus resource to be created with selectors based on values in the helm deployment,
+    ## which will also match the PrometheusRule resources created
+    ##
     ruleSelectorNilUsesHelmValues: false
+
+    ## If true, a nil or {} value for prometheus.prometheusSpec.probeSelector will cause the
+    ## prometheus resource to be created with selectors based on values in the helm deployment,
+    ## which will also match the probes created
+    ##
+    probeSelectorNilUsesHelmValues: false
+    ## Namespaces from which probes are selected
+    ##
+    probeNamespaceSelector:
+      ## Match any namespace
+      ##
+      any: true
+
     serviceMonitorSelector: {}
     serviceMonitorNamespaceSelector: {}
-    serviceMonitorSelectorNilUsesHelmValues: false
     podMonitorSelector: {}
     podMonitorNamespaceSelector: {}
-    podMonitorSelectorNilUsesHelmValues: false
 
 nodeExporter:
   service:
