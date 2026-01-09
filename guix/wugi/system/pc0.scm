@@ -195,6 +195,23 @@
                       (invoke "ip" "link" "set" "nixos14" "up")
                       (invoke "ip" "netns" "exec" "nixos-bview" "ip" "addr" "add" "192.168.0.150/24" "dev" "eth0")))))
 
+(define ns-net-nixos-awg-program-file
+  (program-file "ns-net-nixos-awg"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "nixos-awg")
+                      (invoke "ip" "link" "add" "name" "nixos16" "type" "veth" "peer" "name" "nixos17")
+                      (invoke "ip" "link" "set" "dev" "nixos17" "netns" "nixos-awg")
+                      (invoke "ip" "netns" "exec" "nixos-awg" "ip" "link" "set" "nixos17" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-awg" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "nixos16" "master" "br0")
+                      (invoke "ip" "link" "set" "nixos16" "up")
+                      (invoke "ip" "netns" "exec" "nixos-awg" "ip" "addr" "add" "192.168.0.130/24" "dev" "eth0")))))
+
 (define ns-net-fedora-program-file
   (program-file "ns-net-fedora"
                 (with-imported-modules (source-module-closure '((guix build utils)))
@@ -668,6 +685,16 @@ cgroup_device_acl = [
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-construcbview
                                                              (list #$ns-net-nixos-bview-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
+
+                            (simple-service 'ns-net-nixos-awg shepherd-root-service-type
+                                            (list (shepherd-service
+                                                   (provision '(ns-net-nixos-awg))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-construcawg
+                                                             (list #$ns-net-nixos-awg-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
