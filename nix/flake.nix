@@ -240,6 +240,19 @@
           }
         ]
       ];
+      containerSystemdNixosWsModules = builtins.concatLists [
+        commonModules
+        [
+          ./container-systemd-nixos-ws/hosts/nixos-systemd.nix
+          {
+            home-manager = {
+              users = {
+                oleg = ./container-systemd-nixos-ws/oleg/home-manager.nix;
+              };
+            };
+          }
+        ]
+      ];
     in
     {
       overlay = final: prev: {
@@ -320,6 +333,9 @@
         };
         container-systemd-nixos-awg = nixpkgs.lib.nixosSystem {
           modules = containerSystemdNixosAwgModules;
+        };
+        container-systemd-nixos-ws = nixpkgs.lib.nixosSystem {
+          modules = containerSystemdNixosWsModules;
         };
       };
     };
