@@ -181,13 +181,6 @@ prometheus:
       job_name: lvm
     - static_configs:
       - targets:
-        - 192.168.0.144:6060
-        labels:
-          machine: guixsd
-      scrape_interval: 10s
-      job_name: crowdsec_guixsd
-    - static_configs:
-      - targets:
         - windows.local:9182
         - 192.168.0.178:9182
       scrape_interval: 1m
