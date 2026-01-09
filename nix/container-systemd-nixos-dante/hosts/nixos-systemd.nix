@@ -57,6 +57,7 @@
     config = lib.readFile ./../dante.conf;
   };
   environment.systemPackages = [
+    pkgs.lsof
     pkgs.tcpdump
     pkgs.strace
   ];
