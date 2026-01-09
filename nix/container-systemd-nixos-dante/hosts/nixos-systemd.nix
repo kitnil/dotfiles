@@ -51,6 +51,7 @@
       '';
   };
   networking.firewall.allowedTCPPorts = [
+    1080
     8888
   ];
   networking.firewall.enable = lib.mkForce true;
