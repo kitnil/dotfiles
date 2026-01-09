@@ -61,4 +61,8 @@
   services.prometheus.exporters.bird = {
     enable = true;
   };
+  services.dante = {
+    enable = true;
+    config = lib.readFile ./../dante.conf;
+  };
 }
