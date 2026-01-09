@@ -44,6 +44,10 @@
       text = lib.readFile ./../peers/nixos-zapret.conf;
       mode = "0644";
     };
+    "bird/peers/nixos-awg.conf" = {
+      text = lib.readFile ./../peers/nixos-awg.conf;
+      mode = "0644";
+    };
   };
   systemd.tmpfiles.rules = [
     "f /var/log/bird.log 0644 bird bird -"
