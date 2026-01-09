@@ -51,4 +51,5 @@
   services.prometheus.exporters.bird = {
     enable = true;
   };
+  environment.systemPackages = [ pkgs.mtr ];
 }
