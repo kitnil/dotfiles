@@ -8,4 +8,5 @@
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = 1;
   };
+  programs.amnezia-vpn.enable = true;
 }
