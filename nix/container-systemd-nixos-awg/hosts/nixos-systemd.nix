@@ -29,4 +29,9 @@
   systemd.services."AmneziaVPN".path = [
     pkgs.iptables
   ];
+
+  programs.wireshark.enbale = true;
+  programs.wireshark.enable = true;
+  environment.systemPackages = [ pkgs.wireshark ];
+  users.users.oleg.extraGroups = [ "wireshark" ];
 }
