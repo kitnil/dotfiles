@@ -229,6 +229,23 @@
                       (invoke "ip" "link" "set" "nixos18" "up")
                       (invoke "ip" "netns" "exec" "nixos-ws" "ip" "addr" "add" "192.168.0.120/24" "dev" "eth0")))))
 
+(define ns-net-nixos-dante-program-file
+  (program-file "ns-net-nixos-dante"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "nixos-dante")
+                      (invoke "ip" "link" "add" "name" "nixos20" "type" "veth" "peer" "name" "nixos21")
+                      (invoke "ip" "link" "set" "dev" "nixos21" "netns" "nixos-dante")
+                      (invoke "ip" "netns" "exec" "nixos-dante" "ip" "link" "set" "nixos21" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-dante" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "nixos20" "master" "br0")
+                      (invoke "ip" "link" "set" "nixos20" "up")
+                      (invoke "ip" "netns" "exec" "nixos-dante" "ip" "addr" "add" "192.168.0.110/24" "dev" "eth0")))))
+
 (define ns-net-fedora-program-file
   (program-file "ns-net-fedora"
                 (with-imported-modules (source-module-closure '((guix build utils)))
@@ -426,6 +443,11 @@
                          (file-system
                            (device (file-system-label "nixosws"))
                            (mount-point "/srv/runc/nixos-ws")
+                           (dependencies mapped-devices)
+                           (type "btrfs"))
+                         (file-system
+                           (device (file-system-label "nixosdante"))
+                           (mount-point "/srv/runc/nixos-dante")
                            (dependencies mapped-devices)
                            (type "btrfs")))
                    %control-groups
@@ -732,6 +754,16 @@ cgroup_device_acl = [
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-construcws
                                                              (list #$ns-net-nixos-ws-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
+
+                            (simple-service 'ns-net-nixos-dante shepherd-root-service-type
+                                            (list (shepherd-service
+                                                   (provision '(ns-net-nixos-dante))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-construcdante
+                                                             (list #$ns-net-nixos-dante-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
