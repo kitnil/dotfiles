@@ -90,7 +90,6 @@ prometheus:
         - 78.108.87.250
         - 78.108.91.250
         - 172.16.103.1
-        - ci.guix.gnu.org
       scrape_interval: 30s
       metrics_path: /probe
       params:
