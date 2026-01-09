@@ -37,7 +37,6 @@
       let
         remoteSocks5ServerIp = "127.0.0.1";
       in pkgs.writeText "3proxy.conf" ''
-        debug
         log /tmp/3proxy.log
         logformat "- +_L%t.%.  %N.%p %E %U %C:%c %R:%r %O %I %h %T"
         maxconn 500
