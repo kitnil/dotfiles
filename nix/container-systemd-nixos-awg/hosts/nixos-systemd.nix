@@ -33,4 +33,34 @@
   programs.wireshark.enable = true;
   environment.systemPackages = [ pkgs.wireshark ];
   users.users.oleg.extraGroups = [ "wireshark" ];
+
+  services.bird = {
+    enable = true;
+    config = lib.readFile ./../bird.1.conf;
+    checkConfig = false;
+  };
+  environment.etc = {
+    "bird/bird.conf" = {
+      mode = "0644";
+    };
+    "bird/peers/nixos-antifilter.conf" = {
+      text = lib.readFile ./../peers/nixos-antifilter.conf;
+      mode = "0644";
+    };
+    "bird/peers/nixos-workstation.conf" = {
+      text = lib.readFile ./../peers/nixos-workstation.conf;
+      mode = "0644";
+    };
+  };
+  systemd.services.bird.reloadTriggers = [
+    config.environment.etc."bird/bird.conf".source
+    config.environment.etc."bird/peers/nixos-antifilter.conf".source
+    config.environment.etc."bird/peers/nixos-workstation.conf".source
+  ];
+  systemd.tmpfiles.rules = [
+    "f /var/log/bird.log 0644 bird bird -"
+  ];
+  services.prometheus.exporters.bird = {
+    enable = true;
+  };
 }
