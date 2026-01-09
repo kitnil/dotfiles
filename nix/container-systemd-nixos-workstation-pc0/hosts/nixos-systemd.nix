@@ -49,7 +49,17 @@
       mode = "0644";
     };
   };
-  systemd.tmpfiles.rules = [
+   systemd.services.bird.reloadTriggers = [
+    config.environment.etc."bird/bird.conf".source
+    config.environment.etc."bird/peers/guixsd.conf".source
+    config.environment.etc."bird/peers/pc0.conf".source
+    config.environment.etc."bird/peers/nixos-gw.conf".source
+    config.environment.etc."bird/peers/nixos-majordomo.conf".source
+    config.environment.etc."bird/peers/nixos-tor.conf".source
+    config.environment.etc."bird/peers/nixos-zapret.conf".source
+    config.environment.etc."bird/peers/nixos-awg.conf".source
+  ];
+ systemd.tmpfiles.rules = [
     "f /var/log/bird.log 0644 bird bird -"
   ];
   services.prometheus.exporters.bird = {
