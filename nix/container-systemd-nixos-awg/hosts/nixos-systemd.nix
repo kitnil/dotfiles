@@ -26,4 +26,7 @@
     };
   };
   services.resolved.enable = lib.mkForce false;
+  systemd.services."AmneziaVPN".path = [
+    pkgs.iptables
+  ];
 }
