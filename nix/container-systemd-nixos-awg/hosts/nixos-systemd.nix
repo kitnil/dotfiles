@@ -14,5 +14,16 @@
     enable = true;
     enable32Bit = true;
   };
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      adwaita-fonts
+      dejavu_fonts
+      wqy_zenhei
+    ];
+    fontconfig = {
+      enable = true;
+    };
+  };
   services.resolved.enable = lib.mkForce false;
 }
