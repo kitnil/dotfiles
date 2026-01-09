@@ -43,7 +43,7 @@
         plugin ${pkgs._3proxy}/local/3proxy/libexec/TransparentPlugin.ld.so transparent_plugin
         auth iponly
         allow *
-        parent 1000 socks5 ${remoteSocks5ServerIp} 9050 user2 hghjgjhgj
+        parent 1000 socks5 ${remoteSocks5ServerIp} 1080 user2 hghjgjhgj
         transparent
         tcppm -i0.0.0.0 8888 127.0.0.1 11111
         maxconn 500
