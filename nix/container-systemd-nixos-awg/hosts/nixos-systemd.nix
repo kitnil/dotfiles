@@ -14,4 +14,5 @@
     enable = true;
     enable32Bit = true;
   };
+  services.resolved.enable = lib.mkForce false;
 }
