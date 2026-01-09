@@ -60,7 +60,7 @@
     pkgs.tcpdump
     pkgs.strace
   ];
-  systemd.services.dante-direct = let confFile = writeText "dante.conf" ''
+  systemd.services.dante-direct = let confFile = pkgs.writeText "dante.conf" ''
 logoutput: syslog
 debug: 9
 
