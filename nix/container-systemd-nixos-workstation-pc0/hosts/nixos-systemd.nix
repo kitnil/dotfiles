@@ -48,6 +48,10 @@
       text = lib.readFile ./../peers/nixos-awg.conf;
       mode = "0644";
     };
+    "bird/peers/nixos-ws.conf" = {
+      text = lib.readFile ./../peers/nixos-ws.conf;
+      mode = "0644";
+    };
   };
    systemd.services.bird.reloadTriggers = [
     config.environment.etc."bird/bird.conf".source
@@ -58,6 +62,7 @@
     config.environment.etc."bird/peers/nixos-tor.conf".source
     config.environment.etc."bird/peers/nixos-zapret.conf".source
     config.environment.etc."bird/peers/nixos-awg.conf".source
+    config.environment.etc."bird/peers/nixos-ws.conf".source
   ];
  systemd.tmpfiles.rules = [
     "f /var/log/bird.log 0644 bird bird -"
