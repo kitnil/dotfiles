@@ -376,78 +376,8 @@
                            (mount-point "/hugepages")
                            (type "hugetlbfs"))
                          (file-system
-                           (device (file-system-label "fedora"))
-                           (mount-point "/srv/runc/fedora")
-                           (dependencies mapped-devices)
-                           (type "ext4"))
-                         (file-system
-                           (device (file-system-label "guixnanokvm"))
-                           (mount-point "/srv/runc/guix-nanokvm")
-                           (dependencies mapped-devices)
-                           (type "ext4"))
-                         (file-system
-                           (device (file-system-label "guixrde"))
-                           (mount-point "/srv/runc/guix-rde")
-                           (dependencies mapped-devices)
-                           (type "ext4"))
-                         (file-system
                            (device (file-system-label "guixworkstation"))
                            (mount-point "/srv/runc/guix-workstation")
-                           (dependencies mapped-devices)
-                           (type "btrfs"))
-                         (file-system
-                           (device (file-system-label "nixosantifilter"))
-                           (mount-point "/srv/runc/nixos-antifilter")
-                           (dependencies mapped-devices)
-                           (type "btrfs"))
-                         (file-system
-                           (device (file-system-label "nixosgw"))
-                           (mount-point "/srv/runc/nixos-gw")
-                           (dependencies mapped-devices)
-                           (type "btrfs"))
-                         (file-system
-                           (device (file-system-label "nixosmajordomo"))
-                           (mount-point "/srv/runc/nixos-majordomo")
-                           (dependencies mapped-devices)
-                           (type "ext4"))
-                         (file-system
-                           (device (file-system-label "nixostor"))
-                           (mount-point "/srv/runc/nixos-tor")
-                           (dependencies mapped-devices)
-                           (type "btrfs"))
-                         (file-system
-                           (device (file-system-label "nixosworkstation"))
-                           (mount-point "/srv/runc/nixos-workstation")
-                           (dependencies mapped-devices)
-                           (type "btrfs"))
-                         (file-system
-                           (device (file-system-label "nixoszapret"))
-                           (mount-point "/srv/runc/nixos-zapret")
-                           (dependencies mapped-devices)
-                           (type "btrfs"))
-                         (file-system
-                           (device (file-system-label "nixoswan"))
-                           (mount-point "/srv/runc/nixos-wan")
-                           (dependencies mapped-devices)
-                           (type "btrfs"))
-                         (file-system
-                           (device (file-system-label "nixosbview"))
-                           (mount-point "/srv/runc/nixos-bview")
-                           (dependencies mapped-devices)
-                           (type "btrfs"))
-                         (file-system
-                           (device (file-system-label "nixosawg"))
-                           (mount-point "/srv/runc/nixos-awg")
-                           (dependencies mapped-devices)
-                           (type "btrfs"))
-                         (file-system
-                           (device (file-system-label "nixosws"))
-                           (mount-point "/srv/runc/nixos-ws")
-                           (dependencies mapped-devices)
-                           (type "btrfs"))
-                         (file-system
-                           (device (file-system-label "nixosdante"))
-                           (mount-point "/srv/runc/nixos-dante")
                            (dependencies mapped-devices)
                            (type "btrfs")))
                    %control-groups
