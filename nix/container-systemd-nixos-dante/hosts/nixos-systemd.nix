@@ -50,9 +50,23 @@
         notransparent
       '';
   };
+  services.tor = {
+    enable = true;
+    openFirewall = true;
+    client = {
+      enable = true;
+      socksListenAddress = {
+        addr = "0.0.0.0";
+        port = 9050;
+        IsolateDestAddr = true;
+      };
+    };
+    settings.ControlPort = 9051;
+  };
   networking.firewall.allowedTCPPorts = [
     1080
     8888
+    9050                        # tor
   ];
   networking.firewall.enable = lib.mkForce true;
   networking.firewall.extraCommands = ''
