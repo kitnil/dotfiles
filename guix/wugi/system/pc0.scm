@@ -417,6 +417,11 @@
                            (device (file-system-label "nixosbview"))
                            (mount-point "/srv/runc/nixos-bview")
                            (dependencies mapped-devices)
+                           (type "btrfs"))
+                         (file-system
+                           (device (file-system-label "nixosawg"))
+                           (mount-point "/srv/runc/nixos-awg")
+                           (dependencies mapped-devices)
                            (type "btrfs")))
                    %control-groups
                    %base-file-systems))
