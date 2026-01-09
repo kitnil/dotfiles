@@ -46,6 +46,7 @@
   };
   networking.firewall.allowedTCPPorts = [
     1080
+    1081
     9050                        # tor
   ];
   networking.firewall.enable = lib.mkForce true;
