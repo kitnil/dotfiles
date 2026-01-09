@@ -82,5 +82,6 @@
   };
   environment.systemPackages = [
     pkgs.tcpdump
+    pkgs.strace
   ];
 }
