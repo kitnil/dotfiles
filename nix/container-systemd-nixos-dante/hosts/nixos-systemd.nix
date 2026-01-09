@@ -58,9 +58,10 @@
     config = lib.readFile ./../dante.conf;
   };
   environment.systemPackages = [
+    pkgs.ipset
     pkgs.lsof
-    pkgs.tcpdump
     pkgs.strace
+    pkgs.tcpdump
   ];
   systemd.services.dante-direct = let confFile = pkgs.writeText "dante.conf" ''
 logoutput: syslog
