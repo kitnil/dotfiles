@@ -198,11 +198,6 @@ prometheus:
       job_name: ssh
     - static_configs:
       - targets:
-        - 192.168.0.144:9312
-      metrics_path: /metrics
-      job_name: ssh-metrics
-    - static_configs:
-      - targets:
         - 192.168.0.144:9080
       scrape_interval: 5m
       job_name: lvm
