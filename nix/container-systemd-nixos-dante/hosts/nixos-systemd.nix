@@ -45,7 +45,7 @@
         allow *
         parent 1000 socks5 ${remoteSocks5ServerIp} 1080 user2 hghjgjhgj
         transparent
-        tlspr -p1443 -P443 -c1
+        tlspr -p1080 -P443 -c1
         maxconn 500
         notransparent
       '';
