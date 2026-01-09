@@ -60,4 +60,39 @@
     pkgs.tcpdump
     pkgs.strace
   ];
+  systemd.services.dante-direct = let confFile = writeText "dante.conf" ''
+logoutput: syslog
+debug: 9
+
+external: eth0
+internal: eth0 port = 1081
+
+timeout.io: 60
+
+clientmethod: none
+socksmethod: none
+user.unprivileged: nobody
+
+client pass {
+    from: 0.0.0.0/0 port 1-65535 to: 0.0.0.0/0
+}
+
+socks pass {
+    from: 0.0.0.0/0 to: 0.0.0.0/0
+    protocol: tcp udp
+}
+''; in {
+    description = "Dante SOCKS v4 and v5 compatible proxy server";
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.dante}/bin/sockd -f ${confFile}";
+      ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
+      # Can crash sometimes; see https://github.com/NixOS/nixpkgs/pull/39005#issuecomment-381828708
+      Restart = "on-failure";
+    };
+  };
 }
