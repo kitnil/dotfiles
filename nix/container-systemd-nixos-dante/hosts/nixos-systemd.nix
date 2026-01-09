@@ -66,4 +66,7 @@
     enable = true;
     config = lib.readFile ./../dante.conf;
   };
+  environment.systemPackages = [
+    pkgs.tcpdump
+  ];
 }
