@@ -31,25 +31,6 @@
   systemd.tmpfiles.rules = [
     "f /var/log/bird.log 0644 bird bird -"
   ];
-  services._3proxy = {
-    enable = true;
-    confFile =
-      let
-        remoteSocks5ServerIp = "127.0.0.1";
-      in pkgs.writeText "3proxy.conf" ''
-        log /tmp/3proxy.log
-        logformat "- +_L%t.%.  %N.%p %E %U %C:%c %R:%r %O %I %h %T"
-        maxconn 500
-        plugin ${pkgs._3proxy}/local/3proxy/libexec/TransparentPlugin.ld.so transparent_plugin
-        auth iponly
-        allow *
-        parent 1000 socks5 ${remoteSocks5ServerIp} 1080 user2 hghjgjhgj
-        transparent
-        tcppm -i0.0.0.0 8888 127.0.0.1 11111
-        maxconn 500
-        notransparent
-      '';
-  };
   services.tor = {
     enable = true;
     openFirewall = true;
@@ -65,14 +46,9 @@
   };
   networking.firewall.allowedTCPPorts = [
     1080
-    8888
     9050                        # tor
   ];
   networking.firewall.enable = lib.mkForce true;
-  networking.firewall.extraCommands = ''
-    iptables -t nat -A PREROUTING -s 192.168.0.0/24 -p tcp --dport 80 -j REDIRECT --to-ports 8888
-    iptables -t nat -A PREROUTING -s 192.168.0.0/24 -p tcp --dport 443 -j REDIRECT --to-ports 8888
-  '';
   services.prometheus.exporters.bird = {
     enable = true;
   };
