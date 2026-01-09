@@ -10,4 +10,8 @@
   };
   networking.firewall.enable = lib.mkForce true;
   programs.amnezia-vpn.enable = true;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 }
