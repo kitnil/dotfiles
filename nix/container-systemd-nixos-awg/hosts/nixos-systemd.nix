@@ -8,5 +8,6 @@
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = 1;
   };
+  networking.firewall.enable = lib.mkForce true;
   programs.amnezia-vpn.enable = true;
 }
