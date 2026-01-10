@@ -80,4 +80,8 @@
     enable = true;
     flake = ".#container-systemd-nixos-workstation-pc0";
   };
+
+  programs.wireshark.enable = true;
+  environment.systemPackages = [ pkgs.wireshark ];
+  users.users.oleg.extraGroups = [ "wireshark" ];
 }
