@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: runc-bootstrap-container-nixos
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: kube3
+      tolerations:
+      - key: workstation.cluster.local
+        operator: Equal
+        value: 'true'
+        effect: NoSchedule
+      containers:
+      - name: bootstrap
+        volumeMounts:
+        - mountPath: /srv/runc/nixos-hev
+          name: runc-bootstrap-container-directory
+        env:
+        - name: RUNC_BOOTSTRAP_CONTAINER_DIRECTORY
+          value: /srv/runc/nixos-hev
+      volumes:
+      - name: runc-bootstrap-container-directory
+        hostPath:
+          path: /srv/runc/nixos-hev
+          type: Directory
