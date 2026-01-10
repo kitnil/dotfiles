@@ -67,7 +67,7 @@ in
     systemd.services.webhook.serviceConfig = {
       Restart = lib.mkForce "always";
       RestartSec = 5;
-      Type = "forking";
+      RemainAfterExit = true;
     };
   };
 }
