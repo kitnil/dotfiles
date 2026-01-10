@@ -71,4 +71,7 @@
       enable = true;
     };
   };
+  local.services.prometheus.exporters.blackbox = {
+    enable = true;
+  };
 }
