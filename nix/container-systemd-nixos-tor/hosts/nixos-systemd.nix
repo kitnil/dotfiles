@@ -6,6 +6,7 @@
 
 {
   environment.systemPackages = [
+    pkgs.iftop
     pkgs.tcpdump
   ];
   services.bird = {
