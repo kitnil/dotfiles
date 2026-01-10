@@ -83,6 +83,12 @@
               ];
               nixpkgs.config.allowUnfree = true;
               nixpkgs.system = system;
+              environment.systemPackages = [
+                pkgs.lsof
+                pkgs.mtr
+                pkgs.strace
+                pkgs.tcpdump
+              ];
             })
           {
             # But NIX_PATH is still used by many useful tools, so we set it
