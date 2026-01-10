@@ -53,4 +53,14 @@
   local.services.prometheus.exporters.blackbox = {
     enable = true;
   };
+  services.hev-socks5-tproxy = {
+    enable = true;
+    configFile = builtins.toFile "hev-socks5-tproxy.json" (builtins.toJSON {
+      dns = { address = "::"; port = 1053; upstream = "192.168.0.192"; };
+      main = { workers = 1; };
+      socks5 = { address = "192.168.0.110"; port = 1080; udp = "udp"; };
+      tcp = { address = "::"; port = 1088; };
+      udp = { address = "::"; port = 1088; };
+    });
+  };
 }

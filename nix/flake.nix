@@ -124,6 +124,7 @@
           }
           ./modules/services/webhook.nix
           ./modules/services/prometheus.nix
+          ./modules/services/hev-socks5-tproxy.nix
         ];
       containerSystemdNixosWorkstationModules = builtins.concatLists [
         commonModules
@@ -315,6 +316,7 @@
           ultrawidify;
         firefox-addon-libredirect =
           rycee-nur-expressions.packages.${system}.libredirect;
+        hev-socks5-tproxy = prev.callPackage ./pkgs/hev-socks5-tproxy {};
         socialstream = prev.callPackage ./pkgs/socialstream {};
         streamtitle = prev.callPackage ./pkgs/streamtitle {};
         yt-title-updater = prev.callPackage ./pkgs/yt-title-updater {};
