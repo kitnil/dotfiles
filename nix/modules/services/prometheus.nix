@@ -3,11 +3,11 @@
 with lib;
 
 let
-  cfg = config.services.prometheus.exporters.custom.blackbox;
+  cfg = config.local.services.prometheus.exporters.blackbox;
 in
 {
   options = {
-    services.prometheus.exporters.custom.blackbox = {
+    services.local.prometheus.exporters.blackbox = {
       enable = mkOption {
         type = types.bool;
         default = false;
