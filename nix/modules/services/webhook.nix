@@ -39,6 +39,11 @@ in
             PATH=${pkgs.git}/bin:${pkgs.coreutils}/bin:$PATH
             export PATH
             workspace="$(mktemp -d -t "dotfiles.XXXXXXXXXX")"
+            trap clean EXIT
+            clean()
+            {
+                rm -rf "$workspace"
+            }
             cd "$workspace" || exit 1
             git clone https://cgit.wugi.info/wigust/dotfiles .
             cd nix || exit 1
