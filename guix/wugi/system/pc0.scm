@@ -246,6 +246,23 @@
                       (invoke "ip" "link" "set" "nixos20" "up")
                       (invoke "ip" "netns" "exec" "nixos-dante" "ip" "addr" "add" "192.168.0.110/24" "dev" "eth0")))))
 
+(define ns-net-nixos-hev-program-file
+  (program-file "ns-net-nixos-hev"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "nixos-hev")
+                      (invoke "ip" "link" "add" "name" "nixos22" "type" "veth" "peer" "name" "nixos23")
+                      (invoke "ip" "link" "set" "dev" "nixos23" "netns" "nixos-hev")
+                      (invoke "ip" "netns" "exec" "nixos-hev" "ip" "link" "set" "nixos23" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-hev" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "nixos22" "master" "br0")
+                      (invoke "ip" "link" "set" "nixos22" "up")
+                      (invoke "ip" "netns" "exec" "nixos-hev" "ip" "addr" "add" "192.168.0.115/24" "dev" "eth0")))))
+
 (define ns-net-fedora-program-file
   (program-file "ns-net-fedora"
                 (with-imported-modules (source-module-closure '((guix build utils)))
@@ -694,6 +711,16 @@ cgroup_device_acl = [
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-construcdante
                                                              (list #$ns-net-nixos-dante-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
+
+                            (simple-service 'ns-net-nixos-hev shepherd-root-service-type
+                                            (list (shepherd-service
+                                                   (provision '(ns-net-nixos-hev))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-construchev
+                                                             (list #$ns-net-nixos-hev-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
