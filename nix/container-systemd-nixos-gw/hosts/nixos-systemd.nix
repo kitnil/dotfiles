@@ -54,7 +54,7 @@
   local.services.prometheus.exporters.blackbox = {
     enable = true;
   };
-  services.prometheus.exporters.mtr-exporter = {
+  services.mtr-exporter = {
     enable = true;
     address = "0.0.0.0";
     jobs = [
