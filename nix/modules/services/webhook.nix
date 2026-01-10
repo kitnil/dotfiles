@@ -33,7 +33,7 @@ in
       group = "root";
       hooks = {
         reconfigure = {
-          execute-command = pkgs.writeText "webhook.json" (builtins.toJSON {
+          execute-command = builtins.toString (pkgs.writeText "webhook.json" (builtins.toJSON {
             id = "reconfigure";
             "execute-command" = pkgs.writeScript "webhook-reconfigure.sh" ''
               PATH=${pkgs.git}/bin:${pkgs.coreutils}/bin:$PATH
@@ -43,7 +43,7 @@ in
               git clone --depth 1 https://cgit.wugi.into/wigust/dotfiles .
               nixos-rebuild switch --flake ${cfg.flake} -L
             '';
-          });
+          }));
         };
       };
       hooksTemplated = {
