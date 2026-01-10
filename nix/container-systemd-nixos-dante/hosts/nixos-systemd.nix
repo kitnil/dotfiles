@@ -65,6 +65,7 @@
     settings.ControlPort = 9051;
   };
   networking.firewall.allowedTCPPorts = [
+    179
     1080
     1081
     9050                        # tor
