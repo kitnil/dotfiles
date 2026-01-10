@@ -390,6 +390,28 @@ window-rule {
 }
 
 window-rule {
+    match app-id=r#"^nixos-majordomo-.*$"#
+
+    focus-ring {
+        active-color "#b22222"
+        inactive-color "#8b0000"
+    }
+
+    border {
+        inactive-color "#8b0000"
+    }
+
+    shadow {
+        color "#8b000070"
+    }
+
+    tab-indicator {
+        active-color "#b22222"
+        inactive-color "#8b0000"
+    }
+}
+
+window-rule {
     match app-id=r#"^guix-workstation-.*$"#
 
     focus-ring {
