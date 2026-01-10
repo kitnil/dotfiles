@@ -59,7 +59,7 @@ in
       };
     };
     systemd.services.webhook.serviceConfig = {
-      Restart = "always";
+      Restart = lib.mkForce "always";
     };
   };
 }
