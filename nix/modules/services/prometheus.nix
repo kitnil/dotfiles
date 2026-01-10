@@ -7,7 +7,7 @@ let
 in
 {
   options = {
-    services.local.prometheus.exporters.blackbox = {
+    local.services.prometheus.exporters.blackbox = {
       enable = mkOption {
         type = types.bool;
         default = false;
