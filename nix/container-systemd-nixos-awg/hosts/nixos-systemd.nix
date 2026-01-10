@@ -83,6 +83,7 @@
       {
         name = "vm1.wugi.info";
         address = "78.108.82.44";
+        flags = [ "-n" ];
       }
     ];
   };
