@@ -97,7 +97,7 @@
             timeout = "5s";
           };
         };
-      })
+      });
     };
   };
   services.webhook-custom = {
