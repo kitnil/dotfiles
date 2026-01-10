@@ -79,4 +79,29 @@
     enable = true;
     flake = ".#container-systemd-nixos-antifilter";
   };
+  services.dante = {
+    enable = true;
+    config = ''
+      logoutput: syslog
+      debug: 0
+
+      external: eth0
+      internal: eth0 port = 1080
+
+      timeout.io: 60
+
+      clientmethod: none
+      socksmethod: none
+      user.unprivileged: nobody
+
+      client pass {
+          from: 0.0.0.0/0 port 1-65535 to: 0.0.0.0/0
+      }
+
+      socks pass {
+          from: 0.0.0.0/0 to: 0.0.0.0/0
+          protocol: tcp udp
+      }
+    ''
+  };
 }
