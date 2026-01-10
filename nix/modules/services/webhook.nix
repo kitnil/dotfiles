@@ -38,6 +38,10 @@ in
             set -o nounset -o errexit -o pipefail -o xtrace
             PATH=${pkgs.git}/bin:${pkgs.coreutils}/bin:$PATH
             export PATH
+            if [[ -e /tmp/webhook-reconfigure.txt ]]
+            then
+                echo "'/tmp/webhook-reconfigure.txt' file exists, is reconfigure in progress?"
+            fi
             workspace="$(mktemp -d -t "dotfiles.XXXXXXXXXX")"
             cd "$workspace" || exit 1
             git clone https://cgit.wugi.info/wigust/dotfiles .
@@ -48,6 +52,7 @@ in
             fi
             cd /
             rm -rf "$workspace"
+            rm /tmp/webhook-reconfigure.txt
           '');
           "include-command-output-in-response" = true;
         };
