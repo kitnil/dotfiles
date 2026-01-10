@@ -64,10 +64,12 @@ in
         };
       };
     };
-    systemd.services.webhook.serviceConfig = {
-      Restart = lib.mkForce "always";
-      RestartSec = 5;
-      RemainAfterExit = true;
+    systemd.services.webhook = {
+      stopIfChanged = false;
+      restartIfChanged = true;
+      serviceConfig = {
+        Restart = lib.mkForce "always";
+      };
     };
   };
 }
