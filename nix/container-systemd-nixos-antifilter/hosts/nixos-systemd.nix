@@ -69,36 +69,11 @@
   systemd.tmpfiles.rules = [
     "f /var/log/bird.log 0644 bird bird -"
   ];
-  services.prometheus.exporters = {
-    bird = {
-      enable = true;
-    };
-    blackbox = {
-      enable = true;
-      configFile = builtins.toFile "blackbox.json" (builtins.toJSON {
-        modules = {
-          http_2xx = {
-            http = {
-              follow_redirects = true;
-              preferred_ip_protocol = "ip4";
-              valid_http_versions = [ "HTTP/1.1" "HTTP/2.0" ];
-            };
-            prober = "http";
-            timeout = "5s";
-          };
-          support_task_fix_wordpress = {
-            http = {
-              fail_if_body_not_matches_regexp = [ ".*Поздравляем.*" ];
-              follow_redirects = false;
-              preferred_ip_protocol = "ip4";
-              valid_http_versions = [ "HTTP/1.1" "HTTP/2.0" ];
-            };
-            prober = "http";
-            timeout = "5s";
-          };
-        };
-      });
-    };
+  services.prometheus.exporters.bird = {
+    enable = true;
+  };
+  services.prometheus.exporters.custom.blackbox = {
+    enable = true;
   };
   services.webhook-custom = {
     enable = true;

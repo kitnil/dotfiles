@@ -123,6 +123,7 @@
             };
           }
           ./modules/services/webhook.nix
+          ./modules/services/prometheus.nix
         ];
       containerSystemdNixosWorkstationModules = builtins.concatLists [
         commonModules
