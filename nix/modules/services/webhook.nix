@@ -42,18 +42,18 @@ in
             then
                 echo "'/tmp/webhook-reconfigure.txt' file exists, is another reconfigure in progress?"
             fi
-            touch /tmp/webhook-reconfigure.txt
             workspace="$(mktemp -d -t "dotfiles.XXXXXXXXXX")"
-            cd "$workspace" || exit 1
-            git clone https://cgit.wugi.info/wigust/dotfiles .
-            cd nix || exit 1
-            if /run/current-system/sw/bin/nixos-rebuild switch --print-build-logs --flake ${cfg.flake}
-            then
-                :
-            fi
-            cd /
-            rm -rf "$workspace"
-            rm -f /tmp/webhook-reconfigure.txt
+            trap 'rm -rf "$workspace"; rm -f /tmp/webhook-reconfigure.txt' EXIT
+            touch /tmp/webhook-reconfigure.txt
+            (
+                cd "$workspace" || exit 1
+                git clone https://cgit.wugi.info/wigust/dotfiles .
+                cd nix || exit 1
+                if /run/current-system/sw/bin/nixos-rebuild switch --print-build-logs --flake ${cfg.flake}
+                then
+                    :
+                fi
+            )
           '');
         };
       };
