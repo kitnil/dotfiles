@@ -54,7 +54,6 @@ in
             rm -rf "$workspace"
             rm /tmp/webhook-reconfigure.txt
           '');
-          "include-command-output-in-response" = true;
         };
       };
       hooksTemplated = {
