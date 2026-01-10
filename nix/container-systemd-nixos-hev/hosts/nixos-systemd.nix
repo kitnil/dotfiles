@@ -6,7 +6,7 @@
 
 {
   services.bird = {
-    enable = true;
+    enable = false;
     config = lib.readFile ./../bird.1.conf;
     checkConfig = false;
   };
