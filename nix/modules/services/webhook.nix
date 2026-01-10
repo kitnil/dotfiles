@@ -40,7 +40,7 @@ in
             workspace="$(mktemp -d -t "dotfiles.XXXXXXXXXX")"
             cd "$workspace" || exit 1
             git clone https://cgit.wugi.info/wigust/dotfiles .
-            nixos-rebuild switch --flake ${cfg.flake} -L
+            /run/current-system/sw/bin/nixos-rebuild switch --flake ${cfg.flake} -L
           '');
         };
       };
