@@ -108,4 +108,7 @@
     capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
     # openFirewall = true;
   };
+  local.services.prometheus.exporters.blackbox = {
+    enable = true;
+  };
 }
