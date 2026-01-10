@@ -41,4 +41,8 @@
     pkgs.strace
     pkgs.tcpdump
   ];
+  services.webhook-custom = {
+    enable = true;
+    flake = ".#container-systemd-nixos-hev";
+  };
 }
