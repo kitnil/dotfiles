@@ -33,17 +33,15 @@ in
       group = "root";
       hooks = {
         reconfigure = {
-          execute-command = builtins.toString (pkgs.writeText "webhook.json" (builtins.toJSON {
-            id = "reconfigure";
-            "execute-command" = pkgs.writeScript "webhook-reconfigure.sh" ''
-              PATH=${pkgs.git}/bin:${pkgs.coreutils}/bin:$PATH
-              export PATH
-              workspace="$(mktemp -d -t "dotfiles.XXXXXXXXXX")"
-              cd "$workspace" || exit 1
-              git clone --depth 1 https://cgit.wugi.into/wigust/dotfiles .
-              nixos-rebuild switch --flake ${cfg.flake} -L
-            '';
-          }));
+          execute-command = builtins.toString (pkgs.writeScript "webhook-reconfigure.sh" ''
+            #${runtimeShell} -e
+            PATH=${pkgs.git}/bin:${pkgs.coreutils}/bin:$PATH
+            export PATH
+            workspace="$(mktemp -d -t "dotfiles.XXXXXXXXXX")"
+            cd "$workspace" || exit 1
+            git clone --depth 1 https://cgit.wugi.into/wigust/dotfiles .
+            nixos-rebuild switch --flake ${cfg.flake} -L
+          '');
         };
       };
       hooksTemplated = {
