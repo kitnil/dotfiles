@@ -9,6 +9,10 @@
     "net.ipv4.conf.all.forwarding" = 1;
   };
   networking.firewall.enable = lib.mkForce true;
+  networking.firewall.allowedTCPPorts = [
+    179
+    31247
+  ];
   programs.amnezia-vpn.enable = true;
   hardware.graphics = {
     enable = true;
