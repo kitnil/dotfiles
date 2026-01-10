@@ -75,6 +75,7 @@
   networking.firewall.allowedTCPPorts = [
     8888
     9050                        # tor
+    31247                       # prometheus mtr exporters
   ];
   networking.firewall.enable = lib.mkForce true;
   networking.firewall.extraCommands = ''
