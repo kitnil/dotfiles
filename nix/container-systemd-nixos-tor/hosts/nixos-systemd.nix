@@ -84,4 +84,7 @@
     enable = true;
     flake = ".#container-systemd-nixos-tor";
   };
+  local.services.prometheus.exporters.blackbox = {
+    enable = true;
+  };
 }
