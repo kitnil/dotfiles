@@ -54,4 +54,14 @@
   local.services.prometheus.exporters.blackbox = {
     enable = true;
   };
+  services.prometheus.exporters.mtr-exporter = {
+    enable = true;
+    address = "0.0.0.0";
+    jobs = [
+      {
+        name = "vm1.wugi.info";
+        address = "78.108.82.44";
+      }
+    ];
+  };
 }
