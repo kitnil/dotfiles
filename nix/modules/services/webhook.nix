@@ -3,8 +3,8 @@
 with lib;
 
 let
-  name = "google-chrome";
-  cfg = config.services.google-chrome;
+  name = "webhook-custom";
+  cfg = config.services.webhook-custom;
 in
 {
   options = {
