@@ -91,7 +91,10 @@
   systemd.tmpfiles.rules = [
     "f /var/log/bird.log 0644 bird bird -"
   ];
-  networking.firewall.allowedTCPPorts = [ 179 ];
+  networking.firewall.allowedTCPPorts = [
+    179
+    31247
+  ];
   services.prometheus.exporters.bird = {
     enable = true;
   };
