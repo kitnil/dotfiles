@@ -57,3 +57,157 @@ spec:
     staticConfig:
       static:
       - https://cgit.wugi.info/
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: probe-task-success-nixos-antifilter
+spec:
+  interval: 2m
+  module: http_2xx
+  prober:
+    url: 192.168.0.180:9115
+  targets:
+    staticConfig:
+      static:
+      - https://cgit.wugi.info/
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: probe-task-success-nixos-awg
+spec:
+  interval: 2m
+  module: http_2xx
+  prober:
+    url: 192.168.0.130:9115
+  targets:
+    staticConfig:
+      static:
+      - https://cgit.wugi.info/
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: probe-task-success-nixos-bview
+spec:
+  interval: 2m
+  module: http_2xx
+  prober:
+    url: 192.168.0.150:9115
+  targets:
+    staticConfig:
+      static:
+      - https://cgit.wugi.info/
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: probe-task-success-nixos-dante
+spec:
+  interval: 2m
+  module: http_2xx
+  prober:
+    url: 192.168.0.110:9115
+  targets:
+    staticConfig:
+      static:
+      - https://cgit.wugi.info/
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: probe-task-success-nixos-gw
+spec:
+  interval: 2m
+  module: http_2xx
+  prober:
+    url: 192.168.0.170:9115
+  targets:
+    staticConfig:
+      static:
+      - https://cgit.wugi.info/
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: probe-task-success-nixos-tor
+spec:
+  interval: 2m
+  module: http_2xx
+  prober:
+    url: 192.168.0.190:9115
+  targets:
+    staticConfig:
+      static:
+      - https://cgit.wugi.info/
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: probe-task-success-nixos-wan
+spec:
+  interval: 2m
+  module: http_2xx
+  prober:
+    url: 192.168.0.160:9115
+  targets:
+    staticConfig:
+      static:
+      - https://cgit.wugi.info/
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: probe-task-success-nixos-workstation
+spec:
+  interval: 2m
+  module: http_2xx
+  prober:
+    url: 192.168.0.195:9115
+  targets:
+    staticConfig:
+      static:
+      - https://cgit.wugi.info/
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: probe-task-success-nixos-ws
+spec:
+  interval: 2m
+  module: http_2xx
+  prober:
+    url: 192.168.0.175:9115
+  targets:
+    staticConfig:
+      static:
+      - https://cgit.wugi.info/
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: probe-task-success-nixos-hev
+spec:
+  interval: 2m
+  module: http_2xx
+  prober:
+    url: 192.168.0.115:9115
+  targets:
+    staticConfig:
+      static:
+      - https://cgit.wugi.info/
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: probe-task-success-nixos-zapret
+spec:
+  interval: 2m
+  module: http_2xx
+  prober:
+    url: 192.168.0.175:9115
+  targets:
+    staticConfig:
+      static:
+      - https://cgit.wugi.info/
