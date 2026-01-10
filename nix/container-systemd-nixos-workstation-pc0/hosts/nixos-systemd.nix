@@ -75,14 +75,16 @@
   services.prometheus.exporters.bird = {
     enable = true;
   };
-  environment.systemPackages = [ pkgs.mtr ];
+  environment.systemPackages = [
+    pkgs.mtr
+    pkgs.wireshark
+  ];
   services.webhook-custom = {
     enable = true;
     flake = ".#container-systemd-nixos-workstation-pc0";
   };
 
   programs.wireshark.enable = true;
-  environment.systemPackages = [ pkgs.wireshark ];
   users.users.oleg.extraGroups = [ "wireshark" ];
   local.services.prometheus.exporters.blackbox = {
     enable = true;
