@@ -122,6 +122,7 @@
               };
             };
           }
+          ./modules/services/webhook.nix
         ];
       containerSystemdNixosWorkstationModules = builtins.concatLists [
         commonModules
