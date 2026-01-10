@@ -49,6 +49,7 @@ in
             cd /
             rm -rf "$workspace"
           '');
+          "include-command-output-in-response" = true;
         };
       };
       hooksTemplated = {
