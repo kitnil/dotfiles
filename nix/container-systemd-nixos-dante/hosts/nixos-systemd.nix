@@ -123,4 +123,7 @@ socks pass {
     enable = true;
     flake = ".#container-systemd-nixos-dante";
   };
+  local.services.prometheus.exporters.blackbox = {
+    enable = true;
+  };
 }
