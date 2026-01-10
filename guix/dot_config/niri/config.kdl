@@ -450,6 +450,7 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
+    Mod+Ctrl+T hotkey-overlay-title="Open a NixOS Majordomo Terminal: alacritty" { spawn "alacritty-nixos-majordomo"; }
     Mod+E hotkey-overlay-title="Open an Editor: emacs" { spawn "emacs"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+Shift+s hotkey-overlay-title="Password Store: pass" { spawn "bemenu-passmenu"; }
