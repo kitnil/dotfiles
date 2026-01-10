@@ -5,6 +5,9 @@
 { pkgs, lib, config, ... }:
 
 {
+  environment.systemPackages = [
+    pkgs.tcpdump
+  ];
   services.bird = {
     enable = true;
     config = lib.readFile ./../bird.1.conf;
