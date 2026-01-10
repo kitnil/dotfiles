@@ -33,7 +33,7 @@
   ];
   networking.firewall.enable = lib.mkForce true;
   services.prometheus.exporters.bird = {
-    enable = false;
+    enable = true;
   };
   environment.systemPackages = [
     pkgs.ipset
