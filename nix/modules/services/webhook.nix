@@ -42,6 +42,7 @@ in
             then
                 echo "'/tmp/webhook-reconfigure.txt' file exists, is another reconfigure in progress?"
             fi
+            touch /tmp/webhook-reconfigure.txt
             workspace="$(mktemp -d -t "dotfiles.XXXXXXXXXX")"
             cd "$workspace" || exit 1
             git clone https://cgit.wugi.info/wigust/dotfiles .
@@ -52,7 +53,7 @@ in
             fi
             cd /
             rm -rf "$workspace"
-            rm /tmp/webhook-reconfigure.txt
+            rm -f /tmp/webhook-reconfigure.txt
           '');
         };
       };
