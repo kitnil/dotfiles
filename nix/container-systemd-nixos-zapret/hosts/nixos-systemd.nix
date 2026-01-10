@@ -123,4 +123,7 @@
     enable = true;
     flake = ".#container-systemd-nixos-zapret";
   };
+  local.services.prometheus.exporters.blackbox = {
+    enable = true;
+  };
 }
