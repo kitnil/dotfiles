@@ -34,7 +34,7 @@ in
       hooks = {
         reconfigure = {
           execute-command = builtins.toString (pkgs.writeScript "webhook-reconfigure.sh" ''
-            #${pkgs.runtimeShell} -e
+            #!${pkgs.runtimeShell} -e
             PATH=${pkgs.git}/bin:${pkgs.coreutils}/bin:$PATH
             export PATH
             workspace="$(mktemp -d -t "dotfiles.XXXXXXXXXX")"
