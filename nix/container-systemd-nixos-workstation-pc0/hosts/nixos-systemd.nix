@@ -84,4 +84,7 @@
   programs.wireshark.enable = true;
   environment.systemPackages = [ pkgs.wireshark ];
   users.users.oleg.extraGroups = [ "wireshark" ];
+  local.services.prometheus.exporters.blackbox = {
+    enable = true;
+  };
 }
