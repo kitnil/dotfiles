@@ -40,7 +40,7 @@ in
             export PATH
             if [[ -e /tmp/webhook-reconfigure.txt ]]
             then
-                echo "'/tmp/webhook-reconfigure.txt' file exists, is reconfigure in progress?"
+                echo "'/tmp/webhook-reconfigure.txt' file exists, is another reconfigure in progress?"
             fi
             workspace="$(mktemp -d -t "dotfiles.XXXXXXXXXX")"
             cd "$workspace" || exit 1
