@@ -76,4 +76,8 @@
     enable = true;
   };
   environment.systemPackages = [ pkgs.mtr ];
+  services.webhook-custom = {
+    enable = true;
+    flake = ".#container-systemd-nixos-workstation-pc0";
+  };
 }

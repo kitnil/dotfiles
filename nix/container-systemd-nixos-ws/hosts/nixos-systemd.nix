@@ -52,4 +52,8 @@
   services.prometheus.exporters.bird = {
     enable = true;
   };
+  services.webhook-custom = {
+    enable = true;
+    flake = ".#container-systemd-nixos-ws";
+  };
 }

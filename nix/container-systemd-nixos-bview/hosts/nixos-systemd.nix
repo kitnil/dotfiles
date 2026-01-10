@@ -29,4 +29,8 @@
       ];
     };
   };
+  services.webhook-custom = {
+    enable = true;
+    flake = ".#container-systemd-nixos-bview";
+  };
 }

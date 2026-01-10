@@ -97,5 +97,9 @@ socks pass {
       # Can crash sometimes; see https://github.com/NixOS/nixpkgs/pull/39005#issuecomment-381828708
       Restart = "on-failure";
     };
+};
+  services.webhook-custom = {
+    enable = true;
+    flake = ".#container-systemd-nixos-dante";
   };
 }
