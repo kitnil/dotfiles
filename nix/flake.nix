@@ -84,6 +84,7 @@
               nixpkgs.config.allowUnfree = true;
               nixpkgs.system = system;
               environment.systemPackages = [
+                pkgs.iftop
                 pkgs.lsof
                 pkgs.mtr
                 pkgs.strace
