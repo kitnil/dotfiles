@@ -39,7 +39,7 @@ in
             export PATH
             workspace="$(mktemp -d -t "dotfiles.XXXXXXXXXX")"
             cd "$workspace" || exit 1
-            git clone --depth 1 https://cgit.wugi.info/wigust/dotfiles .
+            git clone https://cgit.wugi.info/wigust/dotfiles .
             nixos-rebuild switch --flake ${cfg.flake} -L
           '');
         };
