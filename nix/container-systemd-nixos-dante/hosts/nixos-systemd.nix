@@ -86,7 +86,7 @@
   ];
   systemd.services.dante-direct = let confFile = pkgs.writeText "dante.conf" ''
 logoutput: syslog
-debug: 9
+debug: 0
 
 external: eth0
 internal: eth0 port = 1081
