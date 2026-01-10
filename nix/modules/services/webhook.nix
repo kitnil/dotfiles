@@ -46,6 +46,7 @@ in
             then
                 :
             fi
+            cd /
             rm -rf "$workspace"
           '');
         };
