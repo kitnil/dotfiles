@@ -46,4 +46,7 @@
     enable = true;
     flake = ".#container-systemd-nixos-gw";
   };
+  local.services.prometheus.exporters.blackbox = {
+    enable = true;
+  };
 }
