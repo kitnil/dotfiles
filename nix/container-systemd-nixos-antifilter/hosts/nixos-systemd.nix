@@ -72,7 +72,7 @@
   services.prometheus.exporters.bird = {
     enable = true;
   };
-  services.local.prometheus.exporters.blackbox = {
+  local.services.prometheus.exporters.blackbox = {
     enable = true;
   };
   services.webhook-custom = {
