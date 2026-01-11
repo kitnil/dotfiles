@@ -21,16 +21,8 @@
       text = lib.readFile ./../peers/antifilter.0.conf;
       mode = "0644";
     };
-    # "bird/peers/antifilter.1.conf" = {
-    #   text = lib.readFile ./../peers/antifilter.1.conf;
-    #   mode = "0644";
-    # };
     "bird/peers/nixos-gw.conf" = {
       text = lib.readFile ./../peers/nixos-gw.conf;
-      mode = "0644";
-    };
-    "bird/peers/nixos-wan.conf" = {
-      text = lib.readFile ./../peers/nixos-wan.conf;
       mode = "0644";
     };
     "bird/peers/nixos-tor.conf" = {
@@ -57,9 +49,7 @@
   systemd.services.bird.reloadTriggers = [
     config.environment.etc."bird/bird.conf".source
     config.environment.etc."bird/peers/antifilter.0.conf".source
-    # config.environment.etc."bird/peers/antifilter.1.conf".source
     config.environment.etc."bird/peers/nixos-gw.conf".source
-    config.environment.etc."bird/peers/nixos-wan.conf".source
     config.environment.etc."bird/peers/nixos-tor.conf".source
     config.environment.etc."bird/peers/nixos-zapret.conf".source
     config.environment.etc."bird/peers/nixos-awg.conf".source
