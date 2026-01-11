@@ -51,6 +51,7 @@ prometheus:
         - 192.168.0.195:31247 # container-systemd-nixos-workstation-pc0
         - 192.168.0.130:31247 # container-systemd-nixos-awg
         - 192.168.0.120:31247 # container-systemd-nixos-ws
+        - 192.168.0.150:31247 # container-systemd-nixos-bview
       scrape_interval: 1m
       job_name: mtr
     - static_configs:
