@@ -91,10 +91,3 @@ bpf:
 #     240.0.0.0/4
 ipMasqAgent:
   enabled: false
-
-# -- Enables masquerading of IPv4 traffic leaving the node from endpoints.
-enableIPv4Masquerade: false
-# -- Enables masquerading of IPv6 traffic leaving the node from endpoints.
-enableIPv6Masquerade: false
-# -- Enables masquerading to the source of the route for traffic leaving the node from endpoints.
-# enableMasqueradeRouteSource: false
