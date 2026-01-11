@@ -800,9 +800,12 @@ cgroup_device_acl = [
                                        (addresses (list
                                                    (network-address
                                                     (device "br0")
-                                                    (value "192.168.0.192/24"))))
+                                                    (value "192.168.0.192/32"))))
                                        (routes
                                         (list (network-route
+                                               (destination "192.168.0.1")
+                                               (device "br0"))
+                                              (network-route
                                                (destination "default")
                                                (gateway "192.168.0.1"))))
                                        (name-servers '("192.168.0.192"
