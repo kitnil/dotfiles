@@ -72,7 +72,7 @@
                         (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "link" "set" "eth0" "up")
                         (invoke "ip" "link" "set" "nixos2" "master" "br0")
                         (invoke "ip" "link" "set" "nixos2" "up")
-                        (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "addr" "add" "192.168.0.197/24" "dev" "eth0"))))))
+                        (invoke "ip" "netns" "exec" "nixos-majordomo" "ip" "addr" "add" "192.168.0.197/32" "dev" "eth0"))))))
 
 (define ns-net-nixos-workstation-program-file
   (program-file "ns-net-nixos-workstation"
@@ -90,7 +90,7 @@
                         (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "link" "set" "eth0" "up")
                         (invoke "ip" "link" "set" "nixos0" "master" "br0")
                         (invoke "ip" "link" "set" "nixos0" "up")
-                        (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "addr" "add" "192.168.0.195/24" "dev" "eth0"))))))
+                        (invoke "ip" "netns" "exec" "nixos-workstation" "ip" "addr" "add" "192.168.0.195/32" "dev" "eth0"))))))
 
 (define ns-net-nixos-zapret-program-file
   (program-file "ns-net-nixos-zapret"
@@ -108,7 +108,7 @@
                         (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "link" "set" "eth0" "up")
                         (invoke "ip" "link" "set" "nixos4" "master" "br0")
                         (invoke "ip" "link" "set" "nixos4" "up")
-                        (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "addr" "add" "192.168.0.175/24" "dev" "eth0"))))))
+                        (invoke "ip" "netns" "exec" "nixos-zapret" "ip" "addr" "add" "192.168.0.175/32" "dev" "eth0"))))))
 
 (define ns-net-nixos-tor-program-file
   (program-file "ns-net-nixos-tor"
@@ -125,7 +125,7 @@
                       (invoke "ip" "netns" "exec" "nixos-tor" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "nixos6" "master" "br0")
                       (invoke "ip" "link" "set" "nixos6" "up")
-                      (invoke "ip" "netns" "exec" "nixos-tor" "ip" "addr" "add" "192.168.0.190/24" "dev" "eth0")))))
+                      (invoke "ip" "netns" "exec" "nixos-tor" "ip" "addr" "add" "192.168.0.190/32" "dev" "eth0")))))
 
 (define ns-net-nixos-antifilter-program-file
   (program-file "ns-net-nixos-antifilter"
@@ -142,7 +142,7 @@
                       (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "nixos8" "master" "br0")
                       (invoke "ip" "link" "set" "nixos8" "up")
-                      (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "addr" "add" "192.168.0.180/24" "dev" "eth0")))))
+                      (invoke "ip" "netns" "exec" "nixos-antifilter" "ip" "addr" "add" "192.168.0.180/32" "dev" "eth0")))))
 
 (define ns-net-nixos-gw-program-file
   (program-file "ns-net-nixos-gw"
@@ -159,7 +159,7 @@
                       (invoke "ip" "netns" "exec" "nixos-gw" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "nixos10" "master" "br0")
                       (invoke "ip" "link" "set" "nixos10" "up")
-                      (invoke "ip" "netns" "exec" "nixos-gw" "ip" "addr" "add" "192.168.0.170/24" "dev" "eth0")))))
+                      (invoke "ip" "netns" "exec" "nixos-gw" "ip" "addr" "add" "192.168.0.170/32" "dev" "eth0")))))
 
 (define ns-net-nixos-wan-program-file
   (program-file "ns-net-nixos-wan"
@@ -176,7 +176,7 @@
                       (invoke "ip" "netns" "exec" "nixos-wan" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "nixos12" "master" "br0")
                       (invoke "ip" "link" "set" "nixos12" "up")
-                      (invoke "ip" "netns" "exec" "nixos-wan" "ip" "addr" "add" "192.168.0.160/24" "dev" "eth0")))))
+                      (invoke "ip" "netns" "exec" "nixos-wan" "ip" "addr" "add" "192.168.0.160/32" "dev" "eth0")))))
 
 (define ns-net-nixos-bview-program-file
   (program-file "ns-net-nixos-bview"
@@ -193,7 +193,7 @@
                       (invoke "ip" "netns" "exec" "nixos-bview" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "nixos14" "master" "br0")
                       (invoke "ip" "link" "set" "nixos14" "up")
-                      (invoke "ip" "netns" "exec" "nixos-bview" "ip" "addr" "add" "192.168.0.150/24" "dev" "eth0")))))
+                      (invoke "ip" "netns" "exec" "nixos-bview" "ip" "addr" "add" "192.168.0.150/32" "dev" "eth0")))))
 
 (define ns-net-nixos-awg-program-file
   (program-file "ns-net-nixos-awg"
@@ -210,7 +210,7 @@
                       (invoke "ip" "netns" "exec" "nixos-awg" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "nixos16" "master" "br0")
                       (invoke "ip" "link" "set" "nixos16" "up")
-                      (invoke "ip" "netns" "exec" "nixos-awg" "ip" "addr" "add" "192.168.0.130/24" "dev" "eth0")))))
+                      (invoke "ip" "netns" "exec" "nixos-awg" "ip" "addr" "add" "192.168.0.130/32" "dev" "eth0")))))
 
 (define ns-net-nixos-ws-program-file
   (program-file "ns-net-nixos-ws"
@@ -227,7 +227,7 @@
                       (invoke "ip" "netns" "exec" "nixos-ws" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "nixos18" "master" "br0")
                       (invoke "ip" "link" "set" "nixos18" "up")
-                      (invoke "ip" "netns" "exec" "nixos-ws" "ip" "addr" "add" "192.168.0.120/24" "dev" "eth0")))))
+                      (invoke "ip" "netns" "exec" "nixos-ws" "ip" "addr" "add" "192.168.0.120/32" "dev" "eth0")))))
 
 (define ns-net-nixos-dante-program-file
   (program-file "ns-net-nixos-dante"
@@ -244,7 +244,7 @@
                       (invoke "ip" "netns" "exec" "nixos-dante" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "nixos20" "master" "br0")
                       (invoke "ip" "link" "set" "nixos20" "up")
-                      (invoke "ip" "netns" "exec" "nixos-dante" "ip" "addr" "add" "192.168.0.110/24" "dev" "eth0")))))
+                      (invoke "ip" "netns" "exec" "nixos-dante" "ip" "addr" "add" "192.168.0.110/32" "dev" "eth0")))))
 
 (define ns-net-nixos-hev-program-file
   (program-file "ns-net-nixos-hev"
@@ -261,7 +261,7 @@
                       (invoke "ip" "netns" "exec" "nixos-hev" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "nixos22" "master" "br0")
                       (invoke "ip" "link" "set" "nixos22" "up")
-                      (invoke "ip" "netns" "exec" "nixos-hev" "ip" "addr" "add" "192.168.0.115/24" "dev" "eth0")))))
+                      (invoke "ip" "netns" "exec" "nixos-hev" "ip" "addr" "add" "192.168.0.115/32" "dev" "eth0")))))
 
 (define ns-net-fedora-program-file
   (program-file "ns-net-fedora"
@@ -279,8 +279,7 @@
                         (invoke "ip" "netns" "exec" "fedora" "ip" "link" "set" "eth0" "up")
                         (invoke "ip" "link" "set" "fedora0" "master" "br0")
                         (invoke "ip" "link" "set" "fedora0" "up")
-                        (invoke "ip" "netns" "exec" "fedora" "ip" "addr" "add" "192.168.0.155/24" "dev" "eth0")
-                        (invoke "ip" "netns" "exec" "fedora" "ip" "route" "add" "default" "via" "192.168.0.1"))))))
+                        (invoke "ip" "netns" "exec" "fedora" "ip" "addr" "add" "192.168.0.155/32" "dev" "eth0"))))))
 
 (define ns-net-guix-workstation-program-file
   (program-file "ns-net-guix-workstation"
@@ -298,8 +297,7 @@
                         (invoke "ip" "netns" "exec" "guix-workstation" "ip" "link" "set" "eth0" "up")
                         (invoke "ip" "link" "set" "guix0" "master" "br0")
                         (invoke "ip" "link" "set" "guix0" "up")
-                        (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.194/24" "dev" "eth0")
-                        (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1"))))))
+                        (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.194/32" "dev" "eth0"))))))
 
 (define ns-net-guix-rde-program-file
   (program-file "ns-net-guix-rde"
@@ -317,8 +315,7 @@
                         (invoke "ip" "netns" "exec" "guix-rde" "ip" "link" "set" "eth0" "up")
                         (invoke "ip" "link" "set" "guix2" "master" "br0")
                         (invoke "ip" "link" "set" "guix2" "up")
-                        (invoke "ip" "netns" "exec" "guix-rde" "ip" "addr" "add" "192.168.0.193/24" "dev" "eth0")
-                        (invoke "ip" "netns" "exec" "guix-rde" "ip" "route" "add" "default" "via" "192.168.0.1"))))))
+                        (invoke "ip" "netns" "exec" "guix-rde" "ip" "addr" "add" "192.168.0.193/32" "dev" "eth0"))))))
 
 (define ns-net-guix-nanokvm-program-file
   (program-file "ns-net-guix-nanokvm"
@@ -336,8 +333,7 @@
                         (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "link" "set" "eth0" "up")
                         (invoke "ip" "link" "set" "guix4" "master" "br0")
                         (invoke "ip" "link" "set" "guix4" "up")
-                        (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "addr" "add" "192.168.0.198/24" "dev" "eth0")
-                        (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "route" "add" "default" "via" "192.168.0.1"))))))
+                        (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "addr" "add" "192.168.0.198/32" "dev" "eth0"))))))
 
 (define (%pc0)
   (operating-system
