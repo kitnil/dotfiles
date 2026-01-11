@@ -9,14 +9,6 @@
     enable = lib.mkForce true;
   };
 
-  programs.firejail = {
-    enable = true;
-  };
-
-  virtualisation.docker = {
-    enable = true;
-  };
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = false;
   services.openssh.settings = {
@@ -102,12 +94,6 @@
     group = "users";
   };
 
-  services.sunshine = {
-    enable = true;
-    autoStart = false;
-    capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
-    # openFirewall = true;
-  };
   local.services.prometheus.exporters.blackbox = {
     enable = true;
   };
