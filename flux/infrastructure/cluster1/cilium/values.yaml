@@ -60,6 +60,10 @@ externalWorkloads:
   # Required for cluster-mesh.
   enabled: false
 
+bpf:
+  # -- Enable native IP masquerade support in eBPF
+  masquerade: off
+
 # When eBPF-masquerading is enabled, traffic from pods to the External IP of
 # cluster nodes will also not be masqueraded. The eBPF implementation differs
 # from the iptables-based masquerading on that aspect. This limitation is
@@ -86,4 +90,4 @@ externalWorkloads:
 #     203.0.113.0/24
 #     240.0.0.0/4
 ipMasqAgent:
-  enabled: true
+  enabled: false
