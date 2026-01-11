@@ -68,6 +68,7 @@
       '';
   };
   networking.firewall.allowedTCPPorts = [
+    179
     8888
     9050                        # tor
     31247                       # prometheus mtr exporters
