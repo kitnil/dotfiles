@@ -68,8 +68,8 @@
       '';
   };
   networking.firewall.allowedTCPPorts = [
-    179
-    8888
+    179                         # bgp (bird)
+    8888                        # 3proxy
     9050                        # tor
     31247                       # prometheus mtr exporters
   ];
