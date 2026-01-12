@@ -5,6 +5,9 @@
 { pkgs, lib, config, ... }:
 
 {
+  boot.kernel.sysctl = {
+    "net.ipv4.conf.all.forwarding" = 1;
+  };
   programs.niri.enable = true;
   programs.sway.enable = true;
   programs.gamescope = {
