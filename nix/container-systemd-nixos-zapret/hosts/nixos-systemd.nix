@@ -5,6 +5,9 @@
 { lib, config, ... }:
 
 {
+  boot.kernel.sysctl = {
+    "net.ipv4.conf.all.forwarding" = 1;
+  };
   console.enable = true;
   systemd.services."getty@tty1" = {
     enable = false;
