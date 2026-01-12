@@ -89,16 +89,4 @@
       }
     '';
   };
-  services.mtr-exporter = {
-    enable = true;
-    address = "0.0.0.0";
-    port = 31247;
-    jobs = [
-      {
-        name = "vm1.wugi.info";
-        address = "78.108.82.44";
-        flags = [ "-n" ];
-      }
-    ];
-  };
 }
