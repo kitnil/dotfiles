@@ -90,6 +90,7 @@
                 pkgs.mtr
                 pkgs.strace
                 pkgs.tcpdump
+                pkgs.tshark
               ];
             })
           {
