@@ -28,7 +28,10 @@
 
   virtualisation.docker.enable = lib.mkForce false;
 
-  networking.firewall.enable = lib.mkForce true;
+  networking.firewall = {
+    enable = lib.mkForce true;
+    rejectPackets = false;
+  };
   services.zapret = {
     enable = true;
     params = [
