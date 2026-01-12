@@ -139,8 +139,8 @@
               port = 31247;
               jobs = [
                 {
-                  name = "vm1.wugi.info";
-                  address = "78.108.82.44";
+                  name = "border";
+                  address = "192.168.0.1";
                   flags = [
                     "--no-dns"
                     "--interval" "5"
