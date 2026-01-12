@@ -84,6 +84,7 @@
               nixpkgs.config.allowUnfree = true;
               nixpkgs.system = system;
               environment.systemPackages = [
+                pkgs.ethtool
                 pkgs.iftop
                 pkgs.lsof
                 pkgs.mtr
