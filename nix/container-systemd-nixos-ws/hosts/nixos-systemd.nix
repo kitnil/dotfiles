@@ -37,14 +37,9 @@
     "bird/bird.conf" = {
       mode = "0644";
     };
-    "bird/peers/nixos-workstation.conf" = {
-      text = lib.readFile ./../peers/nixos-workstation.conf;
-      mode = "0644";
-    };
   };
   systemd.services.bird.reloadTriggers = [
     config.environment.etc."bird/bird.conf".source
-    config.environment.etc."bird/peers/nixos-workstation.conf".source
   ];
   systemd.tmpfiles.rules = [
     "f /var/log/bird.log 0644 bird bird -"
