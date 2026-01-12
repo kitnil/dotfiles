@@ -28,7 +28,15 @@
 
   virtualisation.docker.enable = lib.mkForce false;
 
-  networking.firewall.enable = lib.mkForce true;
+  networking.firewall = {
+    enable = lib.mkForce true;
+    extraCommands = ''
+      iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+    '';
+    extraStopCommands = ''
+      iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+    '';
+  };
   services.zapret = {
     enable = true;
     params = [
