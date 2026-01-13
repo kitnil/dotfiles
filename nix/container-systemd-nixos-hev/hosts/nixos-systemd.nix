@@ -25,11 +25,16 @@
       text = lib.readFile ./../peers/nixos-dante.conf;
       mode = "0644";
     };
+    "bird/peers/nixos-pc0.conf" = {
+      text = lib.readFile ./../peers/nixos-pc0.conf;
+      mode = "0644";
+    };
   };
   systemd.services.bird.reloadTriggers = [
     config.environment.etc."bird/bird.conf".source
     config.environment.etc."bird/peers/nixos-dante.conf".source
     config.environment.etc."bird/peers/nixos-workstation.conf".source
+    config.environment.etc."bird/peers/pc0.conf".source
   ];
   systemd.tmpfiles.rules = [
     "f /var/log/bird.log 0644 bird bird -"
