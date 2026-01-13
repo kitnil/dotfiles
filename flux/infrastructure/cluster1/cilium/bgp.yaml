@@ -41,3 +41,7 @@ spec:
     attributes:
       communities:
         standard: [ "64981:99" ]
+  - advertisementType: "Service"
+    attributes:
+      communities:
+        standard: [ "64981:100" ]
