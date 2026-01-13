@@ -130,5 +130,6 @@ socks pass {
     enable = true;
   };
   # disable nscd because of high cpu usage
+  services.nscd.enable = false;
   system.nssModules = lib.mkForce [];
 }
