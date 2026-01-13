@@ -45,3 +45,8 @@ spec:
     attributes:
       communities:
         standard: [ "64981:100" ]
+    service:
+      addresses:
+      - ClusterIP
+      - ExternalIP
+      - LoadBalancerIP
