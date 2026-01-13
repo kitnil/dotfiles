@@ -10,10 +10,7 @@ spec:
     peers:
     - name: "tor-switch"
       peerASN: 64983
-      autoDiscovery:
-        mode: "DefaultGateway"
-        defaultGateway:
-          addressFamily: ipv4  # Can be "ipv4" or "ipv6"
+      peerAddress: 192.168.0.110
       peerConfigRef:
         name: "cilium-peer"
 ---
