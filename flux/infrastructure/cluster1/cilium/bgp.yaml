@@ -35,3 +35,16 @@ spec:
     advertisements:
       matchLabels:
         advertise: "bgp"
+---
+apiVersion: cilium.io/v2
+kind: CiliumBGPAdvertisement
+metadata:
+  name: bgp-advertisements
+  labels:
+    advertise: bgp
+spec:
+  advertisements:
+  - advertisementType: "PodCIDR"
+    attributes:
+      communities:
+        standard: [ "64981:99" ]
