@@ -13,7 +13,7 @@ spec:
     localPort: 11179
     peers:
     - name: "tor-switch"
-      peerASN: 64981
+      peerASN: 64983
       autoDiscovery:
         mode: "DefaultGateway"
         defaultGateway:
