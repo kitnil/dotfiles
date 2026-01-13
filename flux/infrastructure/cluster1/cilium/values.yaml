@@ -96,9 +96,3 @@ bgp:
     loadbalancerIP: true
     # -- Enable announcement of node pod CIDR
     podCIDR: true
-
-# -- This feature set enables virtual BGP routers to be created via
-# CiliumBGPPeeringPolicy CRDs.
-bgpControlPlane:
-  # -- Enables the BGP control plane.
-  enabled: true
