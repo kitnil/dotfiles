@@ -26,7 +26,7 @@
       mode = "0644";
     };
     "bird/peers/nixos-pc0.conf" = {
-      text = lib.readFile ./../peers/nixos-pc0.conf;
+      text = lib.readFile ./../peers/pc0.conf;
       mode = "0644";
     };
   };
