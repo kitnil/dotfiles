@@ -15,9 +15,9 @@ data:
         name: vlan0
         protocol: bgp
     peers:
-      - my-asn: 64512
-        peer-address: '192.168.154.1'
-        peer-asn: 64512
+      - my-asn: 64981
+        peer-address: '192.168.0.110'
+        peer-asn: 64983
 kind: ConfigMap
 metadata:
   name: bgp-config
