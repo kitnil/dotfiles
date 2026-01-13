@@ -129,5 +129,6 @@ socks pass {
   local.services.prometheus.exporters.blackbox = {
     enable = true;
   };
-  services.nscd.enable = false; # high cpu usage
+  # disable nscd because of high cpu usage
+  system.nssModules = lib.mkForce [];
 }
