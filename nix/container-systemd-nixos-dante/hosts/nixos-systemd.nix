@@ -41,6 +41,10 @@
       text = lib.readFile ./../peers/kubernetes.conf;
       mode = "0644";
     };
+    "bird/peers/pc0.conf" = {
+      text = lib.readFile ./../peers/pc0.conf;
+      mode = "0644";
+    };
   };
   systemd.services.bird.reloadTriggers = [
     config.environment.etc."bird/bird.conf".source
@@ -50,6 +54,7 @@
     config.environment.etc."bird/peers/nixos-awg.conf".source
     config.environment.etc."bird/peers/nixos-gw.conf".source
     config.environment.etc."bird/peers/kubernetes.conf".source
+    config.environment.etc."bird/peers/pc0.conf".source
   ];
   systemd.tmpfiles.rules = [
     "f /var/log/bird.log 0644 bird bird -"
