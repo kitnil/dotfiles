@@ -10,7 +10,7 @@ spec:
   bgpInstances:
   - name: "instance-64981"
     localASN: 64981
-    localPort: 11179
+    localPort: 179
     peers:
     - name: "tor-switch"
       peerASN: 64981
