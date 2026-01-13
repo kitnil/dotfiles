@@ -4,9 +4,6 @@ kind: CiliumBGPClusterConfig
 metadata:
   name: cilium-bgp
 spec:
-  nodeSelector:
-    matchLabels:
-      kubernetes.io/hostname: kube3
   bgpInstances:
   - name: "instance-64981"
     localASN: 64981
