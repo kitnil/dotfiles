@@ -86,13 +86,8 @@ bpf:
 ipMasqAgent:
   enabled: false
 
-# -- Configure BGP
-bgp:
-  # -- Enable BGP support inside Cilium; embeds a new ConfigMap for BGP inside
-  # cilium-agent and cilium-operator
+# -- This feature set enables virtual BGP routers to be created via
+# CiliumBGPPeeringPolicy CRDs.
+bgpControlPlane:
+  # -- Enables the BGP control plane.
   enabled: true
-  announce:
-    # -- Enable allocation and announcement of service LoadBalancer IPs
-    loadbalancerIP: true
-    # -- Enable announcement of node pod CIDR
-    podCIDR: true
