@@ -47,3 +47,22 @@ spec:
     service:
       addresses:
       - LoadBalancerIP
+---
+apiVersion: cilium.io/v2
+kind: CiliumBGPAdvertisement
+metadata:
+  name: bgp-advertisements-blue
+  labels:
+    advertise: bgp
+spec:
+  advertisements:
+  - advertisementType: "Service"
+    attributes:
+      communities:
+        standard: [ "64981:101" ]
+    selector:
+      matchLabels:
+        deployment.cluster.local/public: blue
+    service:
+      addresses:
+      - LoadBalancerIP
