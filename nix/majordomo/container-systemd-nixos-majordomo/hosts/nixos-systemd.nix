@@ -198,4 +198,28 @@
   environment.systemPackages = with pkgs; [
     git
   ];
+
+  services.bird = {
+    enable = true;
+    config = lib.readFile ./../bird.1.conf;
+    checkConfig = false;
+  };
+  environment.etc = {
+    "bird/bird.conf" = {
+      mode = "0644";
+    };
+    "bird/peers/nixos-dante.conf" = {
+      text = lib.readFile ./../peers/nixos-dante.conf;
+      mode = "0644";
+    };
+    "bird/peers/nixos-hev.conf" = {
+      text = lib.readFile ./../peers/nixos-hev.conf;
+      mode = "0644";
+    };
+  };
+  systemd.services.bird.reloadTriggers = [
+    config.environment.etc."bird/bird.conf".source
+    config.environment.etc."bird/peers/nixos-dante.conf".source
+    config.environment.etc."bird/peers/nixos-hev.conf".source
+  ];
 }
