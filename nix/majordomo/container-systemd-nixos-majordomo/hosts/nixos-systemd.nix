@@ -2,9 +2,48 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ ... }:
+{ pkgs, lib, modulesPath, ... }:
 
 {
+  imports = [
+    (modulesPath + "/virtualisation/docker-image.nix")
+    (modulesPath + "/system/boot/tmp.nix")
+  ];
+
+  boot.isContainer = true;
+  boot.loader.initScript.enable = true;
+  boot.tmp = {
+    useTmpfs = true;
+  };
+
+  time.timeZone = "Europe/Moscow";
+
+  networking = {
+    hostName = ""; # empty
+    useDHCP = false;
+    useNetworkd = false;
+    useHostResolvConf = false;
+    resolvconf.enable = false;
+  };
+
+  security.sudo = {
+    enable = true;
+    wheelNeedsPassword = false;
+  };
+  systemd = {
+    sockets = {
+      systemd-rfkill.enable = false;
+    };
+    services = {
+      systemd-rfkill.enable = false;
+    };
+  };
+
+  services.journald.console = "/dev/tty";
+  services.journald.extraConfig = "SystemMaxUse=100M";
+
+  users.users.root.password = ""; # Empty password.
+
   console.enable = true;
   systemd.services."getty@tty1" = {
     enable = false;
@@ -32,10 +71,6 @@
 
   users.groups.jenkins = {
     gid = 109;
-  };
-
-  users.groups.users = {
-    members = [ "taskexecutor" ];
   };
 
   security.pki.certificates = [
@@ -82,7 +117,41 @@
       enable = true;
     };
   };
-  local.services.prometheus.exporters.blackbox = {
-    enable = true;
+
+  users.users.oleg = {
+    isNormalUser = true;
+    extraGroups = [
+      "audio"
+      "video"
+      "input"
+      "docker"
+      "wheel" # Enable ‘sudo’ for the user.
+    ];
+    uid = 1000;
+    initialPassword = "oleg";
   };
+
+  users.groups.users = {
+    name = "users";
+    members = [ "oleg" ];
+    gid = lib.mkForce 998;
+  };
+
+  security.sudo.extraConfig = ''
+    oleg ALL = (root) NOPASSWD:ALL
+  '';
+
+  services.getty.autologinUser = "oleg";
+
+  nix = {
+    package = pkgs.nixVersions.git;
+    extraOptions = "experimental-features = nix-command flakes";
+    settings = {
+      trusted-users = [ "oleg" "root" ];
+    };
+  };
+
+  environment.systemPackages = with pkgs; [
+    git
+  ];
 }

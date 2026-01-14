@@ -309,34 +309,6 @@
           }
         ]
       ];
-      containerSystemdNixosTaskexecutorModules = builtins.concatLists [
-        commonModules
-        [
-          ./container-systemd-taskexecutor/modules/services/taskexecutor-nginx.nix
-          ./container-systemd-taskexecutor/hosts/nixos-systemd.nix
-          {
-            home-manager = {
-              users = {
-                taskexecutor = ./container-systemd-taskexecutor/oleg/home-manager.nix;
-              };
-            };
-          }
-        ]
-      ];
-      containerSystemdNixosMajordomoModules = builtins.concatLists [
-        commonModules
-        containerSystemdNixosTaskexecutorModules
-        [
-          ./container-systemd-nixos-majordomo/hosts/nixos-systemd.nix
-          {
-            home-manager = {
-              users = {
-                oleg = ./container-systemd-nixos-majordomo/oleg/home-manager.nix;
-              };
-            };
-          }
-        ]
-      ];
     in
     {
       overlay = final: prev: {
@@ -427,9 +399,6 @@
         };
         container-systemd-nixos-hev = nixpkgs.lib.nixosSystem {
           modules = containerSystemdNixosHevModules;
-        };
-        container-systemd-nixos-majordomo = nixpkgs.lib.nixosSystem {
-          modules = containerSystemdNixosMajordomoModules;
         };
       };
     };
