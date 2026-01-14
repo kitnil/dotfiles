@@ -309,6 +309,19 @@
           }
         ]
       ];
+      containerSystemdNixosMajordomoModules = builtins.concatLists [
+        commonModules
+        [
+          ./container-systemd-nixos-majordomo/hosts/nixos-systemd.nix
+          {
+            home-manager = {
+              users = {
+                oleg = ./container-systemd-nixos-majordomo/oleg/home-manager.nix;
+              };
+            };
+          }
+        ]
+      ];
     in
     {
       overlay = final: prev: {
@@ -399,6 +412,9 @@
         };
         container-systemd-nixos-hev = nixpkgs.lib.nixosSystem {
           modules = containerSystemdNixosHevModules;
+        };
+        container-systemd-nixos-majordomo = nixpkgs.lib.nixosSystem {
+          modules = containerSystemdNixosMajordomoModules;
         };
       };
     };
