@@ -1,10 +1,10 @@
-{ pkgs, lib, config, robo3t, ... }:
+{ pkgs, lib, config, ... }:
 {
   home.packages = [
     pkgs.ipmitool
-    pkgs.ipmiview
+    # TODO: pkgs.ipmiview
     pkgs.skopeo
-    robo3t
+    pkgs.robo3t
   ]
   ++ (map (file: pkgs.writeScriptBin (builtins.baseNameOf file) (builtins.readFile file)) [
     ./bash/Majordomo_LLC_Root_CA.crt.sh
