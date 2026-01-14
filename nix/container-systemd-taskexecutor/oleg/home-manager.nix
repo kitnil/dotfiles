@@ -6,10 +6,6 @@
 , ... }:
 
 {
-  imports = [
-    ../../modules/services/vendir.nix
-  ];
-
   home.username = "taskexecutor";
   home.homeDirectory = "/home/taskexecutor";
   manual.manpages.enable = false;
@@ -29,6 +25,4 @@
     python-taskexecutor
     python-taskexecutor-wrapper
   ];
-
-  services.vendir.enable = true;
 }
