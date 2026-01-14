@@ -309,8 +309,22 @@
           }
         ]
       ];
+      containerSystemdNixosTaskexecutorModules = builtins.concatLists [
+        commonModules
+        [
+          ./container-systemd-taskexecutor/hosts/nixos-systemd.nix
+          {
+            home-manager = {
+              users = {
+                oleg = ./container-systemd-taskexecutor/oleg/home-manager.nix;
+              };
+            };
+          }
+        ]
+      ];
       containerSystemdNixosMajordomoModules = builtins.concatLists [
         commonModules
+        containerSystemdNixosTaskexecutorModules
         [
           ./container-systemd-nixos-majordomo/hosts/nixos-systemd.nix
           {
