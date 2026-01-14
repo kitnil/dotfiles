@@ -1,0 +1,8 @@
+digraph {
+    { vm1 europe "antifilter-upstream" } -> internet -> isp -> soho -> antifilter -> { amnezia zapret tor gw } -> dante -> hev -> { mjru pc workstation guixsd "guixsd-workstation" }
+    mjru -> dante
+    pc -> dante
+    workstation -> dante
+    guixsd -> dante
+    "guixsd-workstation" -> dante
+}
