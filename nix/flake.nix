@@ -317,7 +317,7 @@
           {
             home-manager = {
               users = {
-                oleg = ./container-systemd-taskexecutor/oleg/home-manager.nix;
+                taskexecutor = ./container-systemd-taskexecutor/oleg/home-manager.nix;
               };
             };
           }
