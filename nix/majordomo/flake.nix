@@ -166,6 +166,7 @@
                 nixpkgs.system = system;
               }
               home-manager.nixosModules.home-manager
+              ./container-systemd-taskexecutor/hosts/nixos-systemd.nix
               ./container-systemd-taskexecutor/modules/services/taskexecutor-nginx.nix
               {
                 home-manager = {
