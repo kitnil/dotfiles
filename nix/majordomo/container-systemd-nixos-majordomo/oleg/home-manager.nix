@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }:
 {
-  modules = [
+  imports = [
     ../../modules/services/firefox.nix
   ];
   home.packages = [
