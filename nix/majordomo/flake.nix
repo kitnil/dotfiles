@@ -1,7 +1,7 @@
 {
   description = "";
 
-  inputs = rec {
+  inputs = {
     home-manager = {
       url = "git+https://github.com/nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
