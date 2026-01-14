@@ -21,6 +21,10 @@
       text = lib.readFile ./../peers/nixos-workstation.conf;
       mode = "0644";
     };
+    "bird/peers/nixos-majordomo.conf" = {
+      text = lib.readFile ./../peers/nixos-majordomo.conf;
+      mode = "0644";
+    };
     "bird/peers/nixos-dante.conf" = {
       text = lib.readFile ./../peers/nixos-dante.conf;
       mode = "0644";
@@ -34,6 +38,7 @@
     config.environment.etc."bird/bird.conf".source
     config.environment.etc."bird/peers/nixos-dante.conf".source
     config.environment.etc."bird/peers/nixos-workstation.conf".source
+    config.environment.etc."bird/peers/nixos-majordomo.conf".source
     config.environment.etc."bird/peers/pc0.conf".source
   ];
   systemd.tmpfiles.rules = [
