@@ -23,6 +23,17 @@
     initialPassword = "taskexecutor";
   };
 
+  users.users.jenkins = {
+    uid = 109;
+    group = "jenkins";
+    useDefaultShell = true;
+    home = "/var/lib/jenkins";
+  };
+
+  users.groups.jenkins = {
+    gid = 109;
+  };
+
   users.groups.users = {
     members = [ "taskexecutor" ];
   };
