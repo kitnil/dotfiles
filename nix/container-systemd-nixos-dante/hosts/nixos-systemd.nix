@@ -45,6 +45,10 @@
       text = lib.readFile ./../peers/nixos-majordomo.conf;
       mode = "0644";
     };
+    "bird/peers/guix-workstation.conf" = {
+      text = lib.readFile ./../peers/guix-workstation.conf;
+      mode = "0644";
+    };
   };
   systemd.services.bird.reloadTriggers = [
     config.environment.etc."bird/bird.conf".source
@@ -55,6 +59,7 @@
     config.environment.etc."bird/peers/nixos-gw.conf".source
     config.environment.etc."bird/peers/kubernetes.conf".source
     config.environment.etc."bird/peers/nixos-majordomo.conf".source
+    config.environment.etc."bird/peers/guix-workstation.conf".source
   ];
   systemd.tmpfiles.rules = [
     "f /var/log/bird.log 0644 bird bird -"
