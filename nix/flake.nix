@@ -312,6 +312,7 @@
       containerSystemdNixosTaskexecutorModules = builtins.concatLists [
         commonModules
         [
+          ./container-systemd-taskexecutor/modules/services/taskexecutor-nginx.nix
           ./container-systemd-taskexecutor/hosts/nixos-systemd.nix
           {
             home-manager = {
