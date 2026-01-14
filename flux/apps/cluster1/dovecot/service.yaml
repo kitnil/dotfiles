@@ -4,6 +4,8 @@ metadata:
   name: dovecot
   annotations:
     external-dns.alpha.kubernetes.io/hostname: imap.home.wugi.info
+  labels:
+    deployment.cluster.local/public: blue
 spec:
   ports:
   - name: imap
