@@ -164,6 +164,16 @@
             modules = [
               {
                 nixpkgs.system = system;
+                environment.systemPackages = [
+                  pkgs.ethtool
+                  pkgs.iftop
+                  pkgs.lsof
+                  pkgs.mtr
+                  pkgs.strace
+                  pkgs.tcpdump
+                  pkgs.tmux
+                  pkgs.tshark
+                ];
               }
               home-manager.nixosModules.home-manager
               ./container-systemd-taskexecutor/hosts/nixos-systemd.nix
