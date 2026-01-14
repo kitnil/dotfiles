@@ -1,24 +1,3 @@
-apiVersion: monitoring.coreos.com/v1
-kind: Probe
-metadata:
-  name: probe-task-success-0
-spec:
-  interval: 10m
-  module: http_2xx
-  prober:
-    url: prometheus-blackbox-exporter.prometheus-blackbox-exporter:9115
-  targets:
-    staticConfig:
-      static:
-      - https://gitlab.corp1.majordomo.ru/
-
-      - https://grafana.corp1.majordomo.ru/
-      - https://prometheus.corp1.majordomo.ru/status
-      - https://harbor.corp1.majordomo.ru/
-
-      - https://grafana.corp2.majordomo.ru/
-      # - https://prometheus.corp2.majordomo.ru/status # 503
-      - https://harbor.corp2.majordomo.ru/
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
@@ -169,6 +148,16 @@ spec:
     staticConfig:
       static:
       - https://cgit.wugi.info/
+
+      - https://gitlab.corp1.majordomo.ru/
+
+      - https://grafana.corp1.majordomo.ru/
+      - https://prometheus.corp1.majordomo.ru/status
+      - https://harbor.corp1.majordomo.ru/
+
+      - https://grafana.corp2.majordomo.ru/
+      # - https://prometheus.corp2.majordomo.ru/status # 503
+      - https://harbor.corp2.majordomo.ru/
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
