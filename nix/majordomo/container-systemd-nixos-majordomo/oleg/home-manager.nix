@@ -1,5 +1,8 @@
 { pkgs, lib, config, ... }:
 {
+  modules = [
+    ../../modules/services/firefox.nix
+  ]
   home.packages = [
     pkgs.ipmitool
     # TODO: pkgs.ipmiview
