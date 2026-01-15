@@ -55,5 +55,13 @@
 
   services.mediamtx = {
     enable = true;
+    settings = {
+      metrics = true;
+      paths = {
+        all = {
+          source = "publisher";
+        };
+      };
+    };
   };
 }
