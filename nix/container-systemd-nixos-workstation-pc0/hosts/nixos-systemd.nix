@@ -52,4 +52,8 @@
   local.services.prometheus.exporters.blackbox = {
     enable = true;
   };
+
+  services.mediamtx = {
+    enable = true;
+  };
 }
