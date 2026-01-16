@@ -4,3 +4,17 @@ tcp:
 controller:
   service:
     loadBalancerIP: 192.168.0.139
+  config:
+    custom-http-errors: >-
+      401,403,404,500,501,502,503
+
+defaultBackend:
+  enabled: true
+  image:
+    repository: ghcr.io/tarampampam/error-pages:3.8
+    tag: '3' # using the latest tag is highly discouraged
+  extraEnvs:
+  - name: TEMPLATE_NAME # Optional: change the default theme
+    value: l7
+  - name: SHOW_DETAILS # Optional: enables the output of additional information on error pages
+    value: 'true'
