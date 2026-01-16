@@ -44,5 +44,8 @@ in
         };
       });
     };
+    networking.firewall.allowedTCPPorts = [
+      9115                        # prometheus blackbox exporter
+    ];
   };
 }
