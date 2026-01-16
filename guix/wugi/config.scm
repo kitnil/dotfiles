@@ -968,7 +968,21 @@ zone:
         "127.0.0.1 example.com"
 
         "192.168.25.2 oracle1.local irc.local"
-        "192.168.0.137 notebook.wugi.info"))
+        "192.168.0.137 notebook.wugi.info"
+
+        "192.168.0.1 border.wugi.info"
+        "192.168.0.180 nixos-antifilter.wugi.info"
+        "192.168.0.130 nixos-awg.wugi.info"
+        "192.168.0.150 nixos-bview.wugi.info"
+        "192.168.0.110 nixos-dante.wugi.info"
+        "192.168.0.170 nixos-gw.wugi.info"
+        "192.168.0.190 nixos-tor.wugi.info"
+        "192.168.0.160 nixos-wan.wugi.info"
+        "192.168.0.195 nixos-workstation.wugi.info"
+        "192.168.0.175 nixos-ws.wugi.info"
+        "192.168.0.115 nixos-hev.wugi.info"
+        "192.168.0.175 nixos-zapret.wugi.info"
+        "192.168.0.160 nixos-wan.wugi.info"))
 
 (define* (generate-hosts-file #:optional (extra-hosts '()))
   (plain-file "hosts"
