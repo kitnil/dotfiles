@@ -4,3 +4,4 @@ namespace: monitoring
 resources:
 - probe.yaml
 - prometheusrules/blackbox.yaml
+- prometheusrules/mtr.yaml

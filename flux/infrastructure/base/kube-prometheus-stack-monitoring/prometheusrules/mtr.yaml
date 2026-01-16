@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: prometheus-mtr-rules
+  namespace: monitoring
+spec:
+  groups:
+  - name: mtr
+    rules:
+    - alert: MtrReportLossFirstHop
+      annotations:
+        description: "mtr (My TraceRoute) packet loss on first hop\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+        summary: "mtr (My TraceRoute) packet loss on first hop (instance {{ $labels.instance }})"
+      expr: mtr_report_loss{host=~"192.168.0.*", hop="first"} > 0
+      for: "10m"
+      labels:
+        severity: warning
