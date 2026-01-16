@@ -12,16 +12,15 @@
 
 (define (%obs-manifest)
   (define inferior
-    (inferior-for-channels %channels-current-local-file
-                           #:cache-directory "/home/oleg/.cache/guix/inferiors"))
+    (inferior-for-channels %channels-current-local-file))
 
   (define inferior-packages
     (inferior-eval `(begin
+                      (pk 'here)
                       (add-to-load-path ,%distro-directory)
                       (use-modules (gnu packages video)
                                    (nongnu packages video)
-                                   (srfi srfi-1)
-                                   (wigust packages video))
+                                   (srfi srfi-1))
                       (%patch-path (append (list ,%distro-directory)
                                            (%patch-path)))
                       (fold (lambda (package result)
@@ -34,21 +33,20 @@
                             '()
                             (list obs-with-cef
                                   ;; plugins
-                                  obs-advanced-masks
-                                  obs-composite-blur
-                                  obs-gradient-source
-                                  (@ (wigust packages video) obs-looking-glass)
-                                  obs-move-transition
-                                  obs-multi-rtmp
-                                  obs-ndi
-                                  obs-pipewire-audio-capture
-                                  obs-scale-to-sound
-                                  obs-shaderfilter
-                                  obs-source-clone
-                                  obs-source-record
-                                  obs-stroke-glow-shadow
-                                  obs-waveform
-                                  obs-wlrobs)))
+                                  ;; obs-advanced-masks
+                                  ;; obs-composite-blur
+                                  ;; obs-gradient-source
+                                  ;; obs-move-transition
+                                  ;; obs-multi-rtmp
+                                  ;; obs-pipewire-audio-capture
+                                  ;; obs-scale-to-sound
+                                  ;; obs-shaderfilter
+                                  ;; obs-source-clone
+                                  ;; obs-source-record
+                                  ;; obs-stroke-glow-shadow
+                                  ;; obs-waveform
+                                  ;; obs-wlrobs
+                                  )))
                    inferior))
 
   (packages->manifest (map (match-lambda

@@ -1,5 +1,5 @@
 ;; GuixSD configuration file for the desktop machine.
-;; Copyright © 2024, 2025 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2024, 2025, 2026 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (define-module (wugi manifests workstation)
@@ -34,7 +34,7 @@
          ;; (%telegram-manifest)
          ;; (%majordomo-manifest)
          (%notebook-packages-manifest)
-         ;; (%obs-manifest)
+         (%obs-manifest)
          ;; (%ai-manifest)
          ;; (%firejail-manifest)
          (%guile-manifest)
