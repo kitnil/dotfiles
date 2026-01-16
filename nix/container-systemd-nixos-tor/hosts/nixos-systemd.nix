@@ -71,6 +71,7 @@
     179                         # bgp (bird)
     8888                        # 3proxy
     9050                        # tor
+    9115                        # prometheus blackbox exporter
     31247                       # prometheus mtr exporters
   ];
   networking.firewall = {
