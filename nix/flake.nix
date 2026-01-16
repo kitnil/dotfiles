@@ -363,7 +363,7 @@
             exec ${python}/bin/python "$@"
           '';
         firejail = prev.firejail.overrideAttrs (old: {
-          extraConfigureFlags = [ "--disable-sandbox-check" ];
+          configureFlags = [ "--disable-sandbox-check" ];
         });
       };
       nixosConfigurations = {
