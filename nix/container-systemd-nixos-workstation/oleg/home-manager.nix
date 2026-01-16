@@ -49,6 +49,8 @@ in {
     yq
 
     rsync
+
+    sshs
   ];
 
   home.file = {
