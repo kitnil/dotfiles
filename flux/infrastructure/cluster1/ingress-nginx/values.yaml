@@ -11,7 +11,9 @@ controller:
 defaultBackend:
   enabled: true
   image:
-    repository: ghcr.io/tarampampam/error-pages:3.8
+    registry: ghcr.io
+    image: tarampampam/error-pages
+    version: "3.8"
   extraEnvs:
   - name: TEMPLATE_NAME # Optional: change the default theme
     value: l7
