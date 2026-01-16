@@ -12,7 +12,6 @@ defaultBackend:
   enabled: true
   image:
     repository: ghcr.io/tarampampam/error-pages:3.8
-    tag: '3' # using the latest tag is highly discouraged
   extraEnvs:
   - name: TEMPLATE_NAME # Optional: change the default theme
     value: l7
