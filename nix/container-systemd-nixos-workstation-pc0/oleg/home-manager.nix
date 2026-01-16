@@ -4,6 +4,9 @@ let
   inherit (customLib) firefoxBaseProfile;
 in
 {
+  home.packages = [
+    pkgs.firejail
+  ];
   programs.chromium = {
     enable = true;
     commandLineArgs = [ "--ozone-platform=wayland" ];

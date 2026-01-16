@@ -362,6 +362,9 @@
             #!${runtimeShell} -e
             exec ${python}/bin/python "$@"
           '';
+        firejail = prev.firejail.overrideAttrs (old: {
+          extraConfigureFlags = [ "--disable-sandbox-check" ];
+        });
       };
       nixosConfigurations = {
         container-systemd = nixpkgs.lib.nixosSystem {
