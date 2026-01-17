@@ -8,4 +8,7 @@ patchesStrategicMerge:
 configMapGenerator:
 - name: ingress-nginx-values-cluster1
   files:
-  - values.yaml=values.yaml
+  - values.yaml=values/cluster1.yaml
+- name: ingress-nginx-values-default-backend
+  files:
+  - values.yaml=values/default-backend.yaml
