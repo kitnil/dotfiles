@@ -339,9 +339,8 @@
   #~(begin
       (use-modules (guix build utils))
       (mkdir-p "/etc/knot-resolver")
-      (call-with-output-file "/etc/knot-resolver/kresd.conf"
-        (lambda ()
-          (display "\
+      (copy-file #$(mixed-text-file "kresd.conf"
+                                    #~(begin "\
 -- vim:syntax=lua:set ts=4 sw=4:
 -- Refer to manual: https://knot-resolver.readthedocs.io/en/stable/daemon.html#configuration
 
@@ -381,7 +380,8 @@ policy.add(policy.all(policy.STUB('8.8.8.8')))
 
 -- Smaller cache size
 cache.size = 10 * MB
-")))))
+"))
+                  "/etc/knot-resolver/kresd.conf")))
 
 (define (%pc0)
   (operating-system
