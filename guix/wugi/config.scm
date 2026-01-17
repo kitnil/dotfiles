@@ -6,6 +6,7 @@
   #:use-module (gnu packages bittorrent)
   #:use-module (gnu packages certs)
   #:use-module (gnu packages cryptsetup)
+  #:use-module (gnu packages dns)
   #:use-module (gnu packages docker)
   #:use-module (gnu packages file)
   #:use-module (gnu packages firmware)
