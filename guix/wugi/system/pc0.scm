@@ -775,10 +775,15 @@ cgroup_device_acl = [
                                                  "99-kvmfr.rules"
                                                  "SUBSYSTEM==\"kvmfr\", OWNER=\"oleg\", GROUP=\"kvm\", MODE=\"0660\"\n"))
 
+                            (simple-service 'add-kresd-config
+                                            etc-service-type
+                                            `(("knot-resolver/kresd.conf")
+                                              (generate-kresd-file %private-ip-address)))
+
                             (service knot-resolver-service-type
                                      (knot-resolver-configuration
                                       (kresd-config-file
-                                       (generate-kresd-file %private-ip-address))))
+                                       "/etc/knot-resolver/kresd.conf")))
 
                             ;; Bring eth0 up and pass it to the networking bridge.
                             (service static-networking-service-type
