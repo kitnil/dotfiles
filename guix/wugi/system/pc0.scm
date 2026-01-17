@@ -816,7 +816,7 @@ cgroup_device_acl = [
 
                             (simple-service 'add-kresd-config
                                             activation-service-type
-                                            (const kresd-config))
+                                            kresd-config)
 
                             (service knot-resolver-service-type
                                      (knot-resolver-configuration
