@@ -10,6 +10,8 @@
 (setq lsp-ui-sideline-enable nil) ;right menu
 (setq lsp-file-watch-threshold nil)
 (setq lsp-lua-emmy-jar-path (expand-file-name "EmmyLua-LS-all.jar" user-emacs-directory))
+(setq lsp-warn-no-matched-clients nil)
+(setq lsp-enable-suggest-server-download nil)
 
 ;; TODO: Spring
 ;; (require 'lsp-java-boot)
