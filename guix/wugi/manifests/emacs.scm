@@ -181,6 +181,8 @@
          emacs-wgrep
          emacs-znc
 
+         emacs-mcp
+
          epipe
 
          emacs-docker
