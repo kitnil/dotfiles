@@ -339,8 +339,49 @@
   #~(begin
       (use-modules (guix build utils))
       (mkdir-p "/etc/knot-resolver")
-      (copy-file #$(generate-kresd-file %private-ip-address)
-                 "/etc/knot-resolver/kresd.conf")))
+      (call-with-output-file "/etc/knot-resolver/kresd.conf"
+        (lambda ()
+          (display "\
+-- vim:syntax=lua:set ts=4 sw=4:
+-- Refer to manual: https://knot-resolver.readthedocs.io/en/stable/daemon.html#configuration
+
+-- Listen on all interfaces (localhost would not work in Docker)
+-- private ip-address
+net.listen('" #$private-ip-address "')
+
+-- To disable DNSSEC validation, uncomment the following line (not recommended)
+-- trust_anchors.remove('.')
+
+-- Load Useful modules
+modules = {
+        'hints > iterate', -- Allow loading /etc/hosts or custom root hints
+        'policy'
+}
+
+-- Load /etc/hosts
+hints.add_hosts()
+
+net.ipv6 = false
+
+policy.add(policy.suffix(policy.STUB(\"172.16.103.2\"), {todname('intr')}))
+policy.add(policy.suffix(policy.STUB(\"172.16.103.131\"), {todname('103.16.172.in-addr.arpa')}))
+policy.add(policy.suffix(policy.STUB(\"172.16.102.35\"), {todname('102.16.172.in-addr.arpa')}))
+
+policy.add(policy.suffix(policy.STUB(\"78.108.80.1\"), {todname('corp1.majordomo.ru')}))
+policy.add(policy.suffix(policy.STUB(\"78.108.88.1\"), {todname('corp2.majordomo.ru')}))
+
+policy.add(policy.suffix(policy.STUB(\"10.8.32.119\"), {todname('home.wugi.info')}))
+
+policy.add(policy.suffix(policy.STUB(\"10.8.255.254\"), {todname('cluster.local')}))
+policy.add(policy.suffix(policy.STUB(\"10.8.255.254\"), {todname('svc.cluster.local')}))
+policy.add(policy.suffix(policy.STUB(\"10.8.255.254\"), {todname('guix.svc.cluster.local')}))
+
+-- -- Forward all queries (complete stub mode)
+policy.add(policy.all(policy.STUB('8.8.8.8')))
+
+-- Smaller cache size
+cache.size = 10 * MB
+")))))
 
 (define (%pc0)
   (operating-system
