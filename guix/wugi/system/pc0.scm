@@ -339,9 +339,8 @@
   #~(begin
       (use-modules (guix build utils))
       (mkdir-p "/etc/knot-resolver")
-      (call-with-output-file "/etc/knot-resolver/kresd.conf"
-        (lambda (port)
-          (display #$(generate-kresd-file %private-ip-address))))))
+      (copy-file #$(generate-kresd-file %private-ip-address)
+                 "/etc/knot-resolver/kresd.conf")))
 
 (define (%pc0)
   (operating-system
