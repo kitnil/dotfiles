@@ -157,7 +157,7 @@ EndSection\n")
         font-misc-misc font-wqy-zenhei))
 
 (define %admin-packages
-  (list `("bind" ,isc-bind "utils")
+  (list (list isc-bind "utils")
         binutils
         bridge-utils
         btrfs-progs
