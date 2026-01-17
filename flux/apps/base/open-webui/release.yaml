@@ -7,7 +7,7 @@ spec:
     spec:
       chart: open-webui
       reconcileStrategy: ChartVersion
-      version: 6.13.0
+      version: 10.2.1
       sourceRef:
         kind: HelmRepository
         name: open-webui
