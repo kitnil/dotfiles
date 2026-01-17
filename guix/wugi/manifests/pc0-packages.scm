@@ -10,6 +10,7 @@
   #:use-module (gnu packages bittorrent)
   #:use-module (gnu packages curl)
   #:use-module (gnu packages dictionaries)
+  #:use-module (gnu packages entr)
   #:use-module (gnu packages games)
   #:use-module (gnu packages gnupg)
   #:use-module (gnu packages golang-web)
@@ -93,4 +94,5 @@
          virt-manager
          wl-clipboard
          xdot
-         mumble)))
+         mumble
+         entr)))
