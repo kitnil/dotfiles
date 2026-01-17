@@ -63,14 +63,15 @@
         vterm-eval-cmds))
 
 (defun wi-vterm-prettify-symbols ()
-  (set (make-local-variable 'prettify-symbols-alist)
-       (append `(("&&" . ?∧)
-                 ("||" . ?∨)
-                 ("++" . ?⧺)
-                 ("<=" . ?≤)
-                 (">=" . ?≥)
-                 ("->" . ?→))
-               mjru-prettify-hosts)))
+  (when (boundp 'mjru-prettify-hosts)
+    (set (make-local-variable 'prettify-symbols-alist)
+         (append `(("&&" . ?∧)
+                   ("||" . ?∨)
+                   ("++" . ?⧺)
+                   ("<=" . ?≤)
+                   (">=" . ?≥)
+                   ("->" . ?→))
+                 mjru-prettify-hosts))))
 
 (add-hook 'vterm-mode-hook 'wi-vterm-prettify-symbols)
 
