@@ -778,7 +778,7 @@ cgroup_device_acl = [
                             (simple-service 'add-kresd-config
                                             etc-service-type
                                             `(("knot-resolver/kresd.conf")
-                                              (generate-kresd-file %private-ip-address)))
+                                              ,(generate-kresd-file %private-ip-address)))
 
                             (service knot-resolver-service-type
                                      (knot-resolver-configuration
