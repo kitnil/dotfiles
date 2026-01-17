@@ -13,3 +13,6 @@ ingress:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/proxy-body-size: 128m
   existingSecret: "open-webui-tls"
+
+image:
+  tag: "0.7.1"
