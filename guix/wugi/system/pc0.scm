@@ -335,6 +335,13 @@
                         (invoke "ip" "link" "set" "guix4" "up")
                         (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "addr" "add" "192.168.0.198/32" "dev" "eth0"))))))
 
+(define kresd-config
+  #~(begin
+      (use-modules (guix build utils))
+      (mkdir-p "/etc/knot-resolver")
+      (copy-file #$(generate-kresd-file %private-ip-address)
+                 "/etc/knot-resolver/kresd.conf")))
+
 (define (%pc0)
   (operating-system
     (host-name "pc0")
@@ -767,9 +774,8 @@ cgroup_device_acl = [
                                                  "SUBSYSTEM==\"kvmfr\", OWNER=\"oleg\", GROUP=\"kvm\", MODE=\"0660\"\n"))
 
                             (simple-service 'add-kresd-config
-                                            etc-service-type
-                                            `(("knot-resolver/kresd.conf"
-                                               ,(generate-kresd-file %private-ip-address))))
+                                            activation-service-type
+                                            (const kresd-config))
 
                             (service knot-resolver-service-type
                                      (knot-resolver-configuration
