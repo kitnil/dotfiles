@@ -28,7 +28,7 @@
    (list (%pc0-packages-manifest)
          (%desktop-manifest)
          (%nonguix-manifest)
-         ;; (%icons-manifest)
+         (%icons-manifest)
          (%emacs-manifest)
          ;; (%deprecated-manifest)
          ;; (%telegram-manifest)
