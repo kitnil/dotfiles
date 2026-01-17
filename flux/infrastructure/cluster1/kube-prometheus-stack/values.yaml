@@ -233,6 +233,14 @@ additionalPrometheusRulesMap:
           summary: Absent bird imports
           description: Absent bird imports.
         alert: BirdAbsent
+      - labels:
+          severity: critical
+        expr: bird_protocol_up != 1
+        for: 1m
+        annotations:
+          summary: Bird protocol down
+          description: Bird protocol down.
+        alert: BirdProtocolDown
       name: bird-exporter
   exim:
     groups:
