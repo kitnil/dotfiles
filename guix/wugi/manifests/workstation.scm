@@ -14,6 +14,7 @@
   #:use-module (wugi manifests guile)
   #:use-module (wugi manifests icons)
   #:use-module (wugi manifests majordomo)
+  #:use-module (wugi manifests node)
   #:use-module (wugi manifests nonguix)
   #:use-module (wugi manifests mqtt)
   #:use-module (wugi manifests notebook-packages)
@@ -40,6 +41,7 @@
          (%guile-manifest)
          ;; (%mqtt-manifest)
          (%wm-manifest)
-         (%web-manifest))))
+         (%web-manifest)
+         (%node-manifest))))
 
 (%workstation-manifest)
