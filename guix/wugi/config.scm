@@ -995,7 +995,7 @@ zone:
 ;;;
 
 (define* (generate-kresd-file #:optional (private-ip-address "127.0.0.1"))
-  (mixed-text-file "kresd.conf" "\
+  "\
 -- vim:syntax=lua:set ts=4 sw=4:
 -- Refer to manual: https://knot-resolver.readthedocs.io/en/stable/daemon.html#configuration
 
@@ -1035,4 +1035,4 @@ policy.add(policy.all(policy.STUB('8.8.8.8')))
 
 -- Smaller cache size
 cache.size = 10 * MB
-"))
+")
