@@ -347,7 +347,7 @@
 
 -- Listen on all interfaces (localhost would not work in Docker)
 -- private ip-address
-net.listen('" #$private-ip-address "')
+net.listen('" #$%private-ip-address "')
 
 -- To disable DNSSEC validation, uncomment the following line (not recommended)
 -- trust_anchors.remove('.')
