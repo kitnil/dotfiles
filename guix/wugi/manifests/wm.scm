@@ -29,8 +29,12 @@
           wl-mirror
           wtype))
 
+  (define notifications
+    (list swaynotificationcenter))
+
   (packages->manifest (append audio
                               clipboard
                               wm
                               sway-utils
-                              wayland-utils)))
+                              wayland-utils
+                              notifications)))
