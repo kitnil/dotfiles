@@ -56,9 +56,9 @@
           "dnd-inhibited-none": "󰪑"
         },
         "return-type": "json",
-        "exec": "/home/oleg/bin/swaync-client -swb",
-        "on-click": "/home/oleg/bin/swaync-client -t -sw",
-        "on-click-right": "/home/oleg/bin/swaync-client -d -sw",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
         "escape": true
     },
     "custom/lm-studio-models": {
