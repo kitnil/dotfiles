@@ -12,6 +12,7 @@
     pkgs.lsof
     pkgs.strace
     pkgs.tcpdump
+    pkgs.openssl
   ];
   services.webhook-custom = {
     enable = true;
