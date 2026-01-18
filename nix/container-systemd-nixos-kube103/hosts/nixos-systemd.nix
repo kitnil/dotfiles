@@ -22,4 +22,5 @@
     enable = true;
   };
   systemd.oomd.enable = false;
+  virtualisation.containerd.enable = true;
 }
