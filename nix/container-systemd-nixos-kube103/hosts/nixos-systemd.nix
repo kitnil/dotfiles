@@ -20,4 +20,5 @@
   local.services.prometheus.exporters.blackbox = {
     enable = true;
   };
+  systemd.oomd.enable = false;
 }
