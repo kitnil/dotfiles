@@ -312,7 +312,6 @@
       containerSystemdNixosKube103Modules = builtins.concatLists [
         commonModules
         [
-          ./modules/services/cluster/kubernetes-node.nix
           ./container-systemd-nixos-kube103/hosts/nixos-systemd.nix
           {
             home-manager = {
