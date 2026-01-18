@@ -155,7 +155,11 @@ program.")))
                           (file-system
                             (device (file-system-label "nixoshev"))
                             (mount-point "/srv/runc/nixos-hev")
-                            (type "btrfs"))))
+                            (type "btrfs"))
+                          (file-system
+                            (device (file-system-label "nixoskube103"))
+                            (mount-point "/srv/runc/nixos-kube103")
+                            (type "ext4"))))
 
       ;; Guix is all you need!
       (services
