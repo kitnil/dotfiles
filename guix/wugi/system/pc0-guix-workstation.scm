@@ -95,7 +95,67 @@ program.")))
       (file-systems (list (file-system
                             (device "does-not-matter")
                             (mount-point "/")
-                            (type "does-not-matter"))))
+                            (type "does-not-matter"))
+                          (file-system
+                            (device (file-system-label "fedora"))
+                            (mount-point "/srv/runc/fedora")
+                            (type "ext4"))
+                          (file-system
+                            (device (file-system-label "guixnanokvm"))
+                            (mount-point "/srv/runc/guix-nanokvm")
+                            (type "ext4"))
+                          (file-system
+                            (device (file-system-label "guixrde"))
+                            (mount-point "/srv/runc/guix-rde")
+                            (type "ext4"))
+                          (file-system
+                            (device (file-system-label "nixosantifilter"))
+                            (mount-point "/srv/runc/nixos-antifilter")
+                            (type "btrfs"))
+                          (file-system
+                            (device (file-system-label "nixosgw"))
+                            (mount-point "/srv/runc/nixos-gw")
+                            (type "btrfs"))
+                          (file-system
+                            (device (file-system-label "nixosmajordomo"))
+                            (mount-point "/srv/runc/nixos-majordomo")
+                            (type "ext4"))
+                          (file-system
+                            (device (file-system-label "nixostor"))
+                            (mount-point "/srv/runc/nixos-tor")
+                            (type "btrfs"))
+                          (file-system
+                            (device (file-system-label "nixosworkstation"))
+                            (mount-point "/srv/runc/nixos-workstation")
+                            (type "btrfs"))
+                          (file-system
+                            (device (file-system-label "nixoszapret"))
+                            (mount-point "/srv/runc/nixos-zapret")
+                            (type "btrfs"))
+                          (file-system
+                            (device (file-system-label "nixoswan"))
+                            (mount-point "/srv/runc/nixos-wan")
+                            (type "btrfs"))
+                          (file-system
+                            (device (file-system-label "nixosbview"))
+                            (mount-point "/srv/runc/nixos-bview")
+                            (type "btrfs"))
+                          (file-system
+                            (device (file-system-label "nixosawg"))
+                            (mount-point "/srv/runc/nixos-awg")
+                            (type "btrfs"))
+                          (file-system
+                            (device (file-system-label "nixosws"))
+                            (mount-point "/srv/runc/nixos-ws")
+                            (type "btrfs"))
+                          (file-system
+                            (device (file-system-label "nixosdante"))
+                            (mount-point "/srv/runc/nixos-dante")
+                            (type "btrfs"))
+                          (file-system
+                            (device (file-system-label "nixoshev"))
+                            (mount-point "/srv/runc/nixos-hev")
+                            (type "btrfs"))))
 
       ;; Guix is all you need!
       (services
