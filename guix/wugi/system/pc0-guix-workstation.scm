@@ -252,6 +252,13 @@ program.")))
 
          (service runc-container-service-type
                   (runc-container-configuration
+                   (bundle "/srv/runc/nixos-dante")
+                   (name "nixos-dante")
+                   (requirement '(file-system-/sys/fs/cgroup))
+                   (auto-start? #t)))
+
+         (service runc-container-service-type
+                  (runc-container-configuration
                    (bundle "/srv/runc/guix-nanokvm")
                    (name "guix-nanokvm")
                    (requirement '(file-system-/sys/fs/cgroup))
