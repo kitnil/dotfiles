@@ -85,6 +85,7 @@
               nixpkgs.system = system;
               environment.systemPackages = [
                 pkgs.ethtool
+                pkgs.htop
                 pkgs.iftop
                 pkgs.jq
                 pkgs.lsof
