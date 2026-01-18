@@ -38,6 +38,7 @@
   services.kubernetes.addons.dns.enable = false;
   services.kubernetes.kubelet = rec {
     enable = true;
+    nodeIp = "192.168.0.104";
     clientCaFile = "/etc/kubernetes/pki/ca.pem";
     tlsCertFile = "/etc/kubernetes/pki/kubelet-client-kube103.pem";
     tlsKeyFile = "/etc/kubernetes/pki/kubelet-client-kube103-key.pem";
