@@ -12,6 +12,7 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages audio)
   #:use-module (gnu packages bash)
+  #:use-module (gnu packages base)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages package-management)
   #:use-module (gnu packages virtualization)
@@ -72,7 +73,7 @@ program.")))
                      %base-user-accounts))
 
       ;; Globally-installed packages.
-      (packages (append (list bash-completion openssh runc)
+      (packages (append (list bash-completion binutils openssh runc)
                         %base-packages))
 
       ;; Because the system will run in a Docker container, we may omit many
