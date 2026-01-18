@@ -89,12 +89,9 @@
                 pkgs.iftop
                 pkgs.jq
                 pkgs.lsof
-                pkgs.lsof
                 pkgs.mtr
                 pkgs.openssl
                 pkgs.strace
-                pkgs.strace
-                pkgs.tcpdump
                 pkgs.tcpdump
                 pkgs.tmux
                 pkgs.tshark
