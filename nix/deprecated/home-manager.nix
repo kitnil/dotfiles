@@ -308,7 +308,6 @@
               i-dont-care-about-cookies
               old-reddit-redirect
               metube-downloader
-              new-window-without-toolbar
               redirector
               right-click-search
               rocker_gestures

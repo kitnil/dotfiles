@@ -174,7 +174,6 @@ in {
               old-reddit-redirect
               metube-downloader
               multi-account-containers
-              new-window-without-toolbar
               redirector
               right-click-search
               rocker_gestures
