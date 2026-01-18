@@ -8,13 +8,6 @@
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = 1;
   };
-  environment.systemPackages = [
-    pkgs.jq
-    pkgs.lsof
-    pkgs.strace
-    pkgs.tcpdump
-    pkgs.openssl
-  ];
   services.webhook-custom = {
     enable = true;
     flake = ".#container-systemd-nixos-kube103";
