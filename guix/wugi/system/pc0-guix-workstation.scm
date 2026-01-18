@@ -159,6 +159,10 @@ program.")))
                             (mount-point "/srv/runc/nixos-hev")
                             (type "btrfs"))
                           (file-system
+                            (device (file-system-label "guixws"))
+                            (mount-point "/srv/runc/guix-ws")
+                            (type "btrfs"))
+                          (file-system
                             (device (file-system-label "nixoskube103"))
                             (mount-point "/srv/runc/nixos-kube103")
                             (type "ext4"))))
