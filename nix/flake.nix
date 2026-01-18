@@ -315,6 +315,7 @@
       containerSystemdNixosKube103Modules = builtins.concatLists [
         commonModules
         [
+          ./modules/system/activation/activation-script.nix
           ./container-systemd-nixos-kube103/hosts/nixos-systemd.nix
           {
             home-manager = {

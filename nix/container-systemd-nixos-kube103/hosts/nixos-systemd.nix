@@ -50,4 +50,5 @@
       keyFile = tlsKeyFile;
     };
   };
+  environment.sbinlvm = "${pkgs.lvm2_dmeventd}/sbin/lvm";
 }
