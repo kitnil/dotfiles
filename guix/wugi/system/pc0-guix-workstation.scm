@@ -205,77 +205,88 @@ program.")))
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-zapret")
                    (name "nixos-zapret")
-                   (requirement '(file-system-/sys/fs/cgroup))
+                   (requirement '(file-system-/sys/fs/cgroup
+                                  file-system-/srv/runc/nixos-zapret))
                    (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-tor")
                    (name "nixos-tor")
-                   (requirement '(file-system-/sys/fs/cgroup))
+                   (requirement '(file-system-/sys/fs/cgroup
+                                  file-system-/srv/runc/nixos-tor))
                    (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-gw")
                    (name "nixos-gw")
-                   (requirement '(file-system-/sys/fs/cgroup))
+                   (requirement '(file-system-/sys/fs/cgroup
+                                  file-system-/srv/runc/nixos-gw))
                    (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-wan")
                    (name "nixos-wan")
-                   (requirement '(file-system-/sys/fs/cgroup))
+                   (requirement '(file-system-/sys/fs/cgroup
+                                  file-system-/srv/runc/nixos-wan))
                    (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-antifilter")
                    (name "nixos-antifilter")
-                   (requirement '(file-system-/sys/fs/cgroup))
+                   (requirement '(file-system-/sys/fs/cgroup
+                                  file-system-/srv/runc/nixos-antifilter))
                    (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-majordomo")
                    (name "nixos-majordomo")
-                   (requirement '(file-system-/sys/fs/cgroup))
+                   (requirement '(file-system-/sys/fs/cgroup
+                                  file-system-/srv/runc/nixos-majordomo))
                    (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-workstation")
                    (name "nixos-workstation")
-                   (requirement '(file-system-/sys/fs/cgroup))
+                   (requirement '(file-system-/sys/fs/cgroup
+                                  file-system-/srv/runc/nixos-workstation))
                    (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-dante")
                    (name "nixos-dante")
-                   (requirement '(file-system-/sys/fs/cgroup))
+                   (requirement '(file-system-/sys/fs/cgroup
+                                  file-system-/srv/runc/nixos-dante))
                    (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/nixos-hev")
                    (name "nixos-hev")
-                   (requirement '(file-system-/sys/fs/cgroup))
+                   (requirement '(file-system-/sys/fs/cgroup
+                                  file-system-/srv/runc/nixos-hev))
                    (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/guix-nanokvm")
                    (name "guix-nanokvm")
-                   (requirement '(file-system-/sys/fs/cgroup))
+                   (requirement '(file-system-/sys/fs/cgroup
+                                  file-system-/srv/runc/guix-nanokvm))
                    (auto-start? #t)))
 
          (service runc-container-service-type
                   (runc-container-configuration
                    (bundle "/srv/runc/fedora")
                    (name "fedora")
-                   (requirement '(file-system-/sys/fs/cgroup))
+                   (requirement '(file-system-/sys/fs/cgroup
+                                  file-system-/srv/runc/fedora))
                    (auto-start? #t))))
 
         (modify-services %base-services
