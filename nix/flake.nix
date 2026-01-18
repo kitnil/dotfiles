@@ -309,6 +309,19 @@
           }
         ]
       ];
+      containerSystemdNixosKube103Modules = builtins.concatLists [
+        commonModules
+        [
+          ./container-systemd-nixos-kube103/hosts/nixos-systemd.nix
+          {
+            home-manager = {
+              users = {
+                oleg = ./container-systemd-nixos-kube103/oleg/home-manager.nix;
+              };
+            };
+          }
+        ]
+      ];
     in
     {
       overlay = final: prev: {
@@ -402,6 +415,9 @@
         };
         container-systemd-nixos-hev = nixpkgs.lib.nixosSystem {
           modules = containerSystemdNixosHevModules;
+        };
+        container-systemd-nixos-kube103 = nixpkgs.lib.nixosSystem {
+          modules = containerSystemdNixosKube103Modules;
         };
       };
     };
