@@ -279,6 +279,14 @@ program.")))
 
          (service runc-container-service-type
                   (runc-container-configuration
+                   (bundle "/srv/runc/nixos-kube103")
+                   (name "nixos-kube103")
+                   (requirement '(file-system-/sys/fs/cgroup
+                                  file-system-/srv/runc/nixos-kube103))
+                   (auto-start? #t)))
+
+         (service runc-container-service-type
+                  (runc-container-configuration
                    (bundle "/srv/runc/guix-nanokvm")
                    (name "guix-nanokvm")
                    (requirement '(file-system-/sys/fs/cgroup
