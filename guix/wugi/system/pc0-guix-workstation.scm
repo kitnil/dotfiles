@@ -227,7 +227,7 @@ program.")))
                    (name "nixos-gw")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/runc/nixos-gw))
-                   (auto-start? #t)))
+                   (auto-start? #f)))
 
          (service runc-container-service-type
                   (runc-container-configuration
