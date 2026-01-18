@@ -33,10 +33,6 @@
       text = lib.readFile ./../peers/nixos-awg.conf;
       mode = "0644";
     };
-    "bird/peers/nixos-gw.conf" = {
-      text = lib.readFile ./../peers/nixos-gw.conf;
-      mode = "0644";
-    };
     "bird/peers/kubernetes.conf" = {
       text = lib.readFile ./../peers/kubernetes.conf;
       mode = "0644";
@@ -56,7 +52,6 @@
     config.environment.etc."bird/peers/nixos-tor.conf".source
     config.environment.etc."bird/peers/nixos-zapret.conf".source
     config.environment.etc."bird/peers/nixos-awg.conf".source
-    config.environment.etc."bird/peers/nixos-gw.conf".source
     config.environment.etc."bird/peers/kubernetes.conf".source
     config.environment.etc."bird/peers/nixos-majordomo.conf".source
     config.environment.etc."bird/peers/guix-workstation.conf".source
