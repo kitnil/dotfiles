@@ -263,6 +263,23 @@
                       (invoke "ip" "link" "set" "nixos22" "up")
                       (invoke "ip" "netns" "exec" "nixos-hev" "ip" "addr" "add" "192.168.0.115/32" "dev" "eth0")))))
 
+(define ns-net-nixos-kube103-program-file
+  (program-file "ns-net-nixos-kube103"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "nixos-kube103")
+                      (invoke "ip" "link" "add" "name" "nixos24" "type" "veth" "peer" "name" "nixos25")
+                      (invoke "ip" "link" "set" "dev" "nixos25" "netns" "nixos-kube103")
+                      (invoke "ip" "netns" "exec" "nixos-kube103" "ip" "link" "set" "nixos25" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-kube103" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "nixos24" "master" "br0")
+                      (invoke "ip" "link" "set" "nixos24" "up")
+                      (invoke "ip" "netns" "exec" "nixos-kube103" "ip" "addr" "add" "192.168.0.103/32" "dev" "eth0")))))
+
 (define ns-net-fedora-program-file
   (program-file "ns-net-fedora"
                 (with-imported-modules (source-module-closure '((guix build utils)))
@@ -715,6 +732,16 @@ cgroup_device_acl = [
                                                    (requirement '(networking))
                                                    (start #~(make-forkexec-constructor
                                                              (list #$ns-net-nixos-hev-program-file)))
+                                                   (respawn? #f)
+                                                   (auto-start? #t)
+                                                   (one-shot? #t))))
+
+                            (simple-service 'ns-net-nixos-kube103 shepherd-root-service-type
+                                            (list (shepherd-service
+                                                   (provision '(ns-net-nixos-kube103))
+                                                   (requirement '(networking))
+                                                   (start #~(make-forkexec-constructor
+                                                             (list #$ns-net-nixos-kube103-program-file)))
                                                    (respawn? #f)
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
