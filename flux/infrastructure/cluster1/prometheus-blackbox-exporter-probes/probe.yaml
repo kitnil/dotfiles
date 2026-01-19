@@ -54,20 +54,6 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
 metadata:
-  name: probe-task-success-nixos-awg
-spec:
-  interval: 2m
-  module: http_2xx
-  prober:
-    url: 192.168.0.130:9115
-  targets:
-    staticConfig:
-      static:
-      - https://cgit.wugi.info/
----
-apiVersion: monitoring.coreos.com/v1
-kind: Probe
-metadata:
   name: probe-task-success-nixos-bview
 spec:
   interval: 2m
