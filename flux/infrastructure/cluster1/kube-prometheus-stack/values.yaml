@@ -32,12 +32,10 @@ prometheus:
       - targets:
         - vm1.wugi.info:9324
         - 192.168.0.160:9324 # container-systemd-nixos-wan
-        - 192.168.0.170:9324 # container-systemd-nixos-gw
         - 192.168.0.175:9324 # container-systemd-nixos-zapret
         - 192.168.0.180:9324 # container-systemd-nixos-antifilter
         - 192.168.0.190:9324 # container-systemd-nixos-tor
         - 192.168.0.195:9324 # container-systemd-nixos-workstation-pc0
-        - 192.168.0.130:9324 # container-systemd-nixos-awg
         - 192.168.0.120:9324 # container-systemd-nixos-ws
       scrape_interval: 1m
       job_name: bird
