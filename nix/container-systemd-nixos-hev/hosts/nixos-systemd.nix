@@ -33,6 +33,10 @@
       text = lib.readFile ./../peers/pc0.conf;
       mode = "0644";
     };
+    "bird/peers/guixsd.conf" = {
+      text = lib.readFile ./../peers/guixsd.conf;
+      mode = "0644";
+    };
   };
   systemd.services.bird.reloadTriggers = [
     config.environment.etc."bird/bird.conf".source
@@ -40,6 +44,7 @@
     config.environment.etc."bird/peers/nixos-workstation.conf".source
     config.environment.etc."bird/peers/nixos-majordomo.conf".source
     config.environment.etc."bird/peers/pc0.conf".source
+    config.environment.etc."bird/peers/guixsd.conf".source
   ];
   systemd.tmpfiles.rules = [
     "f /var/log/bird.log 0644 bird bird -"
