@@ -371,3 +371,8 @@ kubeProxy:
 kubeEtcd:
   endpoints:
   - 192.168.0.91
+
+# XXX: Matches different kubelet versions.
+defaultRules:
+  disabled:
+    KubeVersionMismatch: true
