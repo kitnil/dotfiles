@@ -100,6 +100,7 @@
   networking.firewall.allowedTCPPorts = [
     179
     1080
+    9324                        # prometheus bird exporter
     31247
   ];
   services.prometheus.exporters.bird = {
