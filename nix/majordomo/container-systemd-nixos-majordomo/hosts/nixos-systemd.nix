@@ -222,4 +222,13 @@
     config.environment.etc."bird/peers/nixos-dante.conf".source
     config.environment.etc."bird/peers/nixos-hev.conf".source
   ];
+  networking.firewall = {
+    enable = lib.mkForce true;
+    extraCommands = ''
+      iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -o tapvpn -j MASQUERADE
+    '';
+    extraStopCommands = ''
+      iptables -t nat -D POSTROUTING -s 192.168.0.0/24 -o tapvpn -j MASQUERADE
+    '';
+  };
 }
