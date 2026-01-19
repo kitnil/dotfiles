@@ -61,11 +61,6 @@ prometheus:
       job_name: node
     - static_configs:
       - targets:
-        - 192.168.0.144:9153
-      honor_labels: true
-      job_name: dnsmasq
-    - static_configs:
-      - targets:
         - https://wugi.info/
         - https://guix.wugi.info/
         - https://blog.wugi.info/

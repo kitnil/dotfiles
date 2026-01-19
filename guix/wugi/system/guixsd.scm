@@ -1451,10 +1451,6 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                    (listen-address "0.0.0.0:9095")
                    (prometheus-pushgateway "/home/oleg/.nix-profile/bin/pushgateway")))
 
-         (service prometheus-dnsmasq-service-type
-                  (prometheus-dnsmasq-configuration
-                   (prometheus-dnsmasq "/home/oleg/.nix-profile/bin/dnsmasq_exporter")))
-
          (service openssh-service-type
                   (openssh-configuration
                    (authorized-keys
