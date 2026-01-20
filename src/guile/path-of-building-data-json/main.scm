@@ -1061,7 +1061,12 @@
                                           "Viridian Jewel")))
                            (poe-item-filter-block-configuration
                             (inherit jewel)
-                            (classes '("Abyss Jewels")))))
+                            (classes '("Abyss Jewels")))
+                           (poe-item-filter-block-configuration
+                            (inherit jewel)
+                            (base-types '("Small Cluster Jewel"
+                                          "Medium Cluster Jewel"
+                                          "Large Cluster Jewel")))))
 
                    (let ((gem (poe-item-filter-block-configuration
                                (set-text-color
