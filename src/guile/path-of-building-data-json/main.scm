@@ -878,6 +878,7 @@
                             (green 0)
                             (blue 86)
                             (alpha 255)))
+                          (set-font-size 45)
                           (continue? #t))
 
                          (poe-item-filter-block-configuration

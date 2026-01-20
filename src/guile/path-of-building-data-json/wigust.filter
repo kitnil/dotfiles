@@ -113,6 +113,7 @@ Show
 
 Show
 	BaseType == "Amethyst Ring" "Gold Amulet" "Gold Ring" "Onyx Amulet" 
+	SetFontSize 45
 	SetBorderColor 0 0 0 255
 	SetBackgroundColor 38 0 86 255
 	Continue
