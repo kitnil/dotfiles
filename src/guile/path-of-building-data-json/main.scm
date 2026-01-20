@@ -1044,7 +1044,41 @@
                                  (volume 300)))
                                (play-effect
                                 (poe-item-filter-play-effect-configuration
-                                 (colour 'Grey))))))
+                                 (colour 'Grey)))))
+                         (high-value-gem (poe-item-filter-block-configuration
+                                          (classes '("Skill Gems"
+                                                     "Support Gems"))
+                                          (set-text-color
+                                           (poe-item-filter-color-configuration
+                                            (red 255)
+                                            (green 0)
+                                            (blue 0)
+                                            (alpha 255)))
+                                          (set-border-color
+                                           (poe-item-filter-color-configuration
+                                            (red 255)
+                                            (green 0)
+                                            (blue 0)
+                                            (alpha 255)))
+                                          (set-background-color
+                                           (poe-item-filter-color-configuration
+                                            (red 255)
+                                            (green 255)
+                                            (blue 255)
+                                            (alpha 255)))
+                                          (play-alert-sound
+                                           (poe-item-filter-play-alert-sound-configuration
+                                            (id 6)
+                                            (volume 300)))
+                                          (play-effect
+                                           (poe-item-filter-play-effect-configuration
+                                            (colour 'Red)))
+                                          (minimap-icon
+                                           (poe-item-filter-minimap-icon-configuration
+                                            (enabled? #t)
+                                            (size 0)
+                                            (colour 'Red)
+                                            (shape 'Star))))))
                      (list
                       (poe-item-filter-block-configuration
                        (inherit gem)
@@ -1059,32 +1093,7 @@
                                  (operator '>=))))
 
                       (poe-item-filter-block-configuration
-                       (inherit gem)
-                       (set-text-color
-                        (poe-item-filter-color-configuration
-                         (red 255)
-                         (green 0)
-                         (blue 0)
-                         (alpha 255)))
-                       (set-border-color
-                        (poe-item-filter-color-configuration
-                         (red 255)
-                         (green 0)
-                         (blue 0)
-                         (alpha 255)))
-                       (set-background-color
-                        (poe-item-filter-color-configuration
-                         (red 255)
-                         (green 255)
-                         (blue 255)
-                         (alpha 255)))
-                       (play-alert-sound
-                        (poe-item-filter-play-alert-sound-configuration
-                         (id 6)
-                         (volume 300)))
-                       (play-effect
-                        (poe-item-filter-play-effect-configuration
-                         (colour 'Red)))
+                       (inherit high-value-gem)
                        (base-types '("Awakened"
                                      "Awakened Ancestral Call Support"
                                      "Awakened Brutality Support"
