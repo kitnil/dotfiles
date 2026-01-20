@@ -343,6 +343,9 @@
   (identified?
    (boolean-with-field 'disabled)
    "")
+  (transfigured-gem?
+   (boolean-with-field 'disabled)
+   "")
   (continue?
    (continue #f)
    ""))
@@ -1114,7 +1117,11 @@
                                      "Awakened Swift Affliction Support"
                                      "Awakened Unbound Ailments Support"
                                      "Awakened Unleash Support"
-                                     "Awakened Void Manipulation Support")))))
+                                     "Awakened Void Manipulation Support")))
+
+                      (poe-item-filter-block-configuration
+                       (inherit high-value-gem)
+                       (transfigured-gem? #t))))
 
                    (list
                     (poe-item-filter-block-configuration

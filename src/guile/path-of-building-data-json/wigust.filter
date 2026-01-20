@@ -192,6 +192,16 @@ Show
 	PlayAlertSound 6 300
 	PlayEffect Red
 
+Show
+	Class == "Skill Gems" "Support Gems" 
+	MinimapIcon 0 Red Star
+	SetBorderColor 255 0 0 255
+	SetBackgroundColor 255 255 255 255
+	SetTextColor 255 0 0 255
+	PlayAlertSound 6 300
+	PlayEffect Red
+	TransfiguredGem True
+
 # Highlight Rogue markers.
 Show
 	BaseType "Rogue's Marker" 
