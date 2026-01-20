@@ -956,7 +956,9 @@
                             (shape 'Circle))))
 
                          (poe-item-filter-block-configuration
-                          (classes '("Maps" "Map Fragments"))
+                          (classes '("Maps"
+                                     "Map Fragments"
+                                     "Expedition Logbook"))
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 0)
