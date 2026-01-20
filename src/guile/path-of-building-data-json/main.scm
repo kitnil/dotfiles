@@ -882,6 +882,11 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
+                          (base-types '("Cloth Belt"))
+                          (set-font-size 45)
+                          (continue? #t))
+
+                         (poe-item-filter-block-configuration
                           (base-types '("Vanguard Belt"))
                           (play-effect
                            (poe-item-filter-play-effect-configuration
