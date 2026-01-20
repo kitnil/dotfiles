@@ -119,7 +119,13 @@ Show
 	Continue
 
 Show
+	BaseType "Cloth Belt" 
+	SetFontSize 45
+	Continue
+
+Show
 	BaseType "Vanguard Belt" 
+	SetFontSize 45
 	PlayEffect Green
 	Continue
 
