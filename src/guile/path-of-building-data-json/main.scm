@@ -1097,8 +1097,7 @@
 
                       (poe-item-filter-block-configuration
                        (inherit high-value-gem)
-                       (base-types '("Awakened"
-                                     "Awakened Ancestral Call Support"
+                       (base-types '("Awakened Ancestral Call Support"
                                      "Awakened Brutality Support"
                                      "Awakened Cast On Critical Strike Support"
                                      "Awakened Chain Support"
@@ -1118,6 +1117,10 @@
                                      "Awakened Unbound Ailments Support"
                                      "Awakened Unleash Support"
                                      "Awakened Void Manipulation Support")))
+
+                      (poe-item-filter-block-configuration
+                       (inherit high-value-gem)
+                       (base-types '("Awakened")))
 
                       (poe-item-filter-block-configuration
                        (inherit high-value-gem)

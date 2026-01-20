@@ -183,7 +183,17 @@ Show
 	PlayEffect Grey
 
 Show
-	BaseType == "Awakened" "Awakened Ancestral Call Support" "Awakened Brutality Support" "Awakened Cast On Critical Strike Support" "Awakened Chain Support" "Awakened Elemental Damage with Attacks Support" "Awakened Empower Support" "Awakened Enhance Support" "Awakened Enlighten Support" "Awakened Fork Support" "Awakened Generosity Support" "Awakened Greater Multiple Projectiles Support" "Awakened Increased Area of Effect Support" "Awakened Melee Physical Damage Support" "Awakened Multistrike Support" "Awakened Spell Cascade Support" "Awakened Spell Echo Support" "Awakened Swift Affliction Support" "Awakened Unbound Ailments Support" "Awakened Unleash Support" "Awakened Void Manipulation Support" 
+	BaseType == "Awakened Ancestral Call Support" "Awakened Brutality Support" "Awakened Cast On Critical Strike Support" "Awakened Chain Support" "Awakened Elemental Damage with Attacks Support" "Awakened Empower Support" "Awakened Enhance Support" "Awakened Enlighten Support" "Awakened Fork Support" "Awakened Generosity Support" "Awakened Greater Multiple Projectiles Support" "Awakened Increased Area of Effect Support" "Awakened Melee Physical Damage Support" "Awakened Multistrike Support" "Awakened Spell Cascade Support" "Awakened Spell Echo Support" "Awakened Swift Affliction Support" "Awakened Unbound Ailments Support" "Awakened Unleash Support" "Awakened Void Manipulation Support" 
+	Class == "Skill Gems" "Support Gems" 
+	MinimapIcon 0 Red Star
+	SetBorderColor 255 0 0 255
+	SetBackgroundColor 255 255 255 255
+	SetTextColor 255 0 0 255
+	PlayAlertSound 6 300
+	PlayEffect Red
+
+Show
+	BaseType "Awakened" 
 	Class == "Skill Gems" "Support Gems" 
 	MinimapIcon 0 Red Star
 	SetBorderColor 255 0 0 255
