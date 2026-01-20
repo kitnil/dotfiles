@@ -886,6 +886,7 @@
                           (play-effect
                            (poe-item-filter-play-effect-configuration
                             (colour 'Green)))
+                          (set-font-size 45)
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
