@@ -414,7 +414,7 @@
            (append (list (poe-item-filter-block-configuration
                           (commentary "Highlight border of best crafting bases.")
                           (item-level (poe-item-filter-conditional-value-configuration
-                                       (value 82)
+                                       (value 84)
                                        (operator '>=)))
                           (set-border-color (poe-item-filter-color-configuration
                                              (red 74)

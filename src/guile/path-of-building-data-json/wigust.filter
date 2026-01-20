@@ -1,6 +1,6 @@
 # Highlight border of best crafting bases.
 Show
-	ItemLevel >= 82
+	ItemLevel >= 84
 	SetBorderColor 74 230 58 255
 	Continue
 
