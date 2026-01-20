@@ -1056,7 +1056,56 @@
                        (inherit gem)
                        (quality (poe-item-filter-conditional-value-configuration
                                  (value 1)
-                                 (operator '>=))))))
+                                 (operator '>=))))
+
+                      (poe-item-filter-block-configuration
+                       (inherit gem)
+                       (set-text-color
+                        (poe-item-filter-color-configuration
+                         (red 255)
+                         (green 0)
+                         (blue 0)
+                         (alpha 255)))
+                       (set-border-color
+                        (poe-item-filter-color-configuration
+                         (red 255)
+                         (green 0)
+                         (blue 0)
+                         (alpha 255)))
+                       (set-background-color
+                        (poe-item-filter-color-configuration
+                         (red 255)
+                         (green 255)
+                         (blue 255)
+                         (alpha 255)))
+                       (play-alert-sound
+                        (poe-item-filter-play-alert-sound-configuration
+                         (id 6)
+                         (volume 300)))
+                       (play-effect
+                        (poe-item-filter-play-effect-configuration
+                         (colour 'Red)))
+                       (base-types '("Awakened"
+                                     "Awakened Ancestral Call Support"
+                                     "Awakened Brutality Support"
+                                     "Awakened Cast On Critical Strike Support"
+                                     "Awakened Chain Support"
+                                     "Awakened Elemental Damage with Attacks Support"
+                                     "Awakened Empower Support"
+                                     "Awakened Enhance Support"
+                                     "Awakened Enlighten Support"
+                                     "Awakened Fork Support"
+                                     "Awakened Generosity Support"
+                                     "Awakened Greater Multiple Projectiles Support"
+                                     "Awakened Increased Area of Effect Support"
+                                     "Awakened Melee Physical Damage Support"
+                                     "Awakened Multistrike Support"
+                                     "Awakened Spell Cascade Support"
+                                     "Awakened Spell Echo Support"
+                                     "Awakened Swift Affliction Support"
+                                     "Awakened Unbound Ailments Support"
+                                     "Awakened Unleash Support"
+                                     "Awakened Void Manipulation Support")))))
 
                    (list
                     (poe-item-filter-block-configuration
