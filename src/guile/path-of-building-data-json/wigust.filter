@@ -12,6 +12,14 @@ Show
 	PlayAlertSound 2 300
 	PlayEffect Grey
 
+Show
+	MemoryStrands >= 1
+	MinimapIcon 1 White Triangle
+	SetBorderColor 30 190 190 255
+	SetTextColor 30 190 190 255
+	PlayAlertSound 2 300
+	PlayEffect Grey
+
 # Stop apply rules to scrolls.
 Show
 	BaseType == "Portal Scroll" "Scroll of Wisdom" 
