@@ -180,6 +180,7 @@
               };
             };
           }
+          ./container-systemd-nixos-workstation-pc0/private.nix
         ]
       ];
       containerSystemdNixosTorModules = builtins.concatLists [
