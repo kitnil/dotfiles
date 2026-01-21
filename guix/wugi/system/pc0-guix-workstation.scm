@@ -74,7 +74,13 @@ program.")))
                      %base-user-accounts))
 
       ;; Globally-installed packages.
-      (packages (append (list bash-completion binutils file lvm2 openssh runc)
+      (packages (append (list bash-completion
+                              binutils
+                              file
+                              lvm2
+                              openssh
+                              runc
+                              glibc)
                         %base-packages))
 
       ;; Because the system will run in a Docker container, we may omit many
