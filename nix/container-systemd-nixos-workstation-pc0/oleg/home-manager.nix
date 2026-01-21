@@ -9,6 +9,7 @@ in
   ];
   home.packages = [
     pkgs.firejail
+    pkgs.fuzzel
   ];
   programs.chromium = {
     enable = true;
