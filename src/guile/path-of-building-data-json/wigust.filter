@@ -1,3 +1,10 @@
+# Lower font for basic items.
+Show
+	ItemLevel < 84
+	Class == "Helmets" "Body Armour" "Boots" "Gloves" "Shields" "Bows" "Claws" "Corpses" "Daggers" "One Hand Axes" "One Hand Maces" "One Hand Swords" "Quivers" "Rune Daggers" "Sceptres" "Staves" "Thrusting One Hand Swords" "Two Hand Axes" "Two Hand Maces" "Two Hand Swords" "Wands" "Warstaves" 
+	SetFontSize 25
+	Continue
+
 # Highlight border of best crafting bases.
 Show
 	ItemLevel >= 84

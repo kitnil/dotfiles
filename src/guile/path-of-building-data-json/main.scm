@@ -412,6 +412,35 @@
          (poe-item-filter-configuration
           (blocks
            (append (list (poe-item-filter-block-configuration
+                          (commentary "Lower font for basic items.")
+                          (classes (append '("Helmets"
+                                             "Body Armour"
+                                             "Boots"
+                                             "Gloves"
+                                             "Shields")
+                                           '("Bows"
+                                             "Claws"
+                                             "Corpses"
+                                             "Daggers"
+                                             "One Hand Axes"
+                                             "One Hand Maces"
+                                             "One Hand Swords"
+                                             "Quivers"
+                                             "Rune Daggers"
+                                             "Sceptres"
+                                             "Staves"
+                                             "Thrusting One Hand Swords"
+                                             "Two Hand Axes"
+                                             "Two Hand Maces"
+                                             "Two Hand Swords"
+                                             "Wands"
+                                             "Warstaves")))
+                          (item-level (poe-item-filter-conditional-value-configuration
+                                       (value 84)
+                                       (operator '<)))
+                          (set-font-size 25)
+                          (continue? #t))
+                         (poe-item-filter-block-configuration
                           (commentary "Highlight border of best crafting bases.")
                           (item-level (poe-item-filter-conditional-value-configuration
                                        (value 84)
