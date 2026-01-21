@@ -3,6 +3,23 @@
 let
   inherit (lib) fold;
   inherit (customLib) firefoxBaseProfile;
+  emacs-with-packages = with pkgs; ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
+    epkgs: [
+      epkgs.deadgrep
+      epkgs.edit-indirect
+      epkgs.magit
+      epkgs.helm
+      epkgs.helm-projectile
+      epkgs.lua-mode
+      epkgs.ivy
+      epkgs.groovy-mode
+      epkgs.nginx-mode
+      epkgs.nix-mode
+      epkgs.projectile
+      epkgs.yaml-mode
+      epkgs.wgrep
+    ]
+  ));
 in {
   imports = [
     ../../modules/services/chatterino.nix
@@ -51,6 +68,8 @@ in {
     rsync
 
     sshs
+
+    emacs-with-packages
   ];
 
   home.file = {
@@ -617,23 +636,7 @@ in {
 
   services.emacs = {
     enable = true;
-    package = with pkgs; ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
-      epkgs: [
-        epkgs.deadgrep
-        epkgs.edit-indirect
-        epkgs.magit
-        epkgs.helm
-        epkgs.helm-projectile
-        epkgs.lua-mode
-        epkgs.ivy
-        epkgs.groovy-mode
-        epkgs.nginx-mode
-        epkgs.nix-mode
-        epkgs.projectile
-        epkgs.yaml-mode
-        epkgs.wgrep
-      ]
-    ));
+    package = emacs-with-packages;
     client = {
       enable = true;
     };
