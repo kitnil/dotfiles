@@ -4,6 +4,9 @@ let
   inherit (customLib) firefoxBaseProfile;
 in
 {
+  imports = [
+    ./../private.nix
+  ];
   home.packages = [
     pkgs.firejail
   ];
