@@ -166,6 +166,7 @@
                 {
                   nixpkgs.system = system;
                   environment.systemPackages = [
+                    pkgs.binutils
                     pkgs.ethtool
                     pkgs.iftop
                     pkgs.lsof
