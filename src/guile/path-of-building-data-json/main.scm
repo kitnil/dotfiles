@@ -346,6 +346,9 @@
   (identified?
    (boolean-with-field 'disabled)
    "")
+  (fractured-item?
+   (boolean-with-field 'disabled)
+   "")
   (transfigured-gem?
    (boolean-with-field 'disabled)
    "")
@@ -1410,6 +1413,12 @@
                           (play-effect
                            (poe-item-filter-play-effect-configuration
                             (colour 'Green))))
+
+                         (poe-item-filter-block-configuration
+                          (commentary "Show fractured items.")
+                          (fractured-item? #t)
+                          (show? #t)
+                          (continue? #t))
 
                          (poe-item-filter-block-configuration
                           (commentary "Hide identified items.")

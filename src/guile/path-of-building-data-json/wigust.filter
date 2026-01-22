@@ -473,6 +473,11 @@ Show
 	Class == "Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks" 
 	PlayEffect Green
 
+# Show fractured items.
+Show
+	FracturedItem True
+	Continue
+
 # Hide identified items.
 Hide
 	Identified True
