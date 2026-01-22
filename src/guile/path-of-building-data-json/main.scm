@@ -931,6 +931,23 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
+                          (base-types '("Talisman"))
+                          (set-border-color
+                           (poe-item-filter-color-configuration
+                            (red 0)
+                            (green 0)
+                            (blue 0)
+                            (alpha 255)))
+                          (set-background-color
+                           (poe-item-filter-color-configuration
+                            (red 38)
+                            (green 0)
+                            (blue 86)
+                            (alpha 255)))
+                          (set-font-size 45)
+                          (continue? #t))
+
+                         (poe-item-filter-block-configuration
                           (base-types '("Cloth Belt"))
                           (set-font-size 45)
                           (continue? #t))

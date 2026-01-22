@@ -134,6 +134,13 @@ Show
 	Continue
 
 Show
+	BaseType "Talisman" 
+	SetFontSize 45
+	SetBorderColor 0 0 0 255
+	SetBackgroundColor 38 0 86 255
+	Continue
+
+Show
 	BaseType "Cloth Belt" 
 	SetFontSize 45
 	Continue
