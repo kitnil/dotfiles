@@ -440,7 +440,7 @@
                          (poe-item-filter-block-configuration
                           (quality (poe-item-filter-conditional-value-configuration
                                     (value 20)
-                                    (operator '>=)))
+                                    (operator '>)))
                           (set-text-color
                            (poe-item-filter-color-configuration
                             (red 30)

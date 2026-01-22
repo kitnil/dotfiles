@@ -12,7 +12,7 @@ Show
 	Continue
 
 Show
-	Quality >= 20
+	Quality > 20
 	MinimapIcon 1 White Triangle
 	SetBorderColor 30 190 190 255
 	SetTextColor 30 190 190 255
