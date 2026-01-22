@@ -416,28 +416,11 @@
           (blocks
            (append (list (poe-item-filter-block-configuration
                           (commentary "Lower font for basic items.")
-                          (classes (append '("Helmets"
-                                             "Body Armour"
-                                             "Boots"
-                                             "Gloves"
-                                             "Shields")
-                                           '("Bows"
-                                             "Claws"
-                                             "Corpses"
-                                             "Daggers"
-                                             "One Hand Axes"
-                                             "One Hand Maces"
-                                             "One Hand Swords"
-                                             "Quivers"
-                                             "Rune Daggers"
-                                             "Sceptres"
-                                             "Staves"
-                                             "Thrusting One Hand Swords"
-                                             "Two Hand Axes"
-                                             "Two Hand Maces"
-                                             "Two Hand Swords"
-                                             "Wands"
-                                             "Warstaves")))
+                          (classes '("Helmets"
+                                     "Body Armour"
+                                     "Boots"
+                                     "Gloves"
+                                     "Shields"))
                           (item-level (poe-item-filter-conditional-value-configuration
                                        (value 84)
                                        (operator '<)))
