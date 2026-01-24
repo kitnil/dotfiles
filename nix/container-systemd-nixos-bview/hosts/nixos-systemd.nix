@@ -22,8 +22,14 @@
       neighbors = [
         {
           config = {
-            neighbor-address = "192.168.0.195";
-            peer-as = 64998;
+            neighbor-address = "192.168.0.180";
+            peer-as = 64993;
+          };
+          apply-policy = {
+            config = {
+              default-import-policy = "reject-route";
+              default-export-policy = "accept-route";
+            };
           };
         }
       ];
