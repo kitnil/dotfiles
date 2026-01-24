@@ -400,12 +400,13 @@
      (with-input-from-file "input.json"
        read-string)))
   (define exclude-sub-types
-    '("Armour"
+    '(;; "Armour"
       ;; "Armour/Energy Shield"
       "Armour/Evasion"
-      "Energy Shield"
+      ;; "Energy Shield"
       "Evasion"
-      "Evasion/Energy Shield"))
+      ;; "Evasion/Energy Shield"
+      ))
     (define include-sub-types
     '("Armour/Energy Shield"
       "Energy Shield"))
