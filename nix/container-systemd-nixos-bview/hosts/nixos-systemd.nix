@@ -36,4 +36,20 @@
   local.services.prometheus.exporters.blackbox = {
     enable = true;
   };
+  services.bird = {
+    enable = true;
+    config = lib.readFile ./../bird.1.conf;
+    checkConfig = false;
+  };
+  environment.etc = {
+    "bird/bird.conf" = {
+      mode = "0644";
+    };
+  };
+  systemd.services.bird.reloadTriggers = [
+    config.environment.etc."bird/bird.conf".source
+  ];
+  services.prometheus.exporters.bird = {
+    enable = true;
+  };
 }
