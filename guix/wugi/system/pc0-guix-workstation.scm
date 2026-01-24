@@ -299,6 +299,14 @@ program.")))
 
          (service runc-container-service-type
                   (runc-container-configuration
+                   (bundle "/srv/runc/nixos-bview")
+                   (name "nixos-bview")
+                   (requirement '(file-system-/sys/fs/cgroup
+                                  file-system-/srv/runc/nixos-bview))
+                   (auto-start? #t)))
+
+         (service runc-container-service-type
+                  (runc-container-configuration
                    (bundle "/srv/runc/guix-nanokvm")
                    (name "guix-nanokvm")
                    (requirement '(file-system-/sys/fs/cgroup
