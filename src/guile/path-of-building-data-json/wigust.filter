@@ -60,13 +60,6 @@ Show
 	PlayAlertSound 3 300
 	PlayEffect Brown
 
-# Highlight good percentage.
-Show
-	BaseDefencePercentile >= 70
-	Class == "Body Armours" "Helmets" "Gloves" "Boots" "Shields" 
-	SetBorderColor 0 255 0 255
-	Continue
-
 # Highlight high value currency.
 Show
 	BaseType == "Albino Rhoa Feather" "Awakener's Orb" "Blessing of Chayula" "Blessing of Xoph" "Crusader's Exalted Orb" "Divine Orb" "Eternal Orb" "Fracturing Orb" "Hinekora's Lock" "Hunter's Exalted Orb" "Mirror of Kalandra" "Mirror Shard" "Orb of Dominance" "Redeemer's Exalted Orb" "Reflecting Mist" "Tainted Divine Teardrop" "Valdo's Puzzle Box" "Warlord's Exalted Orb" 

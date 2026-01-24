@@ -637,18 +637,18 @@
                            (poe-item-filter-play-effect-configuration
                             (colour 'Brown))))
 
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight good percentage.")
-                          (classes '("Body Armours" "Helmets" "Gloves" "Boots" "Shields"))
-                          (base-defence-percentile (poe-item-filter-conditional-value-configuration
-                                                    (value 70)
-                                                    (operator '>=)))
-                          (set-border-color (poe-item-filter-color-configuration
-                                             (red 0)
-                                             (green 255)
-                                             (blue 0)
-                                             (alpha 255)))
-                          (continue? #t))
+                         ;; (poe-item-filter-block-configuration
+                         ;;  (commentary "Highlight good percentage.")
+                         ;;  (classes '("Body Armours" "Helmets" "Gloves" "Boots" "Shields"))
+                         ;;  (base-defence-percentile (poe-item-filter-conditional-value-configuration
+                         ;;                            (value 70)
+                         ;;                            (operator '>=)))
+                         ;;  (set-border-color (poe-item-filter-color-configuration
+                         ;;                     (red 0)
+                         ;;                     (green 255)
+                         ;;                     (blue 0)
+                         ;;                     (alpha 255)))
+                         ;;  (continue? #t))
 
                          (poe-item-filter-block-configuration
                           (commentary "Highlight high value currency.")
