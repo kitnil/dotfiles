@@ -221,6 +221,8 @@ guix_repository=$(HOME)/src/git.savannah.gnu.org/git/guix
 
 container_registry=harbor.home.wugi.info
 
+GIT_COMMIT="$$(git rev-parse HEAD)"
+
 .ONESHELL:
 $(STATE_TO_VC_HOSTNAMES):
 	set -o nounset -o errexit -o pipefail
