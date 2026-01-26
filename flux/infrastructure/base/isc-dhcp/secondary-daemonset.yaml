@@ -28,6 +28,7 @@ spec:
         value: "true"
         effect: "NoSchedule"
       hostNetwork: true
+      terminationGracePeriodSeconds: 5
       containers:
       - image: docker-registry.wugi.info/library/isc-dhcp:05152b44
         name: guix
