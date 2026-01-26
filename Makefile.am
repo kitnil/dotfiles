@@ -295,6 +295,7 @@ haproxy:
 .ONESHELL:
 isc-dhcp:
 	set -o nounset -o errexit -o pipefail -o xtrace
+	container_registry=docker-registry.wugi.info
 	commit_8=$$(echo $(GIT_COMMIT) | cut -c -8)
 	container=$$($(GUIX) system image --load-path=/home/oleg/src/cgit.wugi.info/wigust/dotfiles/guix/wugi --max-layers=100 -t docker --network guix/dotfiles/guixsd/docker-image-isc-dhcp.scm)
 	$(SKOPEO) copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
