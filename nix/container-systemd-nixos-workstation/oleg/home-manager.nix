@@ -36,7 +36,6 @@ in {
 
   home.sessionVariables = {
     WAYLAND_DISPLAY = "wayland-1";
-    XDG_RUNTIME_DIR = "/mnt/guix/run/user/1000";
   };
 
   home.packages = with pkgs; [
