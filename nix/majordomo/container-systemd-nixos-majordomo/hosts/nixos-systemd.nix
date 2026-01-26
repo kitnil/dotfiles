@@ -231,4 +231,19 @@
       iptables -t nat -D POSTROUTING -s 192.168.0.0/24 -o tapvpn -j MASQUERADE
     '';
   };
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      adwaita-fonts
+      dejavu_fonts
+      wqy_zenhei
+    ];
+    fontconfig = {
+      enable = true;
+    };
+  };
 }
