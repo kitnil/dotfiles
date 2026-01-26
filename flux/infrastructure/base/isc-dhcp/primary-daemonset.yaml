@@ -27,11 +27,12 @@ spec:
       - image: docker-registry.wugi.info/library/isc-dhcp:05152b44
         name: guix
         lifecycle:
-          # XXX: Use halt instead of SIGSEGV
-          exec:
-            command:
-            - /run/current-system/profile/bin/kill
-            - "-11"
+          preStop:
+            exec:
+              # XXX: Use halt instead of SIGSEGV
+              command:
+              - /run/current-system/profile/bin/kill
+              - "-11"
         volumeMounts:
         - mountPath: /etc/dhcpd.conf
           subPath: dhcpd.conf
