@@ -164,6 +164,7 @@
             modules = [
               ({ pkgs, ... }:
                 {
+                  nixpkgs.config.allowUnfree = true;
                   nixpkgs.system = system;
                   environment.systemPackages = [
                     pkgs.binutils
