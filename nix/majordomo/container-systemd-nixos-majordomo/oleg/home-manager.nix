@@ -6,7 +6,7 @@
   ];
   home.packages = [
     pkgs.ipmitool
-    # TODO: pkgs.ipmiview
+    pkgs.ipmiview
     pkgs.skopeo
     pkgs.robo3t
   ]
