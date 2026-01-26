@@ -193,6 +193,7 @@
               }
               {
                 home-manager = {
+                  useGlobalPkgs = true;
                   users = {
                     oleg = ./container-systemd-nixos-majordomo/oleg/home-manager.nix;
                   };
