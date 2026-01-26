@@ -29,7 +29,7 @@ spec:
         effect: "NoSchedule"
       hostNetwork: true
       containers:
-      - image: harbor.home.wugi.info/library/isc-dhcp:0633b40c
+      - image: docker-registry.wugi.info/library/isc-dhcp:05152b44
         name: guix
         volumeMounts:
         - mountPath: /etc/dhcpd.conf
