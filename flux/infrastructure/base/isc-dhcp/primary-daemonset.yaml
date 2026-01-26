@@ -26,6 +26,8 @@ spec:
       containers:
       - image: docker-registry.wugi.info/library/isc-dhcp:05152b44
         name: guix
+        lifecycle:
+          stopSignal: 11 # XXX: Use halt instead of SIGSEGV
         volumeMounts:
         - mountPath: /etc/dhcpd.conf
           subPath: dhcpd.conf
