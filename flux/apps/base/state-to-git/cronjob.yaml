@@ -22,7 +22,7 @@ spec:
             image: docker-registry.wugi.info/library/util-linux-with-udev
             command:
             - nsenter
-            - --target="1"
+            - --target=1
             - --mount
             - --uts
             - --ipc
