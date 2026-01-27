@@ -3154,11 +3154,11 @@
         "nixpkgs-unstable": "nixpkgs-unstable_26"
       },
       "locked": {
-        "lastModified": 1768210407,
-        "narHash": "sha256-v213H2c9ggBOFNteuN9ZbsWqVastP+tqxr/M0/+qexU=",
+        "lastModified": 1769332540,
+        "narHash": "sha256-OVQrq7hsMpUNqMOJgsuXnUG6qhW9vDTSoZe5y/I+Hzw=",
         "ref": "refs/heads/master",
-        "rev": "c86d0b3fa1c786fd1198e769fd214a702777eebb",
-        "revCount": 549,
+        "rev": "d20b3235a0b2aa80740a7617668771c6ecc5cc78",
+        "revCount": 557,
         "type": "git",
         "url": "ssh://git@gitlab.corp1.majordomo.ru/office/ssl-certificates"
       },
