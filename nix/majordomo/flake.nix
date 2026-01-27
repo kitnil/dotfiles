@@ -172,6 +172,7 @@
                     pkgs.iftop
                     pkgs.lsof
                     pkgs.mtr
+                    pkgs.openssl
                     pkgs.strace
                     pkgs.tcpdump
                     pkgs.tmux
