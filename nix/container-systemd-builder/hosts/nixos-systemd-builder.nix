@@ -19,7 +19,6 @@
   networking.useDHCP = false;
   networking.useNetworkd = false;
   networking.useHostResolvConf = false;
-  networking.firewall.enable = false;
   networking.resolvconf.enable = false;
 
   virtualisation.docker = {

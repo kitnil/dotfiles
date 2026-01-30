@@ -75,7 +75,6 @@
     31247                       # prometheus mtr exporters
   ];
   networking.firewall = {
-    enable = lib.mkForce true;
     extraCommands = ''
       iptables -t nat -A PREROUTING -s 192.168.0.0/24 -p tcp --dport 80 -j REDIRECT --to-ports 8888
       iptables -t nat -A PREROUTING -s 192.168.0.0/24 -p tcp --dport 443 -j REDIRECT --to-ports 8888

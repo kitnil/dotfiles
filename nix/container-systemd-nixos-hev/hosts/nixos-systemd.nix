@@ -54,7 +54,6 @@
   systemd.tmpfiles.rules = [
     "f /var/log/bird.log 0644 bird bird -"
   ];
-  networking.firewall.enable = lib.mkForce true;
   services.prometheus.exporters.bird = {
     enable = true;
   };

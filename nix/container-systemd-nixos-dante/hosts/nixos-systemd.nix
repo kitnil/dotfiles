@@ -73,7 +73,6 @@
     1081
     9050                        # tor
   ];
-  networking.firewall.enable = lib.mkForce true;
   services.prometheus.exporters.bird = {
     enable = true;
   };
