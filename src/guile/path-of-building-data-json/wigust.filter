@@ -41,6 +41,15 @@ Show
 	PlayAlertSound 6 300
 	PlayEffect Red
 
+# Highlight sockets vendor recipe.
+Show
+	SocketGroup >= 3RGB
+	MinimapIcon 1 White Triangle
+	SetBorderColor 30 190 190 255
+	SetTextColor 30 190 190 255
+	PlayAlertSound 2 300
+	PlayEffect Grey
+
 # Highlight 6 sockets vendor recipe.
 Show
 	Sockets = 6
