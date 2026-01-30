@@ -19,6 +19,9 @@
   time.timeZone = "Europe/Moscow";
 
   networking = {
+    # Override virtualisation/docker-image.nix configuration.
+    firewall.enable = lib.mkForce true;
+
     hostName = ""; # empty
     useDHCP = false;
     useNetworkd = false;
