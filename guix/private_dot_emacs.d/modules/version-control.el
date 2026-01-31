@@ -428,8 +428,7 @@ If SHOW-BUFFER, also show the *git-prefetch* output."
                         git-prefetch-buffer-name
                         git-prefetch-buffer-name
                         wugi-git-prefetch
-                        '())))
-      (set-process-sentinel proc 'git-prefetch-sentinel)))
+                        '())))))
   (when show-buffer
     (set-window-buffer (selected-window)
                        (process-buffer (git-prefetch-get-proc)))))
