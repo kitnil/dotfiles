@@ -195,7 +195,6 @@
                           "run-nix-daemon"
                           "run-openvpn"
                           "run-place-existing-windows"
-                          "run-stumpwm"
                           "sbcl"
                           "scan"
                           "sensors.py"
