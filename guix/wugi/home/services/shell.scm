@@ -235,7 +235,8 @@
                           "youtube-dl-music-play-url"
                           "yt"
                           "waybar-1.sh"
-                          "windows")))))
+                          "windows"
+                          "wugi-mbsync")))))
 
 (define home-parallel-service
   (simple-service 'parallel-config
