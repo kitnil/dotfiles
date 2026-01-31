@@ -408,7 +408,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ;;; git-maintenance
 ;;;
 
-(setq wugi-git-prefetch "/home/oleg/bin/wugi-git-prefetch")
+(setq wugi-git-prefetch (executable-find "wugi-git-prefetch"))
 (setq git-prefetch-buffer-name "*wugi-git*")
 (defun git-prefetch-get-proc ()
   "Get the running git-prefetch process (or nil if no such)."
