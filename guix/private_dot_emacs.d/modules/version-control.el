@@ -402,3 +402,34 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ;; NOTE: Use ivy-magit-todos instead of magit-todos-mode
 (when (boundp #'magit-todos-mode)
   (magit-todos-mode))
+
+
+;;;
+;;; git-maintenance
+;;;
+
+(setq wugi-git-prefetch "/home/oleg/bin/wugi-git-prefetch")
+(setq git-prefetch-buffer-name "*wugi-git*")
+(defun git-prefetch-get-proc ()
+  "Get the running git-prefetch process (or nil if no such)."
+  (let ((b (get-buffer "*wugi-git*")))
+    (and (buffer-live-p b)
+         (get-buffer-process b))))
+
+(defun wugi-git-prefetch (&optional show-buffer)
+  "Run the `git-prefetch' command, asynchronously, then run `git-prefetch-exit-hook'.
+If SHOW-BUFFER, also show the *git-prefetch* output."
+  (interactive "P")
+  (if (git-prefetch-get-proc)
+      (message "Please wait, git-prefetch is already fetching, see buffer *git-prefetch* for details.")
+    (let* ((dummy (when (get-buffer git-prefetch-buffer-name)
+                    (kill-buffer git-prefetch-buffer-name)))
+           (proc (apply 'start-process
+                        git-prefetch-buffer-name
+                        git-prefetch-buffer-name
+                        wugi-git-prefetch
+                        '())))
+      (set-process-sentinel proc 'git-prefetch-sentinel)))
+  (when show-buffer
+    (set-window-buffer (selected-window)
+                       (process-buffer (git-prefetch-get-proc)))))
