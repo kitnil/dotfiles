@@ -289,6 +289,9 @@
   (item-level
    (conditional-value (poe-item-filter-conditional-value-configuration))
    "")
+  (area-level
+   (conditional-value (poe-item-filter-conditional-value-configuration))
+   "")
   (stack-size
    (conditional-value (poe-item-filter-conditional-value-configuration))
    "")
@@ -543,6 +546,9 @@
 
                          (poe-item-filter-block-configuration
                           (commentary "Highlight sockets vendor recipe.")
+                          (area-level (poe-item-filter-conditional-value-configuration
+                                       (value 76)
+                                       (operator '<)))
                           (socket-group (poe-item-filter-conditional-value-configuration
                                          (value '3RGB)
                                          (operator '>=)))
