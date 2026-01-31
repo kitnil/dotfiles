@@ -17,7 +17,6 @@
   (simple-service 'applications
                   home-files-service-type
                   (list `(".local/share/applications/mupdf.desktop" ,(local-file (string-append %distro-directory "/dot_local/share/applications/mupdf.desktop")))
-                        `(".local/share/applications/gnus.desktop" ,(local-file (string-append %distro-directory "/dot_local/share/applications/gnus.desktop")))
                         `(".local/share/applications/org-protocol.desktop" ,(local-file (string-append %distro-directory "/dot_local/share/applications/org-protocol.desktop")))
                         `(".local/share/applications/mimeapps.list" ,(local-file (string-append %distro-directory "/dot_local/share/applications/mimeapps.list")))
                         `(".local/share/applications/guix-log.desktop" ,(local-file (string-append %distro-directory "/dot_local/share/applications/guix-log.desktop")))
