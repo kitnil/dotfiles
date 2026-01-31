@@ -1,2 +1,0 @@
-#!/bin/sh
-exec ssh -t 192.168.0.144 dtach -A mbsync.dtach mbsync -a

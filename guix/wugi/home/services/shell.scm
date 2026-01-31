@@ -237,7 +237,7 @@
                           "waybar-1.sh"
                           "windows"
                           "wugi-git-prefetch"
-                          "wugi-mbsync")))))
+                          "mbsync")))))
 
 (define home-parallel-service
   (simple-service 'parallel-config

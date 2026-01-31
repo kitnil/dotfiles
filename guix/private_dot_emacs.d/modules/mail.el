@@ -85,29 +85,3 @@
   (message-goto-cc)
   (search-backward-regexp "@")
   (insert "-done"))
-
-
-;;;
-;;; mbsync
-;;;
-
-(setq wugi-mbsync "/home/oleg/bin/wugi-mbsync")
-
-(defun wugi-mbsync (&optional show-buffer)
-  "Run the `mbsync' command, asynchronously, then run `mbsync-exit-hook'.
-If SHOW-BUFFER, also show the *mbsync* output."
-  (interactive "P")
-  (if (mbsync-get-proc)
-      (message "Please wait, mbsync is already fetching, see buffer *mbsync* for details.")
-    (let* ((dummy (when (get-buffer mbsync-buffer-name)
-                    (kill-buffer mbsync-buffer-name)))
-           (proc (apply 'start-process
-                        mbsync-buffer-name
-                        mbsync-buffer-name
-                        wugi-mbsync
-                        '())))
-      (set-process-filter proc 'mbsync-process-filter)
-      (set-process-sentinel proc 'mbsync-sentinel)))
-  (when show-buffer
-    (set-window-buffer (selected-window)
-                       (process-buffer (mbsync-get-proc)))))
