@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022, 2026 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -40,18 +40,6 @@
          (group "users")
          (comment "SSH forwarding privilege separation user")
          (home-directory "/home/tail-ssh-tunnel"))
-        (user-account
-         (name "spb-zabbix-ssh-tunnel")
-         (uid 30020)
-         (group "users")
-         (comment "SSH forwarding privilege separation user")
-         (home-directory "/home/spb-zabbix-ssh-tunnel"))
-        (user-account
-         (name "oracle-ssh-tunnel")
-         (uid 30021)
-         (group "users")
-         (comment "SSH forwarding privilege separation user")
-         (home-directory "/home/oracle-ssh-tunnel"))
         (user-account
          (name "vm1-ssh-tunnel")
          (uid 30022)
