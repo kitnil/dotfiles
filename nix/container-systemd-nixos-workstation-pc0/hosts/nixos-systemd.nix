@@ -64,4 +64,10 @@
       };
     };
   };
+
+  networking.firewall.allowedTCPPorts = [
+    179                         # bgp (bird)
+    9324                        # prometheus bird exporter
+    31247                       # prometheus mtr exporters
+  ];
 }
