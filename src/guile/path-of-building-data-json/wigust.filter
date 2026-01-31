@@ -43,7 +43,7 @@ Show
 
 # Highlight sockets vendor recipe.
 Show
-	AreaLevel < 76
+	AreaLevel < 75
 	SocketGroup >= 3RGB
 	MinimapIcon 1 White Triangle
 	SetBorderColor 30 190 190 255

@@ -547,7 +547,7 @@
                          (poe-item-filter-block-configuration
                           (commentary "Highlight sockets vendor recipe.")
                           (area-level (poe-item-filter-conditional-value-configuration
-                                       (value 76)
+                                       (value 75)
                                        (operator '<)))
                           (socket-group (poe-item-filter-conditional-value-configuration
                                          (value '3RGB)
