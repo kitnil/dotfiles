@@ -76,8 +76,6 @@
 
             %vm-zabbix-agent-configuration
 
-            %zabbix-nginx-configuration
-
             %openvpn-configuration-wugi.info
             %openvpn-configuration-majordomo.ru
 
@@ -393,29 +391,6 @@ EndSection\n")
                    "add_header Last-Modified \"\";")))))
    (ssl-certificate (letsencrypt-certificate "wugi.info"))
    (ssl-certificate-key (letsencrypt-key "wugi.info"))))
-
-(define %zabbix-nginx-configuration
-  (list
-   (nginx-server-configuration
-    (inherit %zabbix-front-end-configuration-nginx)
-    (server-name '("zabbix.wugi.info"))
-    (locations
-     (append (list (nginx-location-configuration
-                    (inherit php-location)
-                    (uri "/describe/natsu")
-                    (body (append '("alias /var/www/php;")
-                                  (nginx-location-configuration-body
-                                   (nginx-php-location)))))
-                   ;; For use by Certbot.
-                   (nginx-location-configuration
-                    (uri "/.well-known")
-                    (body '("root /var/www;"))))
-             (nginx-server-configuration-locations
-              %zabbix-front-end-configuration-nginx)))
-    (listen '("80" "443 ssl"))
-    (ssl-certificate (letsencrypt-certificate "zabbix.wugi.info"))
-    (ssl-certificate-key (letsencrypt-key "zabbix.wugi.info"))
-    (raw-content %mtls))))
 
 (define %openvpn-configuration-wugi.info
   (openvpn-configuration
