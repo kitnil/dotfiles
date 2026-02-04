@@ -33,6 +33,7 @@
   };
 
   console.enable = true;
+  systemd.services.reload-systemd-vconsole-setup.enable = false;
   systemd.services."getty@tty1" = {
     enable = false;
   };
