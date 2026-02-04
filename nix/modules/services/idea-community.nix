@@ -18,7 +18,7 @@ in
       };
       package = mkOption {
         type = types.package;
-        default = pkgs.jetbrains.idea-community;
+        default = pkgs.jetbrains.pycharm-oss;
         defaultText = "pkgs.idea-community";
         description = ''
           Idea-Community.

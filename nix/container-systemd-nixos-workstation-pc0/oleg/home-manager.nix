@@ -32,7 +32,7 @@ in
 
       vulkan-tools
 
-      jetbrains.pycharm-community
+      jetbrains.pycharm-oss
 
       kubernetes-helm
     ];
