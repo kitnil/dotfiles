@@ -1,5 +1,10 @@
 #!/bin/sh
 exec ssh -tt 192.168.0.144 <<'EOF'
 cd /home/oleg/src/gitlab.intr
-GIT_TRACE=1 dtach -A git.dtach git for-each-repo --config=maintenance.repo maintenance run --task=prefetch
+if GIT_TRACE=1 dtach -A git.dtach git for-each-repo --config=maintenance.repo maintenance run --task=prefetch
+then
+    exit 0
+else
+    exit 1
+fi
 EOF
