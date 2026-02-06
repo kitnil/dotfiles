@@ -421,7 +421,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 If SHOW-BUFFER, also show the *git-prefetch* output."
   (interactive "P")
   (if (git-prefetch-get-proc)
-      (message "Please wait, git-prefetch is already fetching, see buffer *git-prefetch* for details.")
+      (message "Please wait, git-prefetch is already fetching, see buffer *wugi-git* for details.")
     (let* ((dummy (when (get-buffer git-prefetch-buffer-name)
                     (kill-buffer git-prefetch-buffer-name)))
            (proc (apply 'start-process
