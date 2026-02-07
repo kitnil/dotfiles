@@ -1416,6 +1416,16 @@
                           (set-background-color color)
                           (continue? #t)))
 
+                         (let ((color (poe-item-filter-color-configuration
+                                       (red 140)
+                                       (green 60)
+                                       (blue 25)
+                                       (alpha 255))))
+                           (poe-item-filter-block-configuration
+                            (base-types '("Hallowed Hybrid Flask"))
+                            (set-border-color color)
+                            (set-background-color color)))
+
                          (poe-item-filter-block-configuration
                           (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks"))
                           (rarity '(Normal))
