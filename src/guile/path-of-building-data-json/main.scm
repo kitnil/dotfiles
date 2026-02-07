@@ -1298,6 +1298,37 @@
                      (continue? #t))
 )
 
+                   (map (lambda (type)
+                          (poe-item-filter-block-configuration
+                           (commentary (format #f "Lower ~s base items for low tier types."
+                                               type type))
+                           (rarity '(Normal Magic Rare))
+                           (base-types (sort (map (lambda (item)
+                                                    (first item))
+                                                  (filter (lambda (item)
+                                                            (and (and=> (assoc-ref item "type")
+                                                                        (lambda (sub-type)
+                                                                          (and (string= sub-type type)
+                                                                               (and=> (assoc-ref item "type")
+                                                                                      (lambda (t)
+                                                                                        (string= type t))))))
+                                                                 (and=> (assoc-ref item "req")
+                                                                        (lambda (req)
+                                                                          (and=> (assoc-ref req "level")
+                                                                                 (lambda (level)
+                                                                                   (< level 69)))))))
+                                                          base-items))
+                                             string<))
+                           (set-font-size 20)
+                           (area-level (poe-item-filter-conditional-value-configuration
+                                        (value 75)
+                                        (operator '>)))
+                           (continue? #t)))
+                        '("Body Armour"
+                          "Boots"
+                          "Gloves"
+                          "Helmet"))
+
                    (delete #f
                            (apply append
                                   (map (lambda (type)
@@ -1306,7 +1337,7 @@
                                                          (string= type "Body Armour"))
                                                     #f
                                                     (poe-item-filter-block-configuration
-                                                     (commentary (format #f "Decrease font size for ~s ~s base items."
+                                                     (commentary (format #f "Hide ~s ~s base items for specific defence types."
                                                                          type base-type))
                                                      (rarity '(Normal Magic Rare))
                                                      (base-types

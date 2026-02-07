@@ -277,7 +277,39 @@ Show
 	Identified False
 	Continue
 
-# Decrease font size for "Body Armour" "Armour/Evasion" base items.
+# Lower "Body Armour" base items for low tier types.
+Show
+	AreaLevel > 75
+	BaseType == "Arena Plate" "Assassin's Garb" "Astral Plate" "Battle Lamellar" "Battle Plate" "Blood Raiment" "Bone Armour" "Bronze Plate" "Buckskin Tunic" "Cabalist Regalia" "Chain Hauberk" "Chainmail Doublet" "Chainmail Tunic" "Chestplate" "Colosseum Plate" "Commander's Brigandine" "Conjurer's Vestment" "Conquest Chainmail" "Copper Plate" "Coronal Leather" "Crimson Raiment" "Crusader Chainmail" "Crusader Plate" "Crypt Armour" "Cutthroat's Garb" "Desert Brigandine" "Destiny Leather" "Destroyer Regalia" "Devout Chainmail" "Dragonscale Doublet" "Eelskin Tunic" "Elegant Ringmail" "Exquisite Leather" "Field Lamellar" "Frontier Leather" "Full Chainmail" "Full Dragonscale" "Full Leather" "Full Plate" "Full Ringmail" "Full Scale Armour" "Full Wyrmscale" "General's Brigandine" "Gladiator Plate" "Glorious Leather" "Glorious Plate" "Golden Mantle" "Golden Plate" "Holy Chainmail" "Hussar Brigandine" "Infantry Brigandine" "Lacquered Garb" "Latticed Ringmail" "Light Brigandine" "Lordly Plate" "Loricated Ringmail" "Mage's Vestment" "Majestic Plate" "Necromancer Silks" "Occultist's Vestment" "Oiled Coat" "Oiled Vest" "Ornate Ringmail" "Padded Jacket" "Quilted Jacket" "Ringmail Coat" "Sadist Garb" "Sage's Robe" "Saint's Hauberk" "Savant's Robe" "Scale Doublet" "Scarlet Raiment" "Scholar's Robe" "Sentinel Jacket" "Sharkskin Tunic" "Silk Robe" "Silken Garb" "Silken Vest" "Silken Wrap" "Sleek Coat" "Soldier's Brigandine" "Spidersilk Robe" "Strapped Leather" "Sun Leather" "Sun Plate" "Thief's Garb" "Vaal Regalia" "Varnished Coat" "War Plate" "Waxed Garb" "Widowsilk Robe" "Wild Leather" "Wyrmscale Doublet" "Zodiac Leather" 
+	SetFontSize 20
+	Rarity Normal Magic Rare
+	Continue
+
+# Lower "Boots" base items for low tier types.
+Show
+	AreaLevel > 75
+	BaseType == "Ambush Boots" "Ancient Greaves" "Antique Greaves" "Arcanist Slippers" "Assassin's Boots" "Basemetal Treads" "Bronzescale Boots" "Carnal Boots" "Chain Boots" "Clasped Boots" "Cloudwhisper Boots" "Conjurer Boots" "Crusader Boots" "Darksteel Treads" "Deerskin Boots" "Dragonscale Boots" "Duskwalk Slippers" "Eelskin Boots" "Goathide Boots" "Golden Caligae" "Goliath Greaves" "Hydrascale Boots" "Ironscale Boots" "Leatherscale Boots" "Legion Boots" "Mesh Boots" "Nightwind Slippers" "Nubuck Boots" "Plated Greaves" "Reinforced Greaves" "Ringmail Boots" "Riveted Boots" "Runic Greaves" "Runic Sollerets" "Samite Slippers" "Satin Slippers" "Scholar Boots" "Serpentscale Boots" "Shackled Boots" "Shagreen Boots" "Sharkskin Boots" "Silk Slippers" "Soldier Boots" "Sorcerer Boots" "Stealth Boots" "Steel Greaves" "Steelscale Boots" "Strapped Boots" "Titan Greaves" "Trapper Boots" "Vaal Greaves" "Velvet Slippers" "Windbreak Boots" "Wrapped Boots" "Wyrmscale Boots" "Zealot Boots" 
+	SetFontSize 20
+	Rarity Normal Magic Rare
+	Continue
+
+# Lower "Gloves" base items for low tier types.
+Show
+	AreaLevel > 75
+	BaseType == "Aetherwind Gloves" "Ambush Mitts" "Ancient Gauntlets" "Antique Gauntlets" "Apprentice Gloves" "Arcanist Gloves" "Assassin's Mitts" "Bronze Gauntlets" "Bronzescale Gauntlets" "Carnal Mitts" "Chain Gloves" "Clasped Mitts" "Conjurer Gloves" "Crusader Gloves" "Deerskin Gloves" "Dragonscale Gauntlets" "Eelskin Gloves" "Embroidered Gloves" "Goathide Gloves" "Golden Bracers" "Goliath Gauntlets" "Guarding Gauntlets" "Hydrascale Gauntlets" "Ironscale Gauntlets" "Legion Gloves" "Leyline Gloves" "Mesh Gloves" "Murder Mitts" "Nubuck Gloves" "Plated Gauntlets" "Preserving Gauntlets" "Ringmail Gloves" "Riveted Gloves" "Runic Gages" "Runic Gloves" "Samite Gloves" "Satin Gloves" "Serpentscale Gauntlets" "Shagreen Gloves" "Sharkskin Gloves" "Silk Gloves" "Soldier Gloves" "Stealth Gloves" "Steel Gauntlets" "Steelscale Gauntlets" "Strapped Mitts" "Tinker Gloves" "Trapper Mitts" "Vaal Gauntlets" "Velvet Gloves" "Wrapped Mitts" "Wyrmscale Gauntlets" "Zealot Gloves" 
+	SetFontSize 20
+	Rarity Normal Magic Rare
+	Continue
+
+# Lower "Helmet" base items for low tier types.
+Show
+	AreaLevel > 75
+	BaseType == "Atonement Mask" "Aventail Helmet" "Barbute Helmet" "Bone Circlet" "Callous Mask" "Close Helmet" "Cone Helmet" "Crusader Helmet" "Deicide Mask" "Demon Crown" "Ezomyte Burgonet" "Fencer Helm" "Festival Mask" "Fluted Bascinet" "Gale Crown" "Gilded Sallet" "Gladiator Helmet" "Golden Mask" "Golden Wreath" "Great Crown" "Great Helmet" "Harlequin Mask" "Hunter Hood" "Imp Crown" "Iron Circlet" "Iron Mask" "Lacquered Helmet" "Leather Hood" "Lunaris Circlet" "Magistrate Crown" "Mind Cage" "Necromancer Circlet" "Nightmare Bascinet" "Noble Tricorne" "Pig-Faced Bascinet" "Plague Mask" "Praetor Crown" "Prophet Crown" "Raven Mask" "Reaver Helmet" "Regicide Mask" "Royal Burgonet" "Runic Crest" "Runic Crown" "Runic Helm" "Rusted Coif" "Sallet" "Samnite Helmet" "Secutor Helm" "Siege Helmet" "Silken Hood" "Sinner Tricorne" "Solaris Circlet" "Soldier Helmet" "Sorrow Mask" "Steel Circlet" "Torture Cage" "Tribal Circlet" "Tricorne" "Ursine Pelt" "Vaal Mask" "Visored Sallet" "Winter Crown" "Wolf Pelt" "Zealot Helmet" 
+	SetFontSize 20
+	Rarity Normal Magic Rare
+	Continue
+
+# Hide "Body Armour" "Armour/Evasion" base items for specific defence types.
 Hide
 	BaseType == "Battle Lamellar" "Commander's Brigandine" "Conquest Lamellar" "Desert Brigandine" "Dragonscale Doublet" "Field Lamellar" "Full Dragonscale" "Full Scale Armour" "Full Wyrmscale" "Full Wyvernscale" "General's Brigandine" "Hussar Brigandine" "Infantry Brigandine" "Light Brigandine" "Marshall's Brigandine" "Scale Doublet" "Scale Vest" "Soldier's Brigandine" "Triumphant Lamellar" "Wyrmscale Doublet" 
 	SetFontSize 20
@@ -285,7 +317,7 @@ Hide
 	Rarity Normal Magic Rare
 	Continue
 
-# Decrease font size for "Body Armour" "Evasion" base items.
+# Hide "Body Armour" "Evasion" base items for specific defence types.
 Hide
 	BaseType == "Assassin's Garb" "Astral Leather" "Buckskin Tunic" "Coronal Leather" "Cutthroat's Garb" "Destiny Leather" "Eelskin Tunic" "Exquisite Leather" "Frontier Leather" "Full Leather" "Glorious Leather" "Shabby Jerkin" "Sharkskin Tunic" "Strapped Leather" "Sun Leather" "Supreme Leather" "Syndicate's Garb" "Thief's Garb" "Wild Leather" "Zodiac Leather" 
 	SetFontSize 20
@@ -293,7 +325,7 @@ Hide
 	Rarity Normal Magic Rare
 	Continue
 
-# Decrease font size for "Boots" "Armour/Evasion" base items.
+# Hide "Boots" "Armour/Evasion" base items for specific defence types.
 Hide
 	BaseType == "Bronzescale Boots" "Chimerascale Boots" "Dragonscale Boots" "Hydrascale Boots" "Ironscale Boots" "Leatherscale Boots" "Serpentscale Boots" "Steelscale Boots" "Two-Toned Boots" "Wyrmscale Boots" "Wyvernscale Boots" 
 	SetFontSize 20
@@ -301,7 +333,7 @@ Hide
 	Rarity Normal Magic Rare
 	Continue
 
-# Decrease font size for "Boots" "Evasion" base items.
+# Hide "Boots" "Evasion" base items for specific defence types.
 Hide
 	BaseType == "Cloudwhisper Boots" "Deerskin Boots" "Eelskin Boots" "Goathide Boots" "Harpyskin Boots" "Nubuck Boots" "Rawhide Boots" "Shagreen Boots" "Sharkskin Boots" "Slink Boots" "Stealth Boots" "Stormrider Boots" "Velour Boots" "Windbreak Boots" 
 	SetFontSize 20
@@ -309,7 +341,7 @@ Hide
 	Rarity Normal Magic Rare
 	Continue
 
-# Decrease font size for "Gloves" "Armour/Evasion" base items.
+# Hide "Gloves" "Armour/Evasion" base items for specific defence types.
 Hide
 	BaseType == "Bronzescale Gauntlets" "Chimerascale Gauntlets" "Dragonscale Gauntlets" "Fishscale Gauntlets" "Hydrascale Gauntlets" "Ironscale Gauntlets" "Serpentscale Gauntlets" "Steelscale Gauntlets" "Wyrmscale Gauntlets" "Wyvernscale Gauntlets" 
 	SetFontSize 20
@@ -317,7 +349,7 @@ Hide
 	Rarity Normal Magic Rare
 	Continue
 
-# Decrease font size for "Gloves" "Evasion" base items.
+# Hide "Gloves" "Evasion" base items for specific defence types.
 Hide
 	BaseType == "Apprentice Gloves" "Deerskin Gloves" "Eelskin Gloves" "Goathide Gloves" "Gripped Gloves" "Harpyskin Gloves" "Nubuck Gloves" "Rawhide Gloves" "Shagreen Gloves" "Sharkskin Gloves" "Slink Gloves" "Stealth Gloves" "Tinker Gloves" "Trapsetter Gloves" "Velour Gloves" 
 	SetFontSize 20
@@ -325,7 +357,7 @@ Hide
 	Rarity Normal Magic Rare
 	Continue
 
-# Decrease font size for "Helmet" "Armour/Evasion" base items.
+# Hide "Helmet" "Armour/Evasion" base items for specific defence types.
 Hide
 	BaseType == "Atonement Mask" "Battered Helm" "Conquest Helmet" "Fencer Helm" "Fluted Bascinet" "Gilded Sallet" "Haunted Bascinet" "Knight Helm" "Lacquered Helmet" "Nightmare Bascinet" "Penitent Mask" "Pig-Faced Bascinet" "Sallet" "Secutor Helm" "Sorrow Mask" "Visored Sallet" 
 	SetFontSize 20
@@ -333,7 +365,7 @@ Hide
 	Rarity Normal Magic Rare
 	Continue
 
-# Decrease font size for "Helmet" "Evasion" base items.
+# Hide "Helmet" "Evasion" base items for specific defence types.
 Hide
 	BaseType == "Dire Pelt" "Grizzly Pelt" "Hunter Hood" "Leather Cap" "Leather Hood" "Lion Pelt" "Majestic Pelt" "Noble Tricorne" "Silken Hood" "Sinner Tricorne" "Tricorne" "Ursine Pelt" "Wolf Pelt" 
 	SetFontSize 20
