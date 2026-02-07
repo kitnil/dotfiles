@@ -921,19 +921,20 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
-                          (base-types '("Amethyst Ring"
-                                        "Astrolabe Amulet"
-                                        "Blue Pearl Amulet"
-                                        "Focused Amulet"
-                                        "Gold Amulet"
-                                        "Gold Ring"
-                                        "Jet Amulet"
-                                        "Marble Amulet"
-                                        "Onyx Amulet"
-                                        "Ruby Amulet"
-                                        "Seaglass Amulet"
-                                        "Simplex Amulet"
-                                        "Unset Amulet"))
+                          (base-types (append '("Amethyst Ring"
+                                                "Astrolabe Amulet"
+                                                "Blue Pearl Amulet"
+                                                "Focused Amulet"
+                                                "Gold Amulet"
+                                                "Gold Ring"
+                                                "Jet Amulet"
+                                                "Marble Amulet"
+                                                "Onyx Amulet"
+                                                "Ruby Amulet"
+                                                "Seaglass Amulet"
+                                                "Simplex Amulet"
+                                                "Unset Amulet")
+                                              '("Fugitive Ring")))
                           (set-border-color
                            (poe-item-filter-color-configuration
                             (red 0)

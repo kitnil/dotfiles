@@ -130,7 +130,7 @@ Show
 	Continue
 
 Show
-	BaseType == "Amethyst Ring" "Astrolabe Amulet" "Blue Pearl Amulet" "Focused Amulet" "Gold Amulet" "Gold Ring" "Jet Amulet" "Marble Amulet" "Onyx Amulet" "Ruby Amulet" "Seaglass Amulet" "Simplex Amulet" "Unset Amulet" 
+	BaseType == "Amethyst Ring" "Astrolabe Amulet" "Blue Pearl Amulet" "Focused Amulet" "Gold Amulet" "Gold Ring" "Jet Amulet" "Marble Amulet" "Onyx Amulet" "Ruby Amulet" "Seaglass Amulet" "Simplex Amulet" "Unset Amulet" "Fugitive Ring" 
 	SetFontSize 45
 	SetBorderColor 0 0 0 255
 	SetBackgroundColor 38 0 86 255
