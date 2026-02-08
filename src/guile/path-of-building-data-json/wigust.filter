@@ -418,6 +418,11 @@ Show
 	Continue
 
 Show
+	Class == "Tinctures" 
+	SetBorderColor 140 60 25 255
+	SetBackgroundColor 140 60 25 255
+
+Show
 	BaseType "Hallowed Hybrid Flask" 
 	SetBorderColor 140 60 25 255
 	SetBackgroundColor 140 60 25 255
