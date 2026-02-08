@@ -33,6 +33,7 @@ Show
 
 # Highlight 5 linked sockets.
 Show
+	AreaLevel < 75
 	LinkedSockets >= 5
 	MinimapIcon 0 Red Star
 	SetBorderColor 255 0 0 255

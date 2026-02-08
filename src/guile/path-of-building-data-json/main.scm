@@ -509,6 +509,9 @@
 
                          (poe-item-filter-block-configuration
                           (commentary "Highlight 5 linked sockets.")
+                          (area-level (poe-item-filter-conditional-value-configuration
+                                       (value 75)
+                                       (operator '<)))
                           (linked-sockets (poe-item-filter-conditional-value-configuration
                                            (value 5)
                                            (operator '>=)))
