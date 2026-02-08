@@ -973,7 +973,7 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
-                          (base-types '("Vanguard Belt"))
+                          (base-types '("Stygian Vise" "Vanguard Belt"))
                           (play-effect
                            (poe-item-filter-play-effect-configuration
                             (colour 'Green)))

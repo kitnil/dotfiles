@@ -149,7 +149,7 @@ Show
 	Continue
 
 Show
-	BaseType "Vanguard Belt" 
+	BaseType == "Stygian Vise" "Vanguard Belt" 
 	SetFontSize 45
 	PlayEffect Green
 	Continue
