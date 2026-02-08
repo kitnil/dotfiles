@@ -394,7 +394,7 @@ Show
 
 # Increase font size for high level wands base items.
 Show
-	BaseType == "Opal Wand" "Profane Wand" 
+	BaseType "Profane Wand" 
 	SetFontSize 45
 	Continue
 

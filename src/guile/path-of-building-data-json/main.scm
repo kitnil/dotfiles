@@ -1406,7 +1406,7 @@
 
                          (poe-item-filter-block-configuration
                           (commentary "Increase font size for high level wands base items.")
-                          (base-types '("Opal Wand" "Profane Wand"))
+                          (base-types '("Profane Wand"))
                           (set-font-size 45)
                           (continue? #t))
 
