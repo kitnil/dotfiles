@@ -165,6 +165,7 @@ in {
               auto-tab-discard
               clearurls
               container-proxy
+              containerise
               copy-all-tab-urls-we
               copy-link-text
               copy-selection-as-markdown
