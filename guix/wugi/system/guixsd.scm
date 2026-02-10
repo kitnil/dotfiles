@@ -1564,7 +1564,7 @@ PasswordAuthentication yes")))
          (service prometheus-tp-link-exporter-service-type
                   (prometheus-tp-link-exporter-configuration
                    ;; XXX: Deprecated SSH client.
-                   (ssh ((@ (wugi manifests deprecated) openssh)))
+                   ;; (ssh ((@ (wugi manifests deprecated) openssh)))
                    (host "192.168.0.1")
                    (environment-variables
                     (list
