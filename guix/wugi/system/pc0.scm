@@ -860,7 +860,9 @@ cgroup_device_acl = [
                                        (local-file
                                         (string-append
                                          %distro-directory
-                                         "/dotfiles/pc0/etc/bird/bird.conf"))))))
+                                         "/dotfiles/pc0/etc/bird/bird.conf")))))
+
+                            (service ntp-service-type))
                       (modify-services %base-services
                         (delete shepherd-system-log-service-type)
                         (guix-service-type config =>
