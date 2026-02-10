@@ -1,5 +1,10 @@
 prometheus:
   prometheusSpec:
+    containers:
+    - name: prometheus
+      livenessProbe:
+        failureThreshold: 60
+
     # Defines the maximum time that the `prometheus` container's startup probe
     # will wait before being considered failed. The startup probe will return
     # success after the WAL replay is complete. If set, the value should be
