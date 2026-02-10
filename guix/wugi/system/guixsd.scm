@@ -1188,6 +1188,9 @@ location / {
          ;; for taskexecutor
          (extra-special-file "/bin/bash"
                              (file-append bash "/bin/bash"))
+         ;; for topolvm
+         (extra-special-file "/sbin/lvm"
+                             (file-append lvm2 "/sbin/lvm"))
          ;; (extra-special-file "/bin/setquota")
 
          (udev-rules-service 'kvm
