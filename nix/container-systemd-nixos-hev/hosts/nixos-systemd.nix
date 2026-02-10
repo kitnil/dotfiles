@@ -117,6 +117,7 @@
       iptables -t mangle -D prerouting-hev -m set --match-set byp4 dst -j RETURN
       iptables -t mangle -D prerouting-hev -p tcp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
       iptables -t mangle -D prerouting-hev -p udp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
+      iptables -t mangle -X prerouting-hev
     '';
   };
   systemd.services.firewall.path = [ pkgs.ipset ];
