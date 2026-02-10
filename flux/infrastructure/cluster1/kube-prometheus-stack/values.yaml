@@ -3,9 +3,9 @@ prometheus:
     containers:
     - name: prometheus
       livenessProbe:
-        failureThreshold: 60
+        failureThreshold: 600
       readinessProbe:
-        failureThreshold: 100
+        failureThreshold: 1000
 
     # Defines the maximum time that the `prometheus` container's startup probe
     # will wait before being considered failed. The startup probe will return
