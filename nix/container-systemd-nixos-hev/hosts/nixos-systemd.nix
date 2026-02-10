@@ -82,6 +82,7 @@
   };
   networking.firewall = {
     extraCommands = ''
+      iptables -t mangle -N prerouting-hev
       iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 80 -j prerouting-hev
       iptables -t mangle -A PREROUTING -p udp -m udp --dport 80 -j prerouting-hev
       iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 443 -j prerouting-hev
