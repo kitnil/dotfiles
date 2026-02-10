@@ -83,6 +83,7 @@
   networking.firewall = {
     extraCommands = ''
       iptables -t mangle -N prerouting-hev
+      iptables -t mangle -N output-hev
       iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 80 -j prerouting-hev
       iptables -t mangle -A PREROUTING -p udp -m udp --dport 80 -j prerouting-hev
       iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 443 -j prerouting-hev
@@ -118,6 +119,7 @@
       iptables -t mangle -D prerouting-hev -p tcp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
       iptables -t mangle -D prerouting-hev -p udp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
       iptables -t mangle -X prerouting-hev
+      iptables -t mangle -X output-hev
     '';
   };
   systemd.services.firewall.path = [ pkgs.ipset ];
