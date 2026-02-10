@@ -6,6 +6,6 @@ do
         cd "$directory" || exit 1
         GIT_TRACE=1 dtach -A git.dtach git for-each-repo --config=maintenance.repo maintenance run --task=prefetch
     )
-    exit 0
 done
+exit 0
 EOF
