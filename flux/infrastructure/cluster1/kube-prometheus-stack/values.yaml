@@ -185,6 +185,11 @@ prometheus:
       job_name: lvm
     - static_configs:
       - targets:
+        - 192.168.0.152:9182
+      scrape_interval: 1m
+      job_name: windows
+    - static_configs:
+      - targets:
         - 192.168.0.144:9095
       honor_labels: true
       job_name: pushgateway
