@@ -8,7 +8,7 @@ metadata:
     # container image tag changes.
     kustomize.toolkit.fluxcd.io/force: enabled
 spec:
-  schedule: "* 1 * * *"
+  schedule: "0 * * * *" # every hour
   jobTemplate:
     spec:
       template:
