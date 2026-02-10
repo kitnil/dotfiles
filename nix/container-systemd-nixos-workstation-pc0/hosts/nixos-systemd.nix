@@ -70,4 +70,6 @@
     9324                        # prometheus bird exporter
     31247                       # prometheus mtr exporters
   ];
+
+  services.timesyncd.enable = true;
 }
