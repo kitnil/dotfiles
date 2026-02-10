@@ -1558,6 +1558,22 @@ PasswordAuthentication yes")))
                                  (ssl-certificate (letsencrypt-certificate "cgit.wugi.info"))
                                  (ssl-certificate-key (letsencrypt-key "cgit.wugi.info")))))))
 
+         (service prometheus-tp-link-exporter-service-type
+                  (prometheus-tp-link-exporter-configuration
+                   ;; XXX: Deprecated SSH client.
+                   (ssh ((@ (wugi manifests deprecated) openssh)))
+                   (host "192.168.0.1")
+                   (environment-variables
+                    (list
+                     (string-append
+                      "PROMETHEUS_TP_LINK_EXPORTER_PASSWORD="
+                      (string-trim-right
+                       (if (= (getuid) 0)
+                           (with-input-from-file "/etc/guix/secrets/prometheus-tp-link-exporter"
+                             read-string)
+                           "skipping /etc/guix/secrets/prometheus-tp-link-exporter")))))))
+
+
          (service bird-service-type
                   (bird-configuration
                    (config-file
