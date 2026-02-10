@@ -82,40 +82,40 @@
   };
   networking.firewall = {
     extraCommands = ''
-      -t mangle -A PREROUTING -p tcp -m tcp --dport 80 -j prerouting-hev
-      -t mangle -A PREROUTING -p udp -m udp --dport 80 -j prerouting-hev
-      -t mangle -A PREROUTING -p tcp -m tcp --dport 443 -j prerouting-hev
-      -t mangle -A PREROUTING -p udp -m udp --dport 443 -j prerouting-hev
-      -t mangle -A OUTPUT -p tcp -m tcp --dport 80 -j output-hev
-      -t mangle -A OUTPUT -p udp -m udp --dport 80 -j output-hev
-      -t mangle -A OUTPUT -p tcp -m tcp --dport 443 -j output-hev
-      -t mangle -A OUTPUT -p udp -m udp --dport 443 -j output-hev
-      -t mangle -A output-hev -m mark --mark 0x438 -j RETURN
-      -t mangle -A output-hev -m set --match-set byp4 dst -j RETURN
-      -t mangle -A output-hev -p tcp -j MARK --set-xmark 0x440/0xffffffff
-      -t mangle -A output-hev -p udp -j MARK --set-xmark 0x440/0xffffffff
-      -t mangle -A prerouting-hev -m mark --mark 0x438 -j RETURN
-      -t mangle -A prerouting-hev -m set --match-set byp4 dst -j RETURN
-      -t mangle -A prerouting-hev -p tcp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
-      -t mangle -A prerouting-hev -p udp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
+      iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 80 -j prerouting-hev
+      iptables -t mangle -A PREROUTING -p udp -m udp --dport 80 -j prerouting-hev
+      iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 443 -j prerouting-hev
+      iptables -t mangle -A PREROUTING -p udp -m udp --dport 443 -j prerouting-hev
+      iptables -t mangle -A OUTPUT -p tcp -m tcp --dport 80 -j output-hev
+      iptables -t mangle -A OUTPUT -p udp -m udp --dport 80 -j output-hev
+      iptables -t mangle -A OUTPUT -p tcp -m tcp --dport 443 -j output-hev
+      iptables -t mangle -A OUTPUT -p udp -m udp --dport 443 -j output-hev
+      iptables -t mangle -A output-hev -m mark --mark 0x438 -j RETURN
+      iptables -t mangle -A output-hev -m set --match-set byp4 dst -j RETURN
+      iptables -t mangle -A output-hev -p tcp -j MARK --set-xmark 0x440/0xffffffff
+      iptables -t mangle -A output-hev -p udp -j MARK --set-xmark 0x440/0xffffffff
+      iptables -t mangle -A prerouting-hev -m mark --mark 0x438 -j RETURN
+      iptables -t mangle -A prerouting-hev -m set --match-set byp4 dst -j RETURN
+      iptables -t mangle -A prerouting-hev -p tcp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
+      iptables -t mangle -A prerouting-hev -p udp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
     '';
     extraStopCommands = ''
-      -t mangle -D PREROUTING -p tcp -m tcp --dport 80 -j prerouting-hev
-      -t mangle -D PREROUTING -p udp -m udp --dport 80 -j prerouting-hev
-      -t mangle -D PREROUTING -p tcp -m tcp --dport 443 -j prerouting-hev
-      -t mangle -D PREROUTING -p udp -m udp --dport 443 -j prerouting-hev
-      -t mangle -D OUTPUT -p tcp -m tcp --dport 80 -j output-hev
-      -t mangle -D OUTPUT -p udp -m udp --dport 80 -j output-hev
-      -t mangle -D OUTPUT -p tcp -m tcp --dport 443 -j output-hev
-      -t mangle -D OUTPUT -p udp -m udp --dport 443 -j output-hev
-      -t mangle -D output-hev -m mark --mark 0x438 -j RETURN
-      -t mangle -D output-hev -m set --match-set byp4 dst -j RETURN
-      -t mangle -D output-hev -p tcp -j MARK --set-xmark 0x440/0xffffffff
-      -t mangle -D output-hev -p udp -j MARK --set-xmark 0x440/0xffffffff
-      -t mangle -D prerouting-hev -m mark --mark 0x438 -j RETURN
-      -t mangle -D prerouting-hev -m set --match-set byp4 dst -j RETURN
-      -t mangle -D prerouting-hev -p tcp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
-      -t mangle -D prerouting-hev -p udp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
+      iptables -t mangle -D PREROUTING -p tcp -m tcp --dport 80 -j prerouting-hev
+      iptables -t mangle -D PREROUTING -p udp -m udp --dport 80 -j prerouting-hev
+      iptables -t mangle -D PREROUTING -p tcp -m tcp --dport 443 -j prerouting-hev
+      iptables -t mangle -D PREROUTING -p udp -m udp --dport 443 -j prerouting-hev
+      iptables -t mangle -D OUTPUT -p tcp -m tcp --dport 80 -j output-hev
+      iptables -t mangle -D OUTPUT -p udp -m udp --dport 80 -j output-hev
+      iptables -t mangle -D OUTPUT -p tcp -m tcp --dport 443 -j output-hev
+      iptables -t mangle -D OUTPUT -p udp -m udp --dport 443 -j output-hev
+      iptables -t mangle -D output-hev -m mark --mark 0x438 -j RETURN
+      iptables -t mangle -D output-hev -m set --match-set byp4 dst -j RETURN
+      iptables -t mangle -D output-hev -p tcp -j MARK --set-xmark 0x440/0xffffffff
+      iptables -t mangle -D output-hev -p udp -j MARK --set-xmark 0x440/0xffffffff
+      iptables -t mangle -D prerouting-hev -m mark --mark 0x438 -j RETURN
+      iptables -t mangle -D prerouting-hev -m set --match-set byp4 dst -j RETURN
+      iptables -t mangle -D prerouting-hev -p tcp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
+      iptables -t mangle -D prerouting-hev -p udp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
     '';
   };
 }
