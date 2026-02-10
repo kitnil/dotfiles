@@ -119,4 +119,5 @@
       iptables -t mangle -D prerouting-hev -p udp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
     '';
   };
+  systemd.services.firewall.path = [ pkgs.ipset ];
 }
