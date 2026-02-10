@@ -60,9 +60,6 @@
     config.environment.etc."bird/peers/nixos-antifilter.conf".source
     config.environment.etc."bird/peers/nixos-dante.conf".source
   ];
-  systemd.tmpfiles.rules = [
-    "f /var/log/bird.log 0644 bird bird -"
-  ];
   services.prometheus.exporters.bird = {
     enable = true;
   };

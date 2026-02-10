@@ -93,9 +93,6 @@
     config.environment.etc."bird/peers/nixos-antifilter.conf".source
     config.environment.etc."bird/peers/nixos-dante.conf".source
   ];
-  systemd.tmpfiles.rules = [
-    "f /var/log/bird.log 0644 bird bird -"
-  ];
   networking.firewall.allowedTCPPorts = [
     179
     1080

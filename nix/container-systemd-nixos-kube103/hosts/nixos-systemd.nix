@@ -21,9 +21,6 @@
   systemd.services.bird.reloadTriggers = [
     config.environment.etc."bird/bird.conf".source
   ];
-  systemd.tmpfiles.rules = [
-    "f /var/log/bird.log 0644 bird bird -"
-  ];
   services.webhook-custom = {
     enable = true;
     flake = ".#container-systemd-nixos-kube103";

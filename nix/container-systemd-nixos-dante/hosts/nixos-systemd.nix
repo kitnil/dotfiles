@@ -51,9 +51,6 @@
     config.environment.etc."bird/peers/nixos-majordomo.conf".source
     config.environment.etc."bird/peers/guix-workstation.conf".source
   ];
-  systemd.tmpfiles.rules = [
-    "f /var/log/bird.log 0644 bird bird -"
-  ];
   services.tor = {
     enable = true;
     openFirewall = true;
