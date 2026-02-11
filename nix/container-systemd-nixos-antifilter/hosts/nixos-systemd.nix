@@ -82,6 +82,9 @@
     31247                       # prometheus mtr exporters
     53                          # dns
   ];
+  networking.firewall.allowedUDPPorts = [
+    53                          # dns
+  ];
   services.stubby = {
     enable = true;
     settings = pkgs.stubby.passthru.settingsExample // {
