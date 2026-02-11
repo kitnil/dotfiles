@@ -14,6 +14,7 @@ spec:
       - https://ci.guix.gnu.org/
       - https://bordeaux.guix.gnu.org/
       - https://mirrors.sjtug.sjtu.edu.cn/guix/
+      - https://mirrors.sjtug.sjtu.edu.cn/guix-bordeaux
       - https://substitutes.nonguix.org/
       - https://mirror.yandex.ru/mirrors/guix/
 
