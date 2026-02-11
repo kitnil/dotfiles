@@ -1018,7 +1018,7 @@ policy.add(policy.suffix(policy.STUB(\"192.168.0.0\"), {todname('windowsupdate.m
 policy.add(policy.suffix(policy.STUB(\"192.168.0.0\"), {todname('wustat.windows.com')}))
 
 -- -- Forward all queries (complete stub mode)
-policy.add(policy.all(policy.STUB('8.8.8.8')))
+policy.add(policy.all(policy.STUB('192.168.0.180')))
 
 -- Smaller cache size
 cache.size = 10 * MB
