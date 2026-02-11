@@ -92,7 +92,7 @@
           # echo | openssl s_client -connect '1.1.1.1:853' 2>/dev/null | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
           # or
           # kdig -d @1.1.1.1 +tls-ca +tls-host=one.one.one.one example.com
-          digest-sha256 = "GP8Knf7qBae+aIfythytMbYnL+yowaWVeD6MoLHkVRg=";
+          digest-sha256 = "ltQ6aXy3tqpNZKJdnevMD7oR+IsI5rNWbOssFDrl+Ew=";
         in [
           {
             address_data = "1.1.1.1";
