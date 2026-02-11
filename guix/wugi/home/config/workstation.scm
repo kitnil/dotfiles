@@ -106,6 +106,10 @@
                                     home-files-service-type
                                     (list `(".config/niri/config.kdl"
                                             ,(local-file (string-append %distro-directory "/dot_config/niri/config.kdl")))))
+                    (simple-service 'fuzzel-config
+                                    home-files-service-type
+                                    (list `(".config/fuzzel/fuzzel.ini"
+                                            ,(local-file (string-append %distro-directory "/dot_config/fuzzel/fuzzel.ini")))))
                     (service home-scream-service-type
                              (scream-configuration
                               (port 16400)))
