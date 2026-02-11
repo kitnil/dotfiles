@@ -743,6 +743,8 @@ binds {
     Mod+Ctrl+Shift+O { spawn-sh "niri-cast"; }
 
     Mod+y { spawn-sh "cliphist list | fuzzel --width=120 --dmenu | cliphist decode | wl-copy"; }
+
+    Mod+n { spawn-sh "swaync-client -t -sw"; }
 }
 
 environment {
