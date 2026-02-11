@@ -636,20 +636,6 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: maintenance-guix-system-image-libvirt
-  namespace: flux-system
-spec:
-  interval: 10m0s
-  path: ./flux/apps/cluster1/maintenance-guix-system-image-libvirt
-  suspend: false
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
   name: maintenance-guix-system-build-vm1
   namespace: flux-system
 spec:
