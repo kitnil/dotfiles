@@ -352,6 +352,16 @@
                         (invoke "ip" "link" "set" "guix4" "up")
                         (invoke "ip" "netns" "exec" "guix-nanokvm" "ip" "addr" "add" "192.168.0.198/32" "dev" "eth0"))))))
 
+(define bird-config
+  #~(begin
+      (use-modules (guix build utils))
+      (mkdir-p "/etc/bird")
+      (copy-file #$(local-file %distro-directory "/dotfiles/pc0/etc/bird/bird.1.conf")
+                 "/etc/bird/bird.1.conf")
+      (mkdir-p "/etc/bird/peers")
+      (copy-file #$(local-file %distro-directory "/dotfiles/pc0/etc/bird/peers/nixos-hev.conf")
+                 "/etc/bird/peers/nixos-hev.conf")))
+
 (define kresd-config
   #~(begin
       (use-modules (guix build utils))
@@ -803,6 +813,10 @@ cgroup_device_acl = [
                             (simple-service 'add-kresd-config
                                             activation-service-type
                                             kresd-config)
+
+                            (simple-service 'add-bird-config
+                                            activation-service-type
+                                            bird-config)
 
                             (service knot-resolver-service-type
                                      (knot-resolver-configuration
