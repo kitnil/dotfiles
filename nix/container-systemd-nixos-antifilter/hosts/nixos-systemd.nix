@@ -85,6 +85,9 @@
   services.stubby = {
     enable = true;
     settings = pkgs.stubby.passthru.settingsExample // {
+      listen_addresses = [
+        "192.168.0.180"
+      ];
       upstream_recursive_servers =
         let
           # https://wiki.nixos.org/wiki/Encrypted_DNS
