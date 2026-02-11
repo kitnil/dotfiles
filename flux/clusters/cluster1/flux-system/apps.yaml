@@ -382,23 +382,6 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: maintenance-git-guix-kube1
-  namespace: flux-system
-spec:
-  interval: 30m0s
-  path: ./flux/apps/cluster1/maintenance-git-guix-kube1
-  prune: true
-  # Setting spec.wait to true makes Flux wait for the Job to complete before
-  # it is considered ready.
-  wait: true
-  timeout: 2m
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
   name: clamav-kube1
   namespace: flux-system
 spec:
