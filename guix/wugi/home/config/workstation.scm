@@ -102,6 +102,10 @@
                                             ,(local-file (string-append %distro-directory "/dot_config/aichat/config.yaml")))))
                     ;; (service home-wayvnc-service-type)
                     (service home-niri-service-type)
+                    (simple-service 'niri-config
+                                    home-files-service-type
+                                    (list `(".config/niri/config.kdl"
+                                            ,(local-file (string-append %distro-directory "/dot_config/niri/config.kdl")))))
                     (service home-scream-service-type
                              (scream-configuration
                               (port 16400)))
