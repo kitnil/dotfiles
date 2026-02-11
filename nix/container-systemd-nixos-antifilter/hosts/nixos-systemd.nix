@@ -80,5 +80,37 @@
     179                         # bgp (bird)
     9324                        # prometheus bird exporter
     31247                       # prometheus mtr exporters
+    53                          # dns
   ];
+  services.stubby = {
+    enable = true;
+    settings = pkgs.stubby.passthru.settingsExample // {
+      upstream_recursive_servers =
+        let
+          # https://wiki.nixos.org/wiki/Encrypted_DNS
+          #
+          # echo | openssl s_client -connect '1.1.1.1:853' 2>/dev/null | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+          # or
+          # kdig -d @1.1.1.1 +tls-ca +tls-host=one.one.one.one example.com
+          digest-sha256 = "GP8Knf7qBae+aIfythytMbYnL+yowaWVeD6MoLHkVRg=";
+        in [
+          {
+            address_data = "1.1.1.1";
+            tls_auth_name = "cloudflare-dns.com";
+            tls_pubkey_pinset = [{
+              digest = "sha256";
+              value = digest-sha256;
+            }];
+          }
+          {
+            address_data = "1.0.0.1";
+            tls_auth_name = "cloudflare-dns.com";
+            tls_pubkey_pinset = [{
+              digest = "sha256";
+              value = digest-sha256;
+            }];
+          }
+        ];
+    };
+  };
 }
