@@ -1007,6 +1007,9 @@ policy.add(policy.suffix(policy.STUB(\"10.8.255.254\"), {todname('cluster.local'
 policy.add(policy.suffix(policy.STUB(\"10.8.255.254\"), {todname('svc.cluster.local')}))
 policy.add(policy.suffix(policy.STUB(\"10.8.255.254\"), {todname('guix.svc.cluster.local')}))
 
+policy.add(policy.suffix(policy.STUB(\"192.168.0.0\"), {todname('windowsupdate.com')}))
+policy.add(policy.suffix(policy.STUB(\"192.168.0.0\"), {todname('mp.microsoft.com')}))
+
 -- -- Forward all queries (complete stub mode)
 policy.add(policy.all(policy.STUB('8.8.8.8')))
 
