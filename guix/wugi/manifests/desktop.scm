@@ -201,7 +201,11 @@
                   fontconfig)
             extra-fonts))
 
+  (define clipboard
+    (list cliphist))
+
   (packages->manifest (append (list flatpak)
+                              clipboard
                               fonts
                               menus)))
 
