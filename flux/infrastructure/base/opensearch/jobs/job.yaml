@@ -11,7 +11,7 @@ spec:
         command: ["/bin/bash"]
         args: ["/usr/local/bin/script.sh"]
         env:
-        - name: SCRIPT_OPENSEARCH_DASHBOARDS_PORT
+        - name: SCRIPT_OPENSEARCH_DASHBOARDS_URL
           value: "https://dashboards.opensearch.home.wugi.info"
         volumeMounts:
         - mountPath: /usr/local/bin

@@ -6,7 +6,7 @@ username="${SCRIPT_OPENSEARCH_DASHBOARDS_USERNAME:-admin}"
 password="${SCRIPT_OPENSEARCH_DASHBOARDS_PASSWORD:-admin}"
 hostname="${SCRIPT_OPENSEARCH_DASHBOARDS_HOSTNAME:-opensearch-dashboards}"
 port="${SCRIPT_OPENSEARCH_DASHBOARDS_PORT:-5601}"
-opensearch_dashboards_url="$SCRIPT_OPENSEARCH_DASHBOARDS_PORT"
+opensearch_dashboards_url="$SCRIPT_OPENSEARCH_DASHBOARDS_URL"
 
 users_and_passwors=(
     "${username}:${password}"
