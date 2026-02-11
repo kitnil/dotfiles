@@ -10,6 +10,9 @@ spec:
         image: nixery.dev/shell/curl/jq
         command: ["/bin/bash"]
         args: ["/usr/local/bin/script.sh"]
+        environment:
+        - name: SCRIPT_OPENSEARCH_DASHBOARDS_PORT
+          value: "https://dashboards.opensearch.home.wugi.info"
         volumeMounts:
         - mountPath: /usr/local/bin
           name: scripts
