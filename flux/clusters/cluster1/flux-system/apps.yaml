@@ -481,19 +481,6 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: maintenance-guix-home-build-guix-workstation
-  namespace: flux-system
-spec:
-  interval: 10m0s
-  path: ./flux/apps/cluster1/maintenance-guix-home-build-guix-workstation
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
   name: maintenance-guix-rde-image-workstation
   namespace: flux-system
 spec:
