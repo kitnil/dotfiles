@@ -84,6 +84,7 @@
               nixpkgs.config.allowUnfree = true;
               nixpkgs.system = system;
               environment.systemPackages = [
+                pkgs.dnsutils
                 pkgs.ethtool
                 pkgs.htop
                 pkgs.iftop
