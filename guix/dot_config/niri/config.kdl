@@ -287,6 +287,9 @@ spawn-at-startup "wl-paste --watch cliphist store"
 
 spawn-at-startup "xwayland-satellite"
 
+// Notifications
+spawn-at-startup "swaync"
+
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
