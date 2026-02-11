@@ -283,6 +283,8 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "waybar"
 
+spawn-at-startup "wl-paste --watch cliphist store"
+
 spawn-at-startup "xwayland-satellite"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
@@ -736,6 +738,8 @@ binds {
 
     Mod+Ctrl+Shift+F { toggle-windowed-fullscreen; }
     Mod+Ctrl+Shift+O { spawn-sh "niri-cast"; }
+
+    Mod+y { spawn-sh "cliphist list | fuzzel --width=120 --dmenu | cliphist decode | wl-copy"; }
 }
 
 environment {
