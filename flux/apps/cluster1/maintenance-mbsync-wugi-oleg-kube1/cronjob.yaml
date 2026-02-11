@@ -18,3 +18,5 @@ spec:
             env:
             - name: MBSYNC_IMAP_ACCOUNT
               value: wugi-oleg
+          nodeSelector:
+            kubernetes.io/hostname: kube1
