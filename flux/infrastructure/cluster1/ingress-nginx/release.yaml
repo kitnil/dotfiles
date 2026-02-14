@@ -9,3 +9,5 @@ spec:
     name: ingress-nginx-values
   - kind: ConfigMap
     name: ingress-nginx-values-cluster1
+  - kind: ConfigMap
+    name: ingress-nginx-values-default-backend
