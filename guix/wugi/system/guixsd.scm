@@ -610,7 +610,9 @@ Happy hacking!\n"))
               (uri "/.well-known")
               (body '("root /var/www;"))))))
           (nginx-server-configuration
-           (server-name '("socialstream.ninja" "vdo.socialstream.ninja"))
+           (server-name '("socialstream.ninja"
+                          "api.socialstream.ninja"
+                          "vdo.socialstream.ninja"))
            (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
            (root "/home/oleg/src/github.com/steveseguin/social_stream")
            (locations
