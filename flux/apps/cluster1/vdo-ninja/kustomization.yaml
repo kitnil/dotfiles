@@ -3,4 +3,3 @@ kind: Kustomization
 namespace: vdo-ninja
 resources:
 - namespace.yaml
-- certificate.yaml
