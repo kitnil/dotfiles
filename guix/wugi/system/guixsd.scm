@@ -610,6 +610,21 @@ Happy hacking!\n"))
               (uri "/.well-known")
               (body '("root /var/www;"))))))
           (nginx-server-configuration
+           (server-name '("socialstream.ninja"))
+           (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
+           (root "/home/oleg/src/github.com/steveseguin/social_stream")
+           (locations
+            (list
+             (nginx-location-configuration
+              (uri "/")
+              (body
+               '("allow 192.168.0.0/16;"
+                 "allow 10.0.0.0/8;"
+                 "deny all;")))
+             (nginx-location-configuration
+              (uri "/.well-known")
+              (body '("root /var/www;"))))))
+          (nginx-server-configuration
            (server-name '("gitlab.wugi.info"))
            (listen '("127.0.0.1:80"))
            (locations
