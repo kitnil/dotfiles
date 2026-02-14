@@ -5,7 +5,11 @@ metadata:
 spec:
   secretName: vdo-ninja-cert
   issuerRef:
+    group: cert-manager.io
     name: letsencrypt
     kind: ClusterIssuer
   dnsNames:
   - vdo.home.wugi.info
+  usages:
+  - digital signature
+  - key encipherment
