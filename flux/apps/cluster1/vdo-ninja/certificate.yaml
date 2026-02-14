@@ -3,10 +3,9 @@ kind: Certificate
 metadata:
   name: certificate
 spec:
-  secretName: certificate
+  secretName: vdo-ninja-cert
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer
-  commonName: vdo.home.wugi.info
   dnsNames:
   - vdo.home.wugi.info
