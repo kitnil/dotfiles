@@ -452,7 +452,7 @@
 
                         ;; "vfio-pci.ids=1002:7550,1002:ab40"
 
-                        ))
+                        "amdgpu.ppfeaturemask=0xffffffff"))
 
     ;; This is where user accounts are specified.  The "root"
     ;; account is implicit, and is initially created with the
