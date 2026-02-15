@@ -60,11 +60,11 @@
 
   (packages->manifest (append (map (match-lambda
                                      ((name version id)
-                                      ((@@ (guix inferior)inferior-package)
+                                      ((@@ (guix inferior) inferior-package)
                                        inferior name version id)))
                                    inferior-font-packages)
                               (map (match-lambda
                                      ((name version id)
-                                      ((@@ (guix inferior)inferior-package)
+                                      ((@@ (guix inferior) inferior-package)
                                        inferior name version id)))
                                    inferior-k8s-packages))))
