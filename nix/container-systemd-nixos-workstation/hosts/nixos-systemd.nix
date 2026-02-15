@@ -40,7 +40,7 @@
   systemd.services."autovt@tty1" = {
     enable = false;
   };
-  systemd.services."getty@tty9" = {
+  systemd.services."getty@tty14" = {
     enable = true;
     wantedBy = [ "multi-user.target" ];
   };
