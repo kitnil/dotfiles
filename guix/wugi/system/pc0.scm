@@ -450,7 +450,9 @@
                         ;; crash the VM.
                         "kvm.ignore_msrs=1"
 
-                        "vfio-pci.ids=1002:7550,1002:ab40"))
+                        ;; "vfio-pci.ids=1002:7550,1002:ab40"
+
+                        ))
 
     ;; This is where user accounts are specified.  The "root"
     ;; account is implicit, and is initially created with the
@@ -507,22 +509,22 @@
                                       (openssh openssh-sans-x)
                                       (permit-root-login 'prohibit-password)))
 
-                            (simple-service 'vfio-override boot-service-type
-                                            '(and (call-with-output-file "/sys/bus/pci/devices/0000:03:00.0/driver_override"
-                                                    (lambda (p)
-                                                      (display "vfio-pci" p)))
-                                                  (call-with-output-file "/sys/bus/pci/drivers/vfio-pci/new_id"
-                                                    (lambda (p)
-                                                      (display "1002 7550" p)))
-                                                  (call-with-output-file "/sys/bus/pci/devices/0000:03:00.1/driver_override"
-                                                    (lambda (p)
-                                                      (display "vfio-pci" p)))
-                                                  (call-with-output-file "/sys/bus/pci/drivers/vfio-pci/new_id"
-                                                    (lambda (p)
-                                                      (display "1002 ab40" p)))))
+                            ;; (simple-service 'vfio-override boot-service-type
+                            ;;                 '(and (call-with-output-file "/sys/bus/pci/devices/0000:03:00.0/driver_override"
+                            ;;                         (lambda (p)
+                            ;;                           (display "vfio-pci" p)))
+                            ;;                       (call-with-output-file "/sys/bus/pci/drivers/vfio-pci/new_id"
+                            ;;                         (lambda (p)
+                            ;;                           (display "1002 7550" p)))
+                            ;;                       (call-with-output-file "/sys/bus/pci/devices/0000:03:00.1/driver_override"
+                            ;;                         (lambda (p)
+                            ;;                           (display "vfio-pci" p)))
+                            ;;                       (call-with-output-file "/sys/bus/pci/drivers/vfio-pci/new_id"
+                            ;;                         (lambda (p)
+                            ;;                           (display "1002 ab40" p)))))
 
                             (service kernel-module-loader-service-type
-                                     '("vfio-pci"
+                                     '(;; "vfio-pci"
                                        "amdgpu"
 
                                        "dm-snapshot"
@@ -844,13 +846,6 @@ cgroup_device_acl = [
                                                    (network-address
                                                     (device "br0")
                                                     (value "192.168.0.192/32"))))
-                                       (routes
-                                        (list (network-route
-                                               (destination "192.168.0.1")
-                                               (device "br0"))
-                                              (network-route
-                                               (destination "default")
-                                               (gateway "192.168.0.1"))))
                                        (name-servers '("192.168.0.192"
 
                                                        ;; local Docker
