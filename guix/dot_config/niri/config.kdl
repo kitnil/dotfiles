@@ -3,6 +3,11 @@
 // Check the wiki for a full description of the configuration:
 // https://yalter.github.io/niri/Configuration:-Introduction
 
+debug {
+  render-drm-device "/dev/dri/renderD129"
+  ignore-drm-device "/dev/dri/renderD128"
+}
+
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
@@ -69,13 +74,17 @@ input {
     focus-follows-mouse max-scroll-amount="0%"
 }
 
+output "HDMI-A-1" {
+    off
+}
+
 // You can configure outputs by their name, which you can find
 // by running `niri msg outputs` while inside a niri instance.
 // The built-in laptop monitor is usually called "eDP-1".
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
-output "DP-1" {
+output "DP-3" {
     // Uncomment this line to disable this output.
     // off
 
