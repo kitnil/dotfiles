@@ -58,6 +58,21 @@
                             (list kubectl)))
                    inferior))
 
+  (define inferior-steam-packages
+    (inferior-eval `(begin
+                      (use-modules (nonguix multiarch-container)
+                                   (srfi srfi-1))
+                      (fold (lambda (package result)
+                              (let ((id (object-address package)))
+                                (hashv-set! %package-table id package)
+                                (cons (list (package-name package)
+                                            (package-version package)
+                                            id)
+                                      result)))
+                            '()
+                            (list steam)))
+                   inferior))
+
   (packages->manifest (append (map (match-lambda
                                      ((name version id)
                                       ((@@ (guix inferior) inferior-package)
@@ -67,4 +82,9 @@
                                      ((name version id)
                                       ((@@ (guix inferior) inferior-package)
                                        inferior name version id)))
-                                   inferior-k8s-packages))))
+                                   inferior-k8s-packages)
+                              (map (match-lambda
+                                     ((name version id)
+                                      ((@@ (guix inferior) inferior-package)
+                                       inferior name version id)))
+                                   inferior-steam-packages))))
