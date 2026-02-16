@@ -47,10 +47,10 @@
   #~(begin
       (use-modules (guix build utils))
       (mkdir-p "/etc/bird")
-      (copy-file #$(local-file (string-append %distro-directory "/dotfiles/pc0/etc/bird/bird.1.conf"))
+      (copy-file #$(local-file (string-append %distro-directory "/dotfiles/pc0-guix-workstation/etc/bird/bird.1.conf"))
                  "/etc/bird/bird.1.conf")
       (mkdir-p "/etc/bird/peers")
-      (copy-file #$(local-file (string-append %distro-directory "/dotfiles/pc0/etc/bird/peers/nixos-hev.conf"))
+      (copy-file #$(local-file (string-append %distro-directory "/dotfiles/pc0-guix-workstation/etc/bird/peers/nixos-hev.conf"))
                  "/etc/bird/peers/nixos-hev.conf")))
 
 (define (%pc0-guix-workstation)
