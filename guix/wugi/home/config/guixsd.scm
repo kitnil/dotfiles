@@ -64,6 +64,7 @@
 
   #:use-module (gnu packages mail)
   #:use-module (wugi guile pass)
+  #:use-module (wugi utils)
 
   #:export (%guixsd-home-environment))
 
