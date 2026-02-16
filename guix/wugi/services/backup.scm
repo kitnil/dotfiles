@@ -324,7 +324,6 @@
   (restic-lv-backup "vg0" "win11"
                     #:restic-repository (string-append "sftp:root@" %private-ip-address ":/srv/backup/pc0-win11")
                     #:restic-password-file "/etc/guix/secrets/restic-pc0-win11"
-                    #:lvm2-snapshot-size #f ;thin volume
                     #:predicate #~(begin #f)))
 
 (define (restic-repository-init restic-repository-name
