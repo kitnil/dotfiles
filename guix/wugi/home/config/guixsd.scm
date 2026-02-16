@@ -557,10 +557,6 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
                              `(".vnc/xstartup-ratpoison" ,(local-file (string-append %distro-directory "/private_dot_vnc/xstartup-ratpoison") #:recursive? #t))
                              `(".vnc/xstartup-twm" ,(local-file (string-append %distro-directory "/private_dot_vnc/xstartup-twm") #:recursive? #t))))
 
-       (simple-service 'xsession-config
-                       home-activation-service-type
-                       xsession-config-file)
-
        home-parallel-service
 
        home-msmtp-service
