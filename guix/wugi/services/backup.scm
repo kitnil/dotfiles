@@ -250,10 +250,13 @@
                     (list
                      (begin
                        (format #t "Creating new LVM ~a snapshot~%" #$device)
-                       (system* #$lvcreate-binary
-                                "--size" #$lvm2-snapshot-size
-                                "--name" #$lvm2-snapshot-name
-                                "--snapshot" #$device))
+                       (apply system*
+                              (append (list #$lvcreate-binary
+                                            "--name" #$lvm2-snapshot-name
+                                            "--snapshot" #$device)
+                                      (if #$lvm2-snapshot-size
+                                          (list "--size" #$lvm2-snapshot-size)
+                                          '()))))
                      (begin
                        (format #t "Creating new Restic ~a snapshot~%" #$device)
                        (setenv "RESTIC_PASSWORD_FILE" #$restic-password-file)
