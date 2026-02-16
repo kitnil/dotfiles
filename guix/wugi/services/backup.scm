@@ -289,12 +289,6 @@
         (string= (string-trim-right output #\newline)
                  "shut off"))))
 
-(define restic-win10-backup
-  (restic-lv-backup "lvm1" "win10"
-                    #:restic-repository "/srv/backup/win10"
-                    #:restic-password-file "/etc/guix/secrets/windows"
-                    #:predicate (virtual-machine-shut-off? "win10")))
-
 (define restic-win2022-backup
   (restic-lv-backup "lvm2" "win2022"
                     #:restic-repository "/srv/backup/win2022"
@@ -391,7 +385,6 @@
             (zero? (system* program)))
           (list #$restic-system-backup
                 #$restic-guix-backup
-                #$restic-win10-backup
                 #$restic-win2022-backup
                 #$restic-ntfsgames-backup
                 #$restic-openwrt-init
