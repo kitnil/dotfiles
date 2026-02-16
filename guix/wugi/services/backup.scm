@@ -292,7 +292,7 @@
   (restic-lv-backup "lvm2" "ntfsgames"
                     #:restic-repository "/srv/backup/ntfsgames"
                     #:restic-password-file "/etc/guix/secrets/guix"
-                    #:predicate (virtual-machine-shut-off? "win10")))
+                    #:predicate (virtual-machine-shut-off? "win11")))
 
 (define restic-guix-backup
   (restic-lv-backup "lvm2" "guix"
