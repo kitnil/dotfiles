@@ -38,17 +38,6 @@ spec:
             - |
               set -o nounset -o errexit -o pipefail -o xtrace
               /usr/bin/env
-              # This lists keys along with their keygrip. Then check if the
-              # keygrip exists in the agent cache:
-              #     gpg --with-keygrip -k
-              # If it appears with a 1, it's unlocked.
-              if [[ $(gpg-connect-agent 'keyinfo --list' /bye | awk '/2172063C653BABEFB3FF105A46DE07269E42DE0B/ { print $7 }') == 1 ]]
-              then
-                  :
-              else
-                  echo "GPG key is locked."
-                  exit 1
-              fi
               mbsync "$MBSYNC_IMAP_ACCOUNT"
             image: docker-registry.wugi.info/library/util-linux-with-udev
             name: mbsync

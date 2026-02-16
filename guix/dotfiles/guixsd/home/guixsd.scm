@@ -159,8 +159,13 @@
                        (ssl-type "IMAPS")
                        (pass-cmd
                         (string-join
-                         (list "pass" "show"
-                               (pass-private-or-public name)))))))
+                         (list "gpg"
+                               "--pinentry-mode" "loopback"
+                               "--quiet"
+                               "--for-your-eyes-only"
+                               "--no-tty"
+                               "--decrypt"
+                               (string-append "~/.password-store/" (pass-private-or-public name) ".gpg")))))))
                     (imap-stores
                      (list
                       (mbsync-imap-store-configuration
@@ -282,7 +287,7 @@
                         (imap-account "wugi-oleg")
                         (host "imap.wugi.info")
                         (user "oleg@imap.wugi.info")
-                        (pass-cmd "gpg -q --for-your-eyes-only --no-tty -d ~/.password-store/vm1.wugi.info/oleg.gpg")
+                        (pass-cmd "gpg --pinentry-mode loopback --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/vm1.wugi.info/oleg.gpg")
                         (auth-mechs '("LOGIN"))
                         (ssl-type "IMAPS")
                         (certificate-file "/etc/ssl/certs/ca-certificates.crt")
@@ -317,7 +322,7 @@
                         (imap-account "wugi-oleg-windows")
                         (host "imap.wugi.info")
                         (user "oleg-windows@imap.wugi.info")
-                        (pass-cmd "gpg -q --for-your-eyes-only --no-tty -d ~/.password-store/vm1.wugi.info/oleg-windows.gpg")
+                        (pass-cmd "gpg --pinentry-mode loopback --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/vm1.wugi.info/oleg-windows.gpg")
                         (auth-mechs '("LOGIN"))
                         (ssl-type "IMAPS")
                         (certificate-file "/etc/ssl/certs/ca-certificates.crt")
@@ -352,7 +357,7 @@
                         (imap-account "gmail")
                         (host "imap.gmail.com")
                         (user "go.wigust@gmail.com")
-                        (pass-cmd "gpg -q --for-your-eyes-only --no-tty -d ~/.password-store/myaccount.google.com/apppasswords/go.wigust.gpg")
+                        (pass-cmd "gpg --pinentry-mode loopback --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/myaccount.google.com/apppasswords/go.wigust.gpg")
                         (auth-mechs '("LOGIN"))
                         (ssl-type "IMAPS")
                         (certificate-file "/etc/ssl/certs/ca-certificates.crt")
