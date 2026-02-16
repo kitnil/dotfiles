@@ -1136,7 +1136,7 @@ location / {
                                    restic-whonix-gateway-direct-backup
                                    restic-notebook-init
                                    restic-pc0-init
-                                   restic-pc0-win10-init
+                                   restic-pc0-win11-init
                                    system-provision-program-file
                                    system-stop-program-file))
                         %my-system-packages))

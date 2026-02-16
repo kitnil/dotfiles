@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021, 2022, 2023, 2024, 2025 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022, 2023, 2024, 2025, 2026 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -33,7 +33,6 @@
 
             restic-system-backup
             restic-guix-backup
-            restic-win10-backup
             restic-win2022-backup
             restic-ntfsgames-backup
 
@@ -49,8 +48,8 @@
             restic-pc0-init
             restic-pc0-backup
 
-            restic-pc0-win10-init
-            restic-pc0-win10-backup
+            restic-pc0-win11-init
+            restic-pc0-win11-backup
 
             restic-command))
 
@@ -338,10 +337,10 @@
                     #:restic-password-file "/etc/guix/secrets/restic-pc0"
                     #:predicate #~(begin #f)))
 
-(define restic-pc0-win10-backup
-  (restic-lv-backup "vg0" "win10"
-                    #:restic-repository (string-append "sftp:root@" %private-ip-address ":/srv/backup/pc0-win10")
-                    #:restic-password-file "/etc/guix/secrets/restic-pc0-win10"
+(define restic-pc0-win11-backup
+  (restic-lv-backup "vg0" "win11"
+                    #:restic-repository (string-append "sftp:root@" %private-ip-address ":/srv/backup/pc0-win11")
+                    #:restic-password-file "/etc/guix/secrets/restic-pc0-win11"
                     #:predicate #~(begin #f)))
 
 (define (restic-repository-init restic-repository-name
@@ -380,10 +379,10 @@
                           "/srv/backup/pc0"
                           "/etc/guix/secrets/restic-pc0"))
 
-(define restic-pc0-win10-init
-  (restic-repository-init "pc0-win10"
-                          "/srv/backup/pc0-win10"
-                          "/etc/guix/secrets/restic-pc0-win10"))
+(define restic-pc0-win11-init
+  (restic-repository-init "pc0-win11"
+                          "/srv/backup/pc0-win11"
+                          "/etc/guix/secrets/restic-pc0-win11"))
 
 (define (restic-command)
   (program-file
