@@ -56,7 +56,6 @@
   #:use-module (wugi home services databases)
   #:use-module (wugi home services mime)
   #:use-module (wugi home services video)
-  #:use-module (wugi home services networking)
   #:use-module (wugi home services kubernetes)
   #:use-module (wugi home services majordomo billing2)
   #:use-module (wugi home services audio)
@@ -352,7 +351,6 @@
        home-chromium-service
 
        home-bin-service
-       home-networking-service
 
        (simple-service 'looking-glass-wrapper
                        home-files-service-type
