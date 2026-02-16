@@ -48,6 +48,7 @@
 
             restic-pc0-win11-init
             restic-pc0-win11-backup
+            restic-pc0-ntfsgames-backup
 
             restic-command))
 
@@ -324,6 +325,12 @@
   (restic-lv-backup "vg0" "win11"
                     #:restic-repository (string-append "sftp:root@" %private-ip-address ":/srv/backup/pc0-win11")
                     #:restic-password-file "/etc/guix/secrets/restic-pc0-win11"
+                    #:predicate #~(begin #f)))
+
+(define restic-pc0-ntfsgames-backup
+  (restic-lv-backup "vg0" "ntfsgames"
+                    #:restic-repository (string-append "sftp:root@" %private-ip-address ":/srv/backup/ntfsgames")
+                    #:restic-password-file "/etc/guix/secrets/guix"
                     #:predicate #~(begin #f)))
 
 (define (restic-repository-init restic-repository-name

@@ -477,7 +477,8 @@
     ;; Globally-installed packages.
     (packages (append (map package-from-program-file
                            (list restic-pc0-backup
-                                 restic-pc0-win11-backup))
+                                 restic-pc0-win11-backup
+                                 restic-pc0-ntfsgames-backup))
                       (list dmidecode) ;required for libvirt
                       %pc0-packages
                       %base-packages))
