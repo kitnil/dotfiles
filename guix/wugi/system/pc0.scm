@@ -278,7 +278,7 @@
                       (invoke "ip" "netns" "exec" "nixos-kube103" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "nixos24" "master" "br0")
                       (invoke "ip" "link" "set" "nixos24" "up")
-                      (invoke "ip" "netns" "exec" "nixos-kube103" "ip" "addr" "add" "192.168.0.103/32" "dev" "eth0")))))
+                      (invoke "ip" "netns" "exec" "nixos-kube103" "ip" "addr" "add" "192.168.0.104/32" "dev" "eth0")))))
 
 (define ns-net-fedora-program-file
   (program-file "ns-net-fedora"
