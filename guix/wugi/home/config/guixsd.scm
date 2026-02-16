@@ -806,13 +806,6 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
                                     '("guix_package.py"
                                       "guix_pull.py"))))
 
-       (if (file-exists?
-            (string-append %distro-directory "/wugi/home/config/openssh.scm"))
-           ((lambda ()
-              (use-modules (wugi home config openssh))
-              (service home-openssh-service-type %home-openssh-configuration)))
-           (service home-openssh-service-type))
-
        ;; XXX: Make sure ~/.ssh/known_hosts provides ssh-rsa host key algorithm,
        ;; so ssh-exporter works properly.
        (service home-prometheus-ssh-exporter-service-type
