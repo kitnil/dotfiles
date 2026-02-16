@@ -233,7 +233,6 @@
       iptables -t nat -D POSTROUTING -s 192.168.0.0/24 -o tapvpn -j MASQUERADE
     '';
   };
-  networking.firewall.allowedTCPPorts = [ 443 ];
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
