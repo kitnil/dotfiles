@@ -86,10 +86,6 @@
                                     home-files-service-type
                                     (list `(".config/waybar/config.jsonc"
                                             ,(local-file (string-append %distro-directory "/dot_config/waybar/config.jsonc")))
-                                          `(".config/waybar/config-1.jsonc"
-                                            ,(local-file (string-append %distro-directory "/dot_config/waybar/config-1.jsonc")))
-                                          `(".config/waybar/config-2.jsonc"
-                                            ,(local-file (string-append %distro-directory "/dot_config/waybar/config-2.jsonc")))
                                           `(".config/waybar/style.css"
                                             ,(local-file (string-append %distro-directory "/dot_config/waybar/style.css")))))
                     (simple-service 'mako-config
