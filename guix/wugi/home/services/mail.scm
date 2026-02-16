@@ -387,7 +387,7 @@ host           smtp.gmail.com
 port           587
 from           go.wigust@gmail.com
 user           go.wigust
-passwordeval   \"gpg --pinentry-mode loopback --quiet --for-your-eyes-only --no-tty --decrypt ~a/.password-store/myaccount.google.com/apppasswords/go.wigust.gpg\"
+passwordeval   \"gpg --pinentry-mode loopback --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/myaccount.google.com/apppasswords/go.wigust.gpg\"
 
 # Majordomo
 account        majordomo-pyhalov
@@ -395,7 +395,7 @@ host           smtp.majordomo.ru
 port           587
 from           pyhalov@majordomo.ru
 user           pyhalov@majordomo.ru
-passwordeval   \"gpg --pinentry-mode loopback --quiet --for-your-eyes-only --no-tty --decrypt ~a/.password-store/majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru.gpg\"
+passwordeval   \"gpg --pinentry-mode loopback --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru.gpg\"
 
 # Majordomo NOC
 account        majordomo-noc
@@ -403,7 +403,7 @@ host           smtp.majordomo.ru
 port           587
 from           noc@majordomo.ru
 user           noc@majordomo.ru
-passwordeval   \"gpg --pinentry-mode loopback --quiet --for-your-eyes-only --no-tty --decrypt ~a/.password-store/majordomo/private/router.majordomo.ru/noc@majordomo.ru.gpg\"
+passwordeval   \"gpg --pinentry-mode loopback --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/majordomo/private/router.majordomo.ru/noc@majordomo.ru.gpg\"
 
 # Set a default account
 account default : gmail
