@@ -43,7 +43,6 @@
   #:use-module (wugi home services linux)
   #:use-module (wugi home services haskell-apps)
   #:use-module (wugi home services gtk)
-  #:use-module (wugi home services stumpwm)
   #:use-module (wugi home services rust-apps)
   #:use-module (wugi home services lisp)
   #:use-module (wugi home services python)
@@ -183,74 +182,6 @@
                        (channel (string-append "majordomo-" name))
                        (far (string-append ":majordomo-" name "-remote:"))
                        (near (string-append ":majordomo-" name "-local:")))))))))
-
-(define xsession-config-file
-  (let* ((stumpwp-load-file
-          (plain-file
-           "stumpwp-load-file"
-           (with-output-to-string
-             (lambda ()
-               (display '(require :asdf))
-               (newline)
-               (display '(require :stumpwm))
-               (newline)
-               (display '(stumpwm:stumpwm))
-               (newline)))))
-         (xsession-file
-          (program-file
-           "xsession"
-           #~(begin
-               (use-modules (srfi srfi-1)
-                            (ice-9 popen)
-                            (ice-9 rdelim)
-                            (ice-9 format))
-
-               (define %display
-                 (and=> (getenv "DISPLAY")
-                        (lambda (display)
-                          display)))
-
-               (define %home
-                 (and=> (getenv "HOME")
-                        (lambda (home)
-                          home)))
-
-               (display "Set background\n")
-               (system* #$(file-append xsetroot "/bin/xsetroot")
-                        "-solid" "black")
-
-               (display "Set cursor theme\n")
-               (system* #$(file-append xsetroot "/bin/xsetroot")
-                        "-cursor_name" "left_ptr")
-
-               (display "Disable speaker\n")
-               (system* #$(file-append xset "/bin/xset") "-b")
-
-               (display "Configure keymap\n")
-               (system* #$xmodmap-script)
-
-               (system* #$(file-append setxkbmap "/bin/setxkbmap")
-                        "-layout" "us,ru" "-option" "grp:win_space_toggle")
-
-               ;; Prepare environment for VNC sessions
-               (display "Start window manager\n")
-               (unsetenv "SESSION_MANAGER")
-               (unsetenv "DBUS_SESSION_BUS_ADDRESS")
-               (system* #$(file-append xhost "/bin/xhost") "+local:")
-               (let* ((pw    (getpw (getuid)))
-                      (shell (passwd:shell pw)))
-                 (if (or (string= %display ":0.0")
-                         (string= %display ":3.0"))
-                     ;; The '--login' option is supported at least by Bash and zsh.
-                     (execl shell "stumpwm" "--login" "-c"
-                            (format #f "exec -a stumpwm /run/current-system/profile/bin/sbcl --load ~a"
-                                    #$stumpwp-load-file))
-                     ;; The '--login' option is supported at least by Bash and zsh.
-                     (execl shell "i3" "--login" "-c" "exec -a i3 /home/oleg/.guix-profile/bin/i3")))))))
-    #~(begin
-        (let ((file #$(string-append %home "/.xsession")))
-          (copy-file #$xsession-file file)
-          (chmod file #o700)))))
 
 (define (%guixsd-home-environment)
   (home-environment
@@ -469,90 +400,6 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
 
        ;; home-shellcheck-service
 
-       (service stumpwm-service-type
-                (let ((config-files
-                       '("utils.lisp"
-                         "keys.lisp"
-                         "nav.lisp"
-                         "theme.lisp"
-                         "xorg.lisp"
-                         "term.lisp"
-                         "text-editors.lisp"
-                         "repl.lisp"
-                         "notify.lisp"
-                         "hardware.lisp"
-                         "adb.lisp"
-                         "admin.lisp"
-                         "clipboard.lisp"
-                         "screenshoot.lisp"
-                         "password.lisp"
-                         "trans.lisp"
-                         "backup.lisp"
-                         "documentation.lisp"
-                         "emacs.lisp"
-                         "chat.lisp"
-                         "mail.lisp"
-                         "docker.lisp"
-                         "vnc.lisp"
-                         "rofi.lisp"
-                         "audio.lisp"
-                         "mpv.lisp"
-                         "streamlink.lisp"
-                         "youtube-dl.lisp"
-                         "android.lisp"
-                         "kodi.lisp"
-                         "web.lisp"
-                         "time.lisp"
-                         "mjru.lisp"
-                         "virtualization.lisp"
-                         "bittorrent.lisp"
-                         "kubernetes.lisp"
-                         "disk.lisp"
-                         "rest.lisp"
-                         "cpu.lisp"
-                         "mem.lisp"
-                         "imap.lisp"
-                         "covid19.lisp"
-                         "gpg.lisp"
-                         "vpn.lisp"
-                         ;; "mode-line.lisp"
-                         "display-0.lisp"
-                         ;; "display.lisp"
-                         ;; "autostart.lisp"
-                         ;; "swank.lisp"
-                         ;; "gaps.lisp"
-                         ;; "windows.lisp"
-                         )))
-                  (stumpwm-configuration
-                   (init-config
-                    `((in-package :stumpwm)
-
-                      (require "asdf")
-
-                      ;; https://discourse.nixos.org/t/fonts-in-nix-installed-packages-on-a-non-nixos-system/5871/9
-                      (defvar *fontconfig-file*
-                        "FONTCONFIG_FILE=/run/current-system/profile/etc/fonts/fonts.conf")
-
-                      (redirect-all-output
-                       (concat
-                        (getenv "HOME") "/.local/var/log/stumpwm/" (getenv "DISPLAY") ".log"))
-
-                      ;; (defcommand quassel () ()
-                      ;;   (run-shell-command (join (list *fontconfig-file* "/home/oleg/.nix-profile/bin/quassel"))))
-
-                      ;; Tuesday January 3 2005 23:05:25
-                      (setq *time-format-string-default* "%A %B %e %Y %k:%M:%S")
-
-                      (setf *startup-message* nil)
-                      (setf *message-window-gravity* :center)
-                      (setf *input-window-gravity* :center)
-                      ,@(map (lambda (config-file)
-                               `(load ,(string-append "/home/oleg/.stumpwm.d/" config-file)))
-                             config-files)
-                      ;; (restore-from-file ,(local-file "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/dot_stumpwm.d/group-1.lisp"))
-                      ))
-                   (config-files config-files))))
-
        home-bash-service
 
        home-mime-service
@@ -710,7 +557,6 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
                              `(".vnc/xstartup-firefox" ,(local-file (string-append %distro-directory "/private_dot_vnc/xstartup-firefox") #:recursive? #t))
                              `(".vnc/xstartup-quassel" ,(local-file (string-append %distro-directory "/private_dot_vnc/xstartup-quassel") #:recursive? #t))
                              `(".vnc/xstartup-ratpoison" ,(local-file (string-append %distro-directory "/private_dot_vnc/xstartup-ratpoison") #:recursive? #t))
-                             `(".vnc/xstartup-stumpwm" ,(local-file (string-append %distro-directory "/private_dot_vnc/xstartup-stumpwm") #:recursive? #t))
                              `(".vnc/xstartup-twm" ,(local-file (string-append %distro-directory "/private_dot_vnc/xstartup-twm") #:recursive? #t))))
 
        (simple-service 'xsession-config
