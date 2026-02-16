@@ -425,31 +425,31 @@
        (simple-service 'looking-glass-wrapper
                        home-files-service-type
                        (list `(".local/bin/looking-glass-client-wrapper"
-                               ,(local-file (string-append %project-directory "/dot_local/bin/looking-glass-client-wrapper")
+                               ,(local-file (string-append %distro-directory "/dot_local/bin/looking-glass-client-wrapper")
                                             #:recursive? #t))))
 
        (simple-service 'home-firefox-wrapper-twitch
                        home-files-service-type
                        (list `(".local/bin/firefox-twitch"
-                               ,(local-file (string-append %project-directory "/dot_local/bin/firefox-twitch")
+                               ,(local-file (string-append %distro-directory "/dot_local/bin/firefox-twitch")
                                             #:recursive? #t))))
 
        (simple-service 'home-firefox-wrapper-react
                        home-files-service-type
                        (list `(".local/bin/firefox-react"
-                               ,(local-file (string-append %project-directory "/dot_local/bin/firefox-react")
+                               ,(local-file (string-append %distro-directory "/dot_local/bin/firefox-react")
                                             #:recursive? #t))))
 
        (simple-service 'home-firefox-wrapper-vnc
                        home-files-service-type
                        (list `(".local/bin/firefox-vnc"
-                               ,(local-file (string-append %project-directory "/dot_local/bin/firefox-vnc")
+                               ,(local-file (string-append %distro-directory "/dot_local/bin/firefox-vnc")
                                             #:recursive? #t))))
 
        (simple-service 'home-firefox-wrapper-deprecated-default
                        home-files-service-type
                        (list `(".local/bin/firefox-deprecated-default"
-                               ,(local-file (string-append %project-directory "/dot_local/bin/firefox-deprecated-default")
+                               ,(local-file (string-append %distro-directory "/dot_local/bin/firefox-deprecated-default")
                                             #:recursive? #t))))
 
        (simple-service 'idea-ultimate-wrapper
@@ -580,7 +580,7 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
 
        (simple-service 'keynav-config
                        home-files-service-type
-                       (list `(".keynavrc" ,(local-file (string-append %project-directory "/dot_keynavrc")))))
+                       (list `(".keynavrc" ,(local-file (string-append %distro-directory "/dot_keynavrc")))))
 
        home-kodi-service
 
@@ -607,17 +607,17 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
 
        (simple-service 'xmodmap-config
                        home-files-service-type
-                       (list `(".Xmodmap" ,(local-file (string-append %project-directory "/dot_Xmodmap")))))
+                       (list `(".Xmodmap" ,(local-file (string-append %distro-directory "/dot_Xmodmap")))))
 
        (simple-service 'xresources-config
                        home-files-service-type
-                       (list `(".Xresources" ,(local-file (string-append %project-directory "/dot_Xresources")))))
+                       (list `(".Xresources" ,(local-file (string-append %distro-directory "/dot_Xresources")))))
 
        home-qterminal-service
 
        (simple-service 'zathura-config
                        home-files-service-type
-                       (list `(".config/zathura/zathurarc" ,(local-file (string-append %project-directory "/dot_config/zathura/zathurarc")))))
+                       (list `(".config/zathura/zathurarc" ,(local-file (string-append %distro-directory "/dot_config/zathura/zathurarc")))))
 
        home-ripgrep-service
 
@@ -629,26 +629,26 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
 
        (simple-service 'feh-config
                        home-files-service-type
-                       (list `(".config/feh/buttons" ,(local-file (string-append %project-directory "/dot_config/feh/buttons")))))
+                       (list `(".config/feh/buttons" ,(local-file (string-append %distro-directory "/dot_config/feh/buttons")))))
 
        (simple-service 'sway-config
                        home-files-service-type
-                       (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/config")))
-                             `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom")))))
+                       (list `(".config/sway/config" ,(local-file (string-append %distro-directory "/dot_config/sway/config")))
+                             `(".xkb/symbols/custom" ,(local-file (string-append %distro-directory "/dot_xkb/symbols/custom")))))
 
        (simple-service 'polybar-config
                        home-files-service-type
-                       (list `(".config/polybar/config" ,(local-file (string-append %project-directory "/dot_config/polybar/config")))))
+                       (list `(".config/polybar/config" ,(local-file (string-append %distro-directory "/dot_config/polybar/config")))))
 
        home-youtube-dl-service
 
        (simple-service 'cava-config
                        home-files-service-type
-                       (list `(".config/cava/config" ,(local-file (string-append %project-directory "/dot_config/cava/config")))))
+                       (list `(".config/cava/config" ,(local-file (string-append %distro-directory "/dot_config/cava/config")))))
 
        (simple-service 'termonad-config
                        home-files-service-type
-                       (list `(".config/termonad/termonad.hs" ,(local-file (string-append %project-directory "/dot_config/termonad/termonad.hs")))))
+                       (list `(".config/termonad/termonad.hs" ,(local-file (string-append %distro-directory "/dot_config/termonad/termonad.hs")))))
 
        home-nix-service
 
@@ -658,15 +658,15 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
 
        (simple-service 'cagebreak-config
                        home-files-service-type
-                       (list `(".config/cagebreak/config" ,(local-file (string-append %project-directory "/dot_config/cagebreak/config")))))
+                       (list `(".config/cagebreak/config" ,(local-file (string-append %distro-directory "/dot_config/cagebreak/config")))))
 
        (simple-service 'vis-config
                        home-files-service-type
-                       (list `(".config/vis/config" ,(local-file (string-append %project-directory "/dot_config/vis/config")))))
+                       (list `(".config/vis/config" ,(local-file (string-append %distro-directory "/dot_config/vis/config")))))
 
        (simple-service 'dunst-config
                        home-files-service-type
-                       (list `(".config/dunst/dunstrc" ,(local-file (string-append %project-directory "/dot_config/dunst/dunstrc")))))
+                       (list `(".config/dunst/dunstrc" ,(local-file (string-append %distro-directory "/dot_config/dunst/dunstrc")))))
 
 
        ;; TODO: Add those
@@ -688,29 +688,29 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
                                                               (when (file-exists? destination-full-path)
                                                                 (chmod destination-full-path #o644))
                                                               (copy-file source destination-full-path))))
-                                             (list `("config/espanso/default.yml" ,#$(local-file (string-append %project-directory "/dot_config/espanso/default.yml")))
-                                                   ;; TODO: Add `("config/espanso/user/home.yml.tmpl" ,(local-file (string-append %project-directory "/dot_config/espanso/user/home.yml.tmpl")))
-                                                   `("config/espanso/user/systemd.yml" ,#$(local-file (string-append %project-directory "/dot_config/espanso/user/systemd.yml")))
-                                                   `("config/espanso/user/juniper.yml" ,#$(local-file (string-append %project-directory "/dot_config/espanso/user/juniper.yml")))
-                                                   `("config/espanso/user/mysql.yml" ,#$(local-file (string-append %project-directory "/dot_config/espanso/user/mysql.yml")))
-                                                   `("config/espanso/user/nix.yml" ,#$(local-file (string-append %project-directory "/dot_config/espanso/user/nix.yml")))
-                                                   `("config/espanso/user/mjru.yml" ,#$(local-file (string-append %project-directory "/dot_config/espanso/user/mjru.yml"))))))))))
+                                             (list `("config/espanso/default.yml" ,#$(local-file (string-append %distro-directory "/dot_config/espanso/default.yml")))
+                                                   ;; TODO: Add `("config/espanso/user/home.yml.tmpl" ,(local-file (string-append %distro-directory "/dot_config/espanso/user/home.yml.tmpl")))
+                                                   `("config/espanso/user/systemd.yml" ,#$(local-file (string-append %distro-directory "/dot_config/espanso/user/systemd.yml")))
+                                                   `("config/espanso/user/juniper.yml" ,#$(local-file (string-append %distro-directory "/dot_config/espanso/user/juniper.yml")))
+                                                   `("config/espanso/user/mysql.yml" ,#$(local-file (string-append %distro-directory "/dot_config/espanso/user/mysql.yml")))
+                                                   `("config/espanso/user/nix.yml" ,#$(local-file (string-append %distro-directory "/dot_config/espanso/user/nix.yml")))
+                                                   `("config/espanso/user/mjru.yml" ,#$(local-file (string-append %distro-directory "/dot_config/espanso/user/mjru.yml"))))))))))
 
        (simple-service 'sshrc-config
                        home-files-service-type
-                       (list `(".sshrc" ,(local-file (string-append %project-directory "/dot_sshrc")))
-                             `(".sshrc.d/.bashrc" ,(local-file (string-append %project-directory "/dot_sshrc.d/dot_bashrc")))
-                             `(".sshrc.d/.tmux.conf" ,(local-file (string-append %project-directory "/dot_sshrc.d/dot_tmux.conf")))))
+                       (list `(".sshrc" ,(local-file (string-append %distro-directory "/dot_sshrc")))
+                             `(".sshrc.d/.bashrc" ,(local-file (string-append %distro-directory "/dot_sshrc.d/dot_bashrc")))
+                             `(".sshrc.d/.tmux.conf" ,(local-file (string-append %distro-directory "/dot_sshrc.d/dot_tmux.conf")))))
 
        (simple-service 'vnc-config
                        home-files-service-type
-                       (list `(".vnc/default.tigervnc" ,(local-file (string-append %project-directory "/private_dot_vnc/default.tigervnc")))
-                             `(".vnc/xstartup" ,(local-file (string-append %project-directory "/private_dot_vnc/xstartup") #:recursive? #t))
-                             `(".vnc/xstartup-firefox" ,(local-file (string-append %project-directory "/private_dot_vnc/xstartup-firefox") #:recursive? #t))
-                             `(".vnc/xstartup-quassel" ,(local-file (string-append %project-directory "/private_dot_vnc/xstartup-quassel") #:recursive? #t))
-                             `(".vnc/xstartup-ratpoison" ,(local-file (string-append %project-directory "/private_dot_vnc/xstartup-ratpoison") #:recursive? #t))
-                             `(".vnc/xstartup-stumpwm" ,(local-file (string-append %project-directory "/private_dot_vnc/xstartup-stumpwm") #:recursive? #t))
-                             `(".vnc/xstartup-twm" ,(local-file (string-append %project-directory "/private_dot_vnc/xstartup-twm") #:recursive? #t))))
+                       (list `(".vnc/default.tigervnc" ,(local-file (string-append %distro-directory "/private_dot_vnc/default.tigervnc")))
+                             `(".vnc/xstartup" ,(local-file (string-append %distro-directory "/private_dot_vnc/xstartup") #:recursive? #t))
+                             `(".vnc/xstartup-firefox" ,(local-file (string-append %distro-directory "/private_dot_vnc/xstartup-firefox") #:recursive? #t))
+                             `(".vnc/xstartup-quassel" ,(local-file (string-append %distro-directory "/private_dot_vnc/xstartup-quassel") #:recursive? #t))
+                             `(".vnc/xstartup-ratpoison" ,(local-file (string-append %distro-directory "/private_dot_vnc/xstartup-ratpoison") #:recursive? #t))
+                             `(".vnc/xstartup-stumpwm" ,(local-file (string-append %distro-directory "/private_dot_vnc/xstartup-stumpwm") #:recursive? #t))
+                             `(".vnc/xstartup-twm" ,(local-file (string-append %distro-directory "/private_dot_vnc/xstartup-twm") #:recursive? #t))))
 
        (simple-service 'xsession-config
                        home-activation-service-type
@@ -796,10 +796,10 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
 
        (simple-service 'ansible-config
                        home-files-service-type
-                       (append (list `(,".ansible.cfg" ,(local-file (string-append %project-directory "/dot_ansible.cfg"))))
+                       (append (list `(,".ansible.cfg" ,(local-file (string-append %distro-directory "/dot_ansible.cfg"))))
                                (map (lambda (file-name)
                                       `(,(string-append ".ansible/plugins/modules/" file-name)
-                                        ,(local-file (string-append %project-directory
+                                        ,(local-file (string-append %distro-directory
                                                                     "/dot_ansible/plugins/modules/"
                                                                     file-name))))
                                     '("guix_package.py"
