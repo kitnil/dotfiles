@@ -37,10 +37,21 @@
   #:use-module (srfi srfi-1)
   #:use-module (wugi etc guix channels docker-image)
   #:use-module (wugi config)
+  #:use-module (wugi services bird)
   #:use-module (wugi services containers)
   #:use-module (wugi utils)
   #:use-module (wugi utils package)
   #:export (%pc0-guix-workstation))
+
+(define bird-config
+  #~(begin
+      (use-modules (guix build utils))
+      (mkdir-p "/etc/bird")
+      (copy-file #$(local-file (string-append %distro-directory "/dotfiles/pc0/etc/bird/bird.1.conf"))
+                 "/etc/bird/bird.1.conf")
+      (mkdir-p "/etc/bird/peers")
+      (copy-file #$(local-file (string-append %distro-directory "/dotfiles/pc0/etc/bird/peers/nixos-hev.conf"))
+                 "/etc/bird/peers/nixos-hev.conf")))
 
 (define (%pc0-guix-workstation)
   (define container-mingetty-service-type
@@ -216,6 +227,16 @@ program.")))
                                                  "infinity")))
                                  (respawn? #f)
                                  (auto-start? #t))))
+         (simple-service 'add-bird-config
+                         activation-service-type
+                         bird-config)
+         (service bird-service-type
+                  (bird-configuration
+                   (config-file
+                    (local-file
+                     (string-append
+                      %distro-directory
+                      "/dotfiles/pc0-guix-workstation/etc/bird/bird.conf")))))
 
          (service runc-container-service-type
                   (runc-container-configuration
