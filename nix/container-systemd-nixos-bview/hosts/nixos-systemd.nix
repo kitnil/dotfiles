@@ -37,7 +37,7 @@
   };
   systemd.services.gobgpd = {
     serviceConfig = {
-      ExecStartPost = "${pkgs.gobgpd}/bin/gobgp mrt inject --no-ipv6 --only-best global /latest-bview";
+      ExecStartPost = "${pkgs.gobgp}/bin/gobgp mrt inject --no-ipv6 --only-best global /latest-bview";
     };
   };
   services.webhook-custom = {
