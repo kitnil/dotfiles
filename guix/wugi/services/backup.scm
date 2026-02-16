@@ -33,7 +33,6 @@
 
             restic-system-backup
             restic-guix-backup
-            restic-win2022-backup
             restic-ntfsgames-backup
 
             restic-openwrt-init
@@ -289,12 +288,6 @@
         (string= (string-trim-right output #\newline)
                  "shut off"))))
 
-(define restic-win2022-backup
-  (restic-lv-backup "lvm2" "win2022"
-                    #:restic-repository "/srv/backup/win2022"
-                    #:restic-password-file "/etc/guix/secrets/windows"
-                    #:predicate (virtual-machine-shut-off? "win2022")))
-
 (define restic-ntfsgames-backup
   (restic-lv-backup "lvm2" "ntfsgames"
                     #:restic-repository "/srv/backup/ntfsgames"
@@ -385,7 +378,6 @@
             (zero? (system* program)))
           (list #$restic-system-backup
                 #$restic-guix-backup
-                #$restic-win2022-backup
                 #$restic-ntfsgames-backup
                 #$restic-openwrt-init
                 #$restic-openwrt-backup

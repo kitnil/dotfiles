@@ -1127,7 +1127,6 @@ location / {
       (packages (append (map package-from-program-file
                              (list restic-system-backup
                                    restic-guix-backup
-                                   restic-win2022-backup
                                    restic-ntfsgames-backup
                                    restic-openwrt-init
                                    restic-openwrt-backup
