@@ -35,6 +35,11 @@
       ];
     };
   };
+  systemd.services.gobgpd = {
+    serviceConfig = {
+      ExecStartPost = "${pkgs.gobgpd}/bin/gobgpd mrt inject --no-ipv6 --only-best global /latest-bview";
+    };
+  };
   services.webhook-custom = {
     enable = true;
     flake = ".#container-systemd-nixos-bview";
