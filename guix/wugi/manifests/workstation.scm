@@ -7,6 +7,7 @@
   #:use-module (wugi manifests wm)
   #:use-module (wugi utils)
   #:use-module (wugi manifests ai)
+  #:use-module (wugi manifests aspell)
   #:use-module (wugi manifests deprecated)
   #:use-module (wugi manifests desktop)
   #:use-module (wugi manifests emacs)
@@ -25,7 +26,8 @@
 
 (define (%workstation-manifest)
   (combined-manifest-from-files
-   (list (%pc0-packages-manifest)
+   (list (%aspell-manifest)
+         (%pc0-packages-manifest)
          (%desktop-manifest)
          (%nonguix-manifest)
          (%icons-manifest)
