@@ -33,6 +33,10 @@
       text = lib.readFile ./../peers/pc0.conf;
       mode = "0644";
     };
+    "bird/peers/pc0-guix-workstation.conf" = {
+      text = lib.readFile ./../peers/pc0-guix-workstation.conf;
+      mode = "0644";
+    };
     "bird/peers/guixsd-guix-workstation.conf" = {
       text = lib.readFile ./../peers/guixsd-guix-workstation.conf;
       mode = "0644";
@@ -48,6 +52,7 @@
     config.environment.etc."bird/peers/nixos-workstation.conf".source
     config.environment.etc."bird/peers/nixos-majordomo.conf".source
     config.environment.etc."bird/peers/pc0.conf".source
+    config.environment.etc."bird/peers/pc0-guix-workstation.conf".source
     config.environment.etc."bird/peers/guixsd.conf".source
     config.environment.etc."bird/peers/guixsd-guix-workstation.conf".source
   ];
