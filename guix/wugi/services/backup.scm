@@ -33,7 +33,6 @@
 
             restic-system-backup
             restic-guix-backup
-            restic-ntfsgames-backup
 
             restic-openwrt-init
             restic-openwrt-backup
@@ -288,12 +287,6 @@
         (string= (string-trim-right output #\newline)
                  "shut off"))))
 
-(define restic-ntfsgames-backup
-  (restic-lv-backup "lvm2" "ntfsgames"
-                    #:restic-repository "/srv/backup/ntfsgames"
-                    #:restic-password-file "/etc/guix/secrets/guix"
-                    #:predicate (virtual-machine-shut-off? "win11")))
-
 (define restic-guix-backup
   (restic-lv-backup "lvm2" "guix"
                     #:restic-repository "/srv/backup/guix"
@@ -378,7 +371,6 @@
             (zero? (system* program)))
           (list #$restic-system-backup
                 #$restic-guix-backup
-                #$restic-ntfsgames-backup
                 #$restic-openwrt-init
                 #$restic-openwrt-backup
                 #$restic-whonix-gateway-direct-init
