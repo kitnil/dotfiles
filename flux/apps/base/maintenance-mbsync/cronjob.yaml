@@ -38,7 +38,7 @@ spec:
             - |
               set -o nounset -o errexit -o pipefail -o xtrace
               /usr/bin/env
-              mbsync "$MBSYNC_IMAP_ACCOUNT"
+              mbsync --verbose "$MBSYNC_IMAP_ACCOUNT"
             image: docker-registry.wugi.info/library/util-linux-with-udev
             name: mbsync
             env:
