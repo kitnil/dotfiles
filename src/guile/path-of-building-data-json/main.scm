@@ -393,8 +393,7 @@
     "Two Hand Maces"
     "Two Hand Swords"
     ;; "Wands"
-    ;; "Warstaves"
-    ))
+    "Warstaves"))
 
 (define (generate-filter)
   (define font-size 20)
