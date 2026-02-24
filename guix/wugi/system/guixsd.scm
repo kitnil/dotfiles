@@ -2035,7 +2035,7 @@ PasswordAuthentication yes")))
                     (addresses (list
                                 (network-address
                                  (device "br0")
-                                 (value "192.168.0.144/24"))))
+                                 (value "192.168.0.144/32"))))
                     (routes
                      (list (network-route
                             (destination "default")
