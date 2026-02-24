@@ -528,6 +528,16 @@ Best practices:
 
 Happy hacking!\n"))
 
+(define bird-config
+  #~(begin
+      (use-modules (guix build utils))
+      (mkdir-p "/etc/bird")
+      (copy-file #$(local-file (string-append %distro-directory "/dotfiles/guixsd/etc/bird/bird.conf"))
+                 "/etc/bird/bird.conf")
+      (mkdir-p "/etc/bird/peers")
+      (copy-file #$(local-file (string-append %distro-directory "/dotfiles/guixsd/etc/bird/peers/nixos-hev.conf"))
+                 "/etc/bird/peers/nixos-hev.conf")))
+
 (define (%guixsd)
   (define %home
     (passwd:dir (getpw "oleg")))
@@ -1590,14 +1600,13 @@ PasswordAuthentication yes")))
                              read-string)
                            "skipping /etc/guix/secrets/prometheus-tp-link-exporter")))))))
 
+         (simple-service 'add-bird-config
+                         activation-service-type
+                         bird-config)
 
          (service bird-service-type
                   (bird-configuration
-                   (config-file
-                    (local-file
-                     (string-append
-                      %distro-directory
-                      "/dotfiles/guixsd/bird-wugi.info.conf")))))
+                   (config-file "/etc/bird/bird.conf")))
 
          ;; TODO: Move those services.
 
