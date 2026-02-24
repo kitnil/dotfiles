@@ -123,7 +123,7 @@ prometheus:
         target_label: instance
       - replacement: 192.168.0.144:9115
         target_label: __address__
-      job_name: icmp
+      job_name: icmp-guixsd
     - static_configs:
       - targets:
         - smtp.wugi.info:25
