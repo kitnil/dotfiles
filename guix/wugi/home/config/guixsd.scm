@@ -443,9 +443,10 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
                      ("PERL_MB_OPT" . "--install_base ${HOME}/perl5")
                      ("PERL_MM_OPT" . "INSTALL_BASE=${HOME}/perl5")))
 
-                  ;; GUIX_PROFILE variable used in my custom
-                  ;; .bashrc file.
-                  (variables '(("GUIX_PROFILE" . "${HOME}/.guix-home/profile")))))
+                  ;; ;; GUIX_PROFILE variable used in my custom
+                  ;; ;; .bashrc file.
+                  ;; (variables '(("GUIX_PROFILE" . "${HOME}/.guix-home/profile")))
+                  ))
 
        home-mime-service
 
