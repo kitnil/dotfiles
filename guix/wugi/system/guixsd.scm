@@ -2036,10 +2036,6 @@ PasswordAuthentication yes")))
                                 (network-address
                                  (device "br0")
                                  (value "192.168.0.144/32"))))
-                    (routes
-                     (list (network-route
-                            (destination "default")
-                            (gateway "192.168.0.1"))))
                     (name-servers '("192.168.0.144"
 
                                     ;; local Docker
