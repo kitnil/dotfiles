@@ -1,4 +1,4 @@
-<domain type='kvm' id='1' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
+<domain type='kvm' id='3' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
   <name>win11</name>
   <uuid>7444079a-3ce7-45d9-bae6-98f082ef1632</uuid>
   <metadata>
@@ -44,8 +44,6 @@
   <cpu mode='host-passthrough' check='none' migratable='off'>
     <topology sockets='1' dies='1' clusters='1' cores='8' threads='1'/>
     <cache mode='passthrough'/>
-    <feature policy='disable' name='hypervisor'/>
-    <feature policy='disable' name='svm'/>
   </cpu>
   <clock offset='localtime'>
     <timer name='rtc' tickpolicy='catchup'/>
@@ -218,7 +216,7 @@
     <interface type='bridge'>
       <mac address='52:54:00:19:71:e3'/>
       <source bridge='br0'/>
-      <target dev='vnet0'/>
+      <target dev='vnet2'/>
       <model type='virtio'/>
       <alias name='net0'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
