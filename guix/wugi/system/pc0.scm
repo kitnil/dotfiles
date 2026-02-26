@@ -296,7 +296,10 @@
                         (invoke "ip" "netns" "exec" "fedora" "ip" "link" "set" "eth0" "up")
                         (invoke "ip" "link" "set" "fedora0" "master" "br0")
                         (invoke "ip" "link" "set" "fedora0" "up")
-                        (invoke "ip" "netns" "exec" "fedora" "ip" "addr" "add" "192.168.0.155/32" "dev" "eth0"))))))
+                        (invoke "ip" "netns" "exec" "fedora" "ip" "link" "add" "name" "br0" "type" "bridge")
+                        (invoke "ip" "netns" "exec" "fedora" "ip" "link" "set" "dev" "br0" "up")
+                        (invoke "ip" "netns" "exec" "fedora" "ip" "link" "set" "eth0" "master" "br0")
+                        (invoke "ip" "netns" "exec" "fedora" "ip" "addr" "add" "192.168.0.155/32" "dev" "br0"))))))
 
 (define ns-net-guix-workstation-program-file
   (program-file "ns-net-guix-workstation"
