@@ -112,8 +112,4 @@
      home-parallel-service
      home-youtube-dl-service
      home-wireplumber-config-service
-     home-mpv-service
-
-     (service home-scream-service-type
-              (scream-configuration
-               (interface "eth0")))))))
+     home-mpv-service))))
