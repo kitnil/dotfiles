@@ -59,7 +59,6 @@
   #:use-module (gnu packages minetest)
   #:use-module (gnu packages monitoring)
   #:use-module (gnu packages mp3)
-  #:use-module (gnu packages ncdu)
   #:use-module (gnu packages ncurses)
   #:use-module (gnu packages networking)
   #:use-module (gnu packages package-management)
@@ -331,7 +330,6 @@
                  lsofgraph
 
                  fatrace
-                 ncdu            ; TUI `du'
                  sysstat
                  netcat-openbsd
                  openssl

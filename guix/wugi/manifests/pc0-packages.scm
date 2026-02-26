@@ -17,7 +17,6 @@
   #:use-module (gnu packages graphviz)
   #:use-module (gnu packages hardware)
   #:use-module (gnu packages linux)
-  #:use-module (gnu packages ncdu)
   #:use-module (gnu packages ncurses)
   #:use-module (gnu packages networking)
   #:use-module (gnu packages password-utils)
@@ -69,7 +68,6 @@
          moonlight-qt
          mpv
          mtr
-         ncdu
          netcat-openbsd
          password-store
          pavucontrol

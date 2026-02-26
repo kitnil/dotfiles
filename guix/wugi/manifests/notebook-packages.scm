@@ -16,7 +16,6 @@
   #:use-module (gnu packages gnupg)
   #:use-module (gnu packages golang-web)
   #:use-module (gnu packages linux)
-  #:use-module (gnu packages ncdu)
   #:use-module (gnu packages ncurses)
   #:use-module (gnu packages networking)
   #:use-module (gnu packages package-management)
@@ -58,7 +57,6 @@
          moonlight-qt
          mpv
          mtr
-         ncdu
          netcat-openbsd
          password-store
          pavucontrol
