@@ -8,7 +8,7 @@
          (url "https://cgit.wugi.info/git/guix/guix")
          (branch "master")
          (commit
-          "7113a63ff4bdcf24fbc4bb92367ea6354dd33290")
+          "75001089b5b43342c3e784d7ca2c42eade953211")
          (introduction
           (make-channel-introduction
            "9edb3f66fd807b096b48283debdcddccfea34bad"
@@ -19,7 +19,7 @@
          (url "https://cgit.wugi.info/git/guix/nonguix")
          (branch "master")
          (commit
-          "bbbc850e8a94833c9958625eb4c78a206fbacc1d")
+          "da4e72efef62d48dbc2eb089c36972ff55fe6acd")
          (introduction
           (make-channel-introduction
            "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
