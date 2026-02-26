@@ -9,6 +9,7 @@
   #:use-module (gnu services)
   #:use-module (gnu packages xorg)
   #:use-module (guix gexp)
+  #:use-module (home services audio)
   #:use-module (home services desktop)
   #:use-module (home services shell)
   #:use-module (home services mime)
