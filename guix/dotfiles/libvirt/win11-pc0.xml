@@ -1,4 +1,4 @@
-<domain type='kvm' id='10' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
+<domain type='kvm' id='1' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
   <name>win11</name>
   <uuid>7444079a-3ce7-45d9-bae6-98f082ef1632</uuid>
   <metadata>
@@ -24,6 +24,7 @@
     <loader readonly='yes' secure='yes' type='pflash' format='qcow2'>/usr/share/edk2/ovmf/OVMF_CODE_4M.secboot.qcow2</loader>
     <nvram template='/usr/share/edk2/ovmf/OVMF_VARS_4M.secboot.qcow2' templateFormat='qcow2' format='qcow2'>/var/lib/libvirt/qemu/nvram/win11_VARS.qcow2</nvram>
     <boot dev='hd'/>
+    <smbios mode='host'/>
   </os>
   <features>
     <acpi/>
@@ -63,7 +64,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='block' device='disk'>
       <driver name='qemu' type='raw' cache='none' io='native'/>
-      <source dev='/dev/dm-16' index='5'/>
+      <source dev='/dev/vg0/win11' index='5'/>
       <backingStore/>
       <target dev='sda' bus='virtio'/>
       <alias name='virtio-disk0'/>
@@ -71,7 +72,7 @@
     </disk>
     <disk type='block' device='disk'>
       <driver name='qemu' type='raw' cache='none' io='native' discard='unmap'/>
-      <source dev='/dev/mapper/vg0-ntfsgames' index='4'/>
+      <source dev='/dev/vg0/ntfsgames' index='4'/>
       <backingStore/>
       <target dev='sdg' bus='virtio'/>
       <alias name='virtio-disk6'/>
@@ -79,7 +80,7 @@
     </disk>
     <disk type='block' device='disk'>
       <driver name='qemu' type='raw' cache='none' io='native' discard='unmap'/>
-      <source dev='/dev/mapper/vg0-win10' index='3'/>
+      <source dev='/dev/vg0/win10' index='3'/>
       <backingStore/>
       <target dev='sdh' bus='virtio'/>
       <alias name='virtio-disk7'/>
@@ -217,20 +218,20 @@
     <interface type='bridge'>
       <mac address='52:54:00:19:71:e3'/>
       <source bridge='br0'/>
-      <target dev='vnet8'/>
+      <target dev='vnet0'/>
       <model type='virtio'/>
       <alias name='net0'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
     <serial type='pty'>
-      <source path='/dev/pts/2'/>
+      <source path='/dev/pts/1'/>
       <target type='isa-serial' port='0'>
         <model name='isa-serial'/>
       </target>
       <alias name='serial0'/>
     </serial>
-    <console type='pty' tty='/dev/pts/2'>
-      <source path='/dev/pts/2'/>
+    <console type='pty' tty='/dev/pts/1'>
+      <source path='/dev/pts/1'/>
       <target type='serial' port='0'/>
       <alias name='serial0'/>
     </console>
@@ -268,7 +269,7 @@
       <alias name='sound0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x1b' function='0x0'/>
     </sound>
-    <audio id='1' type='pulseaudio'/>
+    <audio id='1' type='pipewire'/>
     <video>
       <model type='none'/>
       <alias name='video0'/>
