@@ -1,4 +1,4 @@
-(define-module (wugi home config guixsd)
+(define-module (wugi home config pc0)
   #:use-module (gnu home)
   #:use-module (gnu home services)
   #:use-module (gnu home services desktop)
