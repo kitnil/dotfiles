@@ -71,45 +71,4 @@
                  (loop))))))))
 
 (define (%pc0-home-environment)
-  (home-environment
-   (services
-    (list
-     (service home-dbus-service-type)
-     (service home-pipewire-service-type)
-     home-bash-service
-     home-mime-service
-     home-direnv-service
-     home-git-service
-     home-gita-service
-     home-gdb-service
-     home-emacs-state-service
-     home-emacs-service
-     home-nano-service
-     home-inputrc-service
-     home-tmux-service
-     home-top-service
-     home-nix-service
-     (service home-alacritty-service-type)
-     home-qterminal-service
-     home-gtk-service
-     home-gtkrc-service
-     home-ripgrep-service
-     home-screen-service
-     home-sbcl-service
-     home-python-service
-     home-bind-utils-service
-     ;; home-shellcheck-service
-     home-bin-service
-     home-gnupg-service
-     home-ghci-service
-     home-groovy-service
-     home-guile-service
-     home-kodi-service
-     home-mailcap-service
-     home-mongo-service
-     home-postgresql-service
-     home-mycli-service
-     home-parallel-service
-     home-youtube-dl-service
-     home-wireplumber-config-service
-     home-mpv-service))))
+  (home-environment))
