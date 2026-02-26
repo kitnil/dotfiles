@@ -116,12 +116,4 @@
 
      (service home-scream-service-type
               (scream-configuration
-               (interface "eth0")))
-
-     (service home-wayvnc-service-type
-              (wayvnc-configuration
-               (wayvnc "/home/oleg/bin/wayvnc")
-               (environment-variables
-                '("WAYLAND_DISPLAY=wayland-1"))
-               (arguments
-                '("--output=HEADLESS-3"))))))))
+               (interface "eth0")))))))
