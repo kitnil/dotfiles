@@ -11,6 +11,7 @@ Show
 	SetBorderColor 74 230 58 255
 	Continue
 
+# Highlight high quality items.
 Show
 	Quality > 20
 	MinimapIcon 1 White Triangle
@@ -19,6 +20,7 @@ Show
 	PlayAlertSound 2 300
 	PlayEffect Grey
 
+# Highlight items with memory strands.
 Show
 	MemoryStrands >= 1
 	MinimapIcon 1 White Triangle
@@ -91,6 +93,7 @@ Show
 	PlayAlertSound 2 300
 	PlayEffect White
 
+# Highlight map fragments.
 Show
 	BaseType == "Divine Vessel" "Sacrifice at Dawn" "Sacrifice at Dusk" "Sacrifice at Midnight" "Sacrifice at Noon" "Offering To The Goddess" "Tribute To The Goddess" 
 	MinimapIcon 0 Red Square
@@ -116,6 +119,7 @@ Show
 	SetTextColor 255 178 135 255
 	PlayEffect Orange
 
+# Highlight currency and incubators.
 Show
 	Class == "Currency" "Incubators" 
 	MinimapIcon 2 White Circle
@@ -124,12 +128,14 @@ Show
 	SetTextColor 0 0 0 255
 	PlayEffect White
 
+# Highlight jewelry.
 Show
 	Class == "Amulet" "Belt" "Ring" 
 	SetBorderColor 0 0 0 255
 	SetBackgroundColor 0 100 150 255
 	Continue
 
+# Highlight high value jewelry.
 Show
 	BaseType == "Amethyst Ring" "Astrolabe Amulet" "Blue Pearl Amulet" "Focused Amulet" "Gold Amulet" "Gold Ring" "Jet Amulet" "Marble Amulet" "Onyx Amulet" "Ruby Amulet" "Seaglass Amulet" "Simplex Amulet" "Unset Amulet" "Fugitive Ring" 
 	SetFontSize 45
@@ -137,6 +143,7 @@ Show
 	SetBackgroundColor 38 0 86 255
 	Continue
 
+# Highlight talismans.
 Show
 	BaseType "Talisman" 
 	SetFontSize 45
@@ -144,17 +151,20 @@ Show
 	SetBackgroundColor 38 0 86 255
 	Continue
 
+# Highlight cloth belt.
 Show
 	BaseType "Cloth Belt" 
 	SetFontSize 45
 	Continue
 
+# Highlight high value belts.
 Show
 	BaseType == "Stygian Vise" "Vanguard Belt" 
 	SetFontSize 45
 	PlayEffect Green
 	Continue
 
+# Highlight labyrinth and incursion items.
 Show
 	Class == "Incursion Items" "Labyrinth Items" 
 	MinimapIcon 0 Green Pentagon
@@ -164,6 +174,7 @@ Show
 	PlayAlertSound 3 300
 	PlayEffect Green
 
+# Highlight scarabs.
 Show
 	BaseType "Scarab" 
 	MinimapIcon 0 Pink Circle
@@ -173,6 +184,7 @@ Show
 	PlayAlertSound 3 300
 	PlayEffect Pink
 
+# Highlight maps.
 Show
 	Class == "Maps" "Map Fragments" "Expedition Logbook" 
 	MinimapIcon 0 Red Square
@@ -181,6 +193,7 @@ Show
 	PlayAlertSound 5 300
 	PlayEffect Yellow
 
+# Highlight jewels.
 Show
 	BaseType == "Cobalt Jewel" "Crimson Jewel" "Viridian Jewel" 
 	MinimapIcon 1 Purple Diamond
@@ -189,6 +202,7 @@ Show
 	SetTextColor 0 240 190 255
 	PlayEffect Purple
 
+# Highlight abyss jewels.
 Show
 	Class == "Abyss Jewels" 
 	MinimapIcon 1 Purple Diamond
@@ -197,6 +211,7 @@ Show
 	SetTextColor 0 240 190 255
 	PlayEffect Purple
 
+# Highlight cluster jewels.
 Show
 	BaseType == "Small Cluster Jewel" "Medium Cluster Jewel" "Large Cluster Jewel" 
 	MinimapIcon 1 Purple Diamond
@@ -205,6 +220,7 @@ Show
 	SetTextColor 0 240 190 255
 	PlayEffect Purple
 
+# Highlight high level gems.
 Show
 	GemLevel >= 20
 	Class == "Skill Gems" "Support Gems" 
@@ -214,6 +230,7 @@ Show
 	PlayAlertSound 2 300
 	PlayEffect Grey
 
+# Highlight high quality gems.
 Show
 	Quality >= 1
 	Class == "Skill Gems" "Support Gems" 
@@ -223,6 +240,7 @@ Show
 	PlayAlertSound 2 300
 	PlayEffect Grey
 
+# Highlight specific awakend gems.
 Show
 	BaseType == "Awakened Ancestral Call Support" "Awakened Brutality Support" "Awakened Cast On Critical Strike Support" "Awakened Chain Support" "Awakened Elemental Damage with Attacks Support" "Awakened Empower Support" "Awakened Enhance Support" "Awakened Enlighten Support" "Awakened Fork Support" "Awakened Generosity Support" "Awakened Greater Multiple Projectiles Support" "Awakened Increased Area of Effect Support" "Awakened Melee Physical Damage Support" "Awakened Multistrike Support" "Awakened Spell Cascade Support" "Awakened Spell Echo Support" "Awakened Swift Affliction Support" "Awakened Unbound Ailments Support" "Awakened Unleash Support" "Awakened Void Manipulation Support" 
 	Class == "Skill Gems" "Support Gems" 
@@ -233,6 +251,7 @@ Show
 	PlayAlertSound 6 300
 	PlayEffect Red
 
+# Highlight awakend gems.
 Show
 	BaseType "Awakened" 
 	Class == "Skill Gems" "Support Gems" 
@@ -243,6 +262,7 @@ Show
 	PlayAlertSound 6 300
 	PlayEffect Red
 
+# Highlight transfigured gems.
 Show
 	Class == "Skill Gems" "Support Gems" 
 	MinimapIcon 0 Red Star
@@ -411,34 +431,40 @@ Hide
 	SetBackgroundColor 0 0 0 0
 	Continue
 
+# Highlight flasks.
 Show
 	Class == "Life Flasks" "Mana Flasks" "Hybrid Flasks" 
 	SetBorderColor 0 0 0 255
 	SetBackgroundColor 25 100 75 255
 	Continue
 
+# Highlight utility flasks.
 Show
 	Class == "Utility Flasks" 
 	SetBorderColor 140 60 25 255
 	SetBackgroundColor 140 60 25 255
 	Continue
 
+# Highlight tinctures.
 Show
 	Class == "Tinctures" 
 	SetBorderColor 140 60 25 255
 	SetBackgroundColor 140 60 25 255
 
+# Highlight hybrid flasks.
 Show
 	BaseType "Hallowed Hybrid Flask" 
 	SetBorderColor 140 60 25 255
 	SetBackgroundColor 140 60 25 255
 
+# Highlight flasks.
 Hide
 	ItemLevel <= 83
 	Class == "Life Flasks" "Mana Flasks" "Hybrid Flasks" 
 	Rarity Normal
 	Continue
 
+# Highlight high quality flasks.
 Show
 	Quality >= 1
 	Class == "Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks" 

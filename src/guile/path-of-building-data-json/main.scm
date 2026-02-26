@@ -441,6 +441,7 @@
                                              (alpha 255)))
                           (continue? #t))
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight high quality items.")
                           (quality (poe-item-filter-conditional-value-configuration
                                     (value 20)
                                     (operator '>)))
@@ -471,6 +472,7 @@
                             (colour 'Grey))))
 
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight items with memory strands.")
                           (memory-strands
                            (poe-item-filter-conditional-value-configuration
                             (value 1)
@@ -787,6 +789,7 @@
                             (shape 'Circle))))
 
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight map fragments.")
                           (base-types '("Divine Vessel"
                                         "Sacrifice at Dawn"
                                         "Sacrifice at Dusk"
@@ -877,6 +880,7 @@
                             (colour 'Orange))))
 
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight currency and incubators.")
                           (classes '("Currency" "Incubators"))
                           (set-text-color
                            (poe-item-filter-color-configuration
@@ -907,6 +911,7 @@
                             (colour 'White))))
 
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight jewelry.")
                           (classes '("Amulet" "Belt" "Ring"))
                           (set-border-color
                            (poe-item-filter-color-configuration
@@ -923,6 +928,7 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight high value jewelry.")
                           (base-types (append '("Amethyst Ring"
                                                 "Astrolabe Amulet"
                                                 "Blue Pearl Amulet"
@@ -953,6 +959,7 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight talismans.")
                           (base-types '("Talisman"))
                           (set-border-color
                            (poe-item-filter-color-configuration
@@ -970,11 +977,13 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight cloth belt.")
                           (base-types '("Cloth Belt"))
                           (set-font-size 45)
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight high value belts.")
                           (base-types '("Stygian Vise" "Vanguard Belt"))
                           (play-effect
                            (poe-item-filter-play-effect-configuration
@@ -983,6 +992,7 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight labyrinth and incursion items.")
                           (classes '("Incursion Items" "Labyrinth Items"))
                           (set-text-color
                            (poe-item-filter-color-configuration
@@ -1017,6 +1027,7 @@
                             (shape 'Pentagon))))
 
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight scarabs.")
                           (base-types '("Scarab"))
                           (set-text-color
                            (poe-item-filter-color-configuration
@@ -1051,6 +1062,7 @@
                             (shape 'Circle))))
 
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight maps.")
                           (classes '("Maps"
                                      "Map Fragments"
                                      "Expedition Logbook"))
@@ -1110,14 +1122,17 @@
                                    (shape 'Diamond))))))
                      (list (poe-item-filter-block-configuration
                             (inherit jewel)
+                            (commentary "Highlight jewels.")
                             (base-types '("Cobalt Jewel"
                                           "Crimson Jewel"
                                           "Viridian Jewel")))
                            (poe-item-filter-block-configuration
                             (inherit jewel)
+                            (commentary "Highlight abyss jewels.")
                             (classes '("Abyss Jewels")))
                            (poe-item-filter-block-configuration
                             (inherit jewel)
+                            (commentary "Highlight cluster jewels.")
                             (base-types '("Small Cluster Jewel"
                                           "Medium Cluster Jewel"
                                           "Large Cluster Jewel")))))
@@ -1187,18 +1202,21 @@
                      (list
                       (poe-item-filter-block-configuration
                        (inherit gem)
+                       (commentary "Highlight high level gems.")
                        (gem-level (poe-item-filter-conditional-value-configuration
                                    (value 20)
                                    (operator '>=))))
 
                       (poe-item-filter-block-configuration
                        (inherit gem)
+                       (commentary "Highlight high quality gems.")
                        (quality (poe-item-filter-conditional-value-configuration
                                  (value 1)
                                  (operator '>=))))
 
                       (poe-item-filter-block-configuration
                        (inherit high-value-gem)
+                       (commentary "Highlight specific awakend gems.")
                        (base-types '("Awakened Ancestral Call Support"
                                      "Awakened Brutality Support"
                                      "Awakened Cast On Critical Strike Support"
@@ -1222,10 +1240,12 @@
 
                       (poe-item-filter-block-configuration
                        (inherit high-value-gem)
+                       (commentary "Highlight awakend gems.")
                        (base-types '("Awakened")))
 
                       (poe-item-filter-block-configuration
                        (inherit high-value-gem)
+                       (commentary "Highlight transfigured gems.")
                        (transfigured-gem? #t))))
 
                    (list
@@ -1429,6 +1449,7 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight flasks.")
                           (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks"))
                           (set-border-color
                            (poe-item-filter-color-configuration
@@ -1449,11 +1470,12 @@
                                        (green 60)
                                        (blue 25)
                                        (alpha 255))))
-                             (poe-item-filter-block-configuration
-                          (classes '("Utility Flasks"))
-                          (set-border-color color)
-                          (set-background-color color)
-                          (continue? #t)))
+                           (poe-item-filter-block-configuration
+                            (commentary "Highlight utility flasks.")
+                            (classes '("Utility Flasks"))
+                            (set-border-color color)
+                            (set-background-color color)
+                            (continue? #t)))
 
                          (let ((color (poe-item-filter-color-configuration
                                        (red 140)
@@ -1461,6 +1483,7 @@
                                        (blue 25)
                                        (alpha 255))))
                            (poe-item-filter-block-configuration
+                            (commentary "Highlight tinctures.")
                             (classes '("Tinctures"))
                             (set-border-color color)
                             (set-background-color color)))
@@ -1471,12 +1494,14 @@
                                        (blue 25)
                                        (alpha 255))))
                            (poe-item-filter-block-configuration
+                            (commentary "Highlight hybrid flasks.")
                             (base-types '("Hallowed Hybrid Flask"))
                             (set-border-color color)
                             (set-background-color color)))
 
                          (poe-item-filter-block-configuration
                           (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks"))
+                          (commentary "Highlight flasks.")
                           (rarity '(Normal))
                           (show? #f)
                           (item-level (poe-item-filter-conditional-value-configuration
@@ -1485,6 +1510,7 @@
                           (continue? #t))
 
                          (poe-item-filter-block-configuration
+                          (commentary "Highlight high quality flasks.")
                           (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks"))
                           (quality (poe-item-filter-conditional-value-configuration
                                     (value 1)
