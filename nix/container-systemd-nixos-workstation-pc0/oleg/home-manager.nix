@@ -49,11 +49,12 @@ in
   xsession.pointerCursor = {
     package = pkgs.adwaita-icon-theme;
     name = "Adwaita";
-    size = 32;
+    size = lib.mkForce 32;
   };
   home.pointerCursor = {
     gtk.enable = true;
     package = pkgs.adwaita-icon-theme;
     name = "Adwaita";
+    size = lib.mkForce 32;
   };
 }
