@@ -384,8 +384,8 @@
           configureFlags = [ "--disable-sandbox-check" ];
         });
         steam = prev.steam.overrideAttrs (old: {
-          extraPkgs = prev: with prev; [
-            adwaita-icon-theme # instead of kdePackages.breeze
+          extraPkgs = [
+            prev.adwaita-icon-theme # instead of kdePackages.breeze
           ];
         });
       };
