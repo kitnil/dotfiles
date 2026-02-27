@@ -46,10 +46,10 @@ in
       };
     };
   };
-  home.pointerCursor = {
-    x11.enable = true;
+  xsession.pointerCursor = {
     package = pkgs.adwaita-icon-theme;
     name = "Adwaita";
+    gtk.enable = true;
     size = 32;
   };
 }
