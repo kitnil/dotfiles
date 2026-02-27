@@ -49,6 +49,6 @@ in
   xsession.pointerCursor = {
     package = pkgs.adwaita-icon-theme;
     name = "Adwaita";
-    size = 38;
+    size = 24;
   };
 }
