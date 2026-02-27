@@ -46,15 +46,10 @@ in
       };
     };
   };
-  xsession.pointerCursor = {
-    package = pkgs.adwaita-icon-theme;
-    name = "Adwaita";
-    size = lib.mkForce 32;
-  };
   home.pointerCursor = {
     gtk.enable = true;
     package = pkgs.adwaita-icon-theme;
     name = "Adwaita";
-    size = lib.mkForce 32;
+    size = 32;
   };
 }
