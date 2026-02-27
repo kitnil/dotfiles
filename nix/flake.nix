@@ -383,11 +383,11 @@
         firejail = prev.firejail.overrideAttrs (old: {
           configureFlags = [ "--disable-sandbox-check" ];
         });
-        steam = prev.steam.override = {
+        steam = prev.steam.overrideAttrs (old: {
           extraPkgs = prev: with prev; [
             adwaita-icon-theme # instead of kdePackages.breeze
           ];
-        };
+        });
       };
       nixosConfigurations = {
         container-systemd = nixpkgs.lib.nixosSystem {
