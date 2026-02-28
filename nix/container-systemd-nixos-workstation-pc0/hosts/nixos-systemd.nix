@@ -82,4 +82,5 @@
       pkgs.gamescope
     ];
   };
+  programs.gamescope.enable = true;
 }
