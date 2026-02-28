@@ -85,6 +85,10 @@
     ];
     package = pkgs.steam.override {
       extraLibraries = pkgs: [ pkgs.xorg.libxcb ];
+      extraEnv = {
+        MANGOHUD = true;
+        OBS_VKCAPTURE = true;
+      };
       extraPkgs =
         pkgs: with pkgs; [
           xorg.libXcursor
