@@ -76,6 +76,7 @@
     extraPackages = [
       pkgs.adwaita-icon-theme
       pkgs.gamescope
+      pkgs.xterm
     ];
     package = pkgs.steam.override {
       extraPkgs = pkgs: with pkgs; [
