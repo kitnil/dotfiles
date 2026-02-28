@@ -77,6 +77,9 @@
     # Open ports in the firewall for Steam Local Network Game Transfers
     localNetworkGameTransfers.openFirewall = true;
     # https://github.com/nixos/nixpkgs/issues/437281
-    extraPackages = [ pkgs.adwaita-icon-theme ];
+    extraPackages = [
+      pkgs.adwaita-icon-theme
+      pkgs.gamescope
+    ];
   };
 }
