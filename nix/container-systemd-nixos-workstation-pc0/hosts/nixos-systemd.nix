@@ -83,19 +83,22 @@
       pkgs.xterm
     ];
     package = pkgs.steam.override {
-      extraPkgs = pkgs: with pkgs; [
-        libXcursor
-        libXi
-        libXinerama
-        libXScrnSaver
-        libpng
-        libpulseaudio
-        libvorbis
-        stdenv.cc.cc.lib # Provides libstdc++.so.6
-        libkrb5
-        keyutils
-        # Add other libraries as needed
-      ];
+      extraLibraries = pkgs: [ pkgs.xorg.libxcb ];
+      extraPkgs =
+        pkgs: with pkgs; [
+          xorg.libXcursor
+          xorg.libXi
+          xorg.libXinerama
+          xorg.libXScrnSaver
+          libpng
+          libpulseaudio
+          libvorbis
+          stdenv.cc.cc.lib
+          libkrb5
+          keyutils
+          gamemode
+        ];
     };
+    extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
 }
