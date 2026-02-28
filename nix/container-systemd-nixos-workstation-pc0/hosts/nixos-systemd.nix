@@ -10,10 +10,6 @@
   };
   programs.niri.enable = true;
   programs.sway.enable = true;
-  programs.gamescope = {
-    enable = true;
-    capSysNice = false;
-  };
   services.bird = {
     enable = true;
     config = lib.readFile ./../bird.1.conf;
