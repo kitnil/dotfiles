@@ -32,25 +32,6 @@
     enable32Bit = true;
   };
 
-  console.enable = true;
-  systemd.services.reload-systemd-vconsole-setup.enable = false;
-  systemd.services."getty@tty1" = {
-    enable = false;
-  };
-  systemd.services."autovt@tty1" = {
-    enable = false;
-  };
-  systemd.services."getty@tty14" = {
-    enable = true;
-    wantedBy = [ "multi-user.target" ];
-  };
-
-  services.seatd = {
-    enable = true;
-    user = "oleg";
-    group = "users";
-  };
-
   local.services.prometheus.exporters.blackbox = {
     enable = true;
   };
