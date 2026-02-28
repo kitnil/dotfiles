@@ -80,6 +80,7 @@
     extraPackages = [
       pkgs.adwaita-icon-theme
       pkgs.gamescope
+      pkgs.mangohud
       pkgs.xterm
     ];
     package = pkgs.steam.override {
