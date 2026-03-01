@@ -379,7 +379,7 @@
     (locale "en_US.utf8")
     (initrd microcode-initrd)
     (initrd-modules (append '("vfio-pci") %base-initrd-modules))
-    (kernel linux-6.12)
+    (kernel linux-6.18)
     (firmware (append (list linux-firmware) %base-firmware))
 
     ;; Use the UEFI variant of GRUB with the EFI System
