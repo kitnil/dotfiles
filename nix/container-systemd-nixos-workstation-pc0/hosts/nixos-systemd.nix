@@ -90,20 +90,19 @@
         OBS_VKCAPTURE = true;
       };
       extraPkgs =
-        pkgs: with pkgs;
-          config.fonts.packages ++ [
-            xorg.libXcursor
-            xorg.libXi
-            xorg.libXinerama
-            xorg.libXScrnSaver
-            libpng
-            libpulseaudio
-            libvorbis
-            stdenv.cc.cc.lib
-            libkrb5
-            keyutils
-            gamemode
-          ];
+        pkgs: with pkgs; [
+          xorg.libXcursor
+          xorg.libXi
+          xorg.libXinerama
+          xorg.libXScrnSaver
+          libpng
+          libpulseaudio
+          libvorbis
+          stdenv.cc.cc.lib
+          libkrb5
+          keyutils
+          gamemode
+        ];
     };
     extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
