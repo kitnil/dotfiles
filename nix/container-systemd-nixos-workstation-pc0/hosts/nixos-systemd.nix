@@ -106,5 +106,7 @@
     };
     extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
+  fonts.fontDir.enable = true;
+
   systemd.services.reload-systemd-vconsole-setup.enable = false;
 }
