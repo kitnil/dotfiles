@@ -105,6 +105,11 @@
         ];
     };
     extraCompatPackages = [ pkgs.proton-ge-bin ];
+    fontPackages = with pkgs; [
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      wqy_zenhei
+    ];
   };
   systemd.services.reload-systemd-vconsole-setup.enable = false;
 }
