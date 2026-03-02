@@ -26,6 +26,7 @@
       enable = true;
       cache32Bit = true;
     };
+    fontDir.enable = true;
   };
 
   hardware.graphics = {
