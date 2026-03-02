@@ -24,6 +24,7 @@
     ];
     fontconfig = {
       enable = true;
+      cache32Bit = true;
     };
   };
 
