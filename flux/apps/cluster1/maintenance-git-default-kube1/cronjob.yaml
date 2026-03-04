@@ -13,6 +13,6 @@ spec:
             env:
             - name: WORKING_DIR
               value: /home/oleg
-  schedule: 0 25 * * *
+  schedule: 25 0 * * *
   timeZone: Europe/Moscow
   suspend: false
