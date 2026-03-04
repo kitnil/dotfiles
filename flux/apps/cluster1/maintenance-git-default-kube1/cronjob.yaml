@@ -13,6 +13,6 @@ spec:
             env:
             - name: GIT_CONFIG_GLOBAL
               value: /home/oleg/.gitconfig
-  schedule: 45 0 * * *
+  schedule: 15 1 * * *
   timeZone: Europe/Moscow
   suspend: false
