@@ -1,0 +1,18 @@
+# Warning: 'patchesStrategicMerge' is deprecated. Please use 'patches' instead. Run 'kustomize edit fix' to update your Kustomization automatically.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: git
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: git
+            env:
+            - name: GIT_CONFIG_GLOBAL
+              value: /home/oleg/src/gitlab.intr/.gitconfig
+  schedule: 45 0 * * *
+  timeZone: Europe/Moscow
+  suspend: false
