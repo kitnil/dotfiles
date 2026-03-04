@@ -149,5 +149,5 @@
       iptables -t mangle -X output-hev
     '';
   };
-  systemd.services.firewall.path = [ pkgs.ipset ];
+  systemd.services.firewall.path = [ pkgs.ipset pkgs.iproute2 ];
 }
