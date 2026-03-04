@@ -1,0 +1,17 @@
+# Warning: 'patchesStrategicMerge' is deprecated. Please use 'patches' instead. Run 'kustomize edit fix' to update your Kustomization automatically.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: git
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: git
+            env:
+            - name: WORKING_DIR
+              value: /home/oleg
+  schedule: 0 7 * * *
+  suspend: false
