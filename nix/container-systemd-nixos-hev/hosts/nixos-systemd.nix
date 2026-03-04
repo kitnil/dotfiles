@@ -131,6 +131,7 @@
     in {
       extraCommands = ''
         set -x
+        set +e
 
         ip rule add fwmark 1088 table 100
         ip route add local default dev lo table 100
