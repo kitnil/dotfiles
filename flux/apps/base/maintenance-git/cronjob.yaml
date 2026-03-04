@@ -32,7 +32,7 @@ spec:
               set -o nounset -o errexit -o pipefail -o xtrace
               /usr/bin/env
               cd "$WORKING_DIR" || exit 1
-              git for-each-repo --config=maintenance.repo git maintenance run --task=prefetch
+              git for-each-repo --config=maintenance.repo maintenance run --task=prefetch
             env:
             - name: "HOME"
               value: "/home/oleg"
