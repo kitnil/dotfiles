@@ -37,6 +37,8 @@ spec:
               value: "/home/oleg"
             - name: "USER"
               value: "oleg"
+            - name: "GIT_TRACE"
+              value: "1"
             image: docker-registry.wugi.info/library/util-linux-with-udev
             name: git
             resources:
