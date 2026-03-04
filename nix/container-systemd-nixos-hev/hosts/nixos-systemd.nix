@@ -84,6 +84,8 @@
   };
   networking.firewall = {
     extraCommands = ''
+      set -x
+
       ip rule add fwmark 1088 table 100
       ip route add local default dev lo table 100
 
@@ -124,6 +126,8 @@
       iptables -t mangle -A prerouting-hev -p udp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
     '';
     extraStopCommands = ''
+      set -x
+
       ip rule delete fwmark 1088 table 100
       ip route delete local default dev lo table 100
 
