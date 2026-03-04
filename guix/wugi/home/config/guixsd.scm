@@ -61,6 +61,7 @@
   #:use-module (wugi home services majordomo billing2)
   #:use-module (wugi home services audio)
 
+  #:use-module (gnu packages gnupg)
   #:use-module (gnu packages mail)
   #:use-module (wugi guile pass)
   #:use-module (wugi utils)
