@@ -153,7 +153,7 @@
         ipset add byp4 224.0.0.0/4
         ipset add byp4 240.0.0.0/4
 
-        iptables-apply ${firewallRulesFile}
+        iptables-restore < ${firewallRulesFile}
       '';
       extraStopCommands = ''
         set -x
@@ -165,5 +165,5 @@
         ipset destroy byp4
       '';
   };
-  systemd.services.firewall.path = [ pkgs.ipset pkgs.iproute2 pkgs.util-linux ];
+  systemd.services.firewall.path = [ pkgs.ipset pkgs.iproute2 ];
 }
