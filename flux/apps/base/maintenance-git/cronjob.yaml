@@ -31,15 +31,12 @@ spec:
             - |
               set -o nounset -o errexit -o pipefail -o xtrace
               /usr/bin/env
-              cd "$WORKING_DIR" || exit 1
               git for-each-repo --config=maintenance.repo maintenance run --task=prefetch
             env:
             - name: "HOME"
               value: "/home/oleg"
             - name: "USER"
               value: "oleg"
-            - name: "WORKING_DIR"
-              value: "/home/oleg"
             image: docker-registry.wugi.info/library/util-linux-with-udev
             name: git
             resources:
