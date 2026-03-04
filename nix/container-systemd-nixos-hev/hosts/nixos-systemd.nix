@@ -84,6 +84,23 @@
   };
   networking.firewall = {
     extraCommands = ''
+      ipset create byp4 hash:net family inet hashsize 2048 maxelem 65536
+      ipset add byp4 0.0.0.0/8
+      ipset add byp4 10.0.0.0/8
+      ipset add byp4 100.64.0.0/10
+      ipset add byp4 127.0.0.0/8
+      ipset add byp4 169.254.0.0/16
+      ipset add byp4 172.16.0.0/12
+      ipset add byp4 192.0.0.0/24
+      ipset add byp4 192.0.2.0/24
+      ipset add byp4 192.88.99.0/24
+      ipset add byp4 192.168.0.0/16
+      ipset add byp4 198.18.0.0/15
+      ipset add byp4 198.51.100.0/24
+      ipset add byp4 203.0.113.0/24
+      ipset add byp4 224.0.0.0/4
+      ipset add byp4 240.0.0.0/4
+
       iptables -t mangle -N prerouting-hev
       iptables -t mangle -N output-hev
       iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 80 -j prerouting-hev
@@ -104,6 +121,8 @@
       iptables -t mangle -A prerouting-hev -p udp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
     '';
     extraStopCommands = ''
+      ipset destroy byp4
+
       iptables -t mangle -D PREROUTING -p tcp -m tcp --dport 80 -j prerouting-hev
       iptables -t mangle -D PREROUTING -p udp -m udp --dport 80 -j prerouting-hev
       iptables -t mangle -D PREROUTING -p tcp -m tcp --dport 443 -j prerouting-hev
