@@ -84,6 +84,9 @@
   };
   networking.firewall = {
     extraCommands = ''
+      ip rule add fwmark 1088 table 100
+      ip route add local default dev lo table 100
+
       ipset create byp4 hash:net family inet hashsize 2048 maxelem 65536
       ipset add byp4 0.0.0.0/8
       ipset add byp4 10.0.0.0/8
@@ -121,6 +124,9 @@
       iptables -t mangle -A prerouting-hev -p udp -j TPROXY --on-port 1088 --on-ip 0.0.0.0 --tproxy-mark 0x440/0xffffffff
     '';
     extraStopCommands = ''
+      ip rule delete fwmark 1088 table 100
+      ip route delete local default dev lo table 100
+
       ipset destroy byp4
 
       iptables -t mangle -D PREROUTING -p tcp -m tcp --dport 80 -j prerouting-hev
