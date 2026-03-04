@@ -165,5 +165,5 @@
         ipset destroy byp4
       '';
   };
-  systemd.services.firewall.path = [ pkgs.ipset pkgs.iproute2 ];
+  systemd.services.firewall.path = [ pkgs.ipset pkgs.iproute2 pkgs.util-linux ];
 }
