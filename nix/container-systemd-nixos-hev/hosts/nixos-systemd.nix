@@ -153,7 +153,7 @@
         ipset add byp4 224.0.0.0/4
         ipset add byp4 240.0.0.0/4
 
-        iptables-restore ${firewallRulesFile}
+        iptables-apply ${firewallRulesFile}
       '';
       extraStopCommands = ''
         set -x
