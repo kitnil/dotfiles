@@ -11,8 +11,8 @@ spec:
           containers:
           - name: git
             env:
-            - name: WORKING_DIR
-              value: /home/oleg
+            - name: GIT_CONFIG_GLOBAL
+              value: /home/oleg/.gitconfig
   schedule: 45 0 * * *
   timeZone: Europe/Moscow
   suspend: false
