@@ -2,6 +2,7 @@
   #:use-module (gnu home)
   #:use-module (gnu home services)
   #:use-module (gnu home services desktop)
+  #:use-module (gnu home services gnupg)
   #:use-module (gnu home services mcron)
   #:use-module (gnu home services shells)
   #:use-module (gnu home services sound)
@@ -466,7 +467,19 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
 
        home-groovy-service
 
-       home-gnupg-service
+       (service home-gpg-agent-service-type
+                (home-gpg-agent-configuration
+                 (pinentry-program
+                  (file-append pinentry "/bin/pinentry"))
+                 (default-cache-ttl 172800)
+                 (max-cache-ttl 172800)
+                 (default-cache-ttl-ssh 172800)
+                 (max-cache-ttl-ssh 172800)
+                 (ssh-support? #t)
+                 (extra-content "\
+pinentry-timeout 5
+no-grab
+allow-preset-passphrase")))
 
        home-inputrc-service
 

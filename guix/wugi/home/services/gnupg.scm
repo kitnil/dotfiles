@@ -13,5 +13,4 @@
                   home-files-service-type
                   (map (lambda (file-name)
                          `(,(string-append ".gnupg/" file-name) ,(local-file (string-append %distro-directory "/private_dot_gnupg/" file-name))))
-                       '("gpg-agent.conf"
-                         "gpg.conf"))))
+                       '("gpg.conf"))))
