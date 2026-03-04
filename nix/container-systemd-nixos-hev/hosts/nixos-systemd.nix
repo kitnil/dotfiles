@@ -157,6 +157,7 @@
       '';
       extraStopCommands = ''
         set -x
+        set +e
 
         ip rule delete fwmark 1088 table 100
         ip route delete local default dev lo table 100
