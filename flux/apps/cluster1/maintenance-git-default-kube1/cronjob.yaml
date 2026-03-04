@@ -13,5 +13,5 @@ spec:
             env:
             - name: WORKING_DIR
               value: /home/oleg
-  schedule: 0 7 * * *
+  schedule: 0 10 * * *
   suspend: false
