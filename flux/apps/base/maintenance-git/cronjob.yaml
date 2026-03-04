@@ -34,8 +34,12 @@ spec:
               cd "$WORKING_DIR" || exit 1
               git maintenance run --task=prefetch
             env:
-            - name: WORKING_DIR
-              value: /home/oleg
+            - name: "HOME"
+              value: "/home/oleg"
+            - name: "USER"
+              value: "oleg"
+            - name: "WORKING_DIR"
+              value: "/home/oleg"
             image: docker-registry.wugi.info/library/util-linux-with-udev
             name: git
             resources:
