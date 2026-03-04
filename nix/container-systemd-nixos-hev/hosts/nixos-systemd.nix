@@ -156,13 +156,13 @@
         iptables-restore ${firewallRulesFile}
       '';
       extraStopCommands = ''
-      set -x
+        set -x
 
-      ip rule delete fwmark 1088 table 100
-      ip route delete local default dev lo table 100
+        ip rule delete fwmark 1088 table 100
+        ip route delete local default dev lo table 100
 
-      ipset destroy byp4
-    '';
+        ipset destroy byp4
+      '';
   };
   systemd.services.firewall.path = [ pkgs.ipset pkgs.iproute2 ];
 }
