@@ -1085,6 +1085,19 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
+  name: maintenance-git
+  namespace: flux-system
+spec:
+  interval: 30m0s
+  path: ./flux/apps/cluster1/maintenance-git
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
   name: maintenance-git-default-kube1
   namespace: flux-system
 spec:
