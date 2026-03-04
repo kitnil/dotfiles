@@ -13,6 +13,6 @@ spec:
             env:
             - name: GIT_CONFIG_GLOBAL
               value: /home/oleg/src/gitlab.intr/.gitconfig
-  schedule: 55 0 * * *
+  schedule: 50 1 * * *
   timeZone: Europe/Moscow
   suspend: false
