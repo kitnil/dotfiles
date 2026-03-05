@@ -1494,17 +1494,17 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
 Match Address 127.0.0.1
 PasswordAuthentication yes")))
 
-         ;; (service nfs-service-type
-         ;;          (nfs-configuration
-         ;;           (exports
-         ;;            '(("/srv"
-         ;;               "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=0)")
-         ;;              ("/home/oleg/src"
-         ;;               "192.168.0.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=2)")
-         ;;              ("/srv/vagrant"
-         ;;               "192.168.0.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=3)")
-         ;;              ("/srv/lib/video"
-         ;;               "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=4)")))))
+         (service nfs-service-type
+                  (nfs-configuration
+                   (exports
+                    '(("/srv"
+                       "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=0)")
+                      ("/home/oleg/src"
+                       "192.168.0.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=2)")
+                      ("/srv/vagrant"
+                       "192.168.0.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=3)")
+                      ("/srv/lib/video"
+                       "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=4)")))))
 
          ;; (service (certbot-service-type-custom-nginx "192.168.0.144")
          ;;          (certbot-configuration
