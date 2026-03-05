@@ -3,6 +3,11 @@
 // Check the wiki for a full description of the configuration:
 // https://yalter.github.io/niri/Configuration:-Introduction
 
+debug {
+  render-drm-device "/dev/dri/renderD129"
+  ignore-drm-device "/dev/dri/renderD128"
+}
+
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
@@ -75,7 +80,7 @@ input {
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
-output "DP-1" {
+output "DP-3" {
     // Uncomment this line to disable this output.
     // off
 
@@ -105,6 +110,12 @@ output "DP-1" {
     // automatically.
     // position x=1280 y=0
 
+    layout {
+        background-color "#000000"
+    }
+}
+
+output "HDMI-A-3" {
     layout {
         background-color "#000000"
     }
