@@ -125,6 +125,19 @@ max-cache-ttl 172800
 max-cache-ttl-ssh 172800
 allow-preset-passphrase"))))
 
+                    (simple-service 'pipewire-config
+                                    home-files-service-type
+                                    (list `(".config/pipewire/pipewire.conf.d/99-low-latency.conf"
+                                            ,(mixed-text-file "pipewire-99-low-latency.conf" "\
+context.properties = {
+    default.clock.rate = 48000
+    default.clock.allowed-rates = [ 44100 48000 ]
+    default.clock.quantum = 512
+    default.clock.min-quantum = 512
+    default.clock.max-quantum = 512
+}
+"))))
+
                     (simple-service 'bin-manual-scripts
                                     home-files-service-type
                                     (list `("bin/manual-scripts-root-02-net.sh"
