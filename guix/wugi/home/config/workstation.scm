@@ -146,7 +146,18 @@ allow-preset-passphrase"))))
                                                          #:recursive? #t))
                                           `("bin/manual-scripts-oleg-02-gnupg.sh"
                                             ,(local-file (string-append %distro-directory "/dotfiles/run/guix-workstation/05-gnupg.sh")
-                                                         #:recursive? #t))))
+                                                         #:recursive? #t))
+                                          `("bin/fuzzel-nixos-workstation"
+                                            ,(program-file "fuzzel-nixos-workstation"
+                                                           #~(execl "/run/privileged/bin/sudo" "runc"
+                                                                    "/run/current-system/profile/sbin/runc" "exec"
+                                                                    "--env" "USER=oleg"
+                                                                    "--env" "WAYLAND_DISPLAY=wayland-1"
+                                                                    "--env" "XDG_RUNTIME_DIR=/mnt/guix/run/user/1000"
+                                                                    "--env" "DISPLAY=:0"
+                                                                    "--user=1000:998"
+                                                                    "nixos-workstation"
+                                                                    "/bin/sh" "-lc" "exec /usr/bin/env fuzzel")))))
                     (simple-service 'bin-namespace-host
                                     home-files-service-type
                                     (list `("bin/namespace-host"
