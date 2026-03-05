@@ -5,6 +5,7 @@
     ./private.nix
   ];
   home.packages = [
+    pkgs.fuzzel
     pkgs.ipmitool
     pkgs.ipmiview
     pkgs.skopeo
