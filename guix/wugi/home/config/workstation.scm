@@ -140,37 +140,41 @@ context.properties = {
 
                     (simple-service 'bin-manual-scripts
                                     home-files-service-type
-                                    (list `("bin/manual-scripts-root-02-net.sh"
-                                            ,(local-file (string-append %distro-directory "/dotfiles/run/guix-workstation/03-net.sh")
-                                                         #:recursive? #t))
-                                          `("bin/manual-scripts-root-03-firefox-twitch-namespace.sh"
-                                            ,(local-file (string-append %distro-directory "/dotfiles/run/guix-workstation/04-firefox-twitch-namespace.sh")
-                                                         #:recursive? #t))
-                                          `("bin/manual-scripts-root-04-mjru-net"
-                                            ,(program-file "manual-scripts-root-04-mjru-net"
-                                                           #~(let ((gateway "192.168.0.144"))
-                                                               (for-each (lambda (network)
-                                                                           (system* #$(file-append iproute "/sbin/ip") "route" "add" network "via" gateway))
-                                                                         '("172.16.103.0/24"
-                                                                           "78.108.80.0/24"
-                                                                           "78.108.88.0/24")))))
-                                          `("bin/manual-scripts-oleg-01-ssh.sh"
-                                            ,(local-file (string-append %distro-directory "/dotfiles/run/guix-workstation/02-ssh.sh")
-                                                         #:recursive? #t))
-                                          `("bin/manual-scripts-oleg-02-gnupg.sh"
-                                            ,(local-file (string-append %distro-directory "/dotfiles/run/guix-workstation/05-gnupg.sh")
-                                                         #:recursive? #t))
-                                          `("bin/fuzzel-nixos-workstation"
-                                            ,(program-file "fuzzel-nixos-workstation"
-                                                           #~(execl "/run/privileged/bin/sudo" "runc"
-                                                                    "/run/current-system/profile/sbin/runc" "exec"
-                                                                    "--env" "USER=oleg"
-                                                                    "--env" "WAYLAND_DISPLAY=wayland-1"
-                                                                    "--env" "XDG_RUNTIME_DIR=/mnt/guix/run/user/1000"
-                                                                    "--env" "DISPLAY=:0"
-                                                                    "--user=1000:998"
-                                                                    "nixos-workstation"
-                                                                    "/bin/sh" "-lc" "exec /usr/bin/env fuzzel")))))
+                                    (append (list `("bin/manual-scripts-root-02-net.sh"
+                                                    ,(local-file (string-append %distro-directory "/dotfiles/run/guix-workstation/03-net.sh")
+                                                                 #:recursive? #t))
+                                                  `("bin/manual-scripts-root-03-firefox-twitch-namespace.sh"
+                                                    ,(local-file (string-append %distro-directory "/dotfiles/run/guix-workstation/04-firefox-twitch-namespace.sh")
+                                                                 #:recursive? #t))
+                                                  `("bin/manual-scripts-root-04-mjru-net"
+                                                    ,(program-file "manual-scripts-root-04-mjru-net"
+                                                                   #~(let ((gateway "192.168.0.144"))
+                                                                       (for-each (lambda (network)
+                                                                                   (system* #$(file-append iproute "/sbin/ip") "route" "add" network "via" gateway))
+                                                                                 '("172.16.103.0/24"
+                                                                                   "78.108.80.0/24"
+                                                                                   "78.108.88.0/24")))))
+                                                  `("bin/manual-scripts-oleg-01-ssh.sh"
+                                                    ,(local-file (string-append %distro-directory "/dotfiles/run/guix-workstation/02-ssh.sh")
+                                                                 #:recursive? #t))
+                                                  `("bin/manual-scripts-oleg-02-gnupg.sh"
+                                                    ,(local-file (string-append %distro-directory "/dotfiles/run/guix-workstation/05-gnupg.sh")
+                                                                 #:recursive? #t)))
+                                            (map (lambda (container-name)
+                                                   (let ((file-name (string-append "fuzzel-" container-name)))
+                                                     `(,(string-append "bin/" file-name)
+                                                       ,(program-file file-name
+                                                                      #~(execl "/run/privileged/bin/sudo" "runc"
+                                                                               "/run/current-system/profile/sbin/runc" "exec"
+                                                                               "--env" "USER=oleg"
+                                                                               "--env" "WAYLAND_DISPLAY=wayland-1"
+                                                                               "--env" "XDG_RUNTIME_DIR=/mnt/guix/run/user/1000"
+                                                                               "--env" "DISPLAY=:0"
+                                                                               "--user=1000:998"
+                                                                               #$container-name
+                                                                               "/bin/sh" "-lc" "exec /usr/bin/env fuzzel")))))
+                                                 '("nixos-workstation"
+                                                   "nixos-majordomo"))))
                     (simple-service 'bin-namespace-host
                                     home-files-service-type
                                     (list `("bin/namespace-host"
