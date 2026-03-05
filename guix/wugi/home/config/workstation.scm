@@ -181,8 +181,12 @@ context.properties = {
                                                                             (apply execl
                                                                                    (append (list "/run/privileged/bin/sudo" "runc"
                                                                                                  "/run/current-system/profile/sbin/runc" "exec"
-                                                                                                 "--env" "USER=oleg"
-                                                                                                 "--env" "WAYLAND_DISPLAY=wayland-1"
+                                                                                                 "--env" (and=> (getenv "USER")
+                                                                                                                (lambda (user)
+                                                                                                                  (string-append "USER=" user)))
+                                                                                                 "--env" (and=> (getenv "WAYLAND_DISPLAY")
+                                                                                                                (lambda (display)
+                                                                                                                  (string-append "WAYLAND_DISPLAY=" display)))
                                                                                                  "--env" "XDG_RUNTIME_DIR=/mnt/guix/run/user/1000"
                                                                                                  "--env" "DISPLAY=:0")
                                                                                            (case (output-name output)
