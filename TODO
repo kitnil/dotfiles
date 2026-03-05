@@ -10,3 +10,6 @@ ln -s ~/.guix-home/profile/lib/tree-sitter/libtree-sitter-kdl.so  ~/.emacs.d/tre
 
 # pc0 limit bandwidth
 tc qdisc add dev usb0 root tbf rate 512kbit burst 16kbit latency 50ms
+# configure firewall
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -i usb0 -j DROP
