@@ -1,19 +1,25 @@
-;; guix build -f main.scm
+#!/run/current-system/profile/bin/guile \
+--no-auto-compile -e (poe-filter) -s
+!#
 
-(use-modules (ice-9 format)
-             (ice-9 popen)
-             (ice-9 rdelim)
-             (ice-9 string-fun)
+(define-module (poe-filter)
+  #:use-module (ice-9 format)
+  #:use-module (ice-9 popen)
+  #:use-module (ice-9 rdelim)
+  #:use-module (ice-9 string-fun)
 
-             (srfi srfi-1)
-             (srfi srfi-26)
-             (srfi srfi-171)
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-26)
+  #:use-module (srfi srfi-171)
 
-             (json)
+  #:use-module (json)
 
-             (gnu services configuration)
-             (guix gexp)
-             (guix store))
+  #:use-module (gnu services configuration)
+  #:use-module (guix gexp)
+  #:use-module (guix store)
+  #:use-module (guix derivations)
+
+  #:export (main))
 
 (define (uglify-field-name field-name)
   (apply string-append
@@ -1451,5 +1457,10 @@
                                 poe-filter-identified-items))))
          poe-item-filter-configuration-fields)))
 
-(run-with-store (open-connection)
-  (text-file* "wigust.filter" (generate-filter)))
+(define (main args)
+  (let* ((%store (open-connection))
+         (drv
+          (run-with-store %store
+            (text-file* "wigust.filter" (generate-filter)))))
+    (and (build-derivations %store (list drv))
+         (copy-file (pk (derivation->output-path drv)) "wigust.filter"))))
