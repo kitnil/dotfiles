@@ -26,63 +26,62 @@
   boolean?)
 
 (define (serialize-show field value)
-  #~(format #f "~a~%" (if #$value "Show" "Hide")))
+  (format #f "~a~%" (if value "Show" "Hide")))
 
 (define (serialize-string field-name value)
-  #~(format #f "~a ~a~%" #$field-name #$value))
+  (format #f "~a ~a~%" field-name value))
 
 (define (serialize-list-of-strings field-name value)
-  #~(string-append #$@(map (cut serialize-string field-name <>) #$value)))
+  (string-append (map (cut serialize-string field-name <>) value)))
 
 (define-maybe list-of-strings)
 
 (define (serialize-symbol-1 field-name value)
-  #~(symbol->string '#$value))
+  (symbol->string value))
 
 (define (serialize-list-of-symbols field-name value)
-  #~(if (null? '#$value)
-        ""
-        (string-append "\t"
-                       (string-join (append (list #$(uglify-field-name field-name))
-                                            (map (lambda (v)
-                                                   (symbol->string v))
-                                                 '#$value)))
-                       "\n")))
+  (if (null? value)
+      ""
+      (string-append "\t"
+                     (string-join (append (list (uglify-field-name field-name))
+                                          (map (lambda (v)
+                                                 (symbol->string v))
+                                               value)))
+                     "\n")))
 
 (define-maybe list-of-symbols)
 
 (define set-font-size? integer?)
 
 (define (serialize-set-font-size field-name value)
-  #~(if (= #$value 0)
-        ""
-        (format #f "\t~a ~a~%" #$(uglify-field-name field-name) #$value)))
+  (if (= value 0)
+      ""
+      (format #f "\t~a ~a~%" (uglify-field-name field-name) value)))
 
 (define base-types?
   list-of-strings?)
 
 (define (serialize-base-types field-name value)
-  #~(if (null? '#$value)
-        ""
-        (if (> (length '#$value) 1)
-            (format #f "\tBaseType == ~{~s ~}~%" '#$value)
-            (format #f "\tBaseType ~{~s ~}~%" '#$value))))
+  (if (null? value)
+      ""
+      (if (> (length value) 1)
+          (format #f "\tBaseType == ~{~s ~}~%" value)
+          (format #f "\tBaseType ~{~s ~}~%" value))))
 
 (define classes?
   list-of-strings?)
 
 (define (serialize-classes field-name value)
-  #~(if (null? '#$value)
-        ""
-        (format #f "\tClass == ~{~s ~}~%"
-                '#$value)))
+  (if (null? value)
+      ""
+      (format #f "\tClass == ~{~s ~}~%" value)))
 
 (define commentary? string?)
 
 (define (serialize-commentary field-name value)
-  #~(if (string-null? #$value)
-        ""
-        (format #f "# ~a~%" #$value)))
+  (if (string-null? value)
+      ""
+      (format #f "# ~a~%" value)))
 
 (define (operator? x)
   (or (boolean? x)
@@ -97,7 +96,7 @@
                   ))))
 
 (define (serialize-operator field-name value)
-  #~(symbol->string '#$value))
+  (symbol->string value))
 
 (define (conditional-value-1? x)
   (or (number? x)
@@ -119,27 +118,27 @@
 
 (define (serialize-conditional-value-configuration config fields)
   "Similar to serialize-configuration."
-  #~(string-join
-     (list #$@(list-transduce (base-transducer config) rcons fields))))
+  (string-join
+   `(,@(list-transduce (base-transducer config) rcons fields))))
 
 (define conditional-value? poe-item-filter-conditional-value-configuration?)
 (define (serialize-conditional-value field-name value)
-  #~(if #$(poe-item-filter-conditional-value-configuration-operator value)
-        (format #f
-                "\t~a ~a~%"
-                #$(uglify-field-name field-name)
-                #$(serialize-conditional-value-configuration value poe-item-filter-conditional-value-configuration-fields))
-        ""))
+  (if (poe-item-filter-conditional-value-configuration-operator value)
+      (format #f
+              "\t~a ~a~%"
+              (uglify-field-name field-name)
+              (serialize-conditional-value-configuration value poe-item-filter-conditional-value-configuration-fields))
+      ""))
 
 (define continue? boolean?)
 
 (define (serialize-continue field-name value)
-  #~(if #$value
-        (string-append "\t" #$(uglify-field-name field-name) "\n")
-        ""))
+  (if value
+      (string-append "\t" (uglify-field-name field-name) "\n")
+      ""))
 
 (define (serialize-integer field-name value)
-  #~(#$value))
+  (value))
 
 (define-configuration poe-item-filter-color-configuration
   ;; XXX: Refactor poe-item-filter-color-configuration less than 256 hack.
@@ -162,26 +161,26 @@
 
 (define (serialize-color field-name value)
   ;; XXX: Refactor poe-item-filter-color-configuration less than 256 hack.
-  #~(if (or (and (or (> #$(poe-item-filter-color-configuration-red value) 0)
-                     (> #$(poe-item-filter-color-configuration-green value) 0)
-                     (> #$(poe-item-filter-color-configuration-blue value) 0)
-                     (> #$(poe-item-filter-color-configuration-alpha value) 0))
-                 (or (< #$(poe-item-filter-color-configuration-red value) 256)
-                     (< #$(poe-item-filter-color-configuration-green value) 256)
-                     (< #$(poe-item-filter-color-configuration-blue value) 256)
-                     (< #$(poe-item-filter-color-configuration-alpha value) 256)))
-            (or (= #$(poe-item-filter-color-configuration-red value) 0)
-                (= #$(poe-item-filter-color-configuration-green value) 0)
-                (= #$(poe-item-filter-color-configuration-blue value) 0)
-                (= #$(poe-item-filter-color-configuration-alpha value) 0)))
-        (string-append "\t"
-                       (string-join (list #$(uglify-field-name field-name)
-                                          #$(number->string (poe-item-filter-color-configuration-red value))
-                                          #$(number->string (poe-item-filter-color-configuration-green value))
-                                          #$(number->string (poe-item-filter-color-configuration-blue value))
-                                          #$(number->string (poe-item-filter-color-configuration-alpha value))))
-                       "\n")
-        ""))
+  (if (or (and (or (> (poe-item-filter-color-configuration-red value) 0)
+                   (> (poe-item-filter-color-configuration-green value) 0)
+                   (> (poe-item-filter-color-configuration-blue value) 0)
+                   (> (poe-item-filter-color-configuration-alpha value) 0))
+               (or (< (poe-item-filter-color-configuration-red value) 256)
+                   (< (poe-item-filter-color-configuration-green value) 256)
+                   (< (poe-item-filter-color-configuration-blue value) 256)
+                   (< (poe-item-filter-color-configuration-alpha value) 256)))
+          (or (= (poe-item-filter-color-configuration-red value) 0)
+              (= (poe-item-filter-color-configuration-green value) 0)
+              (= (poe-item-filter-color-configuration-blue value) 0)
+              (= (poe-item-filter-color-configuration-alpha value) 0)))
+      (string-append "\t"
+                     (string-join (list (uglify-field-name field-name)
+                                        (number->string (poe-item-filter-color-configuration-red value))
+                                        (number->string (poe-item-filter-color-configuration-green value))
+                                        (number->string (poe-item-filter-color-configuration-blue value))
+                                        (number->string (poe-item-filter-color-configuration-alpha value))))
+                     "\n")
+      ""))
 
 (define (serialize-symbol field-name value)
   value)
@@ -207,14 +206,14 @@
   poe-item-filter-minimap-icon-configuration?)
 
 (define (serialize-minimap-icon field-name value)
-  #~(if #$(poe-item-filter-minimap-icon-configuration-enabled? value)
-        (string-append "\t"
-                       (string-join (list #$(uglify-field-name field-name)
-                                          #$(number->string (poe-item-filter-minimap-icon-configuration-size value))
-                                          #$(symbol->string (poe-item-filter-minimap-icon-configuration-colour value))
-                                          #$(symbol->string (poe-item-filter-minimap-icon-configuration-shape value))))
-                       "\n")
-        ""))
+  (if (poe-item-filter-minimap-icon-configuration-enabled? value)
+      (string-append "\t"
+                     (string-join (list (uglify-field-name field-name)
+                                        (number->string (poe-item-filter-minimap-icon-configuration-size value))
+                                        (symbol->string (poe-item-filter-minimap-icon-configuration-colour value))
+                                        (symbol->string (poe-item-filter-minimap-icon-configuration-shape value))))
+                     "\n")
+      ""))
 
 (define (boolean-with-field? x)
   (or (and (symbol? x)
@@ -222,13 +221,13 @@
       (boolean? x)))
 
 (define (serialize-boolean-with-field field-name value)
-  #~(if (and (symbol? '#$value)
-             (eq? 'disabled '#$value))
-        ""
-        (string-append "\t"
-                       (string-join (list #$(uglify-field-name field-name)
-                                          #$(if value "True" "False")))
-                       "\n")))
+  (if (and (symbol? value)
+           (eq? 'disabled value))
+      ""
+      (string-append "\t"
+                     (string-join (list (uglify-field-name field-name)
+                                        (if value "True" "False")))
+                     "\n")))
 
 (define-configuration poe-item-filter-play-alert-sound-configuration
   (id
@@ -1009,8 +1008,7 @@
    (set-border-color
     (poe-item-filter-color-configuration
      (red 30) (green 190) (blue 190) (alpha 255)))
-   (classes '("Skill Gems"
-              "Support Gems"))
+   (classes '("Skill Gems" "Support Gems"))
    (minimap-icon
     (poe-item-filter-minimap-icon-configuration
      (enabled? #t)
