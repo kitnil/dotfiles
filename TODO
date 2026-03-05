@@ -7,3 +7,6 @@ install /home/oleg/bin/waybar-1.sh
 install /home/oleg/bin/waybar-2.sh
 
 ln -s ~/.guix-home/profile/lib/tree-sitter/libtree-sitter-kdl.so  ~/.emacs.d/tree-sitter
+
+# pc0 limit bandwidth
+tc qdisc add dev usb0 root tbf rate 512kbit burst 16kbit latency 50ms
