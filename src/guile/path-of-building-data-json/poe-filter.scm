@@ -3,23 +3,30 @@
 !#
 
 (define-module (poe-filter)
+  #:use-module (gnu services configuration)
+  #:use-module (guix derivations)
+  #:use-module (guix gexp)
+  #:use-module (guix scripts)
+  #:use-module (guix store)
   #:use-module (ice-9 format)
+  #:use-module (ice-9 match)
   #:use-module (ice-9 popen)
   #:use-module (ice-9 rdelim)
   #:use-module (ice-9 string-fun)
-
-  #:use-module (srfi srfi-1)
-  #:use-module (srfi srfi-26)
-  #:use-module (srfi srfi-171)
-
   #:use-module (json)
-
-  #:use-module (gnu services configuration)
-  #:use-module (guix gexp)
-  #:use-module (guix store)
-  #:use-module (guix derivations)
-
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-171)
+  #:use-module (srfi srfi-26)
+  #:use-module (srfi srfi-37)
   #:export (main))
+
+(define %options
+  (list (option '(#\D "exclude-defence") #f #t
+                (lambda (opt name arg result)
+                  (alist-cons 'exclude-defence arg result)))
+        (option '(#\d "defence") #f #t
+                (lambda (opt name arg result)
+                  (alist-cons 'defence arg result)))))
 
 (define (uglify-field-name field-name)
   (apply string-append
@@ -1167,21 +1174,8 @@
 
 (define base-items
   (json-string->scm
-   (with-input-from-file "input.json"
+   (with-input-from-file "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/src/guile/path-of-building-data-json/input.json"
      read-string)))
-
-(define exclude-sub-types
-  '(;; "Armour"
-    ;; "Armour/Energy Shield"
-    "Armour/Evasion"
-    ;; "Energy Shield"
-    "Evasion"
-    ;; "Evasion/Energy Shield"
-    ))
-
-(define include-sub-types
-  '("Armour/Energy Shield"
-    "Energy Shield"))
 
 (define poe-filters-weak-bases
   (map (lambda (type)
@@ -1215,7 +1209,7 @@
          "Gloves"
          "Helmet")))
 
-(define poe-filters-unused-bases
+(define (poe-filters-unused-bases exclude-sub-types)
   (delete #f
           (apply append
                  (map (lambda (type)
@@ -1258,7 +1252,7 @@
                         "Gloves"
                         "Helmet")))))
 
-(define poe-filters-best-bases
+(define (poe-filters-best-bases include-sub-types)
   (delete #f
           (map (lambda (base-type)
                  (poe-item-filter-block-configuration
@@ -1400,67 +1394,76 @@
    (identified? #t)
    (show? #f)))
 
-(define (generate-filter)
-  #~(begin
-      (use-modules (ice-9 format))
-      #$(serialize-configuration
-         (poe-item-filter-configuration
-          (blocks (append (list poe-filter-basic
-                                poe-filter-crafting
-                                poe-filter-quality
-                                poe-filter-memory-strands
-                                poe-filter-scrolls
-                                poe-filter-vendor-5-linked-sockets
-                                poe-filter-vendor-3-sockets
-                                poe-filter-vendor-6-sockets
-                                poe-filter-unique
-                                poe-filter-currency-best
-                                poe-filter-currency-middle
-                                poe-filter-fragments
-                                poe-filter-wombgifts
-                                poe-filter-idols
-                                poe-filter-currency+incubators
-                                poe-filter-jewelry
-                                poe-filter-jewelry-best
-                                poe-filter-talismans
-                                poe-filter-belts
-                                poe-filter-belts-best
-                                poe-filter-labyrinth+incursion
-                                poe-filter-scarabs
-                                poe-filter-maps
-                                poe-filter-jewels
-                                poe-filter-abyss-jewels
-                                poe-filter-high-level-gems
-                                poe-filter-high-quality-gems
-                                poe-filter-high-value-gems
-                                poe-filter-awakend-gems
-                                poe-filter-transfigured-gems
-                                poe-filter-rogue-marks
-                                poe-filter-blueprints+contracts+sanctum
-                                poe-filter-not-identified-items)
-
-                          poe-filters-weak-bases
-                          poe-filters-unused-bases
-                          poe-filters-best-bases
-
-                          (list poe-filter-best-sceptres
-                                poe-filter-best-wands
-                                poe-filter-best-staffs
-                                poe-filter-unused-weapons
-                                poe-filter-flasks
-                                poe-filter-utility-flasks
-                                poe-filter-tinctures
-                                poe-filter-best-hybrid-flasks
-                                poe-filter-low-level-flasks
-                                poe-filter-high-quality-flasks
-                                poe-filter-fractured-items
-                                poe-filter-identified-items))))
-         poe-item-filter-configuration-fields)))
-
 (define (main args)
+  (define opts
+    (parse-command-line args %options (list '())))
+  (define exclude-sub-types
+    (filter-map (match-lambda
+                  (('exclude-defence . type) type)
+                  (_ #f))
+                opts))
+  (define include-sub-types
+    (filter-map (match-lambda
+                  (('defence . type) type)
+                  (_ #f))
+                opts))
   (let* ((%store (open-connection))
          (drv
           (run-with-store %store
-            (text-file* "wigust.filter" (generate-filter)))))
+            (text-file* "wigust.filter"
+                        (serialize-configuration
+                         (poe-item-filter-configuration
+                          (blocks
+                           (append (list poe-filter-basic
+                                         poe-filter-crafting
+                                         poe-filter-quality
+                                         poe-filter-memory-strands
+                                         poe-filter-scrolls
+                                         poe-filter-vendor-5-linked-sockets
+                                         poe-filter-vendor-3-sockets
+                                         poe-filter-vendor-6-sockets
+                                         poe-filter-unique
+                                         poe-filter-currency-best
+                                         poe-filter-currency-middle
+                                         poe-filter-fragments
+                                         poe-filter-wombgifts
+                                         poe-filter-idols
+                                         poe-filter-currency+incubators
+                                         poe-filter-jewelry
+                                         poe-filter-jewelry-best
+                                         poe-filter-talismans
+                                         poe-filter-belts
+                                         poe-filter-belts-best
+                                         poe-filter-labyrinth+incursion
+                                         poe-filter-scarabs
+                                         poe-filter-maps
+                                         poe-filter-jewels
+                                         poe-filter-abyss-jewels
+                                         poe-filter-high-level-gems
+                                         poe-filter-high-quality-gems
+                                         poe-filter-high-value-gems
+                                         poe-filter-awakend-gems
+                                         poe-filter-transfigured-gems
+                                         poe-filter-rogue-marks
+                                         poe-filter-blueprints+contracts+sanctum
+                                         poe-filter-not-identified-items)
+
+                                   poe-filters-weak-bases
+                                   (poe-filters-unused-bases exclude-sub-types)
+                                   (poe-filters-best-bases include-sub-types)
+
+                                   (list poe-filter-best-sceptres
+                                         poe-filter-best-wands
+                                         poe-filter-best-staffs
+                                         poe-filter-unused-weapons
+                                         poe-filter-flasks
+                                         poe-filter-utility-flasks
+                                         poe-filter-tinctures
+                                         poe-filter-best-hybrid-flasks
+                                         poe-filter-low-level-flasks
+                                         poe-filter-high-quality-flasks
+                                         poe-filter-fractured-items
+                                         poe-filter-identified-items))))
+                         poe-item-filter-configuration-fields)))))
     (and (build-derivations %store (list drv))
          (copy-file (pk (derivation->output-path drv)) "wigust.filter"))))
