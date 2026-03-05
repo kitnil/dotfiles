@@ -10,6 +10,7 @@
     pkgs.ipmiview
     pkgs.skopeo
     pkgs.robo3t
+    pkgs.xwayland-satellite
   ]
   ++ (map (file: pkgs.writeScriptBin (builtins.baseNameOf file) (builtins.readFile file)) [
     ./bash/Majordomo_LLC_Root_CA.crt.sh
