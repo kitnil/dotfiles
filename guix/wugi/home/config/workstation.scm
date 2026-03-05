@@ -164,15 +164,34 @@ context.properties = {
                                                    (let ((file-name (string-append "fuzzel-" container-name)))
                                                      `(,(string-append "bin/" file-name)
                                                        ,(program-file file-name
-                                                                      #~(execl "/run/privileged/bin/sudo" "runc"
-                                                                               "/run/current-system/profile/sbin/runc" "exec"
-                                                                               "--env" "USER=oleg"
-                                                                               "--env" "WAYLAND_DISPLAY=wayland-1"
-                                                                               "--env" "XDG_RUNTIME_DIR=/mnt/guix/run/user/1000"
-                                                                               "--env" "DISPLAY=:0"
-                                                                               "--user=1000:998"
-                                                                               #$container-name
-                                                                               "/bin/sh" "-lc" "exec /usr/bin/env fuzzel")))))
+                                                                      #~(begin
+                                                                          (use-modules (json)
+                                                                                       (ice-9 popen)
+                                                                                       (ice-9 rdelim))
+                                                                          (define (focused-output)
+                                                                            (let* ((port (open-pipe* OPEN_READ "niri" "msg" "--json" "focused-output"))
+                                                                                   (output (read-string port)))
+                                                                              (json-string->scm (string-trim-right output #\newline))))
+                                                                          (define (output-name output)
+                                                                            (string->symbol (assoc-ref output "name")))
+                                                                          (define (logical-scale output)
+                                                                            (assoc-ref (assoc-ref output "logical")
+                                                                                       "scale"))
+                                                                          (let ((output (focused-output)))
+                                                                            (apply execl
+                                                                                   (append (list "/run/privileged/bin/sudo" "runc"
+                                                                                                 "/run/current-system/profile/sbin/runc" "exec"
+                                                                                                 "--env" "USER=oleg"
+                                                                                                 "--env" "WAYLAND_DISPLAY=wayland-1"
+                                                                                                 "--env" "XDG_RUNTIME_DIR=/mnt/guix/run/user/1000"
+                                                                                                 "--env" "DISPLAY=:0")
+                                                                                           (case (output-name output)
+                                                                                             ((DP-3) (list "--env" (string-append "GDK_SCALE="
+                                                                                                                                  (number->string (logical-scale output)))))
+                                                                                             (else '()))
+                                                                                           (list "--user=1000:998"
+                                                                                                 #$container-name
+                                                                                                 "/bin/sh" "-lc" "exec /usr/bin/env fuzzel")))))))))
                                                  '("nixos-workstation"
                                                    "nixos-majordomo"))))
                     (simple-service 'bin-namespace-host
