@@ -12,7 +12,7 @@
 (define home-git-service
   (simple-service 'gitconfig-config
                   home-files-service-type
-                  (list `(".gitconfig" ,(local-file (string-append %distro-directory "/dot_gitconfig")))
+                  (list `(".gitconfig2" ,(local-file (string-append %distro-directory "/dot_gitconfig")))
                         `(".config/git/gitk" ,(local-file (string-append %distro-directory "/dot_config/git/gitk")))
                         `(".config/git/ignore" ,(local-file (string-append %distro-directory "/dot_config/git/ignore"))))))
 
