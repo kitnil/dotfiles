@@ -395,1140 +395,1062 @@
     ;; "Wands"
     "Warstaves"))
 
+(define poe-filter-basic
+  (poe-item-filter-block-configuration
+   (commentary "Lower font for basic items.")
+   (classes '("Helmets" "Body Armour" "Boots" "Gloves" "Shields"))
+   (item-level (poe-item-filter-conditional-value-configuration
+                (value 84)
+                (operator '<)))
+   (set-font-size 25)
+   (continue? #t)))
+
+(define poe-filter-crafting
+  (poe-item-filter-block-configuration
+   (commentary "Highlight border of best crafting bases.")
+   (item-level (poe-item-filter-conditional-value-configuration
+                (value 84)
+                (operator '>=)))
+   (set-border-color (poe-item-filter-color-configuration
+                      (red 74)
+                      (green 230)
+                      (blue 58)
+                      (alpha 255)))
+   (continue? #t)))
+
+(define poe-filter-quality
+  (poe-item-filter-block-configuration
+   (commentary "Highlight high quality items.")
+   (quality (poe-item-filter-conditional-value-configuration
+             (value 20)
+             (operator '>)))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 30) (green 190) (blue 190) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 30) (green 190) (blue 190) (alpha 255)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 1)
+     (colour 'White)
+     (shape 'Triangle)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 2)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Grey)))))
+
+(define poe-filter-memory-strands
+  (poe-item-filter-block-configuration
+   (commentary "Highlight items with memory strands.")
+   (memory-strands
+    (poe-item-filter-conditional-value-configuration
+     (value 1)
+     (operator '>=)))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 30) (green 190) (blue 190) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 30) (green 190) (blue 190) (alpha 255)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 1)
+     (colour 'White)
+     (shape 'Triangle)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 2)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Grey)))))
+
+(define poe-filter-scrolls
+  (poe-item-filter-block-configuration
+   (commentary "Stop apply rules to scrolls.")
+   (base-types '("Portal Scroll"
+                 "Scroll of Wisdom"))))
+
+(define poe-filter-vendor-5-linked-sockets
+  (poe-item-filter-block-configuration
+   (commentary "Highlight 5 linked sockets.")
+   (area-level (poe-item-filter-conditional-value-configuration
+                (value 75)
+                (operator '<)))
+   (linked-sockets (poe-item-filter-conditional-value-configuration
+                    (value 5)
+                    (operator '>=)))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 0) (blue 0) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 0) (blue 0) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 255) (blue 255) (alpha 255)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 6)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Red)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 0)
+     (colour 'Red)
+     (shape 'Star)))))
+
+(define poe-filter-vendor-3-sockets
+  (poe-item-filter-block-configuration
+   (commentary "Highlight sockets vendor recipe.")
+   (area-level (poe-item-filter-conditional-value-configuration
+                (value 75)
+                (operator '<)))
+   (socket-group (poe-item-filter-conditional-value-configuration
+                  (value '3RGB)
+                  (operator '>=)))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 30) (green 190) (blue 190) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 30) (green 190) (blue 190) (alpha 255)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 1)
+     (colour 'White)
+     (shape 'Triangle)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 2)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Grey)))))
+
+(define poe-filter-vendor-6-sockets
+  (poe-item-filter-block-configuration
+   (commentary "Highlight 6 sockets vendor recipe.")
+   (sockets (poe-item-filter-conditional-value-configuration
+             (value 6)
+             (operator '=)))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 30) (green 190) (blue 190) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 30) (green 190) (blue 190) (alpha 255)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 1)
+     (colour 'White)
+     (shape 'Triangle)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 2)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Grey)))))
+
+(define poe-filter-unique
+  (poe-item-filter-block-configuration
+   (commentary "Highlight unique items.")
+   (rarity '(Unique))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 188) (green 96) (blue 37) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 188) (green 96) (blue 37) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 53) (green 13) (blue 13) (alpha 229)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 1)
+     (colour 'Brown)
+     (shape 'Star)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 3)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Brown)))))
+
+(define poe-filter-base-high-percentage
+  (poe-item-filter-block-configuration
+   (commentary "Highlight good percentage.")
+   (classes '("Body Armours" "Helmets" "Gloves" "Boots" "Shields"))
+   (base-defence-percentile (poe-item-filter-conditional-value-configuration
+                             (value 70)
+                             (operator '>=)))
+   (set-border-color (poe-item-filter-color-configuration
+                      (red 0)
+                      (green 255)
+                      (blue 0)
+                      (alpha 255)))
+   (continue? #t)))
+
+(define poe-filter-currency-best
+  (poe-item-filter-block-configuration
+   (commentary "Highlight high value currency.")
+   (base-types '("Albino Rhoa Feather"
+                 "Awakener's Orb"
+                 "Blessing of Chayula"
+                 "Blessing of Xoph"
+                 "Crusader's Exalted Orb"
+                 "Divine Orb"
+                 "Eternal Orb"
+                 "Fracturing Orb"
+                 "Hinekora's Lock"
+                 "Hunter's Exalted Orb"
+                 "Mirror of Kalandra"
+                 "Mirror Shard"
+                 "Orb of Dominance"
+                 "Redeemer's Exalted Orb"
+                 "Reflecting Mist"
+                 "Tainted Divine Teardrop"
+                 "Valdo's Puzzle Box"
+                 "Warlord's Exalted Orb"))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 0) (blue 0) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 0) (blue 0) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 255) (blue 255) (alpha 255)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 6)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Red)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 0)
+     (colour 'Red)
+     (shape 'Star)))))
+
+(define poe-filter-currency-middle
+  (poe-item-filter-block-configuration
+   (commentary "Highlight middle value currency.")
+   (base-types '("Abrasive Catalyst"
+                 "Accelerating Catalyst"
+                 "Blighted Scouting Report"
+                 "Burial Medallion"
+                 "Cartographer's Chisel"
+                 "Chaos Orb"
+                 "Comprehensive Scouting Report"
+                 "Delirious Scouting Report"
+                 "Engineer's Orb"
+                 "Exalted Shard"
+                 "Gemcutter's Prism"
+                 "Glassblower's Bauble"
+                 "Grand Eldritch Ember"
+                 "Grand Eldritch Ichor"
+                 "Greater Eldritch Ember"
+                 "Greater Eldritch Ichor"
+                 "Harbinger's Orb"
+                 "Imbued Catalyst"
+                 "Intrinsic Catalyst"
+                 "Lesser Eldritch Ember"
+                 "Lesser Eldritch Ichor"
+                 "Maven's Chisel of Avarice"
+                 "Maven's Chisel of Divination"
+                 "Maven's Chisel of Procurement"
+                 "Noxious Catalyst"
+                 "Operative's Scouting Report"
+                 "Orb of Unmaking"
+                 "Primal Crystallised Lifeforce"
+                 "Ritual Splinter"
+                 "Scrap Metal"
+                 "Singular Scouting Report"
+                 "Stacked Deck"
+                 "Tainted Armourer's Scrap"
+                 "Tainted Blacksmith's Whetstone"
+                 "Tainted Jeweller's Orb"
+                 "Tempering Catalyst"
+                 "Turbulent Catalyst"
+                 "Unstable Catalyst"
+                 "Veiled Scarab"
+                 "Vivid Crystallised Lifeforce"
+                 "Wild Crystallised Lifeforce"))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 0) (blue 0) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 0) (blue 0) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 249) (green 150) (blue 25) (alpha 255)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 2)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'White)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 2)
+     (colour 'White)
+     (shape 'Circle)))))
+
+(define poe-filter-fragments
+  (poe-item-filter-block-configuration
+   (commentary "Highlight map fragments.")
+   (base-types '("Divine Vessel"
+                 "Sacrifice at Dawn"
+                 "Sacrifice at Dusk"
+                 "Sacrifice at Midnight"
+                 "Sacrifice at Noon"
+                 "Offering To The Goddess"
+                 "Tribute To The Goddess"))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 178) (green 120) (blue 230) (alpha 240)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 175) (green 120) (blue 230) (alpha 240)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 0)
+     (colour 'Red)
+     (shape 'Square)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Yellow)))))
+
+(define poe-filter-wombgifts
+  (poe-item-filter-block-configuration
+   (commentary "Highlight wombgifts.")
+   (classes '("Wombgifts"))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 0) (blue 0) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 0) (blue 0) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 120) (green 200) (blue 160) (alpha 255)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 2)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Yellow)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 0)
+     (colour 'Yellow)
+     (shape 'Moon)))))
+
+(define poe-filter-idols
+  (poe-item-filter-block-configuration
+   (commentary "Highlight Idols.")
+   (classes '("Idols"))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 178) (blue 135) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 178) (blue 135) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 20) (green 20) (blue 0) (alpha 255)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Orange)))))
+
+(define poe-filter-currency+incubators
+  (poe-item-filter-block-configuration
+   (commentary "Highlight currency and incubators.")
+   (classes '("Currency" "Incubators"))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 0) (blue 0) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 0) (blue 0) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 213) (green 159) (blue 0) (alpha 255)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 2)
+     (colour 'White)
+     (shape 'Circle)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'White)))))
+
+(define poe-filter-jewelry
+  (poe-item-filter-block-configuration
+   (commentary "Highlight jewelry.")
+   (classes '("Amulet" "Belt" "Ring"))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 0) (blue 0) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 100) (blue 150) (alpha 255)))
+   (continue? #t)))
+
+(define poe-filter-jewelry-best
+  (poe-item-filter-block-configuration
+   (commentary "Highlight high value jewelry.")
+   (base-types (append '("Amethyst Ring"
+                         "Astrolabe Amulet"
+                         "Blue Pearl Amulet"
+                         "Focused Amulet"
+                         "Gold Amulet"
+                         "Gold Ring"
+                         "Jet Amulet"
+                         "Marble Amulet"
+                         "Onyx Amulet"
+                         "Ruby Amulet"
+                         "Seaglass Amulet"
+                         "Simplex Amulet"
+                         "Unset Amulet")
+                       '("Fugitive Ring")))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 0) (blue 0) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 38) (green 0) (blue 86) (alpha 255)))
+   (set-font-size 45)
+   (continue? #t)))
+
+(define poe-filter-talismans
+  (poe-item-filter-block-configuration
+   (commentary "Highlight talismans.")
+   (base-types '("Talisman"))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 0) (blue 0) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 38) (green 0) (blue 86) (alpha 255)))
+   (set-font-size 45)
+   (continue? #t)))
+
+(define poe-filter-belts
+  (poe-item-filter-block-configuration
+   (commentary "Highlight cloth belt.")
+   (base-types '("Cloth Belt"))
+   (set-font-size 45)
+   (continue? #t)))
+
+(define poe-filter-belts-best
+  (poe-item-filter-block-configuration
+   (commentary "Highlight high value belts.")
+   (base-types '("Stygian Vise" "Vanguard Belt"))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Green)))
+   (set-font-size 45)
+   (continue? #t)))
+
+(define poe-filter-labyrinth+incursion
+  (poe-item-filter-block-configuration
+   (commentary "Highlight labyrinth and incursion items.")
+   (classes '("Incursion Items" "Labyrinth Items"))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 74) (green 230) (blue 58) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 74) (green 230) (blue 58) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 20) (green 20) (blue 0) (alpha 255)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 3)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Green)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 0)
+     (colour 'Green)
+     (shape 'Pentagon)))))
+
+(define poe-filter-scarabs
+  (poe-item-filter-block-configuration
+   (commentary "Highlight scarabs.")
+   (base-types '("Scarab"))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 0) (blue 255) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 0) (blue 255) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 100)
+     (green 0)
+     (blue 100)
+     (alpha 255)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 3)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Pink)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 0)
+     (colour 'Pink)
+     (shape 'Circle)))))
+
+(define poe-filter-maps
+  (poe-item-filter-block-configuration
+   (commentary "Highlight maps.")
+   (classes '("Maps"
+              "Map Fragments"
+              "Expedition Logbook"))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 0) (blue 0) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 235) (green 235) (blue 235) (alpha 255)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 5)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Yellow)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 0)
+     (colour 'Red)
+     (shape 'Square)))))
+
+(define %poe-filter-jewel
+  (poe-item-filter-block-configuration
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 240) (blue 190) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 240) (blue 190) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 47)
+     (green 0)
+     (blue 74)
+     (alpha 255)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Purple)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 1)
+     (colour 'Purple)
+     (shape 'Diamond)))))
+
+(define poe-filter-jewels
+  (poe-item-filter-block-configuration
+   (inherit %poe-filter-jewel)
+   (commentary "Highlight jewels.")
+   (base-types (append '("Cobalt Jewel"
+                         "Crimson Jewel"
+                         "Viridian Jewel")
+                       '("Small Cluster Jewel"
+                         "Medium Cluster Jewel"
+                         "Large Cluster Jewel")))))
+
+(define poe-filter-abyss-jewels
+  (poe-item-filter-block-configuration
+   (inherit %poe-filter-jewel)
+   (commentary "Highlight abyss jewels.")
+   (classes '("Abyss Jewels"))))
+
+(define %poe-filter-gem
+  (poe-item-filter-block-configuration
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 30) (green 190) (blue 190) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 30) (green 190) (blue 190) (alpha 255)))
+   (classes '("Skill Gems"
+              "Support Gems"))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 1)
+     (colour 'White)
+     (shape 'Triangle)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 2)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Grey)))))
+
+(define %poe-filter-high-value-gem
+  (poe-item-filter-block-configuration
+   (classes '("Skill Gems"
+              "Support Gems"))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 0) (blue 0) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 0) (blue 0) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 255) (blue 255) (alpha 255)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 6)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Red)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 0)
+     (colour 'Red)
+     (shape 'Star)))))
+
+(define poe-filter-high-level-gems
+  (poe-item-filter-block-configuration
+   (inherit %poe-filter-gem)
+   (commentary "Highlight high level gems.")
+   (gem-level (poe-item-filter-conditional-value-configuration
+               (value 20)
+               (operator '>=)))))
+
+(define poe-filter-high-quality-gems
+  (poe-item-filter-block-configuration
+   (inherit %poe-filter-gem)
+   (commentary "Highlight high quality gems.")
+   (quality (poe-item-filter-conditional-value-configuration
+             (value 1)
+             (operator '>=)))))
+
+(define poe-filter-high-value-gems
+  (poe-item-filter-block-configuration
+   (inherit %poe-filter-high-value-gem)
+   (commentary "Highlight specific awakend gems.")
+   (base-types '("Awakened Ancestral Call Support"
+                 "Awakened Brutality Support"
+                 "Awakened Cast On Critical Strike Support"
+                 "Awakened Chain Support"
+                 "Awakened Elemental Damage with Attacks Support"
+                 "Awakened Empower Support"
+                 "Awakened Enhance Support"
+                 "Awakened Enlighten Support"
+                 "Awakened Fork Support"
+                 "Awakened Generosity Support"
+                 "Awakened Greater Multiple Projectiles Support"
+                 "Awakened Increased Area of Effect Support"
+                 "Awakened Melee Physical Damage Support"
+                 "Awakened Multistrike Support"
+                 "Awakened Spell Cascade Support"
+                 "Awakened Spell Echo Support"
+                 "Awakened Swift Affliction Support"
+                 "Awakened Unbound Ailments Support"
+                 "Awakened Unleash Support"
+                 "Awakened Void Manipulation Support"))))
+
+(define poe-filter-awakend-gems
+  (poe-item-filter-block-configuration
+   (inherit %poe-filter-high-value-gem)
+   (commentary "Highlight awakend gems.")
+   (base-types '("Awakened"))))
+
+(define poe-filter-transfigured-gems
+  (poe-item-filter-block-configuration
+   (inherit %poe-filter-high-value-gem)
+   (commentary "Highlight transfigured gems.")
+   (transfigured-gem? #t)))
+
+(define poe-filter-rogue-marks
+  (poe-item-filter-block-configuration
+   (commentary "Highlight Rogue markers.")
+   (base-types '("Rogue's Marker"))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 178) (blue 135) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 178) (blue 135) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 20) (green 20) (blue 0) (alpha 255)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Orange)))))
+
+(define poe-filter-blueprints+contracts+sanctum
+  (poe-item-filter-block-configuration
+   (commentary "Highlight Blueprints and Contracts and Sanctum.")
+   (classes '("Blueprints" "Contracts" "Sanctum Research"))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 85) (blue 85) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 85) (blue 85) (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 40) (green 0) (blue 30) (alpha 255)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Yellow)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 5)
+     (volume 300)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 1)
+     (colour 'Yellow)
+     (shape 'UpsideDownHouse)))))
+
+(define poe-filter-not-identified-items
+  (poe-item-filter-block-configuration
+   (commentary "Highlight not identified items.")
+   (identified? #f)
+   (rarity '(Magic Rare Unique))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 86) (green 0) (blue 0) (alpha 230)))
+   (continue? #t)))
+
+(define font-size 20)
+
+(define base-items
+  (json-string->scm
+   (with-input-from-file "input.json"
+     read-string)))
+
+(define exclude-sub-types
+  '(;; "Armour"
+    ;; "Armour/Energy Shield"
+    "Armour/Evasion"
+    ;; "Energy Shield"
+    "Evasion"
+    ;; "Evasion/Energy Shield"
+    ))
+
+(define include-sub-types
+  '("Armour/Energy Shield"
+    "Energy Shield"))
+
+(define poe-filters-weak-bases
+  (map (lambda (type)
+         (poe-item-filter-block-configuration
+          (commentary (format #f "Lower ~s base items for low tier types."
+                              type type))
+          (rarity '(Normal Magic Rare))
+          (base-types (sort (map (lambda (item)
+                                   (first item))
+                                 (filter (lambda (item)
+                                           (and (and=> (assoc-ref item "type")
+                                                       (lambda (sub-type)
+                                                         (and (string= sub-type type)
+                                                              (and=> (assoc-ref item "type")
+                                                                     (lambda (t)
+                                                                       (string= type t))))))
+                                                (and=> (assoc-ref item "req")
+                                                       (lambda (req)
+                                                         (and=> (assoc-ref req "level")
+                                                                (lambda (level)
+                                                                  (< level 69)))))))
+                                         base-items))
+                            string<))
+          (set-font-size 20)
+          (area-level (poe-item-filter-conditional-value-configuration
+                       (value 75)
+                       (operator '>)))
+          (continue? #t)))
+       '("Body Armour"
+         "Boots"
+         "Gloves"
+         "Helmet")))
+
+(define poe-filters-unused-bases
+  (delete #f
+          (apply append
+                 (map (lambda (type)
+                        (map (lambda (base-type)
+                               (if (and (string= base-type "Energy Shield")
+                                        (string= type "Body Armour"))
+                                   #f
+                                   (poe-item-filter-block-configuration
+                                    (commentary (format #f "Hide ~s ~s base items for specific defence types."
+                                                        type base-type))
+                                    (rarity '(Normal Magic Rare))
+                                    (base-types
+                                     (sort (let ((items
+                                                  (filter (lambda (item)
+                                                            (and=> (assoc-ref item "subType")
+                                                                   (lambda (sub-type)
+                                                                     (and (string= sub-type base-type)
+                                                                          (and=> (assoc-ref item "type")
+                                                                                 (lambda (t)
+                                                                                   (string= type t)))))))
+                                                          base-items)))
+                                             (map (lambda (item)
+                                                    (string-replace-substring (first item)
+                                                                              (format #f " (~a)" base-type)
+                                                                              ""))
+                                                  items))
+                                           string<))
+                                    (set-font-size 20)
+                                    (set-background-color
+                                     (poe-item-filter-color-configuration
+                                      (red 0)
+                                      (green 0)
+                                      (blue 0)
+                                      (alpha 0)))
+                                    (show? #f)
+                                    (continue? #t))))
+                             exclude-sub-types))
+                      '("Body Armour"
+                        "Boots"
+                        "Gloves"
+                        "Helmet")))))
+
+(define poe-filters-best-bases
+  (delete #f
+          (map (lambda (base-type)
+                 (poe-item-filter-block-configuration
+                  (commentary (format #f "Increase font size for high level ~s base items."
+                                      base-type))
+                  (base-types
+                   (sort (let ((items
+                                (filter (lambda (item)
+                                          (and=> (assoc-ref item "req")
+                                                 (lambda (req)
+                                                   (and=> (assoc-ref req "level")
+                                                          (lambda (level)
+                                                            (>= level 79))))))
+                                        base-items)))
+                           (map (lambda (item)
+                                  (string-replace-substring (first item)
+                                                            (format #f " (~a)" base-type)
+                                                            ""))
+                                items))
+                         string<))
+                  (set-font-size 45)
+                  (continue? #t)))
+               include-sub-types)))
+
+(define poe-filter-best-sceptres
+  (poe-item-filter-block-configuration
+   (commentary "Increase font size for high level sceptres base items.")
+   (base-types '("Opal Sceptre" "Void Sceptre"))
+   (set-font-size 45)
+   (continue? #t)))
+
+(define poe-filter-best-wands
+  (poe-item-filter-block-configuration
+   (commentary "Increase font size for high level wands base items.")
+   (base-types '("Profane Wand"))
+   (set-font-size 45)
+   (continue? #t)))
+
+(define poe-filter-best-staffs
+  (poe-item-filter-block-configuration
+   (commentary "Increase font size for high level wands base items.")
+   (base-types '("Moon Staff"))
+   (set-font-size 45)
+   (continue? #t)))
+
+(define poe-filter-unused-weapons
+  (poe-item-filter-block-configuration
+   (commentary "Decrease font size for items with classes.")
+   (classes %weapon-classes)
+   (set-font-size 20)
+   (show? #f)
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 0)
+     (green 0)
+     (blue 0)
+     (alpha 0)))
+   (continue? #t)))
+
+(define poe-filter-flasks
+  (poe-item-filter-block-configuration
+   (commentary "Highlight flasks.")
+   (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks"))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 0)
+     (green 0)
+     (blue 0)
+     (alpha 255)))
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 25)
+     (green 100)
+     (blue 75)
+     (alpha 255)))
+   (continue? #t)))
+
+(define %poe-filter-flasks-color
+  (poe-item-filter-color-configuration
+   (red 140)
+   (green 60)
+   (blue 25)
+   (alpha 255)))
+
+(define poe-filter-utility-flasks
+  (poe-item-filter-block-configuration
+   (commentary "Highlight utility flasks.")
+   (classes '("Utility Flasks"))
+   (set-border-color %poe-filter-flasks-color)
+   (set-background-color %poe-filter-flasks-color)
+   (continue? #t)))
+
+(define poe-filter-tinctures
+  (poe-item-filter-block-configuration
+   (commentary "Highlight tinctures.")
+   (classes '("Tinctures"))
+   (set-border-color %poe-filter-flasks-color)
+   (set-background-color %poe-filter-flasks-color)))
+
+(define poe-filter-best-hybrid-flasks
+  (poe-item-filter-block-configuration
+   (commentary "Highlight hybrid flasks.")
+   (base-types '("Hallowed Hybrid Flask"))
+   (set-border-color %poe-filter-flasks-color)
+   (set-background-color %poe-filter-flasks-color)))
+
+(define poe-filter-low-level-flasks
+  (poe-item-filter-block-configuration
+   (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks"))
+   (commentary "Highlight flasks.")
+   (rarity '(Normal))
+   (show? #f)
+   (item-level (poe-item-filter-conditional-value-configuration
+                (value 83)
+                (operator '<=)))
+   (continue? #t)))
+
+(define poe-filter-high-quality-flasks
+  (poe-item-filter-block-configuration
+   (commentary "Highlight high quality flasks.")
+   (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks"))
+   (quality (poe-item-filter-conditional-value-configuration
+             (value 1)
+             (operator '>=)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Green)))))
+
+(define poe-filter-fractured-items
+  (poe-item-filter-block-configuration
+   (commentary "Show fractured items.")
+   (fractured-item? #t)
+   (show? #t)
+   (continue? #t)))
+
+(define poe-filter-identified-items
+  (poe-item-filter-block-configuration
+   (commentary "Hide identified items.")
+   (identified? #t)
+   (show? #f)))
+
 (define (generate-filter)
-  (define font-size 20)
-  (define base-items
-    (json-string->scm
-     (with-input-from-file "input.json"
-       read-string)))
-  (define exclude-sub-types
-    '(;; "Armour"
-      ;; "Armour/Energy Shield"
-      "Armour/Evasion"
-      ;; "Energy Shield"
-      "Evasion"
-      ;; "Evasion/Energy Shield"
-      ))
-    (define include-sub-types
-    '("Armour/Energy Shield"
-      "Energy Shield"))
   #~(begin
       (use-modules (ice-9 format))
       #$(serialize-configuration
          (poe-item-filter-configuration
-          (blocks
-           (append (list (poe-item-filter-block-configuration
-                          (commentary "Lower font for basic items.")
-                          (classes '("Helmets"
-                                     "Body Armour"
-                                     "Boots"
-                                     "Gloves"
-                                     "Shields"))
-                          (item-level (poe-item-filter-conditional-value-configuration
-                                       (value 84)
-                                       (operator '<)))
-                          (set-font-size 25)
-                          (continue? #t))
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight border of best crafting bases.")
-                          (item-level (poe-item-filter-conditional-value-configuration
-                                       (value 84)
-                                       (operator '>=)))
-                          (set-border-color (poe-item-filter-color-configuration
-                                             (red 74)
-                                             (green 230)
-                                             (blue 58)
-                                             (alpha 255)))
-                          (continue? #t))
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight high quality items.")
-                          (quality (poe-item-filter-conditional-value-configuration
-                                    (value 20)
-                                    (operator '>)))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 30)
-                            (green 190)
-                            (blue 190)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 30)
-                            (green 190)
-                            (blue 190)
-                            (alpha 255)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 1)
-                            (colour 'White)
-                            (shape 'Triangle)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 2)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Grey))))
+          (blocks (append (list poe-filter-basic
+                                poe-filter-crafting
+                                poe-filter-quality
+                                poe-filter-memory-strands
+                                poe-filter-scrolls
+                                poe-filter-vendor-5-linked-sockets
+                                poe-filter-vendor-3-sockets
+                                poe-filter-vendor-6-sockets
+                                poe-filter-unique
+                                poe-filter-currency-best
+                                poe-filter-currency-middle
+                                poe-filter-fragments
+                                poe-filter-wombgifts
+                                poe-filter-idols
+                                poe-filter-currency+incubators
+                                poe-filter-jewelry
+                                poe-filter-jewelry-best
+                                poe-filter-talismans
+                                poe-filter-belts
+                                poe-filter-belts-best
+                                poe-filter-labyrinth+incursion
+                                poe-filter-scarabs
+                                poe-filter-maps
+                                poe-filter-jewels
+                                poe-filter-abyss-jewels
+                                poe-filter-high-level-gems
+                                poe-filter-high-quality-gems
+                                poe-filter-high-value-gems
+                                poe-filter-awakend-gems
+                                poe-filter-transfigured-gems
+                                poe-filter-rogue-marks
+                                poe-filter-blueprints+contracts+sanctum
+                                poe-filter-not-identified-items)
 
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight items with memory strands.")
-                          (memory-strands
-                           (poe-item-filter-conditional-value-configuration
-                            (value 1)
-                            (operator '>=)))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 30)
-                            (green 190)
-                            (blue 190)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 30)
-                            (green 190)
-                            (blue 190)
-                            (alpha 255)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 1)
-                            (colour 'White)
-                            (shape 'Triangle)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 2)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Grey))))
+                          poe-filters-weak-bases
+                          poe-filters-unused-bases
+                          poe-filters-best-bases
 
-                         (poe-item-filter-block-configuration
-                          (commentary "Stop apply rules to scrolls.")
-                          (base-types '("Portal Scroll"
-                                        "Scroll of Wisdom")))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight 5 linked sockets.")
-                          (area-level (poe-item-filter-conditional-value-configuration
-                                       (value 75)
-                                       (operator '<)))
-                          (linked-sockets (poe-item-filter-conditional-value-configuration
-                                           (value 5)
-                                           (operator '>=)))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 255)
-                            (blue 255)
-                            (alpha 255)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 6)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Red)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 0)
-                            (colour 'Red)
-                            (shape 'Star))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight sockets vendor recipe.")
-                          (area-level (poe-item-filter-conditional-value-configuration
-                                       (value 75)
-                                       (operator '<)))
-                          (socket-group (poe-item-filter-conditional-value-configuration
-                                         (value '3RGB)
-                                         (operator '>=)))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 30)
-                            (green 190)
-                            (blue 190)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 30)
-                            (green 190)
-                            (blue 190)
-                            (alpha 255)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 1)
-                            (colour 'White)
-                            (shape 'Triangle)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 2)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Grey))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight 6 sockets vendor recipe.")
-                          (sockets (poe-item-filter-conditional-value-configuration
-                                    (value 6)
-                                    (operator '=)))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 30)
-                            (green 190)
-                            (blue 190)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 30)
-                            (green 190)
-                            (blue 190)
-                            (alpha 255)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 1)
-                            (colour 'White)
-                            (shape 'Triangle)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 2)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Grey))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight unique items.")
-                          (rarity '(Unique))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 188)
-                            (green 96)
-                            (blue 37)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 188)
-                            (green 96)
-                            (blue 37)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 53)
-                            (green 13)
-                            (blue 13)
-                            (alpha 229)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 1)
-                            (colour 'Brown)
-                            (shape 'Star)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 3)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Brown))))
-
-                         ;; (poe-item-filter-block-configuration
-                         ;;  (commentary "Highlight good percentage.")
-                         ;;  (classes '("Body Armours" "Helmets" "Gloves" "Boots" "Shields"))
-                         ;;  (base-defence-percentile (poe-item-filter-conditional-value-configuration
-                         ;;                            (value 70)
-                         ;;                            (operator '>=)))
-                         ;;  (set-border-color (poe-item-filter-color-configuration
-                         ;;                     (red 0)
-                         ;;                     (green 255)
-                         ;;                     (blue 0)
-                         ;;                     (alpha 255)))
-                         ;;  (continue? #t))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight high value currency.")
-                          (base-types '("Albino Rhoa Feather"
-                                        "Awakener's Orb"
-                                        "Blessing of Chayula"
-                                        "Blessing of Xoph"
-                                        "Crusader's Exalted Orb"
-                                        "Divine Orb"
-                                        "Eternal Orb"
-                                        "Fracturing Orb"
-                                        "Hinekora's Lock"
-                                        "Hunter's Exalted Orb"
-                                        "Mirror of Kalandra"
-                                        "Mirror Shard"
-                                        "Orb of Dominance"
-                                        "Redeemer's Exalted Orb"
-                                        "Reflecting Mist"
-                                        "Tainted Divine Teardrop"
-                                        "Valdo's Puzzle Box"
-                                        "Warlord's Exalted Orb"))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 255)
-                            (blue 255)
-                            (alpha 255)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 6)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Red)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 0)
-                            (colour 'Red)
-                            (shape 'Star))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight middle value currency.")
-                          (base-types '("Abrasive Catalyst"
-                                        "Accelerating Catalyst"
-                                        "Blighted Scouting Report"
-                                        "Burial Medallion"
-                                        "Cartographer's Chisel"
-                                        "Chaos Orb"
-                                        "Comprehensive Scouting Report"
-                                        "Delirious Scouting Report"
-                                        "Engineer's Orb"
-                                        "Exalted Shard"
-                                        "Gemcutter's Prism"
-                                        "Glassblower's Bauble"
-                                        "Grand Eldritch Ember"
-                                        "Grand Eldritch Ichor"
-                                        "Greater Eldritch Ember"
-                                        "Greater Eldritch Ichor"
-                                        "Harbinger's Orb"
-                                        "Imbued Catalyst"
-                                        "Intrinsic Catalyst"
-                                        "Lesser Eldritch Ember"
-                                        "Lesser Eldritch Ichor"
-                                        "Maven's Chisel of Avarice"
-                                        "Maven's Chisel of Divination"
-                                        "Maven's Chisel of Procurement"
-                                        "Noxious Catalyst"
-                                        "Operative's Scouting Report"
-                                        "Orb of Unmaking"
-                                        "Primal Crystallised Lifeforce"
-                                        "Ritual Splinter"
-                                        "Scrap Metal"
-                                        "Singular Scouting Report"
-                                        "Stacked Deck"
-                                        "Tainted Armourer's Scrap"
-                                        "Tainted Blacksmith's Whetstone"
-                                        "Tainted Jeweller's Orb"
-                                        "Tempering Catalyst"
-                                        "Turbulent Catalyst"
-                                        "Unstable Catalyst"
-                                        "Veiled Scarab"
-                                        "Vivid Crystallised Lifeforce"
-                                        "Wild Crystallised Lifeforce"))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 249)
-                            (green 150)
-                            (blue 25)
-                            (alpha 255)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 2)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'White)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 2)
-                            (colour 'White)
-                            (shape 'Circle))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight map fragments.")
-                          (base-types '("Divine Vessel"
-                                        "Sacrifice at Dawn"
-                                        "Sacrifice at Dusk"
-                                        "Sacrifice at Midnight"
-                                        "Sacrifice at Noon"
-                                        "Offering To The Goddess"
-                                        "Tribute To The Goddess"))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 178)
-                            (green 120)
-                            (blue 230)
-                            (alpha 240)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 175)
-                            (green 120)
-                            (blue 230)
-                            (alpha 240)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 0)
-                            (colour 'Red)
-                            (shape 'Square)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Yellow))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight wombgifts.")
-                          (classes '("Wombgifts"))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 120)
-                            (green 200)
-                            (blue 160)
-                            (alpha 255)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 2)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Yellow)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 0)
-                            (colour 'Yellow)
-                            (shape 'Moon))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight Idols.")
-                          (classes '("Idols"))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 178)
-                            (blue 135)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 178)
-                            (blue 135)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 20)
-                            (green 20)
-                            (blue 0)
-                            (alpha 255)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Orange))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight currency and incubators.")
-                          (classes '("Currency" "Incubators"))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 213)
-                            (green 159)
-                            (blue 0)
-                            (alpha 255)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 2)
-                            (colour 'White)
-                            (shape 'Circle)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'White))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight jewelry.")
-                          (classes '("Amulet" "Belt" "Ring"))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 100)
-                            (blue 150)
-                            (alpha 255)))
-                          (continue? #t))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight high value jewelry.")
-                          (base-types (append '("Amethyst Ring"
-                                                "Astrolabe Amulet"
-                                                "Blue Pearl Amulet"
-                                                "Focused Amulet"
-                                                "Gold Amulet"
-                                                "Gold Ring"
-                                                "Jet Amulet"
-                                                "Marble Amulet"
-                                                "Onyx Amulet"
-                                                "Ruby Amulet"
-                                                "Seaglass Amulet"
-                                                "Simplex Amulet"
-                                                "Unset Amulet")
-                                              '("Fugitive Ring")))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 38)
-                            (green 0)
-                            (blue 86)
-                            (alpha 255)))
-                          (set-font-size 45)
-                          (continue? #t))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight talismans.")
-                          (base-types '("Talisman"))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 38)
-                            (green 0)
-                            (blue 86)
-                            (alpha 255)))
-                          (set-font-size 45)
-                          (continue? #t))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight cloth belt.")
-                          (base-types '("Cloth Belt"))
-                          (set-font-size 45)
-                          (continue? #t))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight high value belts.")
-                          (base-types '("Stygian Vise" "Vanguard Belt"))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Green)))
-                          (set-font-size 45)
-                          (continue? #t))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight labyrinth and incursion items.")
-                          (classes '("Incursion Items" "Labyrinth Items"))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 74)
-                            (green 230)
-                            (blue 58)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 74)
-                            (green 230)
-                            (blue 58)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 20)
-                            (green 20)
-                            (blue 0)
-                            (alpha 255)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 3)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Green)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 0)
-                            (colour 'Green)
-                            (shape 'Pentagon))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight scarabs.")
-                          (base-types '("Scarab"))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 0)
-                            (blue 255)
-                            (alpha 255)))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 255)
-                            (green 0)
-                            (blue 255)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 100)
-                            (green 0)
-                            (blue 100)
-                            (alpha 255)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 3)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Pink)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 0)
-                            (colour 'Pink)
-                            (shape 'Circle))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight maps.")
-                          (classes '("Maps"
-                                     "Map Fragments"
-                                     "Expedition Logbook"))
-                          (set-text-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 235)
-                            (green 235)
-                            (blue 235)
-                            (alpha 255)))
-                          (play-alert-sound
-                           (poe-item-filter-play-alert-sound-configuration
-                            (id 5)
-                            (volume 300)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Yellow)))
-                          (minimap-icon
-                           (poe-item-filter-minimap-icon-configuration
-                            (enabled? #t)
-                            (size 0)
-                            (colour 'Red)
-                            (shape 'Square)))))
-
-                   (let ((jewel (poe-item-filter-block-configuration
-                                 (set-text-color
-                                  (poe-item-filter-color-configuration
-                                   (red 0)
-                                   (green 240)
-                                   (blue 190)
-                                   (alpha 255)))
-                                 (set-border-color
-                                  (poe-item-filter-color-configuration
-                                   (red 0)
-                                   (green 240)
-                                   (blue 190)
-                                   (alpha 255)))
-                                 (set-background-color
-                                  (poe-item-filter-color-configuration
-                                   (red 47)
-                                   (green 0)
-                                   (blue 74)
-                                   (alpha 255)))
-                                 (play-effect
-                                  (poe-item-filter-play-effect-configuration
-                                   (colour 'Purple)))
-                                 (minimap-icon
-                                  (poe-item-filter-minimap-icon-configuration
-                                   (enabled? #t)
-                                   (size 1)
-                                   (colour 'Purple)
-                                   (shape 'Diamond))))))
-                     (list (poe-item-filter-block-configuration
-                            (inherit jewel)
-                            (commentary "Highlight jewels.")
-                            (base-types '("Cobalt Jewel"
-                                          "Crimson Jewel"
-                                          "Viridian Jewel")))
-                           (poe-item-filter-block-configuration
-                            (inherit jewel)
-                            (commentary "Highlight abyss jewels.")
-                            (classes '("Abyss Jewels")))
-                           (poe-item-filter-block-configuration
-                            (inherit jewel)
-                            (commentary "Highlight cluster jewels.")
-                            (base-types '("Small Cluster Jewel"
-                                          "Medium Cluster Jewel"
-                                          "Large Cluster Jewel")))))
-
-                   (let ((gem (poe-item-filter-block-configuration
-                               (set-text-color
-                                (poe-item-filter-color-configuration
-                                 (red 30)
-                                 (green 190)
-                                 (blue 190)
-                                 (alpha 255)))
-                               (set-border-color
-                                (poe-item-filter-color-configuration
-                                 (red 30)
-                                 (green 190)
-                                 (blue 190)
-                                 (alpha 255)))
-                               (classes '("Skill Gems"
-                                          "Support Gems"))
-                               (minimap-icon
-                                (poe-item-filter-minimap-icon-configuration
-                                 (enabled? #t)
-                                 (size 1)
-                                 (colour 'White)
-                                 (shape 'Triangle)))
-                               (play-alert-sound
-                                (poe-item-filter-play-alert-sound-configuration
-                                 (id 2)
-                                 (volume 300)))
-                               (play-effect
-                                (poe-item-filter-play-effect-configuration
-                                 (colour 'Grey)))))
-                         (high-value-gem (poe-item-filter-block-configuration
-                                          (classes '("Skill Gems"
-                                                     "Support Gems"))
-                                          (set-text-color
-                                           (poe-item-filter-color-configuration
-                                            (red 255)
-                                            (green 0)
-                                            (blue 0)
-                                            (alpha 255)))
-                                          (set-border-color
-                                           (poe-item-filter-color-configuration
-                                            (red 255)
-                                            (green 0)
-                                            (blue 0)
-                                            (alpha 255)))
-                                          (set-background-color
-                                           (poe-item-filter-color-configuration
-                                            (red 255)
-                                            (green 255)
-                                            (blue 255)
-                                            (alpha 255)))
-                                          (play-alert-sound
-                                           (poe-item-filter-play-alert-sound-configuration
-                                            (id 6)
-                                            (volume 300)))
-                                          (play-effect
-                                           (poe-item-filter-play-effect-configuration
-                                            (colour 'Red)))
-                                          (minimap-icon
-                                           (poe-item-filter-minimap-icon-configuration
-                                            (enabled? #t)
-                                            (size 0)
-                                            (colour 'Red)
-                                            (shape 'Star))))))
-                     (list
-                      (poe-item-filter-block-configuration
-                       (inherit gem)
-                       (commentary "Highlight high level gems.")
-                       (gem-level (poe-item-filter-conditional-value-configuration
-                                   (value 20)
-                                   (operator '>=))))
-
-                      (poe-item-filter-block-configuration
-                       (inherit gem)
-                       (commentary "Highlight high quality gems.")
-                       (quality (poe-item-filter-conditional-value-configuration
-                                 (value 1)
-                                 (operator '>=))))
-
-                      (poe-item-filter-block-configuration
-                       (inherit high-value-gem)
-                       (commentary "Highlight specific awakend gems.")
-                       (base-types '("Awakened Ancestral Call Support"
-                                     "Awakened Brutality Support"
-                                     "Awakened Cast On Critical Strike Support"
-                                     "Awakened Chain Support"
-                                     "Awakened Elemental Damage with Attacks Support"
-                                     "Awakened Empower Support"
-                                     "Awakened Enhance Support"
-                                     "Awakened Enlighten Support"
-                                     "Awakened Fork Support"
-                                     "Awakened Generosity Support"
-                                     "Awakened Greater Multiple Projectiles Support"
-                                     "Awakened Increased Area of Effect Support"
-                                     "Awakened Melee Physical Damage Support"
-                                     "Awakened Multistrike Support"
-                                     "Awakened Spell Cascade Support"
-                                     "Awakened Spell Echo Support"
-                                     "Awakened Swift Affliction Support"
-                                     "Awakened Unbound Ailments Support"
-                                     "Awakened Unleash Support"
-                                     "Awakened Void Manipulation Support")))
-
-                      (poe-item-filter-block-configuration
-                       (inherit high-value-gem)
-                       (commentary "Highlight awakend gems.")
-                       (base-types '("Awakened")))
-
-                      (poe-item-filter-block-configuration
-                       (inherit high-value-gem)
-                       (commentary "Highlight transfigured gems.")
-                       (transfigured-gem? #t))))
-
-                   (list
-                    (poe-item-filter-block-configuration
-                     (commentary "Highlight Rogue markers.")
-                     (base-types '("Rogue's Marker"))
-                     (set-text-color
-                      (poe-item-filter-color-configuration
-                       (red 255)
-                       (green 178)
-                       (blue 135)
-                       (alpha 255)))
-                     (set-border-color
-                      (poe-item-filter-color-configuration
-                       (red 255)
-                       (green 178)
-                       (blue 135)
-                       (alpha 255)))
-                     (set-background-color
-                      (poe-item-filter-color-configuration
-                       (red 20)
-                       (green 20)
-                       (blue 0)
-                       (alpha 255)))
-                     (play-effect
-                      (poe-item-filter-play-effect-configuration
-                       (colour 'Orange))))
-
-                    (poe-item-filter-block-configuration
-                     (commentary "Highlight Blueprints and Contracts and Sanctum.")
-                     (classes '("Blueprints" "Contracts" "Sanctum Research"))
-                     (set-text-color
-                      (poe-item-filter-color-configuration
-                       (red 255)
-                       (green 85)
-                       (blue 85)
-                       (alpha 255)))
-                     (set-border-color
-                      (poe-item-filter-color-configuration
-                       (red 255)
-                       (green 85)
-                       (blue 85)
-                       (alpha 255)))
-                     (set-background-color
-                      (poe-item-filter-color-configuration
-                       (red 40)
-                       (green 0)
-                       (blue 30)
-                       (alpha 255)))
-                     (play-effect
-                      (poe-item-filter-play-effect-configuration
-                       (colour 'Yellow)))
-                     (play-alert-sound
-                      (poe-item-filter-play-alert-sound-configuration
-                       (id 5)
-                       (volume 300)))
-                     (minimap-icon
-                      (poe-item-filter-minimap-icon-configuration
-                       (enabled? #t)
-                       (size 1)
-                       (colour 'Yellow)
-                       (shape 'UpsideDownHouse))))
-                    (poe-item-filter-block-configuration
-                     (commentary "Highlight not identified items.")
-                     (identified? #f)
-                     (rarity '(Magic Rare Unique))
-                     (set-background-color (poe-item-filter-color-configuration
-                                            (red 86)
-                                            (green 0)
-                                            (blue 0)
-                                            (alpha 230)))
-                     (continue? #t))
-)
-
-                   (map (lambda (type)
-                          (poe-item-filter-block-configuration
-                           (commentary (format #f "Lower ~s base items for low tier types."
-                                               type type))
-                           (rarity '(Normal Magic Rare))
-                           (base-types (sort (map (lambda (item)
-                                                    (first item))
-                                                  (filter (lambda (item)
-                                                            (and (and=> (assoc-ref item "type")
-                                                                        (lambda (sub-type)
-                                                                          (and (string= sub-type type)
-                                                                               (and=> (assoc-ref item "type")
-                                                                                      (lambda (t)
-                                                                                        (string= type t))))))
-                                                                 (and=> (assoc-ref item "req")
-                                                                        (lambda (req)
-                                                                          (and=> (assoc-ref req "level")
-                                                                                 (lambda (level)
-                                                                                   (< level 69)))))))
-                                                          base-items))
-                                             string<))
-                           (set-font-size 20)
-                           (area-level (poe-item-filter-conditional-value-configuration
-                                        (value 75)
-                                        (operator '>)))
-                           (continue? #t)))
-                        '("Body Armour"
-                          "Boots"
-                          "Gloves"
-                          "Helmet"))
-
-                   (delete #f
-                           (apply append
-                                  (map (lambda (type)
-                                         (map (lambda (base-type)
-                                                (if (and (string= base-type "Energy Shield")
-                                                         (string= type "Body Armour"))
-                                                    #f
-                                                    (poe-item-filter-block-configuration
-                                                     (commentary (format #f "Hide ~s ~s base items for specific defence types."
-                                                                         type base-type))
-                                                     (rarity '(Normal Magic Rare))
-                                                     (base-types
-                                                      (sort (let ((items
-                                                                   (filter (lambda (item)
-                                                                             (and=> (assoc-ref item "subType")
-                                                                                    (lambda (sub-type)
-                                                                                      (and (string= sub-type base-type)
-                                                                                           (and=> (assoc-ref item "type")
-                                                                                                  (lambda (t)
-                                                                                                    (string= type t)))))))
-                                                                           base-items)))
-                                                              (map (lambda (item)
-                                                                     (string-replace-substring (first item)
-                                                                                               (format #f " (~a)" base-type)
-                                                                                               ""))
-                                                                   items))
-                                                            string<))
-                                                     (set-font-size 20)
-                                                     (set-background-color
-                                                      (poe-item-filter-color-configuration
-                                                       (red 0)
-                                                       (green 0)
-                                                       (blue 0)
-                                                       (alpha 0)))
-                                                     (show? #f)
-                                                     (continue? #t))))
-                                              exclude-sub-types))
-                                       '("Body Armour"
-                                         "Boots"
-                                         "Gloves"
-                                         "Helmet"))))
-
-                   (delete #f
-                           (map (lambda (base-type)
-                                  (poe-item-filter-block-configuration
-                                   (commentary (format #f "Increase font size for high level ~s base items."
-                                                       base-type))
-                                   (base-types
-                                    (sort (let ((items
-                                                 (filter (lambda (item)
-                                                           (and=> (assoc-ref item "req")
-                                                                  (lambda (req)
-                                                                    (and=> (assoc-ref req "level")
-                                                                           (lambda (level)
-                                                                             (>= level 79))))))
-                                                         base-items)))
-                                            (map (lambda (item)
-                                                   (string-replace-substring (first item)
-                                                                             (format #f " (~a)" base-type)
-                                                                             ""))
-                                                 items))
-                                          string<))
-                                   (set-font-size 45)
-                                   (continue? #t)))
-                                include-sub-types))
-
-                   (list (poe-item-filter-block-configuration
-                          (commentary "Increase font size for high level sceptres base items.")
-                          (base-types '("Opal Sceptre" "Void Sceptre"))
-                          (set-font-size 45)
-                          (continue? #t))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Increase font size for high level wands base items.")
-                          (base-types '("Profane Wand"))
-                          (set-font-size 45)
-                          (continue? #t))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Increase font size for high level wands base items.")
-                          (base-types '("Moon Staff"))
-                          (set-font-size 45)
-                          (continue? #t))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Decrease font size for items with classes.")
-                          (classes %weapon-classes)
-                          (set-font-size 20)
-                          (show? #f)
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 0)
-                            (blue 0)
-                            (alpha 0)))
-                          (continue? #t))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight flasks.")
-                          (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks"))
-                          (set-border-color
-                           (poe-item-filter-color-configuration
-                            (red 0)
-                            (green 0)
-                            (blue 0)
-                            (alpha 255)))
-                          (set-background-color
-                           (poe-item-filter-color-configuration
-                            (red 25)
-                            (green 100)
-                            (blue 75)
-                            (alpha 255)))
-                          (continue? #t))
-
-                         (let ((color (poe-item-filter-color-configuration
-                                       (red 140)
-                                       (green 60)
-                                       (blue 25)
-                                       (alpha 255))))
-                           (poe-item-filter-block-configuration
-                            (commentary "Highlight utility flasks.")
-                            (classes '("Utility Flasks"))
-                            (set-border-color color)
-                            (set-background-color color)
-                            (continue? #t)))
-
-                         (let ((color (poe-item-filter-color-configuration
-                                       (red 140)
-                                       (green 60)
-                                       (blue 25)
-                                       (alpha 255))))
-                           (poe-item-filter-block-configuration
-                            (commentary "Highlight tinctures.")
-                            (classes '("Tinctures"))
-                            (set-border-color color)
-                            (set-background-color color)))
-
-                         (let ((color (poe-item-filter-color-configuration
-                                       (red 140)
-                                       (green 60)
-                                       (blue 25)
-                                       (alpha 255))))
-                           (poe-item-filter-block-configuration
-                            (commentary "Highlight hybrid flasks.")
-                            (base-types '("Hallowed Hybrid Flask"))
-                            (set-border-color color)
-                            (set-background-color color)))
-
-                         (poe-item-filter-block-configuration
-                          (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks"))
-                          (commentary "Highlight flasks.")
-                          (rarity '(Normal))
-                          (show? #f)
-                          (item-level (poe-item-filter-conditional-value-configuration
-                                       (value 83)
-                                       (operator '<=)))
-                          (continue? #t))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Highlight high quality flasks.")
-                          (classes '("Life Flasks" "Mana Flasks" "Hybrid Flasks" "Utility Flasks"))
-                          (quality (poe-item-filter-conditional-value-configuration
-                                    (value 1)
-                                    (operator '>=)))
-                          (play-effect
-                           (poe-item-filter-play-effect-configuration
-                            (colour 'Green))))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Show fractured items.")
-                          (fractured-item? #t)
-                          (show? #t)
-                          (continue? #t))
-
-                         (poe-item-filter-block-configuration
-                          (commentary "Hide identified items.")
-                          (identified? #t)
-                          (show? #f))))))
+                          (list poe-filter-best-sceptres
+                                poe-filter-best-wands
+                                poe-filter-best-staffs
+                                poe-filter-unused-weapons
+                                poe-filter-flasks
+                                poe-filter-utility-flasks
+                                poe-filter-tinctures
+                                poe-filter-best-hybrid-flasks
+                                poe-filter-low-level-flasks
+                                poe-filter-high-quality-flasks
+                                poe-filter-fractured-items
+                                poe-filter-identified-items))))
          poe-item-filter-configuration-fields)))
 
 (run-with-store (open-connection)

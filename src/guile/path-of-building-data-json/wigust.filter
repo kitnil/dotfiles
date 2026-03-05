@@ -195,7 +195,7 @@ Show
 
 # Highlight jewels.
 Show
-	BaseType == "Cobalt Jewel" "Crimson Jewel" "Viridian Jewel" 
+	BaseType == "Cobalt Jewel" "Crimson Jewel" "Viridian Jewel" "Small Cluster Jewel" "Medium Cluster Jewel" "Large Cluster Jewel" 
 	MinimapIcon 1 Purple Diamond
 	SetBorderColor 0 240 190 255
 	SetBackgroundColor 47 0 74 255
@@ -205,15 +205,6 @@ Show
 # Highlight abyss jewels.
 Show
 	Class == "Abyss Jewels" 
-	MinimapIcon 1 Purple Diamond
-	SetBorderColor 0 240 190 255
-	SetBackgroundColor 47 0 74 255
-	SetTextColor 0 240 190 255
-	PlayEffect Purple
-
-# Highlight cluster jewels.
-Show
-	BaseType == "Small Cluster Jewel" "Medium Cluster Jewel" "Large Cluster Jewel" 
 	MinimapIcon 1 Purple Diamond
 	SetBorderColor 0 240 190 255
 	SetBackgroundColor 47 0 74 255
