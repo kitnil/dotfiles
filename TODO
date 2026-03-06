@@ -17,4 +17,4 @@ iptables -A INPUT -i usb0 -j DROP
 # firefox low bandwidth mode
 browser.ml.chat.enabled
 permissions.default.image
-permissions.default.image
+gfx.downloadable_fonts.enabled
