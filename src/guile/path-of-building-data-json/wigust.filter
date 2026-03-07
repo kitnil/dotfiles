@@ -350,6 +350,14 @@ Show
 	Rarity Normal Magic Rare
 	Continue
 
+# Hide "Body Armour" "Armour/Evasion" base items for specific defence types.
+Show
+	BaseType == "Battle Lamellar" "Commander's Brigandine" "Conquest Lamellar" "Desert Brigandine" "Dragonscale Doublet" "Field Lamellar" "Full Dragonscale" "Full Scale Armour" "Full Wyrmscale" "Full Wyvernscale" "General's Brigandine" "Hussar Brigandine" "Infantry Brigandine" "Light Brigandine" "Marshall's Brigandine" "Scale Doublet" "Scale Vest" "Soldier's Brigandine" "Triumphant Lamellar" "Wyrmscale Doublet" 
+	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
+	Rarity Normal Magic Rare
+	Continue
+
 # Hide "Body Armour" "Armour" base items for specific defence types.
 Show
 	BaseType == "Arena Plate" "Astral Plate" "Battle Plate" "Bronze Plate" "Chestplate" "Colosseum Plate" "Copper Plate" "Crusader Plate" "Full Plate" "Gladiator Plate" "Glorious Plate" "Golden Plate" "Legion Plate" "Lordly Plate" "Majestic Plate" "Plate Vest" "Royal Plate" "Sun Plate" "Titan Plate" "War Plate" 
@@ -361,6 +369,14 @@ Show
 # Hide "Boots" "Armour/Energy Shield" base items for specific defence types.
 Show
 	BaseType == "Chain Boots" "Crusader Boots" "Legion Boots" "Martyr Boots" "Mesh Boots" "Paladin Boots" "Ringmail Boots" "Riveted Boots" "Soldier Boots" "Two-Toned Boots" "Zealot Boots" 
+	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
+	Rarity Normal Magic Rare
+	Continue
+
+# Hide "Boots" "Armour/Evasion" base items for specific defence types.
+Show
+	BaseType == "Bronzescale Boots" "Chimerascale Boots" "Dragonscale Boots" "Hydrascale Boots" "Ironscale Boots" "Leatherscale Boots" "Serpentscale Boots" "Steelscale Boots" "Two-Toned Boots" "Wyrmscale Boots" "Wyvernscale Boots" 
 	SetFontSize 20
 	SetBackgroundColor 0 0 0 0
 	Rarity Normal Magic Rare
@@ -382,6 +398,14 @@ Show
 	Rarity Normal Magic Rare
 	Continue
 
+# Hide "Gloves" "Armour/Evasion" base items for specific defence types.
+Show
+	BaseType == "Bronzescale Gauntlets" "Chimerascale Gauntlets" "Dragonscale Gauntlets" "Fishscale Gauntlets" "Hydrascale Gauntlets" "Ironscale Gauntlets" "Serpentscale Gauntlets" "Steelscale Gauntlets" "Wyrmscale Gauntlets" "Wyvernscale Gauntlets" 
+	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
+	Rarity Normal Magic Rare
+	Continue
+
 # Hide "Gloves" "Armour" base items for specific defence types.
 Show
 	BaseType == "Ancient Gauntlets" "Antique Gauntlets" "Bronze Gauntlets" "Goliath Gauntlets" "Guarding Gauntlets" "Iron Gauntlets" "Leviathan Gauntlets" "Plated Gauntlets" "Precursor Gauntlets" "Preserving Gauntlets" "Spiked Gloves" "Steel Gauntlets" "Thwarting Gauntlets" "Titan Gauntlets" "Vaal Gauntlets" 
@@ -393,6 +417,14 @@ Show
 # Hide "Helmet" "Armour/Energy Shield" base items for specific defence types.
 Show
 	BaseType == "Archdemon Crown" "Aventail Helmet" "Bone Helmet" "Crusader Helmet" "Demon Crown" "Divine Crown" "Faithful Helmet" "Great Crown" "Great Helmet" "Imp Crown" "Magistrate Crown" "Paladin Crown" "Praetor Crown" "Prophet Crown" "Rusted Coif" "Soldier Helmet" "Zealot Helmet" 
+	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
+	Rarity Normal Magic Rare
+	Continue
+
+# Hide "Helmet" "Armour/Evasion" base items for specific defence types.
+Show
+	BaseType == "Atonement Mask" "Battered Helm" "Conquest Helmet" "Fencer Helm" "Fluted Bascinet" "Gilded Sallet" "Haunted Bascinet" "Knight Helm" "Lacquered Helmet" "Nightmare Bascinet" "Penitent Mask" "Pig-Faced Bascinet" "Sallet" "Secutor Helm" "Sorrow Mask" "Visored Sallet" 
 	SetFontSize 20
 	SetBackgroundColor 0 0 0 0
 	Rarity Normal Magic Rare
