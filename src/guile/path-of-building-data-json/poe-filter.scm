@@ -401,13 +401,13 @@
     "One Hand Swords"
     "Quivers"
     "Rune Daggers"
-    ;; "Sceptres"
-    ;; "Staves"
+    "Sceptres"
+    "Staves"
     "Thrusting One Hand Swords"
     "Two Hand Axes"
     "Two Hand Maces"
     "Two Hand Swords"
-    ;; "Wands"
+    "Wands"
     "Warstaves"))
 
 (define poe-filter-basic
@@ -1454,7 +1454,7 @@
             (list poe-filter-best-sceptres
                   poe-filter-best-wands
                   poe-filter-best-staffs
-                  poe-filter-unused-weapons
+                  ;; poe-filter-unused-weapons
                   poe-filter-flasks
                   poe-filter-utility-flasks
                   poe-filter-tinctures
