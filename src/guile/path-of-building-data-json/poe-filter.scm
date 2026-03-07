@@ -1234,8 +1234,6 @@
      (red 86) (green 0) (blue 0) (alpha 230)))
    (continue? #t)))
 
-(define font-size 20)
-
 (define base-items
   (json-string->scm
    (with-input-from-file "/home/oleg/src/cgit.wugi.info/wigust/dotfiles/src/guile/path-of-building-data-json/input.json"
