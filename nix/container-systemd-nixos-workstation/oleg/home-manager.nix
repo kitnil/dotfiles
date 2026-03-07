@@ -74,6 +74,8 @@ in {
     sshs
 
     emacs-with-packages
+
+    rusty-path-of-building
   ];
 
   home.file = {
