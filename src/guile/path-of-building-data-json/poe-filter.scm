@@ -26,7 +26,10 @@
                   (alist-cons 'exclude-defence arg result)))
         (option '(#\d "defence") #f #t
                 (lambda (opt name arg result)
-                  (alist-cons 'defence arg result)))))
+                  (alist-cons 'defence arg result)))
+        (option '(#\r "ruthless") #f #f
+                (lambda (opt name arg result)
+                  (alist-cons 'ruthless? #t result)))))
 
 (define (uglify-field-name field-name)
   (apply string-append
@@ -1407,63 +1410,72 @@
                   (('defence . type) type)
                   (_ #f))
                 opts))
+  (define ruthless?
+    (assoc-ref opts 'ruthless?))
+  (define poe-filter-blocks
+    (append (list poe-filter-basic
+                  poe-filter-crafting
+                  poe-filter-quality
+                  poe-filter-memory-strands
+                  poe-filter-scrolls
+                  poe-filter-vendor-5-linked-sockets
+                  poe-filter-vendor-3-sockets
+                  poe-filter-vendor-6-sockets
+                  poe-filter-unique
+                  poe-filter-currency-best
+                  poe-filter-currency-middle
+                  poe-filter-fragments
+                  poe-filter-wombgifts
+                  poe-filter-idols
+                  poe-filter-currency+incubators
+                  poe-filter-jewelry
+                  poe-filter-jewelry-best
+                  poe-filter-talismans
+                  poe-filter-belts
+                  poe-filter-belts-best
+                  poe-filter-labyrinth+incursion
+                  poe-filter-scarabs
+                  poe-filter-maps
+                  poe-filter-jewels
+                  poe-filter-abyss-jewels
+                  poe-filter-high-level-gems
+                  poe-filter-high-quality-gems
+                  poe-filter-high-value-gems
+                  poe-filter-awakend-gems
+                  poe-filter-transfigured-gems
+                  poe-filter-rogue-marks
+                  poe-filter-blueprints+contracts+sanctum
+                  poe-filter-not-identified-items)
+
+            poe-filters-weak-bases
+            (poe-filters-unused-bases exclude-sub-types)
+            (poe-filters-best-bases include-sub-types)
+
+            (list poe-filter-best-sceptres
+                  poe-filter-best-wands
+                  poe-filter-best-staffs
+                  poe-filter-unused-weapons
+                  poe-filter-flasks
+                  poe-filter-utility-flasks
+                  poe-filter-tinctures
+                  poe-filter-best-hybrid-flasks
+                  poe-filter-low-level-flasks
+                  poe-filter-high-quality-flasks
+                  poe-filter-fractured-items
+                  poe-filter-identified-items)))
   (let* ((%store (open-connection))
          (drv
           (run-with-store %store
             (text-file* "wigust.filter"
                         (serialize-configuration
                          (poe-item-filter-configuration
-                          (blocks
-                           (append (list poe-filter-basic
-                                         poe-filter-crafting
-                                         poe-filter-quality
-                                         poe-filter-memory-strands
-                                         poe-filter-scrolls
-                                         poe-filter-vendor-5-linked-sockets
-                                         poe-filter-vendor-3-sockets
-                                         poe-filter-vendor-6-sockets
-                                         poe-filter-unique
-                                         poe-filter-currency-best
-                                         poe-filter-currency-middle
-                                         poe-filter-fragments
-                                         poe-filter-wombgifts
-                                         poe-filter-idols
-                                         poe-filter-currency+incubators
-                                         poe-filter-jewelry
-                                         poe-filter-jewelry-best
-                                         poe-filter-talismans
-                                         poe-filter-belts
-                                         poe-filter-belts-best
-                                         poe-filter-labyrinth+incursion
-                                         poe-filter-scarabs
-                                         poe-filter-maps
-                                         poe-filter-jewels
-                                         poe-filter-abyss-jewels
-                                         poe-filter-high-level-gems
-                                         poe-filter-high-quality-gems
-                                         poe-filter-high-value-gems
-                                         poe-filter-awakend-gems
-                                         poe-filter-transfigured-gems
-                                         poe-filter-rogue-marks
-                                         poe-filter-blueprints+contracts+sanctum
-                                         poe-filter-not-identified-items)
-
-                                   poe-filters-weak-bases
-                                   (poe-filters-unused-bases exclude-sub-types)
-                                   (poe-filters-best-bases include-sub-types)
-
-                                   (list poe-filter-best-sceptres
-                                         poe-filter-best-wands
-                                         poe-filter-best-staffs
-                                         poe-filter-unused-weapons
-                                         poe-filter-flasks
-                                         poe-filter-utility-flasks
-                                         poe-filter-tinctures
-                                         poe-filter-best-hybrid-flasks
-                                         poe-filter-low-level-flasks
-                                         poe-filter-high-quality-flasks
-                                         poe-filter-fractured-items
-                                         poe-filter-identified-items))))
+                          (blocks (if ruthless?
+                                      (map (lambda (block)
+                                             (poe-item-filter-block-configuration
+                                              (inherit block)
+                                              (show? #t)))
+                                           poe-filter-blocks)
+                                      poe-filter-blocks)))
                          poe-item-filter-configuration-fields)))))
     (and (build-derivations %store (list drv))
          (copy-file (pk (derivation->output-path drv)) "wigust.filter"))))
