@@ -1,6 +1,7 @@
 # Lower font for basic items.
 Show
 	ItemLevel < 84
+	AreaLevel > 75
 	Class == "Helmets" "Body Armour" "Boots" "Gloves" "Shields" 
 	SetFontSize 25
 	Continue

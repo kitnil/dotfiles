@@ -420,6 +420,9 @@
    (item-level (poe-item-filter-conditional-value-configuration
                 (value 84)
                 (operator '<)))
+   (area-level (poe-item-filter-conditional-value-configuration
+                (value 75)
+                (operator '>)))
    (set-font-size 25)
    (continue? #t)))
 
