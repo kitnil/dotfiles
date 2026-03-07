@@ -1130,6 +1130,11 @@
      (colour 'Red)
      (shape 'Star)))))
 
+(define poe-filter-level-gems
+  (poe-item-filter-block-configuration
+   (inherit %poe-filter-gem)
+   (commentary "Highlight level gems.")))
+
 (define poe-filter-high-level-gems
   (poe-item-filter-block-configuration
    (inherit %poe-filter-gem)
@@ -1478,7 +1483,8 @@
   (define output
     (assoc-ref opts 'output))
   (define poe-filter-blocks
-    (append (list poe-filter-basic
+    (append (if ruthless? (list poe-filter-level-gems) '())
+            (list poe-filter-basic
                   poe-filter-crafting
                   poe-filter-quality-low-level
                   poe-filter-quality
