@@ -29,7 +29,10 @@
                   (alist-cons 'defence arg result)))
         (option '(#\r "ruthless") #f #f
                 (lambda (opt name arg result)
-                  (alist-cons 'ruthless? #t result)))))
+                  (alist-cons 'ruthless? #t result)))
+        (option '(#\o "output") #f #t
+                (lambda (opt name arg result)
+                  (alist-cons 'output arg result)))))
 
 (define (uglify-field-name field-name)
   (apply string-append
@@ -1412,6 +1415,8 @@
                 opts))
   (define ruthless?
     (assoc-ref opts 'ruthless?))
+  (define output
+    (assoc-ref opts 'output))
   (define poe-filter-blocks
     (append (list poe-filter-basic
                   poe-filter-crafting
@@ -1478,4 +1483,8 @@
                                       poe-filter-blocks)))
                          poe-item-filter-configuration-fields)))))
     (and (build-derivations %store (list drv))
-         (copy-file (pk (derivation->output-path drv)) "wigust.filter"))))
+         (let ((out (derivation->output-path drv)))
+           (display out)
+           (newline)
+           (copy-file out "wigust.filter")
+           (copy-file out output)))))
