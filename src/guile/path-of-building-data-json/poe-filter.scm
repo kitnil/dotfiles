@@ -1453,6 +1453,7 @@
 (define poe-filter-identified-items
   (poe-item-filter-block-configuration
    (commentary "Hide identified items.")
+   (rarity '(Magic Rare Unique))
    (identified? #t)
    (show? #f)))
 
