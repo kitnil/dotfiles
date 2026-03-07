@@ -436,6 +436,35 @@
                       (alpha 255)))
    (continue? #t)))
 
+(define poe-filter-quality-low-level
+  (poe-item-filter-block-configuration
+   (commentary "Highlight high quality items.")
+   (quality (poe-item-filter-conditional-value-configuration
+             (value 0)
+             (operator '>)))
+   (area-level (poe-item-filter-conditional-value-configuration
+                (value 75)
+                (operator '<)))
+   (set-text-color
+    (poe-item-filter-color-configuration
+     (red 30) (green 190) (blue 190) (alpha 255)))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 30) (green 190) (blue 190) (alpha 255)))
+   (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 1)
+     (colour 'White)
+     (shape 'Triangle)))
+   (play-alert-sound
+    (poe-item-filter-play-alert-sound-configuration
+     (id 2)
+     (volume 300)))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'Grey)))))
+
 (define poe-filter-quality
   (poe-item-filter-block-configuration
    (commentary "Highlight high quality items.")
@@ -1420,6 +1449,7 @@
   (define poe-filter-blocks
     (append (list poe-filter-basic
                   poe-filter-crafting
+                  poe-filter-quality-low-level
                   poe-filter-quality
                   poe-filter-memory-strands
                   poe-filter-scrolls

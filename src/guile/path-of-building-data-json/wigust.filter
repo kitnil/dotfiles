@@ -13,6 +13,16 @@ Show
 
 # Highlight high quality items.
 Show
+	AreaLevel < 75
+	Quality > 0
+	MinimapIcon 1 White Triangle
+	SetBorderColor 30 190 190 255
+	SetTextColor 30 190 190 255
+	PlayAlertSound 2 300
+	PlayEffect Grey
+
+# Highlight high quality items.
+Show
 	Quality > 20
 	MinimapIcon 1 White Triangle
 	SetBorderColor 30 190 190 255
