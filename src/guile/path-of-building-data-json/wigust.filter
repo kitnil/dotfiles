@@ -23,7 +23,7 @@ Show
 
 # Highlight high quality items.
 Show
-	AreaLevel < 75
+	AreaLevel < 50
 	Quality > 0
 	MinimapIcon 1 White Triangle
 	SetBorderColor 30 190 190 255

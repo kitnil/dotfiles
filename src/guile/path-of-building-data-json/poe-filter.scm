@@ -427,7 +427,7 @@
              (value 0)
              (operator '>)))
    (area-level (poe-item-filter-conditional-value-configuration
-                (value 75)
+                (value 50)
                 (operator '<)))
    (set-text-color
     (poe-item-filter-color-configuration
