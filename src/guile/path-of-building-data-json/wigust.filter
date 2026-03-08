@@ -483,6 +483,13 @@ Show
 	SetFontSize 45
 	Continue
 
+# Decrease font size for items with classes.
+Show
+	Class == "Corpses" "One Hand Axes" "One Hand Maces" "Sceptres" "Staves" "Two Hand Axes" "Two Hand Maces" "Wands" "Warstaves" 
+	SetFontSize 20
+	SetBackgroundColor 0 0 0 0
+	Continue
+
 # Highlight flasks.
 Show
 	Class == "Life Flasks" "Mana Flasks" "Hybrid Flasks" 

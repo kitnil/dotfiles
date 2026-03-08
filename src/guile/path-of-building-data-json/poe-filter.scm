@@ -394,25 +394,6 @@
    (blocks '())
    ""))
 
-(define %weapon-classes
-  '("Bows"
-    "Claws"
-    "Corpses"
-    "Daggers"
-    "One Hand Axes"
-    "One Hand Maces"
-    "One Hand Swords"
-    "Quivers"
-    "Rune Daggers"
-    "Sceptres"
-    "Staves"
-    "Thrusting One Hand Swords"
-    "Two Hand Axes"
-    "Two Hand Maces"
-    "Two Hand Swords"
-    "Wands"
-    "Warstaves"))
-
 (define poe-filter-basic
   (poe-item-filter-block-configuration
    (commentary "Lower font for basic items.")
@@ -1368,10 +1349,29 @@
    (set-font-size 45)
    (continue? #t)))
 
+(define %unused-weapon-classes
+  '(;; "Bows"
+    ;; "Claws"
+    "Corpses"
+    ;; "Daggers"
+    "One Hand Axes"
+    "One Hand Maces"
+    ;; "One Hand Swords"
+    ;; "Quivers"
+    ;; "Rune Daggers"
+    "Sceptres"
+    "Staves"
+    ;; "Thrusting One Hand Swords"
+    "Two Hand Axes"
+    "Two Hand Maces"
+    ;; "Two Hand Swords"
+    "Wands"
+    "Warstaves"))
+
 (define poe-filter-unused-weapons
   (poe-item-filter-block-configuration
    (commentary "Decrease font size for items with classes.")
-   (classes %weapon-classes)
+   (classes %unused-weapon-classes)
    (set-font-size 20)
    (show? #f)
    (set-background-color
@@ -1527,7 +1527,7 @@
             (list poe-filter-best-sceptres
                   poe-filter-best-wands
                   poe-filter-best-staffs
-                  ;; poe-filter-unused-weapons
+                  poe-filter-unused-weapons
                   poe-filter-flasks
                   poe-filter-utility-flasks
                   poe-filter-tinctures
