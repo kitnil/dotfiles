@@ -1501,7 +1501,11 @@
                   poe-filter-wombgifts
                   poe-filter-idols
                   poe-filter-currency+incubators
-                  poe-filter-jewelry
+                  (if ruthless?
+                      (poe-item-filter-block-configuration
+                       (inherit poe-filter-jewelry)
+                       (continue? #f))
+                      poe-filter-jewelry)
                   poe-filter-jewelry-best
                   poe-filter-talismans
                   poe-filter-belts
