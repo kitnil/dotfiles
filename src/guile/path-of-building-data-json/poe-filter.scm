@@ -1349,22 +1349,35 @@
    (set-font-size 45)
    (continue? #t)))
 
+;; (define %unused-weapon-classes
+;;   '(;; "Bows"
+;;     ;; "Claws"
+;;     "Corpses"
+;;     ;; "Daggers"
+;;     "One Hand Axes"
+;;     "One Hand Maces"
+;;     ;; "One Hand Swords"
+;;     ;; "Quivers"
+;;     ;; "Rune Daggers"
+;;     "Sceptres"
+;;     "Staves"
+;;     ;; "Thrusting One Hand Swords"
+;;     "Two Hand Axes"
+;;     "Two Hand Maces"
+;;     ;; "Two Hand Swords"
+;;     "Wands"
+;;     "Warstaves"))
+
 (define %unused-weapon-classes
-  '(;; "Bows"
-    ;; "Claws"
+  '("Bows"
+    "Claws"
     "Corpses"
-    ;; "Daggers"
-    "One Hand Axes"
+    "Daggers"
     "One Hand Maces"
-    ;; "One Hand Swords"
-    ;; "Quivers"
-    ;; "Rune Daggers"
+    "Rune Daggers"
     "Sceptres"
     "Staves"
-    ;; "Thrusting One Hand Swords"
-    "Two Hand Axes"
     "Two Hand Maces"
-    ;; "Two Hand Swords"
     "Wands"
     "Warstaves"))
 
