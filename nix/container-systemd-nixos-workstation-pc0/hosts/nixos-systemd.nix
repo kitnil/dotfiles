@@ -102,6 +102,7 @@
           libkrb5
           keyutils
           gamemode
+          mangohud
         ];
     };
     extraCompatPackages = [
