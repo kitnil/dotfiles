@@ -105,7 +105,6 @@
         ];
     };
     extraCompatPackages = [
-      pkgs.mangohud
       pkgs.proton-ge-bin
     ];
   };
