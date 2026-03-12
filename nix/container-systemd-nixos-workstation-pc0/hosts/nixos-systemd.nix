@@ -83,6 +83,9 @@
       pkgs.mangohud
       pkgs.xterm
     ];
+    extraCompatPackages = [
+      pkgs.mangohud
+    ];
     package = pkgs.steam.override {
       extraLibraries = pkgs: [ pkgs.xorg.libxcb ];
       extraEnv = {
