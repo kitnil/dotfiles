@@ -89,20 +89,19 @@
         MANGOHUD = true;
         OBS_VKCAPTURE = true;
       };
-      extraPkgs =
-        pkgs: with pkgs; [
-          xorg.libXcursor
-          xorg.libXi
-          xorg.libXinerama
-          xorg.libXScrnSaver
-          libpng
-          libpulseaudio
-          libvorbis
-          stdenv.cc.cc.lib
-          libkrb5
-          keyutils
-          gamemode
-        ];
+      extraPkgs = pkgs: [
+        pkgs.xorg.libXcursor
+        pkgs.xorg.libXi
+        pkgs.xorg.libXinerama
+        pkgs.xorg.libXScrnSaver
+        pkgs.libpng
+        pkgs.libpulseaudio
+        pkgs.libvorbis
+        pkgs.stdenv.cc.cc.lib
+        pkgs.libkrb5
+        pkgs.keyutils
+        pkgs.gamemode
+      ];
     };
     extraCompatPackages = [
       pkgs.proton-ge-bin
