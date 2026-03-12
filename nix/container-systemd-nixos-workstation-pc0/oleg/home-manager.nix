@@ -53,4 +53,25 @@ in
     name = "Adwaita";
     size = 32;
   };
+
+  systemd.user.services.xwayland-satellite = {
+    Unit = {
+      Description = "Xwayland-Satellite terminal";
+      StartLimitBurst = 5;
+      StartLimitIntervalSec = 10;
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+    Service = {
+      Environment = [
+        "XDG_RUNTIME_DIR=/mnt/guix/run/user/%U"
+        "WAYLAND_DISPLAY=wayland-1"
+      ];
+      ExecStart = "${pkgs.xwayland-satellite}/bin/xwayland-satellite";
+      Type = "simple";
+      Restart = "always";
+      RestartSec = "2s";
+    };
+  };
 }
