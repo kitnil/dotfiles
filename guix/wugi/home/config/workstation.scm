@@ -75,12 +75,6 @@
                         (service home-openssh-service-type))
                     (service home-dbus-service-type)
                     (service home-pipewire-service-type)
-                    (simple-service 'test-config
-                                    home-xdg-configuration-files-service-type
-                                    (list `("test.conf"
-                                            ,(plain-file "tmp-file.txt"
-                                                         "the content of
-                                               ~/.config/test.conf"))))
                     (service home-files-service-type)
                     (simple-service 'waybar-config
                                     home-files-service-type
