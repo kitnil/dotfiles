@@ -164,7 +164,6 @@
                           "nixos.sh"
                           "nix-builder"
                           "nix-repl"
-                          "obs-wrapper"
                           "oracle"
                           "openai"
                           "opensearch"
