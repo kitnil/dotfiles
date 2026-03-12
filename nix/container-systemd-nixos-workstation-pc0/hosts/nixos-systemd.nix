@@ -101,10 +101,8 @@
         pkgs.libkrb5
         pkgs.keyutils
         pkgs.gamemode
+        pkgs.mangohud
       ];
-      extraProfile = ''
-        export PATH="${pkgs.mangohud}/bin:$PATH"
-      '';
     };
     extraCompatPackages = [
       pkgs.proton-ge-bin
