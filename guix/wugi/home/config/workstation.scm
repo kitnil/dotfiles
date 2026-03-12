@@ -164,7 +164,31 @@ context.properties = {
                                                #:recursive? #t))
                                 `("bin/manual-scripts-oleg-02-gnupg.sh"
                                   ,(local-file (string-append %distro-directory "/dotfiles/run/guix-workstation/05-gnupg.sh")
-                                               #:recursive? #t)))
+                                               #:recursive? #t))
+                                `("bin/obs-nixos-workstation"
+                                  ,(program-file "obs-nixos-workstation"
+                                                 #~(apply execl
+                                                          (list "/run/privileged/bin/sudo" "obs"
+                                                                "runc" "exec"
+                                                                "--env" "USER=oleg"
+                                                                "--env" "WAYLAND_DISPLAY=wayland-1"
+                                                                "--env" "XDG_RUNTIME_DIR=/mnt/guix/run/user/1000"
+                                                                "--user=1000:998" "nixos-workstation" "/bin/sh" "-l"
+                                                                "-c" (string-join (list (string-append "DBUS_SESSION_BUS_ADDRESS="
+                                                                                                       "unix:path="
+                                                                                                       "/mnt/guix"
+                                                                                                       (string-drop (getenv "DBUS_SESSION_BUS_ADDRESS")
+                                                                                                                    (string-length "unix:path=")))
+                                                                                        "DBUS_FATAL_WARNINGS=0"
+                                                                                        "DESKTOP_SESSION=niri"
+                                                                                        "XDG_CURRENT_DESKTOP=niri"
+                                                                                        "XDG_SESSION_DESKTOP=niri"
+                                                                                        "XDG_SESSION_TYPE=wayland"
+                                                                                        "GTK_THEME=Adwaita:dark"
+                                                                                        "WAYLAND_DISPLAY=wayland-1"
+                                                                                        "XDG_RUNTIME_DIR=/mnt/guix/run/user/1000"
+                                                                                        "exec" "obs")
+                                                                                  " "))))))
                           (map (lambda (container-name)
                                  (let ((file-name (string-append "fuzzel-" container-name)))
                                    `(,(string-append "bin/" file-name)
