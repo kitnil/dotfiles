@@ -36,6 +36,7 @@
     enable = true;
   };
   environment.systemPackages = [
+    pkgs.mangohud
     pkgs.mtr
     pkgs.wireshark
   ];
@@ -101,7 +102,6 @@
         pkgs.libkrb5
         pkgs.keyutils
         pkgs.gamemode
-        pkgs.mangohud
       ];
     };
     extraCompatPackages = [
