@@ -105,10 +105,11 @@
       extraProfile = ''
         export PATH="${pkgs.mangohud}/bin:$PATH"
       '';
+      extraCompatPackages = [
+        pkgs.proton-ge-bin
+        pkgs.mangohud
+      ];
     };
-    extraCompatPackages = [
-      pkgs.proton-ge-bin
-    ];
   };
   systemd.services.reload-systemd-vconsole-setup.enable = false;
 }
