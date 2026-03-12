@@ -102,9 +102,6 @@
         pkgs.keyutils
         pkgs.gamemode
       ];
-      extraProfile = ''
-        export PATH="${pkgs.mangohud}/bin:$PATH"
-      '';
     };
     extraCompatPackages = [
       pkgs.proton-ge-bin
