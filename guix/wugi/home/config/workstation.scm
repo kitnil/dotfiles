@@ -129,6 +129,8 @@ max-cache-ttl-ssh 172800
 allow-preset-passphrase")))))
 
 (define pipewire-configuration-service
+  ;; default.clock.min-quantum configuration is suggested in
+  ;; https://www.reddit.com/r/linux_gaming/comments/1gy347h/newbie_here_ive_tried_almost_all_fixes_theres/
   (simple-service 'pipewire-config
                   home-files-service-type
                   (list `(".config/pipewire/pipewire.conf.d/99-low-latency.conf"
