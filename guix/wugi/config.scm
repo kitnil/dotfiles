@@ -1017,6 +1017,8 @@ policy.add(policy.suffix(policy.STUB(\"192.168.0.0\"), {todname('windowsupdate.c
 policy.add(policy.suffix(policy.STUB(\"192.168.0.0\"), {todname('windowsupdate.microsoft.com')}))
 policy.add(policy.suffix(policy.STUB(\"192.168.0.0\"), {todname('wustat.windows.com')}))
 
+policy.add(policy.suffix(policy.STUB(\"192.168.0.104\"), {todname('vdo.socialstream.ninja')}))
+
 -- -- Forward all queries (complete stub mode)
 policy.add(policy.all(policy.STUB('192.168.0.180')))
 
