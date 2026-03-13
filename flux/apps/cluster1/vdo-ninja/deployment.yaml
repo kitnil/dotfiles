@@ -26,6 +26,7 @@ spec:
       - effect: NoSchedule
         key: node.kubernetes.io/unschedulable
         operator: Exists
+      hostNetwork: true
       containers:
       - image: docker-registry.wugi.info/library/vdo.ninja:latest
         name: vdo-ninja
@@ -36,7 +37,6 @@ spec:
         env:
         - name: PORT
           value: "443"
-        hostNetwork: true
         resources:
           limits:
             cpu: 2000m
