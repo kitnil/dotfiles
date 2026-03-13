@@ -959,7 +959,9 @@ zone:
         "192.168.0.175 nixos-ws.wugi.info"
         "192.168.0.115 nixos-hev.wugi.info"
         "192.168.0.175 nixos-zapret.wugi.info"
-        "192.168.0.160 nixos-wan.wugi.info"))
+        "192.168.0.160 nixos-wan.wugi.info"
+
+        "192.168.0.104 vdo.socialstream.ninja"))
 
 (define* (generate-hosts-file #:optional (extra-hosts '()))
   (plain-file "hosts"
@@ -1016,8 +1018,6 @@ policy.add(policy.suffix(policy.STUB(\"192.168.0.0\"), {todname('update.microsof
 policy.add(policy.suffix(policy.STUB(\"192.168.0.0\"), {todname('windowsupdate.com')}))
 policy.add(policy.suffix(policy.STUB(\"192.168.0.0\"), {todname('windowsupdate.microsoft.com')}))
 policy.add(policy.suffix(policy.STUB(\"192.168.0.0\"), {todname('wustat.windows.com')}))
-
-policy.add(policy.suffix(policy.STUB(\"192.168.0.104\"), {todname('vdo.socialstream.ninja')}))
 
 -- -- Forward all queries (complete stub mode)
 policy.add(policy.all(policy.STUB('192.168.0.180')))
