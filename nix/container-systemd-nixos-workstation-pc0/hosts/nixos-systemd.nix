@@ -109,4 +109,6 @@
     ];
   };
   systemd.services.reload-systemd-vconsole-setup.enable = false;
+
+  services.playerctld.enable = true;
 }
