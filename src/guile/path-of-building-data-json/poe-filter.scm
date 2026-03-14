@@ -27,6 +27,9 @@
         (option '(#\d "defence") #f #t
                 (lambda (opt name arg result)
                   (alist-cons 'defence arg result)))
+        (option '(#\W "exclude-weapon") #f #t
+                (lambda (opt name arg result)
+                  (alist-cons 'exclude-weapon arg result)))
         (option '(#\r "ruthless") #f #f
                 (lambda (opt name arg result)
                   (alist-cons 'ruthless? #t result)))
@@ -1349,42 +1352,10 @@
    (set-font-size 45)
    (continue? #t)))
 
-;; (define %unused-weapon-classes
-;;   '(;; "Bows"
-;;     ;; "Claws"
-;;     "Corpses"
-;;     ;; "Daggers"
-;;     "One Hand Axes"
-;;     "One Hand Maces"
-;;     ;; "One Hand Swords"
-;;     ;; "Quivers"
-;;     ;; "Rune Daggers"
-;;     "Sceptres"
-;;     "Staves"
-;;     ;; "Thrusting One Hand Swords"
-;;     "Two Hand Axes"
-;;     "Two Hand Maces"
-;;     ;; "Two Hand Swords"
-;;     "Wands"
-;;     "Warstaves"))
-
-(define %unused-weapon-classes
-  '("Bows"
-    "Claws"
-    "Corpses"
-    "Daggers"
-    "One Hand Maces"
-    "Rune Daggers"
-    "Sceptres"
-    "Staves"
-    "Two Hand Maces"
-    "Wands"
-    "Warstaves"))
-
-(define poe-filter-unused-weapons
+(define (poe-filter-unused-weapons exclude-weapons)
   (poe-item-filter-block-configuration
    (commentary "Decrease font size for items with classes.")
-   (classes %unused-weapon-classes)
+   (classes exclude-weapons)
    (set-font-size 20)
    (show? #f)
    (set-background-color
@@ -1491,6 +1462,11 @@
                   (('defence . type) type)
                   (_ #f))
                 opts))
+  (define exclude-weapons
+    (filter-map (match-lambda
+                  (('exclude-weapon . type) type)
+                  (_ #f))
+                opts))
   (define ruthless?
     (assoc-ref opts 'ruthless?))
   (define output
@@ -1544,7 +1520,7 @@
             (list poe-filter-best-sceptres
                   poe-filter-best-wands
                   poe-filter-best-staffs
-                  poe-filter-unused-weapons
+                  (poe-filter-unused-weapons exclude-weapons)
                   poe-filter-flasks
                   poe-filter-utility-flasks
                   poe-filter-tinctures
