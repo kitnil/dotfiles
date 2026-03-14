@@ -484,7 +484,7 @@ Show
 
 # Decrease font size for items with classes.
 Show
-	Class == "Warstaves" "Wands" "Two Hand Maces" "Two Hand Axes" "Staves" "Sceptres" "One Hand Maces" "One Hand Axes" "Corpses" 
+	Class == "Warstaves" "Wands" "Two Hand Swords" "Two Hand Maces" "Two Hand Axes" "Thrusting One Hand Swords" "Staves" "Sceptres" "One Hand Swords" "One Hand Maces" "One Hand Axes" "Daggers" "Corpses" "Claws" 
 	SetFontSize 20
 	SetBackgroundColor 0 0 0 0
 	Continue
