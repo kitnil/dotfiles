@@ -574,9 +574,9 @@
 
 (define poe-filter-vendor-3-green-sockets
   (poe-item-filter-block-configuration
-   (commentary "Highlight sockets vendor recipe.")
+   (commentary "Highlight 3 green sockets items.")
    (area-level (poe-item-filter-conditional-value-configuration
-                (value 75)
+                (value 68)
                 (operator '<)))
    (socket-group (poe-item-filter-conditional-value-configuration
                   (value '3GGG)

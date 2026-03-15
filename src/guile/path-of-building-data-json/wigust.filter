@@ -74,9 +74,9 @@ Show
 	PlayAlertSound 2 300
 	PlayEffect Grey
 
-# Highlight sockets vendor recipe.
+# Highlight 3 green sockets items.
 Show
-	AreaLevel < 75
+	AreaLevel < 68
 	SocketGroup >= 3GGG
 	MinimapIcon 1 White Triangle
 	SetBorderColor 30 190 190 255
