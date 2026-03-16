@@ -1568,5 +1568,5 @@
          (let ((out (derivation->output-path drv)))
            (display out)
            (newline)
-           (copy-file out "wigust.filter")
-           (copy-file out output)))))
+           (when output
+             (copy-file out output))))))
