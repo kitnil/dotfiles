@@ -1263,7 +1263,7 @@
          "Gloves"
          "Helmet")))
 
-(define (poe-filters-unused-bases exclude-sub-types)
+(define* (poe-filters-unused-bases bases #:key ruthless?)
   (delete #f
           (apply append
                  (map (lambda (type)
@@ -1271,36 +1271,41 @@
                                (if (and (string= base-type "Energy Shield")
                                         (string= type "Body Armour"))
                                    #f
-                                   (poe-item-filter-block-configuration
-                                    (commentary (format #f "Hide ~s ~s base items for specific defence types."
-                                                        type base-type))
-                                    (rarity '(Normal Magic Rare))
-                                    (base-types
-                                     (sort (let ((items
-                                                  (filter (lambda (item)
-                                                            (and=> (assoc-ref item "subType")
-                                                                   (lambda (sub-type)
-                                                                     (and (string= sub-type base-type)
-                                                                          (and=> (assoc-ref item "type")
-                                                                                 (lambda (t)
-                                                                                   (string= type t)))))))
-                                                          base-items)))
-                                             (map (lambda (item)
-                                                    (string-replace-substring (first item)
-                                                                              (format #f " (~a)" base-type)
-                                                                              ""))
-                                                  items))
-                                           string<))
-                                    (set-font-size 20)
-                                    (set-background-color
-                                     (poe-item-filter-color-configuration
-                                      (red 0)
-                                      (green 0)
-                                      (blue 0)
-                                      (alpha 0)))
-                                    (show? #f)
-                                    (continue? #t))))
-                             exclude-sub-types))
+                                   (let ((filter-definition
+                                          (poe-item-filter-block-configuration
+                                           (commentary (format #f "Hide ~s ~s base items for specific defence types."
+                                                               type base-type))
+                                           (rarity '(Normal Magic Rare))
+                                           (base-types
+                                            (sort (let ((items
+                                                         (filter (lambda (item)
+                                                                   (and=> (assoc-ref item "subType")
+                                                                          (lambda (sub-type)
+                                                                            (and (string= sub-type base-type)
+                                                                                 (and=> (assoc-ref item "type")
+                                                                                        (lambda (t)
+                                                                                          (string= type t)))))))
+                                                                 base-items)))
+                                                    (map (lambda (item)
+                                                           (string-replace-substring (first item)
+                                                                                     (format #f " (~a)" base-type)
+                                                                                     ""))
+                                                         items))
+                                                  string<))
+                                           (set-font-size 20)
+                                           (show? #f)
+                                           (continue? #t))))
+                                     (if ruthless?
+                                         filter-definition
+                                         (poe-item-filter-block-configuration
+                                          (inherit filter-definition)
+                                          (set-background-color
+                                           (poe-item-filter-color-configuration
+                                            (red 0)
+                                            (green 0)
+                                            (blue 0)
+                                            (alpha 0))))))))
+                             bases))
                       '("Body Armour"
                         "Boots"
                         "Gloves"
@@ -1352,19 +1357,24 @@
    (set-font-size 45)
    (continue? #t)))
 
-(define (poe-filter-unused-weapons exclude-weapons)
-  (poe-item-filter-block-configuration
-   (commentary "Decrease font size for items with classes.")
-   (classes exclude-weapons)
-   (set-font-size 20)
-   (show? #f)
-   (set-background-color
-    (poe-item-filter-color-configuration
-     (red 0)
-     (green 0)
-     (blue 0)
-     (alpha 0)))
-   (continue? #t)))
+(define* (poe-filter-unused-weapons bases #:key ruthless?)
+  (let ((filter-definition
+         (poe-item-filter-block-configuration
+          (commentary "Decrease font size for items with classes.")
+          (classes bases)
+          (set-font-size 20)
+          (show? #f)
+          (continue? #t))))
+    (if ruthless?
+        filter-definition
+        (poe-item-filter-block-configuration
+         (inherit filter-definition)
+         (set-background-color
+          (poe-item-filter-color-configuration
+           (red 0)
+           (green 0)
+           (blue 0)
+           (alpha 0)))))))
 
 (define poe-filter-flasks
   (poe-item-filter-block-configuration
@@ -1514,13 +1524,15 @@
                   poe-filter-not-identified-items)
 
             poe-filters-weak-bases
-            (poe-filters-unused-bases exclude-sub-types)
+            (poe-filters-unused-bases exclude-sub-types
+                                      #:ruthless? ruthless?)
             (poe-filters-best-bases include-sub-types)
 
             (list poe-filter-best-sceptres
                   poe-filter-best-wands
                   poe-filter-best-staffs
-                  (poe-filter-unused-weapons exclude-weapons)
+                  (poe-filter-unused-weapons exclude-weapons
+                                             #:ruthless? ruthless?)
                   poe-filter-flasks
                   poe-filter-utility-flasks
                   poe-filter-tinctures
