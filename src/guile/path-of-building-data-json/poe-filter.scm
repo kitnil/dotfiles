@@ -1524,16 +1524,25 @@
                   poe-filter-not-identified-items)
 
             poe-filters-weak-bases
-            (poe-filters-unused-bases exclude-sub-types
-                                      #:ruthless? ruthless?)
-            (poe-filters-best-bases include-sub-types)
+
+            (if (null? exclude-sub-types)
+                '()
+                (poe-filters-unused-bases exclude-sub-types
+                                          #:ruthless? ruthless?))
+
+            (if (null? include-sub-types)
+                '()
+                (poe-filters-best-bases include-sub-types))
 
             (list poe-filter-best-sceptres
                   poe-filter-best-wands
-                  poe-filter-best-staffs
-                  (poe-filter-unused-weapons exclude-weapons
-                                             #:ruthless? ruthless?)
-                  poe-filter-flasks
+                  poe-filter-best-staffs)
+
+            (if (null? exclude-weapons)
+                '()
+                (list (poe-filter-unused-weapons exclude-weapons
+                                                 #:ruthless? ruthless?)))
+            (list poe-filter-flasks
                   poe-filter-utility-flasks
                   poe-filter-tinctures
                   poe-filter-best-hybrid-flasks
