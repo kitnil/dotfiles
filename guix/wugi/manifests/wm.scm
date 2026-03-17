@@ -9,6 +9,7 @@
   #:use-module (gnu packages wm)
   #:use-module (gnu packages xdisorg)
   #:use-module (guix profiles)
+  #:use-module (wugi packages wayland)
   #:export (%wm-manifest))
 
 (define (%wm-manifest)
@@ -29,6 +30,9 @@
           wl-mirror
           wtype))
 
+  (define my-packages
+    (list poe-scroll-click))
+
   (define notifications
     (list swaynotificationcenter))
 
@@ -37,4 +41,5 @@
                               wm
                               sway-utils
                               wayland-utils
-                              notifications)))
+                              notifications
+                              my-packages)))
