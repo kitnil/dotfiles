@@ -84,6 +84,8 @@ output "DP-3" {
     // Uncomment this line to disable this output.
     // off
 
+    variable-refresh-rate on-demand=true
+
     // Resolution and, optionally, refresh rate of the output.
     // The format is "<width>x<height>" or "<width>x<height>@<refresh rate>".
     // If the refresh rate is omitted, niri will pick the highest refresh rate
