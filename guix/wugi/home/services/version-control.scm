@@ -38,7 +38,7 @@
 [include]
         path = ~a/.gitconfig2
 " home))))))))
-                    #~(begin (primitive-load #$file)))))
+                    #~(primitive-load #$file))))
 
 (define home-gita-service
   (simple-service 'gita-config
