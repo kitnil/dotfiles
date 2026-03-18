@@ -4,7 +4,7 @@ metadata:
   name: ollama-1
 subsets:
 - addresses:
-  - ip: 192.168.0.152
+  - ip: 192.168.0.195
   ports:
   - port: 11434
     name: ollama-1
