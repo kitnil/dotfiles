@@ -37,7 +37,7 @@
                                     (format port "\
 [include]
 	path = ~a/.gitconfig2
-" home))))))))
+" %home))))))))
                     #~(primitive-load #$file))))
 
 (define home-gita-service
