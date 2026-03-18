@@ -155,4 +155,17 @@
     package = pkgs.ollama-vulkan;
     host = "0.0.0.0";
   };
+
+  console.enable = true;
+  systemd.services."getty@tty1" = {
+    enable = false;
+  };
+  systemd.services."autovt@tty1" = {
+    enable = false;
+  };
+  systemd.services."getty@tty14" = {
+    enable = true;
+    wantedBy = [ "multi-user.target" ];
+  };
+  services.getty.autologinUser = "oleg";
 }
