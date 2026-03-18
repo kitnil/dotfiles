@@ -37,7 +37,8 @@
                                     (unless (file-exists? gitconfig-file)
                                       (format port "\
 [include]
-        path = /home/oleg/.gitconfig2")))))))))
+        path = /home/oleg/.gitconfig2
+")))))))))
                     #~(begin (primitive-load #$file)))))
 
 (define home-gita-service
