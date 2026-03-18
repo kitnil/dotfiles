@@ -56,4 +56,4 @@ spec:
       volumes:
       - name: certs
         secret:
-          secretName: vdo-ninja-certs
+          secretName: vdo-ninja-ingress-certs
