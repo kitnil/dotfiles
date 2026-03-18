@@ -168,4 +168,10 @@
     wantedBy = [ "multi-user.target" ];
   };
   services.getty.autologinUser = "oleg";
+  services.logind = {
+    settings.Login = {
+      NAutoVTs = 0;
+      ReserveVT = 0;
+    };
+  };
 }
