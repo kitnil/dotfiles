@@ -8,6 +8,7 @@
     pkgs.fuzzel
     pkgs.ipmitool
     pkgs.ipmiview
+    pkgs.mariadb.client
     pkgs.pass
     pkgs.skopeo
     pkgs.robo3t
