@@ -36,7 +36,7 @@
                                   (lambda (port)
                                     (format port "\
 [include]
-        path = ~a/.gitconfig2
+	path = ~a/.gitconfig2
 " home))))))))
                     #~(primitive-load #$file))))
 
