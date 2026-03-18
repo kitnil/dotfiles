@@ -11,14 +11,14 @@
             home-gitconfig-service))
 
 (define home-git-service
-  (simple-service 'gitconfig-config
+  (simple-service 'gitconfig2-config
                   home-files-service-type
                   (list `(".gitconfig2" ,(local-file (string-append %distro-directory "/dot_gitconfig")))
                         `(".config/git/gitk" ,(local-file (string-append %distro-directory "/dot_config/git/gitk")))
                         `(".config/git/ignore" ,(local-file (string-append %distro-directory "/dot_config/git/ignore"))))))
 
 (define home-gitconfig-service
-  (simple-service 'netrc-config
+  (simple-service 'gitconfig-config
                   home-activation-service-type
                   (let ((file
                          (scheme-file
