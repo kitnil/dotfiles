@@ -66,6 +66,7 @@
   networking.firewall.allowedTCPPorts = [
     179                         # bgp (bird)
     9324                        # prometheus bird exporter
+    11434                       # ollama
     31247                       # prometheus mtr exporters
   ];
   # https://nixos.wiki/wiki/Steam
