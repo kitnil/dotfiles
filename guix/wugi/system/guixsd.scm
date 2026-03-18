@@ -466,8 +466,8 @@
                       ;; specific gateway ignoring default gateway route.
                       (invoke "ip" "route" "add" "default" "via" "192.168.0.1" "table" "120")
                       (invoke "ip" "route" "add" "192.168.0.0/24" "dev" "br0" "table" "120")
-                      (invoke "iptables" "-t" "mangle" "-I" "INPUT" "-p" "tcp" "-m" "tcp" "--dport" "80" "-i" "br0" "-j" "CONNMARK" "--set-mark" "0x2")
-                      (invoke "iptables" "-t" "mangle" "-I" "INPUT" "-p" "tcp" "-m" "tcp" "--dport" "443" "-i" "br0" "-j" "CONNMARK" "--set-mark" "0x2")
+                      (invoke "iptables" "-t" "mangle" "-I" "INPUT" "!" "-s" "10.0.0.0/8" "-p" "tcp" "-m" "tcp" "--dport" "80" "-i" "br0" "-j" "CONNMARK" "--set-mark" "0x2")
+                      (invoke "iptables" "-t" "mangle" "-I" "INPUT" "!" "-s" "10.0.0.0/8" "-p" "tcp" "-m" "tcp" "--dport" "443" "-i" "br0" "-j" "CONNMARK" "--set-mark" "0x2")
                       (invoke "iptables" "-t" "mangle" "-A" "OUTPUT" "-j" "CONNMARK" "--restore-mark")
                       (invoke "ip" "rule" "add" "fwmark" "0x2/0x2" "lookup" "120")))))
 
