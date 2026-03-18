@@ -428,6 +428,7 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
        home-ghci-service
 
        home-git-service
+       home-gitconfig-service
        home-gita-service
 
        home-emacs-state-service

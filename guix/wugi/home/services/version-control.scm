@@ -7,7 +7,8 @@
   #:use-module (wugi home config)
   #:use-module (wugi utils)
   #:export (home-git-service
-            home-gita-service))
+            home-gita-service
+            home-gitconfig-service))
 
 (define home-git-service
   (simple-service 'gitconfig-config
@@ -15,6 +16,29 @@
                   (list `(".gitconfig2" ,(local-file (string-append %distro-directory "/dot_gitconfig")))
                         `(".config/git/gitk" ,(local-file (string-append %distro-directory "/dot_config/git/gitk")))
                         `(".config/git/ignore" ,(local-file (string-append %distro-directory "/dot_config/git/ignore"))))))
+
+(define home-gitconfig-service
+  (simple-service 'netrc-config
+                  home-activation-service-type
+                  (let ((file
+                         (scheme-file
+                          "generate-gitconfig-file.scm"
+                          #~(begin
+                              (let ((%home
+                                     (and=> (getenv "HOME")
+                                            (lambda (home)
+                                              home))))
+                                (use-modules (ice-9 format)
+                                             (ice-9 match))
+                                (define gitconfig-file
+                                  (string-append %home "/.gitconfig"))
+                                (call-with-output-file gitconfig-file
+                                  (lambda (port)
+                                    (unless (file-exists? gitconfig-file)
+                                      (format port "\
+[include]
+        path = /home/oleg/.gitconfig2")))))))))
+                    #~(begin (primitive-load #$file)))))
 
 (define home-gita-service
   (simple-service 'gita-config
