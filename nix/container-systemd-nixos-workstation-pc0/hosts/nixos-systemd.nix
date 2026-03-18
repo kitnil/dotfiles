@@ -152,5 +152,6 @@
   services.ollama = {
     enable = true;
     package = pkgs.ollama-vulkan;
+    host = "192.168.0.195";
   };
 }
