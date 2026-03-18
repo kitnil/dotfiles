@@ -31,9 +31,9 @@
                                 (use-modules (ice-9 format))
                                 (define gitconfig-file
                                   (string-append %home "/.gitconfig"))
-                                (call-with-output-file gitconfig-file
-                                  (lambda (port)
-                                    (unless (file-exists? gitconfig-file)
+                                (unless (file-exists? gitconfig-file)
+                                  (call-with-output-file gitconfig-file
+                                    (lambda (port)
                                       (format port "\
 [include]
         path = ~a/.gitconfig2
