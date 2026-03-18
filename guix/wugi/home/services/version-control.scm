@@ -24,20 +24,20 @@
                          (scheme-file
                           "generate-gitconfig-file.scm"
                           #~(begin
-                              (let ((%home
-                                     (and=> (getenv "HOME")
-                                            (lambda (home)
-                                              home))))
-                                (use-modules (ice-9 format))
-                                (define gitconfig-file
-                                  (string-append %home "/.gitconfig"))
-                                (unless (file-exists? gitconfig-file)
-                                  (call-with-output-file gitconfig-file
-                                    (lambda (port)
-                                      (format port "\
+                              (use-modules (ice-9 format))
+                              (define %home
+                                (and=> (getenv "HOME")
+                                       (lambda (home)
+                                         home)))
+                              (define gitconfig-file
+                                (string-append %home "/.gitconfig"))
+                              (unless (file-exists? gitconfig-file)
+                                (call-with-output-file gitconfig-file
+                                  (lambda (port)
+                                    (format port "\
 [include]
         path = ~a/.gitconfig2
-" home)))))))))
+" home))))))))
                     #~(begin (primitive-load #$file)))))
 
 (define home-gita-service
