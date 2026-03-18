@@ -149,4 +149,8 @@
       -----END CERTIFICATE-----
     ''
   ];
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-vulkan;
+  };
 }
