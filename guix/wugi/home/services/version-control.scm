@@ -28,8 +28,7 @@
                                      (and=> (getenv "HOME")
                                             (lambda (home)
                                               home))))
-                                (use-modules (ice-9 format)
-                                             (ice-9 match))
+                                (use-modules (ice-9 format))
                                 (define gitconfig-file
                                   (string-append %home "/.gitconfig"))
                                 (call-with-output-file gitconfig-file
