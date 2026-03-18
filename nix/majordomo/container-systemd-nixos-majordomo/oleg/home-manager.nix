@@ -88,6 +88,7 @@
         [client]
         skip-ssl = true
       '';
+    };
   };
 
   # The home.stateVersion option no longer has a default value. It used to
