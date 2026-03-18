@@ -76,39 +76,6 @@
 (define .bashrc
   (string-append %home "/src/cgit.wugi.info/wigust/dotfiles/dot_bashrc"))
 
-(define xmodmap-script
-  (program-file
-   "xmodmap"
-   #~(begin
-       (use-modules (srfi srfi-1)
-                    (ice-9 popen)
-                    (ice-9 rdelim))
-
-       (define %home
-         (and=> (getenv "HOME")
-                (lambda (home)
-                  home)))
-
-       (define xmodmap
-         #$(file-append xmodmap "/bin/xmodmap"))
-
-       (define count (make-parameter 0))
-
-       (let loop ()
-         (let* ((port (open-pipe* OPEN_READ xmodmap "-pke"))
-                (output (read-string port)))
-           (close-pipe port)
-           (if (or (< 2 (count))
-                   (any (lambda (str)
-                          (string= str "keycode 134 = Control_L NoSymbol Control_L"))
-                        (string-split (string-trim-right output #\newline) #\newline)))
-               #t
-               (begin
-                 (count (1+ (count)))
-                 (system* xmodmap (string-append %home "/.Xmodmap"))
-                 (sleep 3)
-                 (loop))))))))
-
 (define* (majordomo-mbsync-services name)
   (define (pass-private-or-public name)
     (if (file-exists? (string-append %home "/.password-store/majordomo/private/router.majordomo.ru/" name "@majordomo.ru.gpg"))
