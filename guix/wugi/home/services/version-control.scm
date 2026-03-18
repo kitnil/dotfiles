@@ -35,10 +35,10 @@
                                 (call-with-output-file gitconfig-file
                                   (lambda (port)
                                     (unless (file-exists? gitconfig-file)
-                                      (format port "\
+                                      (display "\
 [include]
         path = /home/oleg/.gitconfig2
-")))))))))
+" port)))))))))
                     #~(begin (primitive-load #$file)))))
 
 (define home-gita-service
