@@ -294,7 +294,7 @@ context.properties = {
 
                    (service home-niri-service-type)
                    niri-configuration-service
-                   
+
                    fuzzel-configuration-service
 
                    (service home-scream-service-type
