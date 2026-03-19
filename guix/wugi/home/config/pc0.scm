@@ -39,5 +39,4 @@
 
 (define (%pc0-home-environment)
   (home-environment
-    (services
-     (service home-bash-service-type))))
+    (services (list (service home-bash-service-type)))))
