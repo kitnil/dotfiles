@@ -439,7 +439,7 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
        home-gnupg-service
 
        (service home-gpg-agent-service-type
-                (let ((ttl (* (* (* 60 60) 24) 7))) ;7 days
+                (let ((ttl (* (* (* 60 60) 24) 30))) ;30 days
                   (home-gpg-agent-configuration
                    (pinentry-program
                     (file-append pinentry "/bin/pinentry"))
