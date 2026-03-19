@@ -178,7 +178,8 @@
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
-   '((eval progn (setq-local geiser-repl-add-project-paths nil))
+   '((geiser-guile-binary "guix" "repl")
+     (eval progn (setq-local geiser-repl-add-project-paths nil))
      (lisp-fill-paragraphs-as-doc-string nil)
      (eval with-eval-after-load 'git-commit
            (add-to-list 'git-commit-trailers "Change-Id"))
