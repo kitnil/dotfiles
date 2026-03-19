@@ -38,4 +38,6 @@
   #:export (%pc0-home-environment))
 
 (define (%pc0-home-environment)
-  (home-environment))
+  (home-environment
+    (services
+     (service home-bash-service-type))))
