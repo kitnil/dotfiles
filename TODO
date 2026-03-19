@@ -21,3 +21,6 @@ gfx.downloadable_fonts.enabled
 
 # package socialstream for self-hosted instance
 [oleg@nixos-workstation:~/socialstream]$ find -type f -exec sed -i 's/vdo\.socialstream\.ninja/vdo.socialstream.ninja.home.wugi.info/g' {} \;
+
+# automatically clean up logs
+> .local/state/shepherd/shepherd.log
