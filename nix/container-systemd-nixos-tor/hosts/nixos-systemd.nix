@@ -43,7 +43,10 @@
         IsolateDestAddr = true;
       };
     };
-    settings.ControlPort = 9051;
+    settings = {
+      ControlPort = 9051;
+      HTTPTunnelPort = 9080;
+    };
   };
   services._3proxy = {
     enable = true;
