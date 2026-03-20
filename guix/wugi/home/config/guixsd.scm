@@ -150,7 +150,10 @@
 
 (define (%guixsd-home-environment)
   (home-environment
-
+    (packages
+     (list git
+           `(,git "send-email")
+           tmux))
     (services
      (append
       (majordomo-mbsync-services "pyhalov")
