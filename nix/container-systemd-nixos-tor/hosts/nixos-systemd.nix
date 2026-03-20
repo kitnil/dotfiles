@@ -5,6 +5,9 @@
 { pkgs, lib, config, ... }:
 
 {
+  imports = [
+    ../private.nix
+  ];
   environment.systemPackages = [
     pkgs.iftop
     pkgs.tcpdump
