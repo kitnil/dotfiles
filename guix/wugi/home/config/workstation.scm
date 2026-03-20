@@ -12,6 +12,7 @@
   #:use-module (gnu packages ssh)
   #:use-module (gnu packages virtualization)
   #:use-module (gnu packages wm)
+  #:use-module (gnu packages xdisorg)
   #:use-module (gnu services)
   #:use-module (guix gexp)
   #:use-module (guix inferior)
@@ -109,6 +110,12 @@
            ,(local-file
              (string-append %distro-directory
                             "/dot_config/fuzzel/fuzzel.ini"))))))
+
+(define fuzzel-service
+  (simple-service
+   'fuzzel
+   home-profile-service-type
+   (list fuzzel)))
 
 (define gnupg-configuration-service
   (simple-service 'gnupg-config
@@ -295,6 +302,7 @@ context.properties = {
                    (service home-niri-service-type)
                    niri-configuration-service
 
+                   fuzzel-service
                    fuzzel-configuration-service
 
                    (service home-scream-service-type
