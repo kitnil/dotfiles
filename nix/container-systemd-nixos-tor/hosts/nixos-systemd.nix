@@ -71,6 +71,7 @@
     179                         # bgp (bird)
     8888                        # 3proxy
     9050                        # tor
+    9080                        # tor http proxy
     9324                        # prometheus bird exporter
     31247                       # prometheus mtr exporters
   ];
