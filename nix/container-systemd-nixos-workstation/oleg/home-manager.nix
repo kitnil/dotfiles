@@ -10,6 +10,7 @@ let
       epkgs.magit
       epkgs.helm
       epkgs.helm-projectile
+      epkgs.lsp-mode
       epkgs.lua-mode
       epkgs.ivy
       epkgs.groovy-mode
