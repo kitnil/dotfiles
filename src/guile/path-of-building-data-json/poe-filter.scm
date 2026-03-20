@@ -1336,6 +1336,15 @@
                   (continue? #t)))
                include-sub-types)))
 
+(define poe-filter-preferred-weapons
+  (poe-item-filter-block-configuration
+   (commentary "Preferred weapons.")
+   (classes '("Quivers" "Bows"))
+   (set-border-color
+    (poe-item-filter-color-configuration
+     (red 255) (green 0) (blue 0) (alpha 255)))
+   (continue? #t)))
+
 (define poe-filter-best-sceptres
   (poe-item-filter-block-configuration
    (commentary "Increase font size for high level sceptres base items.")
@@ -1533,6 +1542,8 @@
             (if (null? include-sub-types)
                 '()
                 (poe-filters-best-bases include-sub-types))
+
+            (list poe-filter-preferred-weapons)
 
             (list poe-filter-best-sceptres
                   poe-filter-best-wands
