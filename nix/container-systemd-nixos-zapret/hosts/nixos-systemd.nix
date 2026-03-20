@@ -96,6 +96,7 @@
   networking.firewall.allowedTCPPorts = [
     179
     1080
+    1081
     9324                        # prometheus bird exporter
     31247
   ];
