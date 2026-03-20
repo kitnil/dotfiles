@@ -9,6 +9,8 @@
         python3-telethon = nixpkgs.legacyPackages.${system}.python3.withPackages (python-packages:
           with python-packages; [
             telethon
+            python-lsp-server
+            pysocks
           ]);
         default = python3-telethon;
       };

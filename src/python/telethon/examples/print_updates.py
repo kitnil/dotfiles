@@ -8,6 +8,9 @@ import time
 # Import the client
 from telethon import TelegramClient
 
+import socks
+
+from pprint import pprint as pp
 
 # This is a helper method to access environment variables or
 # prompt the user to type them in the terminal if missing.
@@ -27,13 +30,23 @@ def get_env(name, message, cast=str):
 session = os.environ.get('TG_SESSION', 'printer')
 api_id = get_env('TG_API_ID', 'Enter your API ID: ', int)
 api_hash = get_env('TG_API_HASH', 'Enter your API hash: ')
-proxy = None  # https://github.com/Anorov/PySocks
 
+# https://github.com/Anorov/PySocks
+# proxy = socks.socksocket()
+# proxy.set_proxy(socks.SOCKS5, os.environ.get('TG_SOCKS5_PROXY', "192.168.0.190"), 9080)
+proxy = {
+    'proxy_type': 'socks5', # (mandatory) protocol to use (see above)
+    'addr': '192.168.0.190', # (mandatory) proxy IP address
+    'port': 9050,           # (mandatory) proxy port number
+    'rdns': True            # (optional) whether to use remote or local resolve, default remote
+}
 
 # This is our update handler. It is called when a new update arrives.
 async def handler(update):
     print(update)
-
+    if hasattr(update, 'message'):
+        if hasattr(update.message, 'message'):
+            print(update.message.message)
 
 # Use the client in a `with` block. It calls `start/disconnect` automatically.
 with TelegramClient(session, api_id, api_hash, proxy=proxy) as client:
