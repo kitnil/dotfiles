@@ -98,7 +98,12 @@
                    "Claw"
                    "Dagger"
                    "One Hand Sword"
-                   "Two Hand Sword"))))
+                   "Two Hand Sword"))
+
+            (map (lambda (shield)
+                   (string-append "--shield-subtype=" shield))
+                 '("Evasion"
+                   "Evasion/Energy Shield"))))
 
   ;; duelist
   (apply invoke

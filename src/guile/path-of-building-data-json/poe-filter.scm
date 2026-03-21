@@ -33,6 +33,9 @@
         (option '(#\c "weapon-class") #f #t
                 (lambda (opt name arg result)
                   (alist-cons 'weapon-class arg result)))
+        (option '(#\s "shield-subtype") #f #t
+                (lambda (opt name arg result)
+                  (alist-cons 'shield-subtype arg result)))
         (option '(#\W "exclude-weapon") #f #t
                 (lambda (opt name arg result)
                   (alist-cons 'exclude-weapon arg result)))
@@ -1275,7 +1278,7 @@
                  "Gloves"
                  "Helmet"))))
 
-(define (poe-filters-good-bases bases)
+(define* (poe-filters-good-bases bases #:key (shield-subtypes '()))
   (filter
    (lambda (rule)
      (not (null? (poe-item-filter-block-configuration-base-types rule))))
@@ -1299,17 +1302,27 @@
                                                                  (drop-suffix "Armour/Energy Shield"
                                                                               name)))))
                                    (filter (lambda (item)
-                                             (and (and=> (assoc-ref item "type")
-                                                         (lambda (sub-type)
-                                                           (and (string= sub-type type)
-                                                                (and=> (assoc-ref item "type")
-                                                                       (lambda (t)
-                                                                         (string= type t))))))
-                                                  (and=> (assoc-ref item "req")
-                                                         (lambda (req)
-                                                           (and=> (assoc-ref req "level")
-                                                                  (lambda (level)
-                                                                    (> level 69)))))))
+                                             (if (string= (assoc-ref item "type")
+                                                          "Shield")
+                                                 (and (and=> (assoc-ref item "subType")
+                                                             (lambda (sub-type)
+                                                               (member sub-type shield-subtypes)))
+                                                      (and=> (assoc-ref item "req")
+                                                             (lambda (req)
+                                                               (and=> (assoc-ref req "level")
+                                                                      (lambda (level)
+                                                                        (> level 68))))))
+                                                 (and (and=> (assoc-ref item "type")
+                                                             (lambda (sub-type)
+                                                               (and (string= sub-type type)
+                                                                    (and=> (assoc-ref item "type")
+                                                                           (lambda (t)
+                                                                             (string= type t))))))
+                                                      (and=> (assoc-ref item "req")
+                                                             (lambda (req)
+                                                               (and=> (assoc-ref req "level")
+                                                                      (lambda (level)
+                                                                        (> level 69))))))))
                                            base-items)))
                              string<))
            (set-font-size 40)
@@ -1556,6 +1569,11 @@
                   (('weapon-class . type) type)
                   (_ #f))
                 opts))
+  (define shield-subtypes
+    (filter-map (match-lambda
+                  (('shield-subtype . type) type)
+                  (_ #f))
+                opts))
   (define ruthless?
     (assoc-ref opts 'ruthless?))
   (define output
@@ -1609,7 +1627,8 @@
                                               "Boots"
                                               "Gloves"
                                               "Helmet")
-                                            weapons))
+                                            weapons)
+                                    #:shield-subtypes shield-subtypes)
 
             (if (null? exclude-sub-types)
                 '()
