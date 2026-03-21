@@ -87,8 +87,8 @@
 
                    "Claw"
                    "Dagger"
-                   "One Hand Sword"
-                   "Two Hand Sword"))
+                   "One Handed Sword"
+                   "Two Handed Sword"))
 
             (map (lambda (weapon)
                    (string-append "--weapon-class=" weapon))
@@ -97,8 +97,8 @@
 
                    "Claw"
                    "Dagger"
-                   "One Handed Sword"
-                   "Two Handed Sword"))))
+                   "One Hand Sword"
+                   "Two Hand Sword"))))
 
   ;; duelist
   (apply invoke

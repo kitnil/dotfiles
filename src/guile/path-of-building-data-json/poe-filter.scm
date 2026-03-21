@@ -1553,7 +1553,7 @@
                 opts))
   (define weapon-classes
     (filter-map (match-lambda
-                  (('weapon-classes . type) type)
+                  (('weapon-class . type) type)
                   (_ #f))
                 opts))
   (define ruthless?
