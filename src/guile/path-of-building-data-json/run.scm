@@ -87,6 +87,16 @@
 
                    "Claw"
                    "Dagger"
+                   "One Hand Sword"
+                   "Two Hand Sword"))
+
+            (map (lambda (weapon)
+                   (string-append "--weapon-class=" weapon))
+                 '("Bow"
+                   "Quiver"
+
+                   "Claw"
+                   "Dagger"
                    "One Handed Sword"
                    "Two Handed Sword"))))
 

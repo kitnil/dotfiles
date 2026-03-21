@@ -30,6 +30,9 @@
         (option '(#\w "weapon") #f #t
                 (lambda (opt name arg result)
                   (alist-cons 'weapon arg result)))
+        (option '(#\c "weapon-class") #f #t
+                (lambda (opt name arg result)
+                  (alist-cons 'weapon-class arg result)))
         (option '(#\W "exclude-weapon") #f #t
                 (lambda (opt name arg result)
                   (alist-cons 'exclude-weapon arg result)))
@@ -1538,6 +1541,11 @@
                   (('weapon . type) type)
                   (_ #f))
                 opts))
+  (define weapon-classes
+    (filter-map (match-lambda
+                  (('weapon-classes . type) type)
+                  (_ #f))
+                opts))
   (define ruthless?
     (assoc-ref opts 'ruthless?))
   (define output
@@ -1591,7 +1599,7 @@
                                               "Boots"
                                               "Gloves"
                                               "Helmet")
-                                            weapons))
+                                            weapon-classes))
 
             (if (null? exclude-sub-types)
                 '()
