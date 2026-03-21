@@ -82,6 +82,16 @@
                    "Wands"
                    "Warstaves"))
 
+            (map (lambda (weapon)
+                   (string-append "--weapon=" weapon))
+                 '("Bows"
+                   "Quivers"
+
+                   "Claws"
+                   "Daggers"
+                   "One Hand Swords"
+                   "Two Hand Swords"))
+
             (list "--ruthless"
                   "--backup"
                   (string-append "--output=" (output-file "shadow.ruthlessfilter")))))

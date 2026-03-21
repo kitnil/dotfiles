@@ -27,6 +27,9 @@
         (option '(#\d "defence") #f #t
                 (lambda (opt name arg result)
                   (alist-cons 'defence arg result)))
+        (option '(#\w "weapon") #f #t
+                (lambda (opt name arg result)
+                  (alist-cons 'weapon arg result)))
         (option '(#\W "exclude-weapon") #f #t
                 (lambda (opt name arg result)
                   (alist-cons 'exclude-weapon arg result)))
@@ -1267,7 +1270,7 @@
          "Gloves"
          "Helmet")))
 
-(define poe-filters-good-bases
+(define (poe-filters-good-bases bases)
   (map (lambda (type)
          (poe-item-filter-block-configuration
           (commentary (format #f "Increase ~s base items for high tier types."
@@ -1302,10 +1305,7 @@
                             string<))
           (set-font-size 35)
           (continue? #t)))
-       '("Body Armour"
-         "Boots"
-         "Gloves"
-         "Helmet")))
+       bases))
 
 (define* (poe-filters-unused-bases bases #:key ruthless?)
   (delete #f
@@ -1382,10 +1382,10 @@
                   (continue? #t)))
                include-sub-types)))
 
-(define poe-filter-preferred-weapons
+(define (poe-filter-preferred-weapons weapons)
   (poe-item-filter-block-configuration
    (commentary "Preferred weapons.")
-   (classes '("Quivers" "Bows"))
+   (classes weapons)
    (set-border-color
     (poe-item-filter-color-configuration
      (red 255) (green 0) (blue 0) (alpha 255)))
@@ -1532,6 +1532,11 @@
                   (('exclude-weapon . type) type)
                   (_ #f))
                 opts))
+  (define weapons
+    (filter-map (match-lambda
+                  (('weapon . type) type)
+                  (_ #f))
+                opts))
   (define ruthless?
     (assoc-ref opts 'ruthless?))
   (define output
@@ -1581,7 +1586,11 @@
                   poe-filter-not-identified-items)
 
             poe-filters-weak-bases
-            poe-filters-good-bases
+            (poe-filters-good-bases (append '("Body Armour"
+                                              "Boots"
+                                              "Gloves"
+                                              "Helmet")
+                                            weapons))
 
             (if (null? exclude-sub-types)
                 '()
@@ -1592,7 +1601,7 @@
                 '()
                 (poe-filters-best-bases include-sub-types))
 
-            (list poe-filter-preferred-weapons)
+            (list (poe-filter-preferred-weapons weapons))
 
             (list poe-filter-best-sceptres
                   poe-filter-best-wands
