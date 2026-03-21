@@ -1541,8 +1541,8 @@
     (assoc-ref opts 'ruthless?))
   (define output
     (assoc-ref opts 'output))
-  (define backup
-    (assoc-ref opts 'backup))
+  (define backup?
+    (assoc-ref opts 'backup?))
   (define poe-filter-blocks
     (append (if ruthless? (list poe-filter-level-gems) '())
             (list poe-filter-basic
@@ -1637,7 +1637,7 @@
          (let ((out (derivation->output-path drv)))
            (display out)
            (newline)
-           (when backup
+           (when backup?
              (copy-file output (string-append output ".1")))
            (when output
              (copy-file out output))))))
