@@ -1620,7 +1620,9 @@
                 '()
                 (poe-filters-best-bases include-sub-types))
 
-            (list (poe-filter-preferred-weapons weapons))
+            (filter (lambda (rule)
+                      (not (null? (poe-item-filter-block-configuration-classes rule))))
+                    (list (poe-filter-preferred-weapons weapon-classes)))
 
             (list poe-filter-best-sceptres
                   poe-filter-best-wands
