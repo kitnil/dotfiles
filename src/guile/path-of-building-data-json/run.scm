@@ -3,6 +3,7 @@
 !#
 
 (define-module (run)
+  #:use-module (guix build utils)
   #:use-module (srfi srfi-26)
   #:use-module (srfi srfi-37)
   #:export (main))
@@ -53,10 +54,7 @@
                    "Sceptres"
                    "Staves"
                    "Wands"
-                   "Warstaves"))
-
-            (list "--ruthless"
-                  (string-append "--output=" (output-file "duelist.ruthlessfilter")))))
+                   "Warstaves"))))
   (define shadow-args
     (append (map (lambda (defence)
                    (string-append "--defence=" defence))
@@ -90,12 +88,18 @@
                    "Claws"
                    "Daggers"
                    "One Hand Swords"
-                   "Two Hand Swords"))
+                   "Two Hand Swords"))))
 
-            (list "--ruthless"
-                  "--backup"
-                  (string-append "--output=" (output-file "shadow.ruthlessfilter")))))
-  (for-each (lambda (args)
-              (apply system* (append (list poe-filter-script) args)))
-            (list duelist-args
-                  shadow-args)))
+  ;; duelist
+  (apply invoke
+         (append (list poe-filter-script "--backup" "--ruthless"
+                       (string-append "--output="
+                                      (output-file "duelist.ruthlessfilter")))
+                 duelist-args))
+
+  ;; shadow
+  (apply invoke
+         (append (list poe-filter-script "--backup" "--ruthless"
+                       (string-append "--output="
+                                      (output-file "shadow.ruthlessfilter")))
+                 shadow-args)))
