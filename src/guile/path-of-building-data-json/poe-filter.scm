@@ -1312,7 +1312,7 @@
                                                                     (> level 69)))))))
                                            base-items)))
                              string<))
-           (set-font-size 35)
+           (set-font-size 40)
            (continue? #t)))
         bases)))
 
