@@ -1241,150 +1241,160 @@
      read-string)))
 
 (define poe-filters-weak-bases
-  (map (lambda (type)
-         (poe-item-filter-block-configuration
-          (commentary (format #f "Lower ~s base items for low tier types."
-                              type type))
-          (rarity '(Normal Magic Rare))
-          (base-types (sort (delete-duplicates
-                             (map (lambda (item)
-                                    (first item))
-                                  (filter (lambda (item)
-                                            (and (and=> (assoc-ref item "type")
-                                                        (lambda (sub-type)
-                                                          (and (string= sub-type type)
-                                                               (and=> (assoc-ref item "type")
-                                                                      (lambda (t)
-                                                                        (string= type t))))))
-                                                 (and=> (assoc-ref item "req")
-                                                        (lambda (req)
-                                                          (and=> (assoc-ref req "level")
-                                                                 (lambda (level)
-                                                                   (< level 69)))))))
-                                          base-items)))
-                            string<))
-          (set-font-size 20)
-          (area-level (poe-item-filter-conditional-value-configuration
-                       (value 75)
-                       (operator '>)))
-          (continue? #t)))
-       '("Body Armour"
-         "Boots"
-         "Gloves"
-         "Helmet")))
+  (filter (lambda (rule)
+            (not (null? (poe-item-filter-block-configuration-base-types rule))))
+          (map (lambda (type)
+                 (poe-item-filter-block-configuration
+                  (commentary (format #f "Lower ~s base items for low tier types."
+                                      type type))
+                  (rarity '(Normal Magic Rare))
+                  (base-types (sort (delete-duplicates
+                                     (map (lambda (item)
+                                            (first item))
+                                          (filter (lambda (item)
+                                                    (and (and=> (assoc-ref item "type")
+                                                                (lambda (sub-type)
+                                                                  (and (string= sub-type type)
+                                                                       (and=> (assoc-ref item "type")
+                                                                              (lambda (t)
+                                                                                (string= type t))))))
+                                                         (and=> (assoc-ref item "req")
+                                                                (lambda (req)
+                                                                  (and=> (assoc-ref req "level")
+                                                                         (lambda (level)
+                                                                           (< level 69)))))))
+                                                  base-items)))
+                                    string<))
+                  (set-font-size 20)
+                  (area-level (poe-item-filter-conditional-value-configuration
+                               (value 75)
+                               (operator '>)))
+                  (continue? #t)))
+               '("Body Armour"
+                 "Boots"
+                 "Gloves"
+                 "Helmet"))))
 
 (define (poe-filters-good-bases bases)
-  (map (lambda (type)
-         (poe-item-filter-block-configuration
-          (commentary (format #f "Increase ~s base items for high tier types."
-                              type type))
-          (rarity '(Normal Magic Rare))
-          (base-types (sort (delete-duplicates
-                             (map (lambda (item)
-                                    (let* ((name (first item))
-                                           (drop-suffix
-                                            (lambda (suffix name)
-                                              (let ((end-suffix (string-append " (" suffix ")")))
-                                                (if (string-suffix? end-suffix name)
-                                                    (string-drop-right name (string-length end-suffix))
-                                                    name)))))
-                                      ;; Delete suffixes from Two-Toned Boots.
-                                      (drop-suffix "Evasion/Energy Shield"
-                                                   (drop-suffix "Armour/Evasion"
-                                                                (drop-suffix "Armour/Energy Shield"
-                                                                             name)))))
-                                  (filter (lambda (item)
-                                            (and (and=> (assoc-ref item "type")
-                                                        (lambda (sub-type)
-                                                          (and (string= sub-type type)
-                                                               (and=> (assoc-ref item "type")
-                                                                      (lambda (t)
-                                                                        (string= type t))))))
-                                                 (and=> (assoc-ref item "req")
-                                                        (lambda (req)
-                                                          (and=> (assoc-ref req "level")
-                                                                 (lambda (level)
-                                                                   (> level 69)))))))
-                                          base-items)))
-                            string<))
-          (set-font-size 35)
-          (continue? #t)))
-       bases))
+  (filter
+   (lambda (rule)
+     (not (null? (poe-item-filter-block-configuration-base-types rule))))
+   (map (lambda (type)
+          (poe-item-filter-block-configuration
+           (commentary (format #f "Increase ~s base items for high tier types."
+                               type type))
+           (rarity '(Normal Magic Rare))
+           (base-types (sort (delete-duplicates
+                              (map (lambda (item)
+                                     (let* ((name (first item))
+                                            (drop-suffix
+                                             (lambda (suffix name)
+                                               (let ((end-suffix (string-append " (" suffix ")")))
+                                                 (if (string-suffix? end-suffix name)
+                                                     (string-drop-right name (string-length end-suffix))
+                                                     name)))))
+                                       ;; Delete suffixes from Two-Toned Boots.
+                                       (drop-suffix "Evasion/Energy Shield"
+                                                    (drop-suffix "Armour/Evasion"
+                                                                 (drop-suffix "Armour/Energy Shield"
+                                                                              name)))))
+                                   (filter (lambda (item)
+                                             (and (and=> (assoc-ref item "type")
+                                                         (lambda (sub-type)
+                                                           (and (string= sub-type type)
+                                                                (and=> (assoc-ref item "type")
+                                                                       (lambda (t)
+                                                                         (string= type t))))))
+                                                  (and=> (assoc-ref item "req")
+                                                         (lambda (req)
+                                                           (and=> (assoc-ref req "level")
+                                                                  (lambda (level)
+                                                                    (> level 69)))))))
+                                           base-items)))
+                             string<))
+           (set-font-size 35)
+           (continue? #t)))
+        bases)))
 
 (define* (poe-filters-unused-bases bases #:key ruthless?)
-  (delete #f
-          (apply append
-                 (map (lambda (type)
-                        (map (lambda (base-type)
-                               (if (and (string= base-type "Energy Shield")
-                                        (string= type "Body Armour"))
-                                   #f
-                                   (let ((filter-definition
+  (filter
+   (lambda (rule)
+     (not (null? (poe-item-filter-block-configuration-base-types rule))))
+   (delete #f
+           (apply append
+                  (map (lambda (type)
+                         (map (lambda (base-type)
+                                (if (and (string= base-type "Energy Shield")
+                                         (string= type "Body Armour"))
+                                    #f
+                                    (let ((filter-definition
+                                           (poe-item-filter-block-configuration
+                                            (commentary (format #f "Hide ~s ~s base items for specific defence types."
+                                                                type base-type))
+                                            (rarity '(Normal Magic Rare))
+                                            (base-types
+                                             (sort (delete-duplicates
+                                                    (let ((items
+                                                           (filter (lambda (item)
+                                                                     (and=> (assoc-ref item "subType")
+                                                                            (lambda (sub-type)
+                                                                              (and (string= sub-type base-type)
+                                                                                   (and=> (assoc-ref item "type")
+                                                                                          (lambda (t)
+                                                                                            (string= type t)))))))
+                                                                   base-items)))
+                                                      (map (lambda (item)
+                                                             (string-replace-substring (first item)
+                                                                                       (format #f " (~a)" base-type)
+                                                                                       ""))
+                                                           items)))
+                                                   string<))
+                                            (set-font-size 20)
+                                            (show? #f)
+                                            (continue? #t))))
+                                      (if ruthless?
+                                          filter-definition
                                           (poe-item-filter-block-configuration
-                                           (commentary (format #f "Hide ~s ~s base items for specific defence types."
-                                                               type base-type))
-                                           (rarity '(Normal Magic Rare))
-                                           (base-types
-                                            (sort (delete-duplicates
-                                                   (let ((items
-                                                          (filter (lambda (item)
-                                                                    (and=> (assoc-ref item "subType")
-                                                                           (lambda (sub-type)
-                                                                             (and (string= sub-type base-type)
-                                                                                  (and=> (assoc-ref item "type")
-                                                                                         (lambda (t)
-                                                                                           (string= type t)))))))
-                                                                  base-items)))
-                                                     (map (lambda (item)
-                                                            (string-replace-substring (first item)
-                                                                                      (format #f " (~a)" base-type)
-                                                                                      ""))
-                                                          items)))
-                                                  string<))
-                                           (set-font-size 20)
-                                           (show? #f)
-                                           (continue? #t))))
-                                     (if ruthless?
-                                         filter-definition
-                                         (poe-item-filter-block-configuration
-                                          (inherit filter-definition)
-                                          (set-background-color
-                                           (poe-item-filter-color-configuration
-                                            (red 0)
-                                            (green 0)
-                                            (blue 0)
-                                            (alpha 0))))))))
-                             bases))
-                      '("Body Armour"
-                        "Boots"
-                        "Gloves"
-                        "Helmet")))))
+                                           (inherit filter-definition)
+                                           (set-background-color
+                                            (poe-item-filter-color-configuration
+                                             (red 0)
+                                             (green 0)
+                                             (blue 0)
+                                             (alpha 0))))))))
+                              bases))
+                       '("Body Armour"
+                         "Boots"
+                         "Gloves"
+                         "Helmet"))))))
 
 (define (poe-filters-best-bases include-sub-types)
-  (delete #f
-          (map (lambda (base-type)
-                 (poe-item-filter-block-configuration
-                  (commentary (format #f "Increase font size for high level ~s base items."
-                                      base-type))
-                  (base-types
-                   (sort (delete-duplicates
-                          (let ((items
-                                 (filter (lambda (item)
-                                           (and=> (assoc-ref item "req")
-                                                  (lambda (req)
-                                                    (and=> (assoc-ref req "level")
-                                                           (lambda (level)
-                                                             (>= level 79))))))
-                                         base-items)))
-                            (map (lambda (item)
-                                   (string-replace-substring (first item)
-                                                             (format #f " (~a)" base-type)
-                                                             ""))
-                                 items)))
-                         string<))
-                  (set-font-size 45)
-                  (continue? #t)))
-               include-sub-types)))
+  (filter (lambda (rule)
+            (not (null? (poe-item-filter-block-configuration-base-types rule))))
+          (delete #f
+                  (map (lambda (base-type)
+                         (poe-item-filter-block-configuration
+                          (commentary (format #f "Increase font size for high level ~s base items."
+                                              base-type))
+                          (base-types
+                           (sort (delete-duplicates
+                                  (let ((items
+                                         (filter (lambda (item)
+                                                   (and=> (assoc-ref item "req")
+                                                          (lambda (req)
+                                                            (and=> (assoc-ref req "level")
+                                                                   (lambda (level)
+                                                                     (>= level 79))))))
+                                                 base-items)))
+                                    (map (lambda (item)
+                                           (string-replace-substring (first item)
+                                                                     (format #f " (~a)" base-type)
+                                                                     ""))
+                                         items)))
+                                 string<))
+                          (set-font-size 45)
+                          (continue? #t)))
+                       include-sub-types))))
 
 (define (poe-filter-preferred-weapons weapons)
   (poe-item-filter-block-configuration
@@ -1599,7 +1609,7 @@
                                               "Boots"
                                               "Gloves"
                                               "Helmet")
-                                            weapon-classes))
+                                            weapons))
 
             (if (null? exclude-sub-types)
                 '()
