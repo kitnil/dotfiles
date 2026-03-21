@@ -1263,6 +1263,46 @@
          "Gloves"
          "Helmet")))
 
+(define poe-filters-good-bases
+  (map (lambda (type)
+         (poe-item-filter-block-configuration
+          (commentary (format #f "Increase ~s base items for high tier types."
+                              type type))
+          (rarity '(Normal Magic Rare))
+          (base-types (sort (delete-duplicates
+                             (map (lambda (item)
+                                    (let* ((name (first item))
+                                           (drop-suffix
+                                            (lambda (suffix name)
+                                              (let ((end-suffix (string-append " (" suffix ")")))
+                                                (if (string-suffix? end-suffix name)
+                                                    (string-drop-right name (string-length end-suffix))
+                                                    name)))))
+                                      (drop-suffix "Evasion/Energy Shield"
+                                                   (drop-suffix "Armour/Evasion"
+                                                                (drop-suffix "Armour/Energy Shield"
+                                                                             name)))))
+                                  (filter (lambda (item)
+                                            (and (and=> (assoc-ref item "type")
+                                                        (lambda (sub-type)
+                                                          (and (string= sub-type type)
+                                                               (and=> (assoc-ref item "type")
+                                                                      (lambda (t)
+                                                                        (string= type t))))))
+                                                 (and=> (assoc-ref item "req")
+                                                        (lambda (req)
+                                                          (and=> (assoc-ref req "level")
+                                                                 (lambda (level)
+                                                                   (> level 69)))))))
+                                          base-items)))
+                            string<))
+          (set-font-size 35)
+          (continue? #t)))
+       '("Body Armour"
+         "Boots"
+         "Gloves"
+         "Helmet")))
+
 (define* (poe-filters-unused-bases bases #:key ruthless?)
   (delete #f
           (apply append
@@ -1533,6 +1573,7 @@
                   poe-filter-not-identified-items)
 
             poe-filters-weak-bases
+            poe-filters-good-bases
 
             (if (null? exclude-sub-types)
                 '()
