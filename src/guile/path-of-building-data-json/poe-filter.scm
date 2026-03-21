@@ -1285,6 +1285,7 @@
                                                 (if (string-suffix? end-suffix name)
                                                     (string-drop-right name (string-length end-suffix))
                                                     name)))))
+                                      ;; Delete suffixes from Two-Toned Boots.
                                       (drop-suffix "Evasion/Energy Shield"
                                                    (drop-suffix "Armour/Evasion"
                                                                 (drop-suffix "Armour/Energy Shield"
