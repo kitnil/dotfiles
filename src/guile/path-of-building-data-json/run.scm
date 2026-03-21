@@ -83,6 +83,7 @@
                    "Warstaves"))
 
             (list "--ruthless"
+                  "--backup"
                   (string-append "--output=" (output-file "shadow.ruthlessfilter")))))
   (for-each (lambda (args)
               (apply system* (append (list poe-filter-script) args)))
