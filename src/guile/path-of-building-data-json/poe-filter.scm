@@ -1344,7 +1344,9 @@
                                            (poe-item-filter-block-configuration
                                             (commentary (format #f "Hide ~s ~s base items for specific defence types."
                                                                 type base-type))
-                                            (rarity '(Normal Magic Rare))
+                                            (rarity (if ruthless?
+                                                        '(Normal)
+                                                        '(Normal Magic Rare)))
                                             (base-types
                                              (sort (delete-duplicates
                                                     (let ((items
@@ -1443,6 +1445,9 @@
   (let ((filter-definition
          (poe-item-filter-block-configuration
           (commentary "Decrease font size for items with classes.")
+          (rarity (if ruthless?
+                      '(Normal)
+                      '(Normal Magic Rare)))
           (classes bases)
           (set-font-size 20)
           (show? #f)
