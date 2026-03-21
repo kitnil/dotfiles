@@ -82,13 +82,13 @@
 
             (map (lambda (weapon)
                    (string-append "--weapon=" weapon))
-                 '("Bows"
-                   "Quivers"
+                 '("Bow"
+                   "Quiver"
 
-                   "Claws"
-                   "Daggers"
-                   "One Hand Swords"
-                   "Two Hand Swords"))))
+                   "Claw"
+                   "Dagger"
+                   "One Handed Sword"
+                   "Two Handed Sword"))))
 
   ;; duelist
   (apply invoke
