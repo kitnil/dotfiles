@@ -54,7 +54,7 @@ use_guix()
     )
     export ENV_PACKAGES_MAINTENANCE="${packages_maintenance[@]}"
 
-    packages=(help2man guile-sqlite3 guile-gcrypt)
+    packages=(help2man guile-sqlite3 guile-gcrypt texinfo)
     export ENV_PACKAGES="${packages[@]}"
 
     GIT_SSL_CAINFO=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt
