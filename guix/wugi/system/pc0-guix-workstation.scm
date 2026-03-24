@@ -182,7 +182,11 @@ program.")))
                           (file-system
                             (device (file-system-label "nixoskube103"))
                             (mount-point "/srv/runc/nixos-kube103")
-                            (type "ext4"))))
+                            (type "ext4"))
+                          (file-system
+                            (device (file-system-label "steam"))
+                            (mount-point "/mnt/steam")
+                            (type "btrfs"))))
 
       ;; Guix is all you need!
       (services
@@ -291,7 +295,8 @@ program.")))
                    (bundle "/srv/runc/nixos-workstation")
                    (name "nixos-workstation")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/runc/nixos-workstation))
+                                  file-system-/srv/runc/nixos-workstation
+                                  file-system-/mnt/steam))
                    (auto-start? #t)))
 
          (service runc-container-service-type
