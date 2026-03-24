@@ -361,6 +361,7 @@
           ultrawidify;
         firefox-addon-libredirect =
           rycee-nur-expressions.packages.${system}.libredirect;
+        fuzzel-wrapper = prev.callPackage ./pkgs/fuzzel-wrapper {};
         hev-socks5-tproxy = prev.callPackage ./pkgs/hev-socks5-tproxy {};
         socialstream = prev.callPackage ./pkgs/socialstream {};
         streamtitle = prev.callPackage ./pkgs/streamtitle {};

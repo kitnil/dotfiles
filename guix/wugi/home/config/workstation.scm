@@ -149,6 +149,57 @@ context.properties = {
 }
 ")))))
 
+(define* (runc-fuzzel container-name #:key launch-prefix)
+  #~(begin
+      (use-modules (json)
+                   (ice-9 popen)
+                   (ice-9 rdelim))
+      (define (focused-output)
+        (let* ((port (open-pipe* OPEN_READ "niri" "msg" "--json" "focused-output"))
+               (output (read-string port)))
+          (json-string->scm (string-trim-right output #\newline))))
+      (define (output-name output)
+        (string->symbol (assoc-ref output "name")))
+      (define (logical-scale output)
+        (assoc-ref (assoc-ref output "logical")
+                   "scale"))
+      (let ((output (focused-output)))
+        (apply execl
+               (append (list "/run/privileged/bin/sudo" "runc"
+                             "/run/current-system/profile/sbin/runc" "exec"
+                             "--env" (and=> (getenv "USER")
+                                            (lambda (user)
+                                              (string-append "USER=" user)))
+                             "--env" (and=> (getenv "WAYLAND_DISPLAY")
+                                            (lambda (display)
+                                              (string-append "WAYLAND_DISPLAY=" display)))
+                             "--env" "DESKTOP_SESSION=niri"
+                             "--env" "XDG_CURRENT_DESKTOP=niri"
+                             "--env" "XDG_SESSION_DESKTOP=niri"
+                             "--env" "XDG_SESSION_TYPE=wayland"
+                             "--env" (and=> (getenv "GTK_THEME")
+                                            (lambda (theme)
+                                              (string-append "GTK_THEME=" theme)))
+                             "--env" "XDG_RUNTIME_DIR=/mnt/guix/run/user/1000")
+                       (list "--env" (string-append "GUIX_DBUS_SESSION_BUS_ADDRESS="
+                                                    "unix:path="
+                                                    "/mnt/guix"
+                                                    (string-drop (getenv "DBUS_SESSION_BUS_ADDRESS")
+                                                                 (string-length "unix:path="))))
+                       '("--env" "DISPLAY=:0")
+                       (case (output-name output)
+                         ((DP-3) (list "--env" (string-append "GDK_SCALE="
+                                                              (number->string (logical-scale output)))))
+                         (else '()))
+                       (list "--user=1000:998"
+                             #$container-name
+                             "/bin/sh" "-lc"
+                             (string-join
+                              (append (list "exec" "/usr/bin/env" "fuzzel")
+                                      (if #$launch-prefix
+                                          (list #$launch-prefix)
+                                          '())))))))))
+
 (define bin-configuration-service
   (simple-service 'bin-manual-scripts
                   home-files-service-type
@@ -171,57 +222,14 @@ context.properties = {
                                                #:recursive? #t))
                                 `("bin/manual-scripts-oleg-02-gnupg.sh"
                                   ,(local-file (string-append %distro-directory "/dotfiles/run/guix-workstation/05-gnupg.sh")
-                                               #:recursive? #t)))
-                          (map (lambda (container-name)
-                                 (let ((file-name (string-append "fuzzel-" container-name)))
-                                   `(,(string-append "bin/" file-name)
-                                     ,(program-file file-name
-                                                    #~(begin
-                                                        (use-modules (json)
-                                                                     (ice-9 popen)
-                                                                     (ice-9 rdelim))
-                                                        (define (focused-output)
-                                                          (let* ((port (open-pipe* OPEN_READ "niri" "msg" "--json" "focused-output"))
-                                                                 (output (read-string port)))
-                                                            (json-string->scm (string-trim-right output #\newline))))
-                                                        (define (output-name output)
-                                                          (string->symbol (assoc-ref output "name")))
-                                                        (define (logical-scale output)
-                                                          (assoc-ref (assoc-ref output "logical")
-                                                                     "scale"))
-                                                        (let ((output (focused-output)))
-                                                          (apply execl
-                                                                 (append (list "/run/privileged/bin/sudo" "runc"
-                                                                               "/run/current-system/profile/sbin/runc" "exec"
-                                                                               "--env" (and=> (getenv "USER")
-                                                                                              (lambda (user)
-                                                                                                (string-append "USER=" user)))
-                                                                               "--env" (and=> (getenv "WAYLAND_DISPLAY")
-                                                                                              (lambda (display)
-                                                                                                (string-append "WAYLAND_DISPLAY=" display)))
-                                                                               "--env" "DESKTOP_SESSION=niri"
-                                                                               "--env" "XDG_CURRENT_DESKTOP=niri"
-                                                                               "--env" "XDG_SESSION_DESKTOP=niri"
-                                                                               "--env" "XDG_SESSION_TYPE=wayland"
-                                                                               "--env" (and=> (getenv "GTK_THEME")
-                                                                                              (lambda (theme)
-                                                                                                (string-append "GTK_THEME=" theme)))
-                                                                               "--env" "XDG_RUNTIME_DIR=/mnt/guix/run/user/1000"
-                                                                               "--env" (string-append "DBUS_SESSION_BUS_ADDRESS="
-                                                                                                      "unix:path="
-                                                                                                      "/mnt/guix"
-                                                                                                      (string-drop (getenv "DBUS_SESSION_BUS_ADDRESS")
-                                                                                                                   (string-length "unix:path=")))
-                                                                               "--env" "DISPLAY=:0")
-                                                                         (case (output-name output)
-                                                                           ((DP-3) (list "--env" (string-append "GDK_SCALE="
-                                                                                                                (number->string (logical-scale output)))))
-                                                                           (else '()))
-                                                                         (list "--user=1000:998"
-                                                                               #$container-name
-                                                                               "/bin/sh" "-lc" "exec /usr/bin/env fuzzel")))))))))
-                               '("nixos-workstation"
-                                 "nixos-majordomo")))))
+                                               #:recursive? #t))
+                                `("bin/fuzzel-nixos-workstation"
+                                  ,(program-file "fuzzel-nixos-workstation"
+                                                 (runc-fuzzel "nixos-workstation"
+                                                              #:launch-prefix "--launch-prefix=/etc/profiles/per-user/oleg/bin/fuzzel-wrapper")))
+                                `("bin/fuzzel-nixos-majordomo"
+                                  ,(program-file "fuzzel-nixos-majordomo"
+                                                 (runc-fuzzel "nixos-majordomo")))))))
 
 (define host-namespace-configuration-service
   (simple-service 'bin-namespace-host

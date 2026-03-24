@@ -9,6 +9,7 @@ in
   ];
   home.packages = [
     pkgs.firejail
+    pkgs.fuzzel-wrapper
     pkgs.tor-browser
   ];
   programs.fuzzel = {
