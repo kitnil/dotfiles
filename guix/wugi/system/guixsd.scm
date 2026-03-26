@@ -1957,6 +1957,41 @@ PasswordAuthentication yes")))
          (dovecot-service
           #:config (dovecot-configuration
                     (listen (list "127.0.0.1" %guixsd-private-ip-address))
+                    ;; (default-vsz-limit 1073741824)
+                    (services
+                     (list
+                      (service-configuration
+                        (kind "imap-login")
+                        (client-limit 0)
+                        (process-limit 0)
+                        (listeners
+                         (list
+                          (inet-listener-configuration
+                            (protocol "imap")
+                            (port 143)
+                            (ssl? #f))
+                          (inet-listener-configuration
+                            (protocol "imaps")
+                            (port 993)
+                            (ssl? #t)))))
+                      (service-configuration
+                        (kind "imap")
+                        (client-limit 1)
+                        (process-limit 1024)
+                        (vsz-limit 1073741824))
+                      (service-configuration
+                        (kind "auth")
+                        (service-count 0)
+                        (client-limit 0)
+                        (process-limit 1)
+                        (listeners
+                         (list
+                          (unix-listener-configuration
+                            (path "auth-userdb")))))
+                      (service-configuration
+                        (kind "auth-worker")
+                        (client-limit 1)
+                        (process-limit 0))))
                     (disable-plaintext-auth? #f)
                     (log-path "/var/log/dovecot.log")
                     (info-log-path "/var/log/dovecot-info.log")
