@@ -1958,8 +1958,9 @@ PasswordAuthentication yes")))
           #:config (dovecot-configuration
                     (listen (list "127.0.0.1" %guixsd-private-ip-address))
                     (disable-plaintext-auth? #f)
-                    (info-log-path "syslog")
-                    (debug-log-path "syslog")
+                    (log-path "/var/log/dovecot.log")
+                    (info-log-path "/var/log/dovecot-info.log")
+                    (debug-log-path "/var/log/dovecot-debug.log")
                     (auth-debug? #t)
                     (mail-debug? #t)
                     (mail-location (string-join '("maildir"
