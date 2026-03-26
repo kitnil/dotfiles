@@ -8,6 +8,7 @@
   #:use-module (gnu home services sound)
   #:use-module (gnu services)
   #:use-module (gnu packages tmux)
+  #:use-module (gnu packages version-control)
   #:use-module (gnu packages xorg)
   #:use-module (guix gexp)
   #:use-module (wugi home services audio)
@@ -40,5 +41,7 @@
 
 (define (%pc0-home-environment)
   (home-environment
-    (packages (list tmux))
-    (services (list (service home-bash-service-type)))))
+   (packages (list git
+                   `(,git "send-email")
+                   tmux))
+   (services (list (service home-bash-service-type)))))
