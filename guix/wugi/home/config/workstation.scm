@@ -415,7 +415,6 @@ context.properties = {
                    home-mycli-service
                    home-parallel-service
                    home-youtube-dl-service
-                   home-wireplumber-config-service
                    home-mpv-service
 
                    looking-glass-configuration-service

@@ -531,8 +531,6 @@ allow-preset-passphrase"))))
 
        home-nix-service
 
-       home-wireplumber-config-service
-
        home-mpv-service
 
        (simple-service 'cagebreak-config
