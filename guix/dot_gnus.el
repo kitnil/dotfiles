@@ -202,7 +202,7 @@ below otherwise."
          (address "noc@majordomo.ru")
          (organization "Majordomo"))))
 
-;; (setq nnmail-expiry-wait 'immediate)
+;; ( nnmail-expiry-wait 'immediate)
 ;;
 ;; Alternative:
 ;;
