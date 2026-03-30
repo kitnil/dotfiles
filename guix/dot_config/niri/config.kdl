@@ -51,7 +51,8 @@ input {
         // off
         // natural-scroll
         // accel-speed 0.2
-        // accel-profile "flat"
+        // accel-profile: can be adaptive (the default) or flat (disables pointer acceleration).
+        accel-profile "flat"
         // scroll-method "no-scroll"
     }
 
