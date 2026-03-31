@@ -168,6 +168,13 @@
     enable = true;
     wantedBy = [ "multi-user.target" ];
   };
+  systemd.services.debug-shell = {
+    serviceConfig = {
+      TTYReset = false;
+      TTYVHangup = false;
+      TTYVTDisallocate = false;
+    };
+  };
   services.getty.autologinUser = "oleg";
   services.logind = {
     settings.Login = {
