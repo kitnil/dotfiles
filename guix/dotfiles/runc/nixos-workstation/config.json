@@ -42,7 +42,6 @@
         "CAP_SYS_NICE",
         "CAP_SYS_RESOURCE",
         "CAP_SYS_TIME",
-        "CAP_SYS_TTY_CONFIG",
         "CAP_MKNOD",
         "CAP_LEASE",
         "CAP_AUDIT_WRITE",
@@ -85,7 +84,6 @@
         "CAP_SYS_NICE",
         "CAP_SYS_RESOURCE",
         "CAP_SYS_TIME",
-        "CAP_SYS_TTY_CONFIG",
         "CAP_MKNOD",
         "CAP_LEASE",
         "CAP_AUDIT_WRITE",
@@ -128,7 +126,6 @@
         "CAP_SYS_NICE",
         "CAP_SYS_RESOURCE",
         "CAP_SYS_TIME",
-        "CAP_SYS_TTY_CONFIG",
         "CAP_MKNOD",
         "CAP_LEASE",
         "CAP_AUDIT_WRITE",
@@ -158,78 +155,13 @@
     },
     {
       "destination": "/dev",
-      "type": "tmpfs",
-      "source": "tmpfs",
+      "type": "devtmpfs",
+      "source": "none",
       "options": [
         "nosuid",
         "strictatime",
         "mode=755",
         "size=65536k"
-      ]
-    },
-    {
-      "destination": "/dev/dri",
-      "type": "bind",
-      "source": "/dev/dri",
-      "options": [
-        "rbind",
-        "rprivate",
-        "rw"
-      ]
-    },
-    {
-      "destination": "/dev/pts",
-      "type": "devpts",
-      "source": "devpts",
-      "options": [
-        "nosuid",
-        "noexec",
-        "newinstance",
-        "ptmxmode=0666",
-        "mode=0620",
-        "gid=5"
-      ]
-    },
-    {
-      "destination": "/dev/tty9",
-      "type": "bind",
-      "source": "/dev/tty9",
-      "options": [
-        "rbind",
-        "rprivate",
-        "rw"
-      ]
-    },
-    {
-      "destination": "/dev/tty0",
-      "type": "bind",
-      "source": "/dev/tty9",
-      "options": [
-        "rbind",
-        "rprivate",
-        "rw"
-      ]
-    },
-    {
-      "destination": "/dev/shm",
-      "type": "tmpfs",
-      "source": "shm",
-      "options": [
-        "nosuid",
-        "noexec",
-        "nodev",
-        "mode=1777",
-        "size=65536k"
-      ]
-    },
-    {
-      "destination": "/dev/mqueue",
-      "type": "mqueue",
-      "source": "mqueue",
-      "options": [
-        "nosuid",
-        "noexec",
-        "nodev"
       ]
     },
     {
@@ -251,7 +183,8 @@
           "rw",
           "relatime",
           "nsdelegate",
-          "memory_recursiveprot"
+          "memory_recursiveprot",
+          "rshared"
       ]
     },
     {
@@ -273,6 +206,15 @@
         "rslave",
         "rw"
       ]
+    },
+    {
+      "destination": "/home/oleg/.local/share/Steam",
+      "type": "bind",
+      "source": "/mnt/steam/home/oleg/.local/share/Steam",
+      "options": [
+        "bind",
+        "rw"
+      ]
     }
   ],
   "annotations": {
@@ -284,22 +226,63 @@
     "org.opencontainers.image.stopSignal": ""
   },
   "linux": {
-    "devices": [
-      {
-        "path": "/dev/kvm",
-        "type": "c",
-        "major": 10,
-        "minor": 232,
-        "fileMode": 666,
-        "uid": 0,
-        "gid": 0
-      }
-    ],
     "resources": {
+      "memory": {
+        "limit": 17179869184
+      },
       "devices": [
         {
-          "allow": true,
+          "allow": false,
           "access": "rwm"
+        },
+        {
+            "allow": true,
+            "type": "c",
+            "major": 4,
+            "minor": 14,
+            "access": "rw"
+        },
+        {
+            "allow": true,
+            "type": "c",
+            "major": 226,
+            "minor": 1,
+            "access": "rw"
+        },
+        {
+            "allow": true,
+            "type": "c",
+            "major": 226,
+            "minor": 0,
+            "access": "rw"
+        },
+        {
+            "allow": true,
+            "type": "c",
+            "major": 226,
+            "minor": 128,
+            "access": "rw"
+        },
+        {
+            "allow": true,
+            "type": "c",
+            "major": 226,
+            "minor": 129,
+            "access": "rw"
+        },
+        {
+            "allow": true,
+            "type": "c",
+            "major": 13,
+            "minor": 66,
+            "access": "rwm"
+        },
+        {
+            "allow": true,
+            "type": "c",
+            "major": 13,
+            "minor": 72,
+            "access": "rwm"
         }
       ]
     },
@@ -319,6 +302,9 @@
       },
       {
         "type": "mount"
+      },
+      {
+        "type": "cgroup"
       }
     ],
     "rootfsPropagation": "rslave"
