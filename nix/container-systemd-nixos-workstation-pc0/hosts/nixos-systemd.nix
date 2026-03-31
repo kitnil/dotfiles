@@ -157,7 +157,7 @@
     host = "0.0.0.0";
   };
 
-  console.enable = true;
+  console.enable = false;
   systemd.services."getty@tty1" = {
     enable = false;
   };
