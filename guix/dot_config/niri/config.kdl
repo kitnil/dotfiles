@@ -301,8 +301,6 @@ spawn-at-startup "wl-paste --watch cliphist store"
 
 spawn-at-startup "xwayland-satellite"
 
-spawn-at-startup "sudo -i poe-scroll-click"
-
 // Notifications
 spawn-at-startup "swaync"
 
