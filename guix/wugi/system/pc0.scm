@@ -880,7 +880,6 @@ cgroup_device_acl = [
                                              (sysctl-configuration
                                               (settings (append '(("kernel.sysrq" . "1")
                                                                   ("net.bridge.bridge-nf-call-iptables" . "0")
-                                                                  ("vm.nr_hugepages" . "16384")
                                                                   ;; for runc containers and libvirt virtual machines
                                                                   ("net.ipv4.conf.br0.forwarding" . "1"))
                                                                 %default-sysctl-settings))))
