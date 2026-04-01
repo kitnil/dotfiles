@@ -7,6 +7,7 @@
   #:use-module (gnu home services shells)
   #:use-module (gnu home services sound)
   #:use-module (gnu home services ssh)
+  #:use-module (gnu packages containers)
   #:use-module (gnu packages gnupg)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages ssh)
@@ -165,8 +166,8 @@ context.properties = {
                    "scale"))
       (let ((output (focused-output)))
         (apply execl
-               (append (list "/run/privileged/bin/sudo" "runc"
-                             "/run/current-system/profile/sbin/runc" "exec"
+               (append (list "/run/privileged/bin/sudo" "crun"
+                             #$(file-append crun "/bin/crun") "exec"
                              "--env" (and=> (getenv "USER")
                                             (lambda (user)
                                               (string-append "USER=" user)))
