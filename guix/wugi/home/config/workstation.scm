@@ -182,6 +182,10 @@ context.properties = {
                                             (lambda (theme)
                                               (string-append "GTK_THEME=" theme)))
                              "--env" "XDG_RUNTIME_DIR=/mnt/guix/run/user/1000")
+                       (or (and=> (getenv "HOME")
+                                  (lambda (home)
+                                    (list (string-append "--cwd=" home))))
+                           '())
                        (list "--env" (string-append "GUIX_DBUS_SESSION_BUS_ADDRESS="
                                                     "unix:path="
                                                     "/mnt/guix"
