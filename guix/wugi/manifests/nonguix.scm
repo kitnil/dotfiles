@@ -9,7 +9,6 @@
   #:use-module (wugi utils)
   #:use-module (nongnu packages fonts)
   #:use-module (nongnu packages k8s)
-  #:use-module (nongnu packages game-client)
   #:export (%nonguix-manifest))
 
 (define (%nonguix-manifest)
@@ -28,5 +27,4 @@
                                     font-microsoft-web-core-fonts
                                     font-microsoft-webdings
                                     font-ubuntu)
-                              (list kubectl)
-                              (list steam))))
+                              (list kubectl))))
