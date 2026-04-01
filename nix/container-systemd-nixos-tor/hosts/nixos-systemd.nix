@@ -55,8 +55,7 @@
     enable = true;
     confFile =
       let
-        remoteSocks5ServerIp = "192.168.0.190";
-        remoteSocks5ServerPort = "9150";
+        remoteSocks5ServerIp = "127.0.0.1";
       in pkgs.writeText "3proxy.conf" ''
         log /tmp/3proxy.log
         logformat "- +_L%t.%.  %N.%p %E %U %C:%c %R:%r %O %I %h %T"
@@ -64,7 +63,7 @@
         plugin ${pkgs._3proxy}/local/3proxy/libexec/TransparentPlugin.ld.so transparent_plugin
         auth iponly
         allow *
-        parent 1000 socks5 ${remoteSocks5ServerIp} ${remoteSocks5ServerPort} user2 hghjgjhgj
+        parent 1000 socks5 ${remoteSocks5ServerIp} 9050 user2 hghjgjhgj
         transparent
         tcppm -i0.0.0.0 8888 127.0.0.1 11111
         maxconn 500
