@@ -962,7 +962,9 @@ zone:
         "192.168.0.160 nixos-wan.wugi.info"
 
         "192.168.0.104 vdo.socialstream.ninja"
-        "192.168.0.104 vdo.socialstream.ninja.home.wugi.info"))
+        "192.168.0.104 vdo.socialstream.ninja.home.wugi.info"
+
+        "144.76.7.123 substitutes.nonguix.org"))
 
 (define* (generate-hosts-file #:optional (extra-hosts '()))
   (plain-file "hosts"
