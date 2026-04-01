@@ -55,7 +55,7 @@
     enable = true;
     confFile =
       let
-        remoteSocks5ServerIp = "127.0.0.1";
+        remoteSocks5ServerIp = "192.168.0.190";
       in pkgs.writeText "3proxy.conf" ''
         log /tmp/3proxy.log
         logformat "- +_L%t.%.  %N.%p %E %U %C:%c %R:%r %O %I %h %T"
