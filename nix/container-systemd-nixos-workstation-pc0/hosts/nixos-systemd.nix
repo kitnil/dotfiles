@@ -93,12 +93,10 @@
   ];
   networking.firewall = {
     extraCommands = ''
-      iptables -t nat -A OUTPUT -d 144.76.7.123/32 -p tcp --dport 443 -j REDIRECT --to-ports 8888
       iptables -t nat -A PREROUTING -d 144.76.7.123/32 -p tcp --dport 443 -j REDIRECT --to-ports 8888
     '';
     extraStopCommands = ''
       iptables -t nat -D PREROUTING -d 144.76.7.123/32 -p tcp --dport 443 -j REDIRECT --to-ports 8888
-      iptables -t nat -D OUTPUT -d 144.76.7.123/32 -p tcp --dport 443 -j REDIRECT --to-ports 8888
     '';
   };
   # https://nixos.wiki/wiki/Steam
