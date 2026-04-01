@@ -38,5 +38,6 @@
     enable = true;
   };
 
-  users.groups.audio.gid = 116;
+  # Do not override group owner for files in /dev/snd directory.
+  users.groups.audio.gid = lib.mkForce 116;
 }
