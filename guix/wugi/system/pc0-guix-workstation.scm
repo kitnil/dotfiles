@@ -116,71 +116,71 @@ program.")))
                             (type "does-not-matter"))
                           (file-system
                             (device (file-system-label "fedora"))
-                            (mount-point "/srv/runc/fedora")
+                            (mount-point "/srv/container/fedora")
                             (type "ext4"))
                           (file-system
                             (device (file-system-label "guixnanokvm"))
-                            (mount-point "/srv/runc/guix-nanokvm")
+                            (mount-point "/srv/container/guix-nanokvm")
                             (type "ext4"))
                           (file-system
                             (device (file-system-label "guixrde"))
-                            (mount-point "/srv/runc/guix-rde")
+                            (mount-point "/srv/container/guix-rde")
                             (type "ext4"))
                           (file-system
                             (device (file-system-label "nixosantifilter"))
-                            (mount-point "/srv/runc/nixos-antifilter")
+                            (mount-point "/srv/container/nixos-antifilter")
                             (type "btrfs"))
                           (file-system
                             (device (file-system-label "nixosgw"))
-                            (mount-point "/srv/runc/nixos-gw")
+                            (mount-point "/srv/container/nixos-gw")
                             (type "btrfs"))
                           (file-system
                             (device (file-system-label "nixosmajordomo"))
-                            (mount-point "/srv/runc/nixos-majordomo")
+                            (mount-point "/srv/container/nixos-majordomo")
                             (type "ext4"))
                           (file-system
                             (device (file-system-label "nixostor"))
-                            (mount-point "/srv/runc/nixos-tor")
+                            (mount-point "/srv/container/nixos-tor")
                             (type "btrfs"))
                           (file-system
                             (device (file-system-label "nixosworkstation"))
-                            (mount-point "/srv/runc/nixos-workstation")
+                            (mount-point "/srv/container/nixos-workstation")
                             (type "btrfs"))
                           (file-system
                             (device (file-system-label "nixoszapret"))
-                            (mount-point "/srv/runc/nixos-zapret")
+                            (mount-point "/srv/container/nixos-zapret")
                             (type "btrfs"))
                           (file-system
                             (device (file-system-label "nixoswan"))
-                            (mount-point "/srv/runc/nixos-wan")
+                            (mount-point "/srv/container/nixos-wan")
                             (type "btrfs"))
                           (file-system
                             (device (file-system-label "nixosbview"))
-                            (mount-point "/srv/runc/nixos-bview")
+                            (mount-point "/srv/container/nixos-bview")
                             (type "btrfs"))
                           (file-system
                             (device (file-system-label "nixosawg"))
-                            (mount-point "/srv/runc/nixos-awg")
+                            (mount-point "/srv/container/nixos-awg")
                             (type "btrfs"))
                           (file-system
                             (device (file-system-label "nixosws"))
-                            (mount-point "/srv/runc/nixos-ws")
+                            (mount-point "/srv/container/nixos-ws")
                             (type "btrfs"))
                           (file-system
                             (device (file-system-label "nixosdante"))
-                            (mount-point "/srv/runc/nixos-dante")
+                            (mount-point "/srv/container/nixos-dante")
                             (type "btrfs"))
                           (file-system
                             (device (file-system-label "nixoshev"))
-                            (mount-point "/srv/runc/nixos-hev")
+                            (mount-point "/srv/container/nixos-hev")
                             (type "btrfs"))
                           (file-system
                             (device (file-system-label "guixws"))
-                            (mount-point "/srv/runc/guix-ws")
+                            (mount-point "/srv/container/guix-ws")
                             (type "btrfs"))
                           (file-system
                             (device (file-system-label "nixoskube103"))
-                            (mount-point "/srv/runc/nixos-kube103")
+                            (mount-point "/srv/container/nixos-kube103")
                             (type "ext4"))
                           (file-system
                             (device (file-system-label "steam"))
@@ -241,109 +241,109 @@ program.")))
                       %distro-directory
                       "/dotfiles/pc0-guix-workstation/etc/bird/bird.conf")))))
 
-         (service runc-container-service-type
-                  (runc-container-configuration
-                   (bundle "/srv/runc/nixos-zapret")
+         (service container-service-type
+                  (container-configuration
+                   (bundle "/srv/container/nixos-zapret")
                    (name "nixos-zapret")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/runc/nixos-zapret))
+                                  file-system-/srv/container/nixos-zapret))
                    (auto-start? #t)))
 
-         (service runc-container-service-type
-                  (runc-container-configuration
-                   (bundle "/srv/runc/nixos-tor")
+         (service container-service-type
+                  (container-configuration
+                   (bundle "/srv/container/nixos-tor")
                    (name "nixos-tor")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/runc/nixos-tor))
+                                  file-system-/srv/container/nixos-tor))
                    (auto-start? #t)))
 
-         (service runc-container-service-type
-                  (runc-container-configuration
-                   (bundle "/srv/runc/nixos-gw")
+         (service container-service-type
+                  (container-configuration
+                   (bundle "/srv/container/nixos-gw")
                    (name "nixos-gw")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/runc/nixos-gw))
+                                  file-system-/srv/container/nixos-gw))
                    (auto-start? #f)))
 
-         (service runc-container-service-type
-                  (runc-container-configuration
-                   (bundle "/srv/runc/nixos-wan")
+         (service container-service-type
+                  (container-configuration
+                   (bundle "/srv/container/nixos-wan")
                    (name "nixos-wan")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/runc/nixos-wan))
+                                  file-system-/srv/container/nixos-wan))
                    (auto-start? #t)))
 
-         (service runc-container-service-type
-                  (runc-container-configuration
-                   (bundle "/srv/runc/nixos-antifilter")
+         (service container-service-type
+                  (container-configuration
+                   (bundle "/srv/container/nixos-antifilter")
                    (name "nixos-antifilter")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/runc/nixos-antifilter))
+                                  file-system-/srv/container/nixos-antifilter))
                    (auto-start? #t)))
 
-         (service runc-container-service-type
-                  (runc-container-configuration
-                   (bundle "/srv/runc/nixos-majordomo")
+         (service container-service-type
+                  (container-configuration
+                   (bundle "/srv/container/nixos-majordomo")
                    (name "nixos-majordomo")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/runc/nixos-majordomo))
+                                  file-system-/srv/container/nixos-majordomo))
                    (auto-start? #t)))
 
-         (service runc-container-service-type
-                  (runc-container-configuration
-                   (bundle "/srv/runc/nixos-workstation")
+         (service container-service-type
+                  (container-configuration
+                   (bundle "/srv/container/nixos-workstation")
                    (name "nixos-workstation")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/runc/nixos-workstation
+                                  file-system-/srv/container/nixos-workstation
                                   file-system-/mnt/steam))
                    (auto-start? #t)))
 
-         (service runc-container-service-type
-                  (runc-container-configuration
-                   (bundle "/srv/runc/nixos-dante")
+         (service container-service-type
+                  (container-configuration
+                   (bundle "/srv/container/nixos-dante")
                    (name "nixos-dante")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/runc/nixos-dante))
+                                  file-system-/srv/container/nixos-dante))
                    (auto-start? #t)))
 
-         (service runc-container-service-type
-                  (runc-container-configuration
-                   (bundle "/srv/runc/nixos-hev")
+         (service container-service-type
+                  (container-configuration
+                   (bundle "/srv/container/nixos-hev")
                    (name "nixos-hev")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/runc/nixos-hev))
+                                  file-system-/srv/container/nixos-hev))
                    (auto-start? #t)))
 
-         (service runc-container-service-type
-                  (runc-container-configuration
-                   (bundle "/srv/runc/nixos-kube103")
+         (service container-service-type
+                  (container-configuration
+                   (bundle "/srv/container/nixos-kube103")
                    (name "nixos-kube103")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/runc/nixos-kube103))
+                                  file-system-/srv/container/nixos-kube103))
                    (auto-start? #t)))
 
-         (service runc-container-service-type
-                  (runc-container-configuration
-                   (bundle "/srv/runc/nixos-bview")
+         (service container-service-type
+                  (container-configuration
+                   (bundle "/srv/container/nixos-bview")
                    (name "nixos-bview")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/runc/nixos-bview))
+                                  file-system-/srv/container/nixos-bview))
                    (auto-start? #t)))
 
-         (service runc-container-service-type
-                  (runc-container-configuration
-                   (bundle "/srv/runc/guix-nanokvm")
+         (service container-service-type
+                  (container-configuration
+                   (bundle "/srv/container/guix-nanokvm")
                    (name "guix-nanokvm")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/runc/guix-nanokvm))
+                                  file-system-/srv/container/guix-nanokvm))
                    (auto-start? #t)))
 
-         (service runc-container-service-type
-                  (runc-container-configuration
-                   (bundle "/srv/runc/fedora")
+         (service container-service-type
+                  (container-configuration
+                   (bundle "/srv/container/fedora")
                    (name "fedora")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/runc/fedora))
+                                  file-system-/srv/container/fedora))
                    (auto-start? #t))))
 
         (modify-services %base-services
