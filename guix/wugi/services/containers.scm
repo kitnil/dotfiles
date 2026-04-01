@@ -1,5 +1,5 @@
 (define-module (wugi services containers)
-  #:use-module (gnu packages virtualization)
+  #:use-module (gnu packages containers)
   #:use-module (gnu services)
   #:use-module (gnu services admin)
   #:use-module (gnu services shepherd)
@@ -21,7 +21,7 @@
   runc-container-configuration make-runc-container-configuration
   runc-container-configuration?
   (runc runc-container-configuration-runc ;<package>
-        (default runc))
+        (default crun))
   (bundle runc-container-configuration-bundle) ;string
   (config-file runc-container-configuration-config-file ;<file-like> object
                (default #f))
@@ -56,7 +56,7 @@
        (documentation "Run runc-container.")
        (requirement requirement)
        (start #~(make-forkexec-constructor
-                 (list (string-append #$runc "/sbin/runc")
+                 (list (string-append #$crun "/bin/crun")
                        "run"
                        "--bundle" #$bundle
                        #$name)
