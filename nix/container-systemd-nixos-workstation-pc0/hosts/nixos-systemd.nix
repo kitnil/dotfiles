@@ -64,13 +64,43 @@
     };
   };
 
+  services._3proxy = {
+    enable = true;
+    confFile =
+      let
+        remoteSocks5ServerIp = "127.0.0.1";
+      in pkgs.writeText "3proxy.conf" ''
+        log /tmp/3proxy.log
+        logformat "- +_L%t.%.  %N.%p %E %U %C:%c %R:%r %O %I %h %T"
+        maxconn 500
+        plugin ${pkgs._3proxy}/local/3proxy/libexec/TransparentPlugin.ld.so transparent_plugin
+        auth iponly
+        allow *
+        parent 1000 socks5 ${remoteSocks5ServerIp} 9150 user2 hghjgjhgj
+        transparent
+        tcppm -i0.0.0.0 8888 127.0.0.1 11111
+        maxconn 500
+        notransparent
+      '';
+  };
   networking.firewall.allowedTCPPorts = [
     179                         # bgp (bird)
+    8888                        # 3proxy
     9150                        # tor browser
     9324                        # prometheus bird exporter
     11434                       # ollama
     31247                       # prometheus mtr exporters
   ];
+  networking.firewall = {
+    extraCommands = ''
+      iptables -t nat -A OUTPUT -d 144.76.7.123/32 -p tcp --dport 443 -j REDIRECT --to-ports 8888
+      iptables -t nat -A PREROUTING -d 144.76.7.123/32 -p tcp --dport 443 -j REDIRECT --to-ports 8888
+    '';
+    extraStopCommands = ''
+      iptables -t nat -D PREROUTING -d 144.76.7.123/32 -p tcp --dport 443 -j REDIRECT --to-ports 8888
+      iptables -t nat -D OUTPUT -d 144.76.7.123/32 -p tcp --dport 443 -j REDIRECT --to-ports 8888
+    '';
+  };
   # https://nixos.wiki/wiki/Steam
   programs.steam = {
     enable = true;
