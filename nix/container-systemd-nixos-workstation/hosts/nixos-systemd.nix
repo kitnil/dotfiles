@@ -37,4 +37,6 @@
   local.services.prometheus.exporters.blackbox = {
     enable = true;
   };
+
+  users.groups.audio.gid = 116;
 }
