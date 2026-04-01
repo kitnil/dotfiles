@@ -179,7 +179,7 @@
   systemd.services.console-getty = {
     enable = false;
     wantedBy = [ ];
-  }
+  };
   services.getty.autologinUser = "oleg";
   services.logind = {
     settings.Login = {
