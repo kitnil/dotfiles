@@ -503,6 +503,7 @@ binds {
     Mod+E hotkey-overlay-title="Open an Editor: emacs" { spawn "emacsclient" "-cn"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+Shift+D hotkey-overlay-title="Run an Application NixOS: fuzzel" { spawn "~/bin/fuzzel-nixos-workstation"; }
+    Mod+Ctrl+D hotkey-overlay-title="Run an Application NixOS Majordomo: fuzzel" { spawn "~/bin/fuzzel-nixos-majordomo"; }
     Mod+Shift+s hotkey-overlay-title="Password Store: pass" { spawn "bemenu-passmenu"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
