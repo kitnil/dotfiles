@@ -90,7 +90,6 @@ program.")))
                               file
                               lvm2
                               openssh
-                              runc
                               glibc)
                         %base-packages))
 
