@@ -532,7 +532,6 @@
                                        "ddcci_backlight"
 
                                        "vfio_iommu_type1"))
-                            (service containerd-service-type)
 
                             (service runc-container-service-type
                                      (runc-container-configuration
