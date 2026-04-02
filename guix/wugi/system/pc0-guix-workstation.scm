@@ -31,6 +31,7 @@
   #:use-module (guix channels)
   #:use-module (guix gexp)
   #:use-module (guix inferior)
+  #:use-module (guix modules)
   #:use-module (guix packages)
   #:use-module (guix profiles)
   #:use-module (guix ui)
