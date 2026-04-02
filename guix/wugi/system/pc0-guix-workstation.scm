@@ -16,6 +16,7 @@
   #:use-module (gnu packages file)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages package-management)
+  #:use-module (gnu packages pulseaudio)
   #:use-module (gnu packages virtualization)
   #:use-module (gnu packages ssh)
   #:use-module (gnu services)
@@ -28,6 +29,7 @@
   #:use-module (gnu services sound)
   #:use-module (gnu services web)
   #:use-module (gnu system linux-container)
+  #:use-module (gnu system privilege)
   #:use-module (guix channels)
   #:use-module (guix gexp)
   #:use-module (guix inferior)
@@ -376,7 +378,13 @@ program.")))
                                                "root ALL=(ALL) ALL"
                                                "%wheel ALL=(ALL) ALL"
                                                "oleg ALL=(ALL) NOPASSWD:ALL")
-                                             "\n")))))
+                                             "\n")))
+
+      (privileged-programs
+       (append (list (privileged-program
+                       (program (file-append noisetorch "/bin/NoiseTorch"))
+                       (capabilities "cap_sys_resource=+ep")))
+               %default-privileged-programs))))
 
   (define %my-containerized-operating-system
     (containerized-operating-system %my-operating-system
