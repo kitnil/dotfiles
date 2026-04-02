@@ -262,24 +262,6 @@ context.properties = {
                           ,(local-file (string-append %distro-directory "/dot_local/bin/passmenu")
                                        #:recursive? #t)))))
 
-(define looking-glass-configuration-service
-  (simple-service 'looking-glass-wrapper
-                  home-files-service-type
-                  (list `(".local/bin/looking-glass-client-wrapper"
-                          ,(program-file "looking-glass-client-wrapper"
-                                         #~(let ((args (cdr (command-line))))
-                                             (apply execl
-                                                    `(#$(file-append looking-glass-client "/bin/looking-glass-client")
-                                                        "looking-glass-client"
-                                                        "spice:enable" "no"
-                                                        "wayland:warpSupport" "no"
-                                                        "input:grabKeyboard" "no"
-                                                        "win:dontUpscale" "yes"
-                                                        ,@(if (file-exists? "/dev/kvmfr0")
-                                                              '("-f" "/dev/kvmfr0")
-                                                              '())
-                                                        ,@args))))))))
-
 (define (%workstation-home-environment)
   (home-environment
    (packages (manifest->packages (%workstation-manifest)))
@@ -407,8 +389,6 @@ context.properties = {
                    home-youtube-dl-service
                    home-wireplumber-config-service
                    home-mpv-service
-
-                   looking-glass-configuration-service
 
                    (service home-msmtp-service-type
                             (home-msmtp-configuration
