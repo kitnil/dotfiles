@@ -26,6 +26,8 @@
   #:use-module (gnu services guix)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services sound)
+  #:use-module (gnu services spice)
+  #:use-module (gnu services virtualization)
   #:use-module (gnu services web)
   #:use-module (gnu system linux-container)
   #:use-module (guix channels)
@@ -78,7 +80,8 @@ program.")))
                                                      "audio"
                                                      "video"
                                                      "kvm"
-                                                     "input"))
+                                                     "input"
+                                                     "libvirt"))
                              (password (crypt "oleg" "NmhJoj")))
                            (user-account (inherit %root-account)
                                          (password (crypt "root" "uUxBgD"))))
@@ -344,7 +347,16 @@ program.")))
                    (name "fedora")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/fedora))
-                   (auto-start? #f))))
+                   (auto-start? #f)))
+
+         (service libvirt-service-type
+                  (libvirt-configuration
+                    (listen-tcp? #t)
+                    (auth-tcp "none")))
+         (service virtlog-service-type
+                  (virtlog-configuration
+                    (max-clients 1000)))
+         (service spice-vdagent-service-type))
 
         (modify-services %base-services
           (delete console-font-service-type)
