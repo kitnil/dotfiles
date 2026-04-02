@@ -187,4 +187,6 @@
       ReserveVT = 0;
     };
   };
+
+  programs.noisetorch.enable = true;
 }
