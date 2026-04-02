@@ -336,7 +336,7 @@ program.")))
                    (name "guix-nanokvm")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/guix-nanokvm))
-                   (auto-start? #t)))
+                   (auto-start? #f)))
 
          (service container-service-type
                   (container-configuration
@@ -344,7 +344,7 @@ program.")))
                    (name "fedora")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/fedora))
-                   (auto-start? #t))))
+                   (auto-start? #f))))
 
         (modify-services %base-services
           (delete console-font-service-type)
