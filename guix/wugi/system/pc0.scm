@@ -471,8 +471,7 @@
                                                   "audio"
                                                   "video"
                                                   "kvm"
-                                                  "input"
-                                                  "libvirt"))))
+                                                  "input"))))
                    %base-user-accounts))
 
     ;; Globally-installed packages.
@@ -480,7 +479,6 @@
                            (list restic-pc0-backup
                                  restic-pc0-win11-backup
                                  restic-pc0-ntfsgames-backup))
-                      (list dmidecode) ;required for libvirt
                       %pc0-packages
                       %base-packages))
 
@@ -543,38 +541,6 @@
                                                      ns-net-guix-workstation))
                                       (name "guix-workstation")
                                       (auto-start? #t)))
-
-                            (service libvirt-service-type
-                                     (libvirt-configuration
-                                      ;; XXX: Specify listen-addr after adding networking requirement.
-                                      ;;
-                                      (listen-addr "192.168.0.192")
-                                      (listen-tcp? #t)
-                                      (auth-tcp "none")
-                                      ;; (requirement '(networking))
-                                      ))
-                            (simple-service 'libvirt-qemu-config activation-service-type
-                                            #~(begin
-                                                (when (file-exists? "/etc/libvirt")
-                                                  (with-output-to-file "/etc/libvirt/qemu.conf"
-                                                    (lambda ()
-                                                      (display "\
-user = \"oleg\"
-
-nvram = [
-  \"/home/oleg/.nix-profile/FV/OVMF_CODE.fd:/home/oleg/.nix-profile/FV/OVMF_VARS.fd\"
-]
-
-namespaces = [ ]
-
-cgroup_device_acl = [
-   \"/dev/null\", \"/dev/full\", \"/dev/zero\",
-   \"/dev/random\", \"/dev/urandom\",
-   \"/dev/ptmx\", \"/dev/kvm\",
-   \"/dev/vfio/vfio\",
-   \"/dev/kvmfr0\"
-]
-"))))))
 
                             (simple-service 'ns-net-nixos-majordomo shepherd-root-service-type
                                             (list (shepherd-service
@@ -747,19 +713,10 @@ cgroup_device_acl = [
                                                    (auto-start? #t)
                                                    (one-shot? #t))))
 
-                            (service virtlog-service-type
-                                     (virtlog-configuration
-                                      (max-clients 1000)))
-
                             (udev-rules-service 'kvm
                                                 (udev-rule
                                                  "91-kvm-custom.rules"
                                                  "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n"))
-
-                            (udev-rules-service 'kvmfr
-                                                (udev-rule
-                                                 "99-kvmfr.rules"
-                                                 "SUBSYSTEM==\"kvmfr\", OWNER=\"oleg\", GROUP=\"kvm\", MODE=\"0660\"\n"))
 
                             (simple-service 'add-kresd-config
                                             activation-service-type
