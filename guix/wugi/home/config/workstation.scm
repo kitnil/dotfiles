@@ -10,6 +10,7 @@
   #:use-module (gnu packages containers)
   #:use-module (gnu packages gnupg)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages pulseaudio)
   #:use-module (gnu packages ssh)
   #:use-module (gnu packages virtualization)
   #:use-module (gnu packages wm)
@@ -139,6 +140,44 @@ context.properties = {
     default.clock.allowed-rates = [ 44100 48000 ]
     default.clock.min-quantum = 1024
 }
+"))
+                        ;; https://wiki.gentoo.org/wiki/PipeWire/Microphone_Noise_Suppression
+                        `(".config/pipewire/pipewire.conf.d/99-input-denoising.conf"
+                          ,(mixed-text-file "99-input-denoising.conf" "\
+context.modules = [
+    {
+        name = libpipewire-module-filter-chain
+        args = {
+            node.description =  \"Noise Canceling source\"
+            media.name =  \"Noise Canceling source\"
+            filter.graph = {
+                nodes = [
+                    {
+                        type = ladspa
+                        name = rnnoise
+                        plugin = " (file-append noise-suppression-for-voice "/lib/ladspa/librnnoise_ladspa.so") "
+                        label = noise_suppressor_mono
+                        control = {
+                            \"VAD Threshold (%)\" = 50.0
+                            \"VAD Grace Period (ms)\" = 200
+                            \"Retroactive VAD Grace (ms)\" = 0
+                        }
+                    }
+                ]
+            }
+            capture.props = {
+                node.name =  \"capture.rnnoise_source\"
+                node.passive = true
+                audio.rate = 48000
+            }
+            playback.props = {
+                node.name =  \"rnnoise_source\"
+                media.class = Audio/Source
+                audio.rate = 48000
+            }
+        }
+    }
+]
 ")))))
 
 (define* (runc-fuzzel container-name #:key launch-prefix)
