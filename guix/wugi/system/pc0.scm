@@ -378,7 +378,6 @@
     (timezone "Europe/Moscow")
     (locale "en_US.utf8")
     (initrd microcode-initrd)
-    (initrd-modules (append '("vfio-pci") %base-initrd-modules))
     (kernel linux-6.18)
     (firmware (append (list linux-firmware) %base-firmware))
 
@@ -505,8 +504,7 @@
                                       (permit-root-login 'prohibit-password)))
 
                             (service kernel-module-loader-service-type
-                                     '("vfio-pci"
-                                       "amdgpu"
+                                     '("amdgpu"
 
                                        "dm-snapshot"
                                        "dm-thin-pool"
@@ -524,9 +522,7 @@
 
                                        ;; ddc to backlight interface.
                                        "ddcci"
-                                       "ddcci_backlight"
-
-                                       "vfio_iommu_type1"))
+                                       "ddcci_backlight"))
 
                             (service container-service-type
                                      (container-configuration
