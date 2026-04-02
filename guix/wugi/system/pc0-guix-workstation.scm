@@ -550,7 +550,8 @@ program.")))
                    (bundle "/srv/container/nixos-zapret")
                    (name "nixos-zapret")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/container/nixos-zapret))
+                                  file-system-/srv/container/nixos-zapret
+                                  ns-net-nixos-zapret))
                    (auto-start? #t)))
 
          (service container-service-type
@@ -558,7 +559,8 @@ program.")))
                    (bundle "/srv/container/nixos-tor")
                    (name "nixos-tor")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/container/nixos-tor))
+                                  file-system-/srv/container/nixos-tor
+                                  ns-net-nixos-tor))
                    (auto-start? #t)))
 
          (service container-service-type
@@ -566,7 +568,8 @@ program.")))
                    (bundle "/srv/container/nixos-gw")
                    (name "nixos-gw")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/container/nixos-gw))
+                                  file-system-/srv/container/nixos-gw
+                                  ns-net-nixos-gw))
                    (auto-start? #f)))
 
          (service container-service-type
@@ -574,7 +577,8 @@ program.")))
                    (bundle "/srv/container/nixos-wan")
                    (name "nixos-wan")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/container/nixos-wan))
+                                  file-system-/srv/container/nixos-wan
+                                  ns-net-nixos-wan))
                    (auto-start? #t)))
 
          (service container-service-type
@@ -582,7 +586,8 @@ program.")))
                    (bundle "/srv/container/nixos-antifilter")
                    (name "nixos-antifilter")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/container/nixos-antifilter))
+                                  file-system-/srv/container/nixos-antifilter
+                                  ns-net-nixos-antifilter))
                    (auto-start? #t)))
 
          (service container-service-type
@@ -590,7 +595,8 @@ program.")))
                    (bundle "/srv/container/nixos-majordomo")
                    (name "nixos-majordomo")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/container/nixos-majordomo))
+                                  file-system-/srv/container/nixos-majordomo
+                                  ns-net-nixos-majordomo))
                    (auto-start? #t)))
 
          (service container-service-type
@@ -599,7 +605,8 @@ program.")))
                    (name "nixos-workstation")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-workstation
-                                  file-system-/mnt/steam))
+                                  file-system-/mnt/steam
+                                  ns-net-nixos-workstation))
                    (auto-start? #t)))
 
          (service container-service-type
@@ -607,7 +614,8 @@ program.")))
                    (bundle "/srv/container/nixos-dante")
                    (name "nixos-dante")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/container/nixos-dante))
+                                  file-system-/srv/container/nixos-dante
+                                  ns-net-nixos-dante))
                    (auto-start? #t)))
 
          (service container-service-type
@@ -615,7 +623,8 @@ program.")))
                    (bundle "/srv/container/nixos-hev")
                    (name "nixos-hev")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/container/nixos-hev))
+                                  file-system-/srv/container/nixos-hev
+                                  ns-net-nixos-hev))
                    (auto-start? #t)))
 
          (service container-service-type
@@ -623,7 +632,8 @@ program.")))
                    (bundle "/srv/container/nixos-kube103")
                    (name "nixos-kube103")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/container/nixos-kube103))
+                                  file-system-/srv/container/nixos-kube103
+                                  ns-net-nixos-kube103))
                    (auto-start? #t)))
 
          (service container-service-type
@@ -631,7 +641,8 @@ program.")))
                    (bundle "/srv/container/nixos-bview")
                    (name "nixos-bview")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/container/nixos-bview))
+                                  file-system-/srv/container/nixos-bview
+                                  ns-net-nixos-bview))
                    (auto-start? #t)))
 
          (service container-service-type
@@ -639,7 +650,8 @@ program.")))
                    (bundle "/srv/container/guix-nanokvm")
                    (name "guix-nanokvm")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/container/guix-nanokvm))
+                                  file-system-/srv/container/guix-nanokvm
+                                  ns-net-guix-nanokvm))
                    (auto-start? #f)))
 
          (service container-service-type
@@ -647,7 +659,8 @@ program.")))
                    (bundle "/srv/container/fedora")
                    (name "fedora")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/container/fedora))
+                                  file-system-/srv/container/fedora
+                                  ns-net-fedora))
                    (auto-start? #f)))
 
          (simple-service 'ns-net-nixos-majordomo shepherd-root-service-type
