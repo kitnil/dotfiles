@@ -551,7 +551,8 @@ program.")))
                    (name "nixos-zapret")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-zapret
-                                  ns-net-nixos-zapret))
+                                  ns-net-nixos-zapret
+                                  wait-for-file-/var/run/netns/nixos-zapret))
                    (auto-start? #t)
                    (netns "/var/run/netns/nixos-zapret")))
 
@@ -561,7 +562,8 @@ program.")))
                    (name "nixos-tor")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-tor
-                                  ns-net-nixos-tor))
+                                  ns-net-nixos-tor
+                                  wait-for-file-/var/run/netns/nixos-tor))
                    (auto-start? #t)
                    (netns "/var/run/netns/nixos-tor")))
 
@@ -571,7 +573,8 @@ program.")))
                    (name "nixos-gw")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-gw
-                                  ns-net-nixos-gw))
+                                  ns-net-nixos-gw
+                                  wait-for-file-/var/run/netns/nixos-gw))
                    (auto-start? #f)
                    (netns "/var/run/netns/nixos-gw")))
 
@@ -581,7 +584,8 @@ program.")))
                    (name "nixos-wan")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-wan
-                                  ns-net-nixos-wan))
+                                  ns-net-nixos-wan
+                                  wait-for-file-/var/run/netns/nixos-wan))
                    (auto-start? #t)
                    (netns "/var/run/netns/nixos-wan")))
 
@@ -591,7 +595,8 @@ program.")))
                    (name "nixos-antifilter")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-antifilter
-                                  ns-net-nixos-antifilter))
+                                  ns-net-nixos-antifilter
+                                  wait-for-file-/var/run/netns/nixos-antifilter))
                    (auto-start? #t)
                    (netns "/var/run/netns/nixos-antifilter")))
 
@@ -601,7 +606,8 @@ program.")))
                    (name "nixos-majordomo")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-majordomo
-                                  ns-net-nixos-majordomo))
+                                  ns-net-nixos-majordomo
+                                  wait-for-file-/var/run/netns/nixos-majordomo))
                    (auto-start? #t)
                    (netns "/var/run/netns/nixos-majordomo")))
 
@@ -612,7 +618,8 @@ program.")))
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-workstation
                                   file-system-/mnt/steam
-                                  ns-net-nixos-workstation))
+                                  ns-net-nixos-workstation
+                                  wait-for-file-/var/run/netns/nixos-workstation))
                    (auto-start? #t)
                    (netns "/var/run/netns/nixos-workstation")))
 
@@ -622,7 +629,8 @@ program.")))
                    (name "nixos-dante")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-dante
-                                  ns-net-nixos-dante))
+                                  ns-net-nixos-dante
+                                  wait-for-file-/var/run/netns/nixos-dante))
                    (auto-start? #t)
                    (netns "/var/run/netns/nixos-dante")))
 
@@ -632,7 +640,8 @@ program.")))
                    (name "nixos-hev")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-hev
-                                  ns-net-nixos-hev))
+                                  ns-net-nixos-hev
+                                  wait-for-file-/var/run/netns/nixos-hev))
                    (auto-start? #t)
                    (netns "/var/run/netns/nixos-hev")))
 
@@ -642,7 +651,8 @@ program.")))
                    (name "nixos-kube103")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-kube103
-                                  ns-net-nixos-kube103))
+                                  ns-net-nixos-kube103
+                                  wait-for-file-/var/run/netns/nixos-kube103))
                    (auto-start? #t)
                    (netns "/var/run/netns/nixos-kube103")))
 
@@ -652,7 +662,8 @@ program.")))
                    (name "nixos-bview")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-bview
-                                  ns-net-nixos-bview))
+                                  ns-net-nixos-bview
+                                  wait-for-file-/var/run/netns/nixos-bview))
                    (auto-start? #t)
                    (netns "/var/run/netns/nixos-bview")))
 
@@ -662,7 +673,8 @@ program.")))
                    (name "guix-nanokvm")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/guix-nanokvm
-                                  ns-net-guix-nanokvm))
+                                  ns-net-guix-nanokvm
+                                  wait-for-file-/var/run/netns/guix-nanokvm))
                    (auto-start? #f)
                    (netns "/var/run/netns/guix-nanokvm")))
 
@@ -672,7 +684,8 @@ program.")))
                    (name "fedora")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/fedora
-                                  ns-net-fedora))
+                                  ns-net-fedora
+                                  wait-for-file-/var/run/netns/fedora))
                    (auto-start? #f)
                    (netns "/var/run/netns/fedora")))
 
