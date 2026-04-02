@@ -422,7 +422,7 @@
                            (options "mode=1777,size=50%"))
                          (file-system
                            (device (file-system-label "guixworkstation"))
-                           (mount-point "/srv/runc/guix-workstation")
+                           (mount-point "/srv/container/guix-workstation")
                            (dependencies mapped-devices)
                            (type "btrfs")))
                    %control-groups
@@ -530,8 +530,8 @@
 
                             (service container-service-type
                                      (container-configuration
-                                      (bundle "/srv/container")
-                                      (requirement '(file-system-/srv/runc/guix-workstation
+                                      (bundle "/srv/container/guix-workstation")
+                                      (requirement '(file-system-/srv/container/guix-workstation
                                                      ns-net-guix-workstation))
                                       (name "guix-workstation")
                                       (auto-start? #t)))
