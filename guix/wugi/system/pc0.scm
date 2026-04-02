@@ -421,10 +421,6 @@
                            (flags '(no-dev))
                            (options "mode=1777,size=50%"))
                          (file-system
-                           (device "hugetlbfs")
-                           (mount-point "/hugepages")
-                           (type "hugetlbfs"))
-                         (file-system
                            (device (file-system-label "guixworkstation"))
                            (mount-point "/srv/runc/guix-workstation")
                            (dependencies mapped-devices)
