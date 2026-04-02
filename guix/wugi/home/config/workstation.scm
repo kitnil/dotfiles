@@ -169,10 +169,11 @@ context.properties = {
                              "--env" "XDG_CURRENT_DESKTOP=niri"
                              "--env" "XDG_SESSION_DESKTOP=niri"
                              "--env" "XDG_SESSION_TYPE=wayland"
-                             "--env" (and=> (getenv "GTK_THEME")
-                                            (lambda (theme)
-                                              (string-append "GTK_THEME=" theme)))
                              "--env" "XDG_RUNTIME_DIR=/mnt/guix/run/user/1000")
+                       (or (and=> (getenv "GTK_THEME")
+                                  (lambda (theme)
+                                    (list "--env" (string-append "GTK_THEME=" theme))))
+                           '())
                        (or (and=> (getenv "HOME")
                                   (lambda (home)
                                     (list (string-append "--cwd=" home))))
