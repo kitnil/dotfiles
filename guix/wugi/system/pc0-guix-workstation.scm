@@ -205,7 +205,7 @@ program.")))
                    (terminals
                     (list
                      (greetd-terminal-configuration
-                      (terminal-vt "15")
+                      (terminal-vt "8")
                       (terminal-switch #t)
                       (default-session-user "oleg"))))))
          (service (@ (wugi services desktop) bluetooth-service-type)
