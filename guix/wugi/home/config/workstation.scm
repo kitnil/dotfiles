@@ -77,15 +77,6 @@
            ,(local-file (string-append %distro-directory
                                        "/dot_config/waybar/style.css"))))))
 
-(define mako-configuration-service
-  (simple-service
-   'mako-config
-   home-files-service-type
-   (list `(".config/mako/config"
-           ,(local-file
-             (string-append %distro-directory
-                            "/dot_config/mako/config"))))))
-
 (define aichat-configuration-service
   (simple-service
    'aichat-config
@@ -307,8 +298,6 @@ context.properties = {
                    (service home-files-service-type)
 
                    waybar-configuration-service
-
-                   mako-configuration-service
 
                    aichat-configuration-service
 
