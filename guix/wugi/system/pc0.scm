@@ -533,9 +533,9 @@
 
                                        "vfio_iommu_type1"))
 
-                            (service runc-container-service-type
-                                     (runc-container-configuration
-                                      (bundle "/srv/runc/guix-workstation")
+                            (service container-service-type
+                                     (container-configuration
+                                      (bundle "/srv/container")
                                       (requirement '(file-system-/srv/runc/guix-workstation
                                                      ns-net-guix-workstation))
                                       (name "guix-workstation")
