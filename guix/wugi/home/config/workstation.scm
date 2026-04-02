@@ -318,10 +318,6 @@ context.properties = {
                    fuzzel-service
                    fuzzel-configuration-service
 
-                   (service home-scream-service-type
-                            (scream-configuration
-                             (port 16400)))
-
                    (service home-alacritty-service-type)
 
                    gnupg-configuration-service
