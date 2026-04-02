@@ -388,8 +388,7 @@
                  (bootloader grub-efi-bootloader-removable)
                  (targets '("/boot/efi"))))
 
-    (kernel-loadable-modules (list kvmfr-linux-module
-                                   ddcci-driver-linux
+    (kernel-loadable-modules (list ddcci-driver-linux
                                    v4l2loopback-linux-module))
 
     (mapped-devices
