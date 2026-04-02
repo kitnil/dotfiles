@@ -382,7 +382,6 @@ context.properties = {
                    home-guile-service
                    home-kodi-service
                    home-mailcap-service
-                   home-mongo-service
                    home-postgresql-service
                    home-mycli-service
                    home-parallel-service
