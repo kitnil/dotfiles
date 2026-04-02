@@ -11,6 +11,37 @@
             container-configuration?
             container-service-type))
 
+(define (wait-for-files-services files)
+  (map (lambda (file)
+         (shepherd-service
+           (provision
+            (list (string->symbol (string-append "wait-for-file-" file))))
+           (start
+            #~(lambda ()
+                (let loop ((i 20))
+                  (cond ((file-exists? #$file)
+                         #t)
+                        ((zero? i)
+                         (error "file didn't show up" #$file))
+                        (else
+                         (pk 'wait-for-file #$file)
+                         (sleep 1)
+                         (loop (- i 1)))))))
+           (stop #~(lambda ()
+                     #f))
+           (respawn? #f)))
+       files))
+
+(define wait-for-file-service-type
+  (service-type
+    (name 'wait-for-file)
+    (extensions (list (service-extension shepherd-root-service-type
+                                         wait-for-files-services)))
+    (default-value '())
+    (compose append)
+    (extend append)
+    (description "Wait for file to show up.")))
+
 ;;; Commentary:
 ;;;
 ;;; This module provides a service definition for the container container service.
@@ -31,7 +62,9 @@
   (respawn? container-configuration-respawn? ;boolean
             (default #f))
   (auto-start? container-configuration-auto-start? ;boolean
-               (default #f)))
+               (default #f))
+  (netns container-configuration-netns ;string
+         (default #f)))
 
 (define (container-activation config)
   "Return the activation GEXP for CONFIG."
@@ -76,7 +109,10 @@
                                                      container-log-rotations)
                                   (service-extension profile-service-type
                                                      (lambda (config)
-                                                       (list (container-configuration-container config))))))
+                                                       (list (container-configuration-container config))))
+                                  (service-extension wait-for-file-service-type
+                                                     (lambda (config)
+                                                       (container-configuration-netns config)))))
                 (description "Run container.")))
 
 ;;; containers.scm ends here

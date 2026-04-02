@@ -248,7 +248,8 @@
                                       (requirement '(file-system-/srv/container/guix-workstation
                                                      ns-net-guix-workstation))
                                       (name "guix-workstation")
-                                      (auto-start? #t)))
+                                      (auto-start? #t)
+                                      (netns "/var/run/netns/guix-workstation")))
 
                             (simple-service 'ns-net-guix-workstation shepherd-root-service-type
                                             (list (shepherd-service

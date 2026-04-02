@@ -552,7 +552,8 @@ program.")))
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-zapret
                                   ns-net-nixos-zapret))
-                   (auto-start? #t)))
+                   (auto-start? #t)
+                   (netns "/var/run/netns/nixos-zapret")))
 
          (service container-service-type
                   (container-configuration
@@ -561,7 +562,8 @@ program.")))
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-tor
                                   ns-net-nixos-tor))
-                   (auto-start? #t)))
+                   (auto-start? #t)
+                   (netns "/var/run/netns/nixos-tor")))
 
          (service container-service-type
                   (container-configuration
@@ -570,7 +572,8 @@ program.")))
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-gw
                                   ns-net-nixos-gw))
-                   (auto-start? #f)))
+                   (auto-start? #f)
+                   (netns "/var/run/netns/nixos-gw")))
 
          (service container-service-type
                   (container-configuration
@@ -579,7 +582,8 @@ program.")))
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-wan
                                   ns-net-nixos-wan))
-                   (auto-start? #t)))
+                   (auto-start? #t)
+                   (netns "/var/run/netns/nixos-wan")))
 
          (service container-service-type
                   (container-configuration
@@ -588,7 +592,8 @@ program.")))
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-antifilter
                                   ns-net-nixos-antifilter))
-                   (auto-start? #t)))
+                   (auto-start? #t)
+                   (netns "/var/run/netns/nixos-antifilter")))
 
          (service container-service-type
                   (container-configuration
@@ -597,7 +602,8 @@ program.")))
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-majordomo
                                   ns-net-nixos-majordomo))
-                   (auto-start? #t)))
+                   (auto-start? #t)
+                   (netns "/var/run/netns/nixos-majordomo")))
 
          (service container-service-type
                   (container-configuration
@@ -607,7 +613,8 @@ program.")))
                                   file-system-/srv/container/nixos-workstation
                                   file-system-/mnt/steam
                                   ns-net-nixos-workstation))
-                   (auto-start? #t)))
+                   (auto-start? #t)
+                   (netns "/var/run/netns/nixos-workstation")))
 
          (service container-service-type
                   (container-configuration
@@ -616,7 +623,8 @@ program.")))
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-dante
                                   ns-net-nixos-dante))
-                   (auto-start? #t)))
+                   (auto-start? #t)
+                   (netns "/var/run/netns/nixos-dante")))
 
          (service container-service-type
                   (container-configuration
@@ -625,7 +633,8 @@ program.")))
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-hev
                                   ns-net-nixos-hev))
-                   (auto-start? #t)))
+                   (auto-start? #t)
+                   (netns "/var/run/netns/nixos-hev")))
 
          (service container-service-type
                   (container-configuration
@@ -634,7 +643,8 @@ program.")))
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-kube103
                                   ns-net-nixos-kube103))
-                   (auto-start? #t)))
+                   (auto-start? #t)
+                   (netns "/var/run/netns/nixos-kube103")))
 
          (service container-service-type
                   (container-configuration
@@ -643,7 +653,8 @@ program.")))
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-bview
                                   ns-net-nixos-bview))
-                   (auto-start? #t)))
+                   (auto-start? #t)
+                   (netns "/var/run/netns/nixos-bview")))
 
          (service container-service-type
                   (container-configuration
@@ -652,7 +663,8 @@ program.")))
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/guix-nanokvm
                                   ns-net-guix-nanokvm))
-                   (auto-start? #f)))
+                   (auto-start? #f)
+                   (netns "/var/run/netns/guix-nanokvm")))
 
          (service container-service-type
                   (container-configuration
@@ -661,7 +673,8 @@ program.")))
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/fedora
                                   ns-net-fedora))
-                   (auto-start? #f)))
+                   (auto-start? #f)
+                   (netns "/var/run/netns/fedora")))
 
          (simple-service 'ns-net-nixos-majordomo shepherd-root-service-type
                          (list (shepherd-service
