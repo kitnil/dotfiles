@@ -235,26 +235,6 @@ context.properties = {
                                          #~(execl #$(file-append openssh "/bin/ssh")
                                                   "ssh" "-t" "192.168.0.192" "tmux"))))))
 
-(define wl-mirror-configuration-service
-  (simple-service 'bin-wl-mirror
-                  home-files-service-type
-                  (map (lambda (wayland-output)
-                         (let ((file-name (string-downcase wayland-output)))
-                           `(,(string-append "bin/" file-name)
-                             ,(program-file file-name
-                                            #~(execl #$(file-append wl-mirror "/bin/wl-mirror")
-                                                     "wl-mirror"
-                                                     "--scaling" "exact"
-                                                     #$wayland-output)))))
-                       '("HEADLESS-1"
-                         "HEADLESS-2"
-                         "HEADLESS-3"
-                         "HEADLESS-4"
-                         "HEADLESS-5"
-                         "HEADLESS-6"
-                         "HEADLESS-7"
-                         "HEADLESS-8"))))
-
 (define bemenu-configuration-service
   (simple-service 'bin-bemenu-scripts
                   home-files-service-type
@@ -298,8 +278,6 @@ context.properties = {
                    bin-configuration-service
 
                    host-namespace-configuration-service
-
-                   wl-mirror-configuration-service
 
                    bemenu-configuration-service
 
