@@ -243,145 +243,140 @@ context.properties = {
                           ,(local-file (string-append %distro-directory "/dot_local/bin/passmenu")
                                        #:recursive? #t)))))
 
+(define %config-file-services
+  (list aichat-configuration-service
+        bemenu-configuration-service
+        bin-configuration-service
+        fuzzel-configuration-service
+        fuzzel-service
+        gnupg-configuration-service
+        home-bash-service
+        home-bin-service
+        home-bind-utils-service
+        home-direnv-service
+        home-emacs-service
+        home-emacs-state-service
+        home-gdb-service
+        home-ghci-service
+        home-git-service
+        home-gita-service
+        home-groovy-service
+        home-gtk-service
+        home-gtkrc-service
+        home-guile-service
+        home-inputrc-service
+        home-kodi-service
+        home-mailcap-service
+        home-mime-service
+        home-mpv-service
+        home-mycli-service
+        home-nano-service
+        home-nix-service
+        home-parallel-service
+        home-postgresql-service
+        home-python-service
+        home-qterminal-service
+        home-ripgrep-service
+        home-sbcl-service
+        home-screen-service
+        home-tmux-service
+        home-top-service
+        home-wireplumber-config-service
+        home-youtube-dl-service
+        host-namespace-configuration-service
+        niri-configuration-service
+        pipewire-configuration-service
+        tmuxifier-service
+        waybar-configuration-service))
+
 (define (%workstation-home-environment)
   (home-environment
    (packages (manifest->packages (%workstation-manifest)))
-   (services (list (if (file-exists?
-                        (string-append %distro-directory
-                                       "/wugi/home/config/openssh.scm"))
-                       (service home-openssh-service-type
-                                (@ (wugi home config openssh)
-                                   %home-openssh-configuration))
-                       (service home-openssh-service-type))
+   (services
+    (append
+     (list (if (file-exists?
+                (string-append %distro-directory
+                               "/wugi/home/config/openssh.scm"))
+               (service home-openssh-service-type
+                        (@ (wugi home config openssh)
+                           %home-openssh-configuration))
+               (service home-openssh-service-type))
 
-                   (service home-dbus-service-type)
+           (service home-dbus-service-type)
 
-                   (service home-pipewire-service-type)
+           (service home-pipewire-service-type)
 
-                   (service home-files-service-type)
+           (service home-files-service-type)
 
-                   waybar-configuration-service
+           (service home-niri-service-type)
 
-                   aichat-configuration-service
+           (service home-alacritty-service-type)
 
-                   (service home-niri-service-type)
-                   niri-configuration-service
+           (service home-bash-service-type
+                    (home-bash-configuration
+                     (bashrc
+                      (list
+                       (local-file
+                        (string-append %distro-directory "/dot_bashrc"))))
+                     (environment-variables
+                      `(("PATH" .
+                         ,(string-append "${HOME}/bin"
+                                         ":" "${HOME}/.local/bin"
+                                         ;; ":" "$(/usr/bin/env --ignore-environment sh --norc --noprofile -c 'unset PATH; export HOME=/home/oleg; export USER=oleg; source /etc/profile; printf $PATH')"
+                                         ":" "${HOME}/go/bin"
+                                         ":" "${HOME}/.npm-global/bin"
+                                         ":" "/opt/gradle/bin"
+                                         ":" "${HOME}/perl5/bin"
+                                         ;; ":" "${HOME}/.nix-profile/lib/openjdk/bin"
+                                         ;; ":" "${HOME}/.nix-profile/bin"
+                                         ":" "$PATH"))
+                        ("LC_TIME" . "en_GB.UTF-8")
+                        ("LANG" . "en_US.UTF-8")
 
-                   fuzzel-service
-                   fuzzel-configuration-service
+                        ("CHICKEN_REPOSITORY" . "${HOME}/.eggs/lib/chicken/8")
+                        ("CHICKEN_DOC_REPOSITORY" . "${HOME}/.eggs/share/chicken-doc")
 
-                   (service home-alacritty-service-type)
+                        ("BROWSER" . "icecat")
+                        ("INFOPATH" . "${HOME}/src/codeberg.org/guix/guix/doc${INFOPATH:+:}$INFOPATH")
+                        ("GUILE_WARN_DEPRECATED" . "no")
 
-                   gnupg-configuration-service
+                        ;; Fix mouse wheel in gtk3
+                        ;; https://github.com/stumpwm/stumpwm/wiki/FAQ
+                        ("GDK_CORE_DEVICE_EVENTS" . "1")
 
-                   pipewire-configuration-service
+                        ("QT_QPA_PLATFORMTHEME" . "gtk2")
+                        ("GUILE_LOAD_PATH" . "${HOME}/.config:${GUILE_LOAD_PATH}")
+                        ("RIPGREP_CONFIG_PATH" . "${HOME}/.config/ripgrep/ripgreprc")
+                        ("SSHRC_BECOME" . "yes")
+                        ("GRADLE_HOME" . "/opt/gradle")
+                        ("PYTHONSTARTUP" . "${HOME}/.pythonrc")
+                        ("TMUXIFIER_LAYOUT_PATH" . "${HOME}/.tmuxifier-layouts")
+                        ("EDITOR" . "emacsclient -nw -c")
+                        ("MANWIDTH" . "80")
+                        ("PERL5LIB" . "${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}")
+                        ("PERL_LOCAL_LIB_ROOT" . "${HOME}/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}")
+                        ("PERL_MB_OPT" . "--install_base ${HOME}/perl5")
+                        ("PERL_MM_OPT" . "INSTALL_BASE=${HOME}/perl5")))
 
-                   bin-configuration-service
+                     ;; GUIX_PROFILE variable used in my custom
+                     ;; .bashrc file.
+                     (variables '(("GUIX_PROFILE" . "${HOME}/.guix-home/profile")))))
 
-                   host-namespace-configuration-service
-
-                   bemenu-configuration-service
-
-                   home-bash-service
-
-                   (service home-bash-service-type
-                            (home-bash-configuration
-                             (bashrc
-                              (list
-                               (local-file
-                                (string-append %distro-directory "/dot_bashrc"))))
-                             (environment-variables
-                              `(("PATH" .
-                                 ,(string-append "${HOME}/bin"
-                                                 ":" "${HOME}/.local/bin"
-                                                 ;; ":" "$(/usr/bin/env --ignore-environment sh --norc --noprofile -c 'unset PATH; export HOME=/home/oleg; export USER=oleg; source /etc/profile; printf $PATH')"
-                                                 ":" "${HOME}/go/bin"
-                                                 ":" "${HOME}/.npm-global/bin"
-                                                 ":" "/opt/gradle/bin"
-                                                 ":" "${HOME}/perl5/bin"
-                                                 ;; ":" "${HOME}/.nix-profile/lib/openjdk/bin"
-                                                 ;; ":" "${HOME}/.nix-profile/bin"
-                                                 ":" "$PATH"))
-                                ("LC_TIME" . "en_GB.UTF-8")
-                                ("LANG" . "en_US.UTF-8")
-
-                                ("CHICKEN_REPOSITORY" . "${HOME}/.eggs/lib/chicken/8")
-                                ("CHICKEN_DOC_REPOSITORY" . "${HOME}/.eggs/share/chicken-doc")
-
-                                ("BROWSER" . "icecat")
-                                ("INFOPATH" . "${HOME}/src/codeberg.org/guix/guix/doc${INFOPATH:+:}$INFOPATH")
-                                ("GUILE_WARN_DEPRECATED" . "no")
-
-                                ;; Fix mouse wheel in gtk3
-                                ;; https://github.com/stumpwm/stumpwm/wiki/FAQ
-                                ("GDK_CORE_DEVICE_EVENTS" . "1")
-
-                                ("QT_QPA_PLATFORMTHEME" . "gtk2")
-                                ("GUILE_LOAD_PATH" . "${HOME}/.config:${GUILE_LOAD_PATH}")
-                                ("RIPGREP_CONFIG_PATH" . "${HOME}/.config/ripgrep/ripgreprc")
-                                ("SSHRC_BECOME" . "yes")
-                                ("GRADLE_HOME" . "/opt/gradle")
-                                ("PYTHONSTARTUP" . "${HOME}/.pythonrc")
-                                ("TMUXIFIER_LAYOUT_PATH" . "${HOME}/.tmuxifier-layouts")
-                                ("EDITOR" . "emacsclient -nw -c")
-                                ("MANWIDTH" . "80")
-                                ("PERL5LIB" . "${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}")
-                                ("PERL_LOCAL_LIB_ROOT" . "${HOME}/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}")
-                                ("PERL_MB_OPT" . "--install_base ${HOME}/perl5")
-                                ("PERL_MM_OPT" . "INSTALL_BASE=${HOME}/perl5")))
-
-                             ;; GUIX_PROFILE variable used in my custom
-                             ;; .bashrc file.
-                             (variables '(("GUIX_PROFILE" . "${HOME}/.guix-home/profile")))))
-                   home-mime-service
-                   home-direnv-service
-                   home-git-service
-                   home-gita-service
-                   home-gdb-service
-                   home-emacs-state-service
-                   home-emacs-service
-                   home-nano-service
-                   home-inputrc-service
-                   home-tmux-service
-                   tmuxifier-service
-                   home-top-service
-                   home-nix-service
-                   home-qterminal-service
-                   home-gtk-service
-                   home-gtkrc-service
-                   home-ripgrep-service
-                   home-screen-service
-                   home-sbcl-service
-                   home-python-service
-                   home-bind-utils-service
-                   ;; home-shellcheck-service
-                   home-bin-service
-                   home-ghci-service
-                   home-groovy-service
-                   home-guile-service
-                   home-kodi-service
-                   home-mailcap-service
-                   home-postgresql-service
-                   home-mycli-service
-                   home-parallel-service
-                   home-youtube-dl-service
-                   home-wireplumber-config-service
-                   home-mpv-service
-
-                   (service home-msmtp-service-type
-                            (home-msmtp-configuration
-                             (default-account "gmail")
-                             (extra-content "\
+           (service home-msmtp-service-type
+                    (home-msmtp-configuration
+                     (default-account "gmail")
+                     (extra-content "\
 auth on
 tls on
 tls_trust_file /etc/ssl/certs/ca-certificates.crt\n")
-                             (accounts
-                              (list
-                               (msmtp-account
-                                (name "gmail")
-                                (configuration
-                                 (msmtp-configuration
-                                  (host "smtp.gmail.com")
-                                  (port 587)
-                                  (user "go.wigust")
-                                  (password-eval "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/myaccount.google.com/apppasswords/go.wigust.gpg"))))))))))))
+                     (accounts
+                      (list
+                       (msmtp-account
+                        (name "gmail")
+                        (configuration
+                         (msmtp-configuration
+                          (host "smtp.gmail.com")
+                          (port 587)
+                          (user "go.wigust")
+                          (password-eval "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/myaccount.google.com/apppasswords/go.wigust.gpg")))))))))
+            %config-file-services))))
