@@ -221,7 +221,6 @@
                  mps-youtube
                  streamlink
                  twitchy
-                 youtube-dl   ; Video and music from websites
 
                  redshift  ; Color temperature
                  neofetch
