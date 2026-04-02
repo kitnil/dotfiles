@@ -73,7 +73,10 @@
                                   (service-extension shepherd-root-service-type
                                                      container-shepherd-service)
                                   (service-extension log-rotation-service-type
-                                                     container-log-rotations)))
+                                                     container-log-rotations)
+                                  (service-extension profile-service-type
+                                                     (lambda (config)
+                                                       (list (container-configuration-container config))))))
                 (description "Run container.")))
 
 ;;; containers.scm ends here
