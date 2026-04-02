@@ -246,7 +246,8 @@
                                      (container-configuration
                                       (bundle "/srv/container/guix-workstation")
                                       (requirement '(file-system-/srv/container/guix-workstation
-                                                     ns-net-guix-workstation))
+                                                     ns-net-guix-workstation
+                                                     wait-for-file-/var/run/netns/guix-workstation))
                                       (name "guix-workstation")
                                       (auto-start? #t)
                                       (netns "/var/run/netns/guix-workstation")))
