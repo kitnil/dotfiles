@@ -766,7 +766,3 @@ binds {
 
     Mod+n { spawn-sh "swaync-client -t -sw"; }
 }
-
-environment {
-    GTK_THEME "Adwaita:dark"
-}
