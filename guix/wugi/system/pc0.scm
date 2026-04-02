@@ -419,7 +419,7 @@
                            (type "tmpfs")
                            (check? #f)
                            (flags '(no-dev))
-                           (options "mode=1777,size=25%"))
+                           (options "mode=1777,size=50%"))
                          (file-system
                            (device "hugetlbfs")
                            (mount-point "/hugepages")
