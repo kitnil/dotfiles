@@ -499,6 +499,12 @@ program.")))
                   (ladspa-configuration (plugins (list swh-plugins))))
          (service avahi-service-type)
 
+         (service guix-publish-service-type
+                  (guix-publish-configuration
+                   (host "0.0.0.0")
+                   (port 5556)
+                   (ttl (* 90 24 3600))))
+
          (simple-service 'add-bird-config
                          activation-service-type
                          bird-config)
