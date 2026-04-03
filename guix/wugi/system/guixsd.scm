@@ -451,7 +451,7 @@
                       (display #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/09-piraeus.sh")
                                              #:recursive? #t))
                       (newline)
-                      (display "sudo herd start runc-container-guix-workstation\n")
+                      (display "sudo herd start container-guix-workstation\n")
                       (format #t "PYTHON_TTY_DEVICE=~s PYTHON_TTY_STRING=~s ~a~%"
                               "/dev/tty8"
                               "password"
@@ -1654,11 +1654,14 @@ PasswordAuthentication yes")))
 
          (service jenkins-service-type %jenkins-config)
 
-         (service runc-container-service-type
-                  (runc-container-configuration
+         (service container-service-type
+                  (container-configuration
                    (bundle "/srv/runc/guix-workstation")
                    (name "guix-workstation")
-                   (requirement '(guix-workstation))))
+                   (requirement '(guix-workstation
+                                  ns-net-guix-workstation
+                                  wait-for-file-/var/run/netns/guix-workstation))
+                   (wait-for-files '("/var/run/netns/guix-workstation"))))
 
          (simple-service 'guix-workstation shepherd-root-service-type
                          (list (shepherd-service
