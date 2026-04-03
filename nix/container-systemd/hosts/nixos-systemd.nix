@@ -20,7 +20,7 @@
 
   networking = {
     # Override virtualisation/docker-image.nix configuration.
-    firewall.enable = lib.mkForce true;
+    firewall.enable = lib.mkDefault true;
 
     hostName = ""; # empty
     useDHCP = false;
