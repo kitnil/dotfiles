@@ -77,6 +77,7 @@
     '';
   };
   networking.firewall.allowedTCPPorts = [
+    1080                        # dante
     179                         # bgp (bird)
     9324                        # prometheus bird exporter
     31247                       # prometheus mtr exporters
