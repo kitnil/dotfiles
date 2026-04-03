@@ -114,8 +114,14 @@ program.")))
       (services (append (list (service dbus-root-service-type)
                               (service elogind-service-type)
                               seatd-service
-                              (service container-mingetty-service-type
-                                       (mingetty-configuration (tty "tty8")))
+                              (service greetd-service-type
+                                       (greetd-configuration
+                                        (terminals
+                                         (list
+                                          (greetd-terminal-configuration
+                                           (terminal-vt "8")
+                                           (terminal-switch #t)
+                                           (default-session-user "oleg"))))))
                               (service avahi-service-type)
                               (service skopeo-service-type
                                        (skopeo-configuration
@@ -166,7 +172,10 @@ program.")))
                                                                  "https://bordeaux.guix.gnu.org"
                                                                  "https://substitutes.nonguix.org"
                                                                  "http://ci.guix.trop.in"))))
-                          (delete shepherd-system-log-service-type))))
+                          (delete shepherd-system-log-service-type)
+                          (delete console-font-service-type)
+                          (delete mingetty-service-type)
+                          (delete agetty-service-type))))
 
       (sudoers-file (plain-file "sudoers"
                                 (string-join `("Defaults:root runcwd=*"
