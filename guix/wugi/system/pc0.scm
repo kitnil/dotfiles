@@ -250,7 +250,7 @@
                                                      wait-for-file-/var/run/netns/guix-workstation))
                                       (name "guix-workstation")
                                       (auto-start? #t)
-                                      (netns "/var/run/netns/guix-workstation")))
+                                      (wait-for-files '("/var/run/netns/guix-workstation"))))
 
                             (simple-service 'ns-net-guix-workstation shepherd-root-service-type
                                             (list (shepherd-service
