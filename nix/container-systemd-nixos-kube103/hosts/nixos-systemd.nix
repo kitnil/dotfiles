@@ -39,7 +39,7 @@
     clientCaFile = "/etc/kubernetes/pki/ca.pem";
     tlsCertFile = "/etc/kubernetes/pki/kubelet-client-kube103.pem";
     tlsKeyFile = "/etc/kubernetes/pki/kubelet-client-kube103-key.pem";
-    clusterDns = "10.8.255.254";
+    clusterDns = [ "10.8.255.254" ];
     extraConfig = {
       failSwapOn = false;
     };
