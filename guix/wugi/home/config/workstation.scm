@@ -334,94 +334,93 @@ context.modules = [
   (manifest->packages (%workstation-manifest)))
 
 (define %workstation-services
-  (services
-   (append
-    (list (if (file-exists?
-               (string-append %distro-directory
-                              "/wugi/home/config/openssh.scm"))
-              (service home-openssh-service-type
-                       (@ (wugi home config openssh)
-                          %home-openssh-configuration))
-              (service home-openssh-service-type))
+  (append
+   (list (if (file-exists?
+              (string-append %distro-directory
+                             "/wugi/home/config/openssh.scm"))
+             (service home-openssh-service-type
+                      (@ (wugi home config openssh)
+                         %home-openssh-configuration))
+             (service home-openssh-service-type))
 
-          (service home-dbus-service-type)
+         (service home-dbus-service-type)
 
-          (service home-pipewire-service-type)
+         (service home-pipewire-service-type)
 
-          (service home-files-service-type)
+         (service home-files-service-type)
 
-          (service home-niri-service-type)
+         (service home-niri-service-type)
 
-          (service home-alacritty-service-type)
+         (service home-alacritty-service-type)
 
-          (service home-bash-service-type
-                   (home-bash-configuration
-                    (bashrc
-                     (list
-                      (local-file
-                       (string-append %distro-directory "/dot_bashrc"))))
-                    (environment-variables
-                     `(("PATH" .
-                        ,(string-append "${HOME}/bin"
-                                        ":" "${HOME}/.local/bin"
-                                        ;; ":" "$(/usr/bin/env --ignore-environment sh --norc --noprofile -c 'unset PATH; export HOME=/home/oleg; export USER=oleg; source /etc/profile; printf $PATH')"
-                                        ":" "${HOME}/go/bin"
-                                        ":" "${HOME}/.npm-global/bin"
-                                        ":" "/opt/gradle/bin"
-                                        ":" "${HOME}/perl5/bin"
-                                        ;; ":" "${HOME}/.nix-profile/lib/openjdk/bin"
-                                        ;; ":" "${HOME}/.nix-profile/bin"
-                                        ":" "$PATH"))
-                       ("LC_TIME" . "en_GB.UTF-8")
-                       ("LANG" . "en_US.UTF-8")
+         (service home-bash-service-type
+                  (home-bash-configuration
+                   (bashrc
+                    (list
+                     (local-file
+                      (string-append %distro-directory "/dot_bashrc"))))
+                   (environment-variables
+                    `(("PATH" .
+                       ,(string-append "${HOME}/bin"
+                                       ":" "${HOME}/.local/bin"
+                                       ;; ":" "$(/usr/bin/env --ignore-environment sh --norc --noprofile -c 'unset PATH; export HOME=/home/oleg; export USER=oleg; source /etc/profile; printf $PATH')"
+                                       ":" "${HOME}/go/bin"
+                                       ":" "${HOME}/.npm-global/bin"
+                                       ":" "/opt/gradle/bin"
+                                       ":" "${HOME}/perl5/bin"
+                                       ;; ":" "${HOME}/.nix-profile/lib/openjdk/bin"
+                                       ;; ":" "${HOME}/.nix-profile/bin"
+                                       ":" "$PATH"))
+                      ("LC_TIME" . "en_GB.UTF-8")
+                      ("LANG" . "en_US.UTF-8")
 
-                       ("CHICKEN_REPOSITORY" . "${HOME}/.eggs/lib/chicken/8")
-                       ("CHICKEN_DOC_REPOSITORY" . "${HOME}/.eggs/share/chicken-doc")
+                      ("CHICKEN_REPOSITORY" . "${HOME}/.eggs/lib/chicken/8")
+                      ("CHICKEN_DOC_REPOSITORY" . "${HOME}/.eggs/share/chicken-doc")
 
-                       ("BROWSER" . "icecat")
-                       ("INFOPATH" . "${HOME}/src/codeberg.org/guix/guix/doc${INFOPATH:+:}$INFOPATH")
-                       ("GUILE_WARN_DEPRECATED" . "no")
+                      ("BROWSER" . "icecat")
+                      ("INFOPATH" . "${HOME}/src/codeberg.org/guix/guix/doc${INFOPATH:+:}$INFOPATH")
+                      ("GUILE_WARN_DEPRECATED" . "no")
 
-                       ;; Fix mouse wheel in gtk3
-                       ;; https://github.com/stumpwm/stumpwm/wiki/FAQ
-                       ("GDK_CORE_DEVICE_EVENTS" . "1")
+                      ;; Fix mouse wheel in gtk3
+                      ;; https://github.com/stumpwm/stumpwm/wiki/FAQ
+                      ("GDK_CORE_DEVICE_EVENTS" . "1")
 
-                       ("QT_QPA_PLATFORMTHEME" . "gtk2")
-                       ("GUILE_LOAD_PATH" . "${HOME}/.config:${GUILE_LOAD_PATH}")
-                       ("RIPGREP_CONFIG_PATH" . "${HOME}/.config/ripgrep/ripgreprc")
-                       ("SSHRC_BECOME" . "yes")
-                       ("GRADLE_HOME" . "/opt/gradle")
-                       ("PYTHONSTARTUP" . "${HOME}/.pythonrc")
-                       ("TMUXIFIER_LAYOUT_PATH" . "${HOME}/.tmuxifier-layouts")
-                       ("EDITOR" . "emacsclient -nw -c")
-                       ("MANWIDTH" . "80")
-                       ("PERL5LIB" . "${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}")
-                       ("PERL_LOCAL_LIB_ROOT" . "${HOME}/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}")
-                       ("PERL_MB_OPT" . "--install_base ${HOME}/perl5")
-                       ("PERL_MM_OPT" . "INSTALL_BASE=${HOME}/perl5")))
+                      ("QT_QPA_PLATFORMTHEME" . "gtk2")
+                      ("GUILE_LOAD_PATH" . "${HOME}/.config:${GUILE_LOAD_PATH}")
+                      ("RIPGREP_CONFIG_PATH" . "${HOME}/.config/ripgrep/ripgreprc")
+                      ("SSHRC_BECOME" . "yes")
+                      ("GRADLE_HOME" . "/opt/gradle")
+                      ("PYTHONSTARTUP" . "${HOME}/.pythonrc")
+                      ("TMUXIFIER_LAYOUT_PATH" . "${HOME}/.tmuxifier-layouts")
+                      ("EDITOR" . "emacsclient -nw -c")
+                      ("MANWIDTH" . "80")
+                      ("PERL5LIB" . "${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}")
+                      ("PERL_LOCAL_LIB_ROOT" . "${HOME}/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}")
+                      ("PERL_MB_OPT" . "--install_base ${HOME}/perl5")
+                      ("PERL_MM_OPT" . "INSTALL_BASE=${HOME}/perl5")))
 
-                    ;; GUIX_PROFILE variable used in my custom
-                    ;; .bashrc file.
-                    (variables '(("GUIX_PROFILE" . "${HOME}/.guix-home/profile")))))
+                   ;; GUIX_PROFILE variable used in my custom
+                   ;; .bashrc file.
+                   (variables '(("GUIX_PROFILE" . "${HOME}/.guix-home/profile")))))
 
-          (service home-msmtp-service-type
-                   (home-msmtp-configuration
-                    (default-account "gmail")
-                    (extra-content "\
+         (service home-msmtp-service-type
+                  (home-msmtp-configuration
+                   (default-account "gmail")
+                   (extra-content "\
 auth on
 tls on
 tls_trust_file /etc/ssl/certs/ca-certificates.crt\n")
-                    (accounts
-                     (list
-                      (msmtp-account
-                       (name "gmail")
-                       (configuration
-                        (msmtp-configuration
-                         (host "smtp.gmail.com")
-                         (port 587)
-                         (user "go.wigust")
-                         (password-eval "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/myaccount.google.com/apppasswords/go.wigust.gpg")))))))))
-    %config-file-services)))
+                   (accounts
+                    (list
+                     (msmtp-account
+                      (name "gmail")
+                      (configuration
+                       (msmtp-configuration
+                        (host "smtp.gmail.com")
+                        (port 587)
+                        (user "go.wigust")
+                        (password-eval "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/myaccount.google.com/apppasswords/go.wigust.gpg")))))))))
+   %config-file-services))
 
 (define (%workstation-home-environment)
   (home-environment
