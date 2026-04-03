@@ -1659,7 +1659,6 @@ PasswordAuthentication yes")))
                    (bundle "/srv/runc/guix-workstation")
                    (name "guix-workstation")
                    (requirement '(guix-workstation
-                                  ns-net-guix-workstation
                                   wait-for-file-/var/run/netns/guix-workstation))
                    (wait-for-files '("/var/run/netns/guix-workstation"))))
 
