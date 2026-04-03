@@ -1,11 +1,6 @@
 ;; This is an operating system configuration template for a "Docker image"
 ;; setup, so it has barely any services at all.
 
-;; guix system image -t docker --network ./docker-image-workstation.scm
-;; skopeo copy docker-archive:/gnu/store/…-tor-docker-pack.tar.gz docker-daemon:example.org:5000/tor:latest --insecure-policy
-;; docker run --network=host --security-opt seccomp=unconfined --detach --name tor --network=host example.org:5000/tor
-;; docker exec --detach tor /gnu/store/…-tor-0.4.6.10/bin/tor -f /gnu/store/…-torrc
-
 (define-module (wugi system pc0-guix-workstation)
   #:use-module (wugi services desktop)
   #:use-module (gnu)
