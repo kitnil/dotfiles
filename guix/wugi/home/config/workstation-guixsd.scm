@@ -6,10 +6,13 @@
   #:export (%workstation-guixsd-home-environment))
 
 (define (%workstation-guixsd-home-environment)
-  (home-environment
-   (inherit (%workstation-home-environment))
-   (services
-    (list
-     (service home-wayvnc-service-type
-              (wayvnc-configuration
-               (environment-variables '("WAYLAND_DISPLAY=wayland-1"))))))))
+  (let ((workstation-home (%workstation-home-environment)))
+    (home-environment
+     (inherit workstation-home)
+     (services
+      (append
+       (list
+        (service home-wayvnc-service-type
+                 (wayvnc-configuration
+                  (environment-variables '("WAYLAND_DISPLAY=wayland-1")))))
+       (home-environment-services workstation-home))))))
