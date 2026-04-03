@@ -49,5 +49,8 @@
       keyFile = tlsKeyFile;
     };
   };
+  networking.firewall.allowedTCPPorts = [
+    10250                       # kubelet
+  ];
   environment.sbinlvm = "${pkgs.lvm2_dmeventd}/bin/lvm";
 }
