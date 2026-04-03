@@ -916,6 +916,7 @@ zone:
         "192.168.0.144 kube1 kube1.home kube1.lan"
         "192.168.0.137 kube2 kube2.home kube2.lan"
         "192.168.0.192 kube3 kube3.home kube3.lan"
+        "192.168.0.104 kube103 kube103.home kube103.lan"
         "192.168.154.99 kube5 kube5.home"
         "192.168.0.144 nfs.home"
 
