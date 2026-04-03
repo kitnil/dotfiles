@@ -1,6 +1,8 @@
 (define-module (wugi home config workstation-guixsd)
-  #:use-module (wugi home services desktop)
+  #:use-module (gnu home)
+  #:use-module (gnu home services)
   #:use-module (wugi home config workstation)
+  #:use-module (wugi home services desktop)
   #:export (%workstation-guixsd-home-environment))
 
 (define (%workstation-guixsd-home-environment)
