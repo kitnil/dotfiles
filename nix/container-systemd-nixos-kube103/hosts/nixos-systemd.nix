@@ -52,5 +52,6 @@
   networking.firewall.allowedTCPPorts = [
     10250                       # kubelet
   ];
+  networking.firewall.enable = lib.mkForce false;
   environment.sbinlvm = "${pkgs.lvm2_dmeventd}/bin/lvm";
 }
