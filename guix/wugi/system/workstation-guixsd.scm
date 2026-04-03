@@ -45,6 +45,20 @@
   #:use-module (wugi utils)
   #:export (%workstation-guixsd))
 
+(define bird-config
+  #~(begin
+      (use-modules (guix build utils))
+      (mkdir-p "/etc/bird")
+      (copy-file #$(local-file (string-append %distro-directory "/dotfiles/guixsd-guix-workstation/etc/bird/bird.1.conf"))
+                 "/etc/bird/bird.1.conf")
+      (mkdir-p "/etc/bird/peers")
+      (copy-file #$(local-file (string-append %distro-directory "/dotfiles/guixsd-guix-workstation/etc/bird/peers/nixos-hev.conf"))
+                 "/etc/bird/peers/nixos-hev.conf")
+      (copy-file #$(local-file (string-append %distro-directory "/dotfiles/guixsd-guix-workstation/etc/bird/peers/nixos-dante.conf"))
+                 "/etc/bird/peers/nixos-dante.conf")
+      (copy-file #$(local-file (string-append %distro-directory "/dotfiles/guixsd-guix-workstation/etc/bird/peers/vm1.conf"))
+                 "/etc/bird/peers/vm1.conf")))
+
 (define (%workstation-guixsd)
   (define container-mingetty-service-type
     (service-type (name 'mingetty)
@@ -118,7 +132,18 @@ program.")))
                                                          "--no-unixaf"
                                                          "--no-klog"))))
                               (service openvpn-service-type %openvpn-configuration-majordomo.ru)
-                              (service openvpn-service-type %openvpn-configuration-wugi.info))
+                              (service openvpn-service-type %openvpn-configuration-wugi.info)
+
+                              (simple-service 'add-bird-config
+                                              activation-service-type
+                                              bird-config)
+                              (service bird-service-type
+                                       (bird-configuration
+                                        (config-file
+                                         (local-file
+                                          (string-append
+                                           %distro-directory
+                                           "/dotfiles/guixsd-guix-workstation/etc/bird/bird.conf"))))))
                         (modify-services %base-services
                           (guix-service-type config =>
                                              (guix-configuration
