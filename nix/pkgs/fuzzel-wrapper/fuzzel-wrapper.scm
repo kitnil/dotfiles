@@ -23,4 +23,7 @@
                               (apply execl
                                      (append (list "/usr/bin/env" "/usr/bin/env" "--chdir=/" head)
                                              tail)))
-                             (_ #f))))))))
+                             (_
+                              (apply execl
+                                     (append (list "/usr/bin/env" "/usr/bin/env" head)
+                                             tail))))))))))
