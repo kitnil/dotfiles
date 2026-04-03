@@ -1,21 +1,5 @@
 replicas: 1
 
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - kube3
-
-tolerations:
-- key: "workstation.cluster.local"
-  operator: "Equal"
-  value: "true"
-  effect: "NoSchedule"
-
 resources:
   limits:
     cpu: 100m
