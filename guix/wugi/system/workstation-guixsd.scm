@@ -39,6 +39,7 @@
   #:use-module (guix profiles)
   #:use-module (srfi srfi-1)
   #:use-module (wugi config)
+  #:use-module (wugi services bird)
   #:use-module (wugi etc guix channels workstation)
   #:use-module (wugi services desktop)
   #:use-module (wugi services docker)
