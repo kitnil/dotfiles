@@ -499,36 +499,6 @@ program.")))
                   (ladspa-configuration (plugins (list swh-plugins))))
          (service avahi-service-type)
 
-         (service static-networking-service-type
-                  (list
-                   (static-networking
-                    (provision '(eth0))
-                    (addresses (list
-                                (network-address
-                                 (device "eth0")
-                                 (value "127.0.0.1/8")))))
-                   (static-networking
-                    (provision '(br0))
-                    (requirement '(eth0))
-                    (links (list
-                            (network-link
-                             (name "br0")
-                             (type 'bridge)
-                             (arguments '()))))
-                    (addresses (list
-                                (network-address
-                                 (device "br0")
-                                 (value "192.168.0.194/32"))))
-                    (name-servers '("192.168.0.192")))
-                   (static-networking
-                    (provision '(networking))
-                    (requirement '(eth0 br0))
-                    (links (list
-                            (network-link
-                             (name "eth0")
-                             (arguments '((master . "br0"))))))
-                    (addresses '()))))
-
          (simple-service 'add-bird-config
                          activation-service-type
                          bird-config)
@@ -888,9 +858,40 @@ program.")))
   (operating-system
     (inherit %my-containerized-operating-system)
     (kernel linux-libre)
-    (services (modify-services (operating-system-user-services %my-containerized-operating-system)
-                (guix-service-type
-                 config =>
-                 (guix-configuration
-                   (inherit config)
-                   (chroot? #t)))))))
+    (services
+     (append
+      (list (service static-networking-service-type
+                     (list
+                      (static-networking
+                       (provision '(eth0))
+                       (addresses (list
+                                   (network-address
+                                    (device "eth0")
+                                    (value "127.0.0.1/8")))))
+                      (static-networking
+                       (provision '(br0))
+                       (requirement '(eth0))
+                       (links (list
+                               (network-link
+                                (name "br0")
+                                (type 'bridge)
+                                (arguments '()))))
+                       (addresses (list
+                                   (network-address
+                                    (device "br0")
+                                    (value "192.168.0.194/32"))))
+                       (name-servers '("192.168.0.192")))
+                      (static-networking
+                       (provision '(networking))
+                       (requirement '(eth0 br0))
+                       (links (list
+                               (network-link
+                                (name "eth0")
+                                (arguments '((master . "br0"))))))
+                       (addresses '())))))
+      (modify-services (operating-system-user-services %my-containerized-operating-system)
+        (guix-service-type
+         config =>
+         (guix-configuration
+          (inherit config)
+          (chroot? #t))))))))
