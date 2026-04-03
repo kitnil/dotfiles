@@ -14,5 +14,7 @@
       (service home-sway-service-type)
       (service home-wayvnc-service-type
                (wayvnc-configuration
-                (environment-variables '("WAYLAND_DISPLAY=wayland-1")))))
+                (environment-variables '("WAYLAND_DISPLAY=wayland-1"))
+                (arguments
+                 '("--output=HEADLESS-1")))))
      %workstation-services))))
