@@ -554,7 +554,7 @@ program.")))
                                   ns-net-nixos-zapret
                                   wait-for-file-/var/run/netns/nixos-zapret))
                    (auto-start? #t)
-                   (netns "/var/run/netns/nixos-zapret")))
+                   (wait-for-files '("/var/run/netns/nixos-zapret"))))
 
          (service container-service-type
                   (container-configuration
@@ -565,7 +565,7 @@ program.")))
                                   ns-net-nixos-tor
                                   wait-for-file-/var/run/netns/nixos-tor))
                    (auto-start? #t)
-                   (netns "/var/run/netns/nixos-tor")))
+                   (wait-for-files '("/var/run/netns/nixos-tor"))))
 
          (service container-service-type
                   (container-configuration
@@ -576,7 +576,7 @@ program.")))
                                   ns-net-nixos-gw
                                   wait-for-file-/var/run/netns/nixos-gw))
                    (auto-start? #f)
-                   (netns "/var/run/netns/nixos-gw")))
+                   (wait-for-files '("/var/run/netns/nixos-gw"))))
 
          (service container-service-type
                   (container-configuration
@@ -587,7 +587,7 @@ program.")))
                                   ns-net-nixos-wan
                                   wait-for-file-/var/run/netns/nixos-wan))
                    (auto-start? #t)
-                   (netns "/var/run/netns/nixos-wan")))
+                   (wait-for-files '("/var/run/netns/nixos-wan"))))
 
          (service container-service-type
                   (container-configuration
@@ -598,7 +598,7 @@ program.")))
                                   ns-net-nixos-antifilter
                                   wait-for-file-/var/run/netns/nixos-antifilter))
                    (auto-start? #t)
-                   (netns "/var/run/netns/nixos-antifilter")))
+                   (wait-for-files '("/var/run/netns/nixos-antifilter"))))
 
          (service container-service-type
                   (container-configuration
@@ -607,9 +607,11 @@ program.")))
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-majordomo
                                   ns-net-nixos-majordomo
-                                  wait-for-file-/var/run/netns/nixos-majordomo))
+                                  wait-for-file-/var/run/netns/nixos-majordomo
+                                  wait-for-file-/run/user/1000/wayland-1))
                    (auto-start? #t)
-                   (netns "/var/run/netns/nixos-majordomo")))
+                   (wait-for-files '("/var/run/netns/nixos-majordomo"
+                                     "/run/user/1000/wayland-1"))))
 
          (service container-service-type
                   (container-configuration
@@ -619,9 +621,11 @@ program.")))
                                   file-system-/srv/container/nixos-workstation
                                   file-system-/mnt/steam
                                   ns-net-nixos-workstation
-                                  wait-for-file-/var/run/netns/nixos-workstation))
+                                  wait-for-file-/var/run/netns/nixos-workstation
+                                  wait-for-file-/run/user/1000/wayland-1))
                    (auto-start? #t)
-                   (netns "/var/run/netns/nixos-workstation")))
+                   (wait-for-files '("/var/run/netns/nixos-workstation"
+                                     "/run/user/1000/wayland-1"))))
 
          (service container-service-type
                   (container-configuration
@@ -632,7 +636,7 @@ program.")))
                                   ns-net-nixos-dante
                                   wait-for-file-/var/run/netns/nixos-dante))
                    (auto-start? #t)
-                   (netns "/var/run/netns/nixos-dante")))
+                   (wait-for-files '("/var/run/netns/nixos-dante"))))
 
          (service container-service-type
                   (container-configuration
@@ -643,7 +647,7 @@ program.")))
                                   ns-net-nixos-hev
                                   wait-for-file-/var/run/netns/nixos-hev))
                    (auto-start? #t)
-                   (netns "/var/run/netns/nixos-hev")))
+                   (wait-for-files '("/var/run/netns/nixos-hev"))))
 
          (service container-service-type
                   (container-configuration
@@ -654,7 +658,7 @@ program.")))
                                   ns-net-nixos-kube103
                                   wait-for-file-/var/run/netns/nixos-kube103))
                    (auto-start? #t)
-                   (netns "/var/run/netns/nixos-kube103")))
+                   (wait-for-files '("/var/run/netns/nixos-kube103"))))
 
          (service container-service-type
                   (container-configuration
@@ -665,7 +669,7 @@ program.")))
                                   ns-net-nixos-bview
                                   wait-for-file-/var/run/netns/nixos-bview))
                    (auto-start? #t)
-                   (netns "/var/run/netns/nixos-bview")))
+                   (wait-for-files '("/var/run/netns/nixos-bview"))))
 
          (service container-service-type
                   (container-configuration
@@ -676,7 +680,7 @@ program.")))
                                   ns-net-guix-nanokvm
                                   wait-for-file-/var/run/netns/guix-nanokvm))
                    (auto-start? #f)
-                   (netns "/var/run/netns/guix-nanokvm")))
+                   (wait-for-files '("/var/run/netns/guix-nanokvm"))))
 
          (service container-service-type
                   (container-configuration
@@ -687,7 +691,7 @@ program.")))
                                   ns-net-fedora
                                   wait-for-file-/var/run/netns/fedora))
                    (auto-start? #f)
-                   (netns "/var/run/netns/fedora")))
+                   (wait-for-files '("/var/run/netns/fedora"))))
 
          (simple-service 'ns-net-nixos-majordomo shepherd-root-service-type
                          (list (shepherd-service

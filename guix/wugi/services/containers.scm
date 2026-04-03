@@ -30,7 +30,7 @@
            (stop #~(lambda ()
                      #f))
            (respawn? #f)))
-       files))
+       (delete-duplicates (apply append files))))
 
 (define wait-for-file-service-type
   (service-type
@@ -63,8 +63,8 @@
             (default #f))
   (auto-start? container-configuration-auto-start? ;boolean
                (default #f))
-  (netns container-configuration-netns ;string
-         (default #f)))
+  (wait-for-files container-configuration-wait-for-files ;list of strings
+                  (default #f)))
 
 (define (container-activation config)
   "Return the activation GEXP for CONFIG."
@@ -112,7 +112,7 @@
                                                        (list (container-configuration-container config))))
                                   (service-extension wait-for-file-service-type
                                                      (lambda (config)
-                                                       (container-configuration-netns config)))))
+                                                       (container-configuration-wait-for-files config)))))
                 (description "Run container.")))
 
 ;;; containers.scm ends here
