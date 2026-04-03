@@ -270,8 +270,6 @@
                       (invoke "ip" "netns" "exec" "guix-workstation" "ip" "link" "set" "eth0" "up")
                       (invoke "ip" "link" "set" "guix0" "master" "br0")
                       (invoke "ip" "link" "set" "guix0" "up")
-                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "addr" "add" "192.168.0.191/24" "dev" "eth0")
-                      (invoke "ip" "netns" "exec" "guix-workstation" "ip" "route" "add" "default" "via" "192.168.0.1")
                       (invoke "ip" "netns" "exec" "guix-workstation" "sysctl" "-w" "net.ipv4.ip_forward=1")
                       (invoke "ip" "netns" "exec" "guix-workstation" "iptables" "-A" "FORWARD" "-i" "eth0" "-o" "tapvpn1" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")
                       (invoke "ip" "netns" "exec" "guix-workstation" "iptables" "-A" "FORWARD" "-i" "tapvpn1" "-o" "eth0" "-m" "state" "--state" "RELATED,ESTABLISHED" "-j" "ACCEPT")

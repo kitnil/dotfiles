@@ -1,11 +1,6 @@
 ;; This is an operating system configuration template for a "Docker image"
 ;; setup, so it has barely any services at all.
 
-;; guix system image -t docker --network ./docker-image-workstation.scm
-;; skopeo copy docker-archive:/gnu/store/…-tor-docker-pack.tar.gz docker-daemon:example.org:5000/tor:latest --insecure-policy
-;; docker run --network=host --security-opt seccomp=unconfined --detach --name tor --network=host example.org:5000/tor
-;; docker exec --detach tor /gnu/store/…-tor-0.4.6.10/bin/tor -f /gnu/store/…-torrc
-
 (define-module (wugi system workstation-guixsd)
   #:use-module (gnu packages)
   #:use-module (gnu packages admin)
@@ -33,6 +28,7 @@
   #:use-module (gnu bootloader grub)
   #:use-module (gnu system)
   #:use-module (gnu system accounts)
+  #:use-module (gnu system linux-container)
   #:use-module (gnu system file-systems)
   #:use-module (gnu system shadow)
   #:use-module (guix channels)
@@ -43,7 +39,6 @@
   #:use-module (srfi srfi-1)
   #:use-module (wugi config)
   #:use-module (wugi etc guix channels workstation)
-  #:use-module (wugi home config workstation)
   #:use-module (wugi services desktop)
   #:use-module (wugi services docker)
   #:use-module (wugi services openvpn)
@@ -59,123 +54,156 @@
                    "Provide console login using the @command{mingetty}
 program.")))
 
+  (define %my-operating-system
+    (operating-system
+      (host-name "workstation")
+      (timezone "Europe/Moscow")
+      (locale "en_US.utf8")
+
+      ;; This is where user accounts are specified.  The "root" account is
+      ;; implicit, and is initially created with the empty password.
+      (users (append (list (user-account
+                            (name "oleg")
+                            (comment "Oleg Pykhalov")
+                            (group "users")
+                            (supplementary-groups '("wheel" "audio" "video"))
+                            (password (crypt "oleg" "NmhJoj")))
+                           (user-account (inherit %root-account)
+                                         (password (crypt "root" "uUxBgD"))))
+                     %base-user-accounts))
+
+      ;; Because the system will run in a Docker container, we may omit many
+      ;; things that would normally be required in an operating system
+      ;; configuration file.  These things include:
+      ;;
+      ;;   * bootloader
+      ;;   * file-systems
+      ;;   * services such as mingetty, udevd, slim, networking, dhcp
+      ;;
+      ;; Either these things are simply not required, or Docker provides
+      ;; similar services for us.
+
+      ;; This will be ignored.
+      (bootloader (bootloader-configuration
+                   (bootloader grub-bootloader)
+                   (targets '("does-not-matter"))))
+      ;; This will be ignored, too.
+      (file-systems (list (file-system
+                            (device "does-not-matter")
+                            (mount-point "/")
+                            (type "does-not-matter"))))
+
+      ;; Globally-installed packages.
+      (packages (append (list openssh)
+                        %base-packages))
+
+      (services (append (list (service dbus-root-service-type)
+                              (service elogind-service-type)
+                              seatd-service
+                              (service container-mingetty-service-type
+                                       (mingetty-configuration (tty "tty8")))
+                              (service avahi-service-type)
+                              (simple-service 'host-container-guix shepherd-root-service-type
+                                              (list
+                                               (shepherd-service
+                                                (provision '(host-container-guix))
+                                                (auto-start? #t)
+                                                (one-shot? #t)
+                                                (documentation "Provision Guix container.")
+                                                (requirement '())
+                                                (start #~(make-forkexec-constructor
+                                                          (list #$(file-append shepherd "/bin/herd")
+                                                                "--socket=/mnt/guix/var/run/shepherd/socket"
+                                                                "start" "container-guix")))
+                                                (respawn? #f))))
+                              (service skopeo-service-type
+                                       (skopeo-configuration
+                                        (policy-file
+                                         (local-file
+                                          (string-append
+                                           %distro-directory
+                                           "/wugi/system/etc/containers/policy.json")))))
+                              (service containerd-service-type)
+                              (service syslog-service-type
+                                       (syslog-configuration
+                                        (extra-options '("--rcfile=/etc/syslog.conf"
+                                                         "--no-forward"
+                                                         "--no-unixaf"
+                                                         "--no-klog"))))
+                              (service openvpn-service-type %openvpn-configuration-majordomo.ru)
+                              (service openvpn-service-type %openvpn-configuration-wugi.info))
+                        (modify-services %base-services
+                          (guix-service-type config =>
+                                             (guix-configuration
+                                              (channels %channels-workstation)
+                                              ;; (guix (guix-for-channels %channels-workstation))
+                                              (authorized-keys
+                                               (append
+                                                (map (lambda (file-name)
+                                                       (local-file
+                                                        (string-append %distro-directory "/wugi/etc/substitutes/" file-name)))
+                                                     '("bordeaux.guix.gnu.org.pub"
+                                                       "guix.wugi.info.pub"
+                                                       "mirror.brielmaier.net.pub"
+                                                       "substitutes.nonguix.org.pub"
+                                                       "vm1.wugi.info.pub"
+                                                       "vm2.wugi.info.pub"
+                                                       "guix-builder.pub"))
+                                                %default-authorized-guix-keys))
+                                              (substitute-urls '("http://runc-kube1-guix-builder.guix:5556"
+                                                                 "https://bordeaux.guix.gnu.org"
+                                                                 "https://substitutes.nonguix.org"
+                                                                 "http://ci.guix.trop.in"))))
+                          (delete shepherd-system-log-service-type))))
+
+      (sudoers-file (plain-file "sudoers"
+                                (string-join `("Defaults:root runcwd=*"
+                                               "root ALL=(ALL) ALL"
+                                               "%wheel ALL=(ALL) ALL"
+                                               "oleg ALL=(ALL) NOPASSWD:ALL")
+                                             "\n")))))
+
+  (define %my-containerized-operating-system
+    (containerized-operating-system %my-operating-system
+                                    (cons %store-mapping '())))
+
   (operating-system
-    (host-name "workstation")
-    (timezone "Europe/Moscow")
-    (locale "en_US.utf8")
-
-    ;; This is where user accounts are specified.  The "root" account is
-    ;; implicit, and is initially created with the empty password.
-    (users (append (list (user-account
-                          (name "oleg")
-                          (comment "Oleg Pykhalov")
-                          (group "users")
-                          (supplementary-groups '("wheel" "audio" "video"))
-                          (password (crypt "oleg" "NmhJoj")))
-                         (user-account (inherit %root-account)
-                                       (password (crypt "root" "uUxBgD"))))
-                   %base-user-accounts))
-
-    ;; Because the system will run in a Docker container, we may omit many
-    ;; things that would normally be required in an operating system
-    ;; configuration file.  These things include:
-    ;;
-    ;;   * bootloader
-    ;;   * file-systems
-    ;;   * services such as mingetty, udevd, slim, networking, dhcp
-    ;;
-    ;; Either these things are simply not required, or Docker provides
-    ;; similar services for us.
-
-    ;; This will be ignored.
-    (bootloader (bootloader-configuration
-                 (bootloader grub-bootloader)
-                 (targets '("does-not-matter"))))
-    ;; This will be ignored, too.
-    (file-systems (list (file-system
-                          (device "does-not-matter")
-                          (mount-point "/")
-                          (type "does-not-matter"))))
-
-    ;; Globally-installed packages.
-    (packages (append (list openssh)
-                      %base-packages))
-
-    (services (append (list (service dbus-root-service-type)
-                            (service guix-home-service-type
-                                     `(("oleg" ,(%workstation-home-environment))))
-                            (service elogind-service-type)
-                            seatd-service
-                            (service container-mingetty-service-type
-                                     (mingetty-configuration (tty "tty8")))
-                            (service avahi-service-type)
-                            (simple-service 'host-container-guix shepherd-root-service-type
-                                            (list
-                                             (shepherd-service
-                                              (provision '(host-container-guix))
-                                              (auto-start? #t)
-                                              (one-shot? #t)
-                                              (documentation "Provision Guix container.")
-                                              (requirement '())
-                                              (start #~(make-forkexec-constructor
-                                                        (list #$(file-append shepherd "/bin/herd")
-                                                              "--socket=/mnt/guix/var/run/shepherd/socket"
-                                                              "start" "container-guix")))
-                                              (respawn? #f))))
-                            (service skopeo-service-type
-                                     (skopeo-configuration
-                                      (policy-file
-                                       (local-file
-                                        (string-append
-                                         %distro-directory
-                                         "/wugi/system/etc/containers/policy.json")))))
-                            (service containerd-service-type)
-                            (service syslog-service-type
-                                     (syslog-configuration
-                                      (extra-options '("--rcfile=/etc/syslog.conf"
-                                                       "--no-forward"
-                                                       "--no-unixaf"
-                                                       "--no-klog"))))
-                            (service openvpn-service-type %openvpn-configuration-majordomo.ru)
-                            (service openvpn-service-type %openvpn-configuration-wugi.info)
-
-                            (service bluetooth-service-type
-                                     (bluetooth-configuration
-                                      (auto-enable? #t)
-                                      (just-works-repairing 'confirm)
-                                      (controller-mode 'dual)
-                                      (min-connection-interval 7)
-                                      (max-connection-interval 9)
-                                      (connection-latency 0)
-                                      (privacy 'device)))
-                            udev-rules-service-xbox)
-                      (modify-services %base-services
-                        (guix-service-type config =>
-                                           (guix-configuration
-                                            (channels %channels-workstation)
-                                            ;; (guix (guix-for-channels %channels-workstation))
-                                            (authorized-keys
-                                             (append
-                                              (map (lambda (file-name)
-                                                     (local-file
-                                                      (string-append %distro-directory "/wugi/etc/substitutes/" file-name)))
-                                                   '("bordeaux.guix.gnu.org.pub"
-                                                     "guix.wugi.info.pub"
-                                                     "mirror.brielmaier.net.pub"
-                                                     "substitutes.nonguix.org.pub"
-                                                     "vm1.wugi.info.pub"
-                                                     "vm2.wugi.info.pub"
-                                                     "guix-builder.pub"))
-                                              %default-authorized-guix-keys))
-                                            (substitute-urls '("http://runc-kube1-guix-builder.guix:5556"
-                                                               "https://bordeaux.guix.gnu.org"
-                                                               "https://substitutes.nonguix.org"
-                                                               "http://ci.guix.trop.in"))))
-                        (delete shepherd-system-log-service-type))))
-
-    (sudoers-file (plain-file "sudoers"
-                              (string-join `("Defaults:root runcwd=*"
-                                             "root ALL=(ALL) ALL"
-                                             "%wheel ALL=(ALL) ALL"
-                                             "oleg ALL=(ALL) NOPASSWD:ALL")
-                                           "\n")))))
+    (inherit %my-containerized-operating-system)
+    (kernel linux-libre)
+    (services
+     (append
+      (list (service static-networking-service-type
+                     (list
+                      (static-networking
+                       (provision '(eth0))
+                       (addresses (list
+                                   (network-address
+                                    (device "eth0")
+                                    (value "127.0.0.1/8")))))
+                      (static-networking
+                       (provision '(br0))
+                       (requirement '(eth0))
+                       (links (list
+                               (network-link
+                                (name "br0")
+                                (type 'bridge)
+                                (arguments '()))))
+                       (addresses (list
+                                   (network-address
+                                    (device "br0")
+                                    (value "192.168.0.191/32"))))
+                       (name-servers '("192.168.0.144")))
+                      (static-networking
+                       (provision '(networking))
+                       (requirement '(eth0 br0))
+                       (links (list
+                               (network-link
+                                (name "eth0")
+                                (arguments '((master . "br0"))))))
+                       (addresses '())))))
+      (modify-services (operating-system-user-services %my-containerized-operating-system)
+        (guix-service-type
+         config =>
+         (guix-configuration
+          (inherit config)
+          (chroot? #t))))))))
