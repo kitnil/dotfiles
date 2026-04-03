@@ -8,6 +8,8 @@
 (define (%workstation-guixsd-home-environment)
   (home-environment
    (inherit (%workstation-home-environment))
-   (service home-wayvnc-service-type
-            (wayvnc-configuration
-             (environment-variables '("WAYLAND_DISPLAY=wayland-1"))))))
+   (services
+    (list
+     (service home-wayvnc-service-type
+              (wayvnc-configuration
+               (environment-variables '("WAYLAND_DISPLAY=wayland-1"))))))))
