@@ -14,8 +14,13 @@
                               (and=> (getenv "GUIX_DBUS_SESSION_BUS_ADDRESS")
                                      (lambda (guix-dbus-session-bus-address)
                                        (setenv "DBUS_SESSION_BUS_ADDRESS"
-                                               guix-dbus-session-bus-address))))
-                             (_ #f)))
-                    (apply execl
-                           (append (list "/usr/bin/env" "/usr/bin/env" head)
-                                   tail)))))))
+                                               guix-dbus-session-bus-address)))
+                              (apply execl
+                                     (append (list "/usr/bin/env" "/usr/bin/env" head)
+                                             tail)))
+                             ;; Tries to find files relative to '/' directory.
+                             ("socialstream.desktop"
+                              (apply execl
+                                     (append (list "/usr/bin/env" "/usr/bin/env" "--chdir=/" head)
+                                             tail)))
+                             (_ #f))))))))
