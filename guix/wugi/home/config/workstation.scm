@@ -349,8 +349,6 @@ context.modules = [
 
          (service home-files-service-type)
 
-         (service home-niri-service-type)
-
          (service home-alacritty-service-type)
 
          (service home-bash-service-type
@@ -425,4 +423,7 @@ tls_trust_file /etc/ssl/certs/ca-certificates.crt\n")
 (define (%workstation-home-environment)
   (home-environment
    (packages %workstation-packages)
-   (services %workstation-services)))
+   (services
+    (append
+     (list (service home-niri-service-type))
+     %workstation-services))))
