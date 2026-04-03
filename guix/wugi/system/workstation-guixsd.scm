@@ -132,7 +132,6 @@ program.")))
                                           (string-append
                                            %distro-directory
                                            "/wugi/system/etc/containers/policy.json")))))
-                              (service containerd-service-type)
                               (service syslog-service-type
                                        (syslog-configuration
                                         (extra-options '("--rcfile=/etc/syslog.conf"
