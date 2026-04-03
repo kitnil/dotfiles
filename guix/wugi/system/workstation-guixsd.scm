@@ -103,19 +103,6 @@ program.")))
                               (service container-mingetty-service-type
                                        (mingetty-configuration (tty "tty8")))
                               (service avahi-service-type)
-                              (simple-service 'host-container-guix shepherd-root-service-type
-                                              (list
-                                               (shepherd-service
-                                                (provision '(host-container-guix))
-                                                (auto-start? #t)
-                                                (one-shot? #t)
-                                                (documentation "Provision Guix container.")
-                                                (requirement '())
-                                                (start #~(make-forkexec-constructor
-                                                          (list #$(file-append shepherd "/bin/herd")
-                                                                "--socket=/mnt/guix/var/run/shepherd/socket"
-                                                                "start" "container-guix")))
-                                                (respawn? #f))))
                               (service skopeo-service-type
                                        (skopeo-configuration
                                         (policy-file
