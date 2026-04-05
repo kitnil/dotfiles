@@ -73,6 +73,7 @@
                  '("Corpses"
                    "One Hand Axes"
                    "One Hand Maces"
+                   "Rune Daggers"
                    "Sceptres"
                    "Staves"
                    "Two Hand Axes"
