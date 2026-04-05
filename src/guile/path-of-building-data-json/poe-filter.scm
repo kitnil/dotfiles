@@ -1614,7 +1614,9 @@
                   poe-filter-blueprints+contracts+sanctum
                   poe-filter-not-identified-items)
 
-            poe-filters-weak-bases
+            (if ruthless?
+                '()
+                poe-filters-weak-bases)
             (poe-filters-good-bases (append '("Body Armour"
                                               "Boots"
                                               "Gloves"
