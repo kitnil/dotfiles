@@ -76,6 +76,8 @@
                    "Rune Daggers"
                    "Sceptres"
                    "Staves"
+                   "One Hand Swords"
+                   "Two Hand Swords"
                    "Two Hand Axes"
                    "Two Hand Maces"
                    "Wands"
@@ -87,9 +89,7 @@
                    "Quiver"
 
                    "Claw"
-                   "Dagger"
-                   "One Handed Sword"
-                   "Two Handed Sword"))
+                   "Dagger"))
 
             (map (lambda (weapon)
                    (string-append "--weapon-class=" weapon))
@@ -97,9 +97,7 @@
                    "Quiver"
 
                    "Claw"
-                   "Dagger"
-                   "One Hand Sword"
-                   "Two Hand Sword"))
+                   "Dagger"))
 
             (map (lambda (shield)
                    (string-append "--shield-subtype=" shield))
