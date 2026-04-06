@@ -187,7 +187,8 @@
                    %base-user-accounts))
 
     ;; Globally-installed packages.
-    (packages (append (map package-from-program-file
+    (packages (append (list wpa-supplicant)
+                      (map package-from-program-file
                            (list restic-pc0-backup
                                  restic-pc0-win11-backup
                                  restic-pc0-ntfsgames-backup))
