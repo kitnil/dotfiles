@@ -8,6 +8,7 @@
     pkgs.fuzzel
     pkgs.ipmitool
     pkgs.ipmiview
+    pkgs.jetbrains.pycharm-oss
     pkgs.mariadb.client
     pkgs.pass
     pkgs.skopeo
