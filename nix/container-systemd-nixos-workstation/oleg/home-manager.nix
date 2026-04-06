@@ -27,7 +27,6 @@ in {
     ../../modules/services/firefox.nix
     ../../modules/services/google-chrome.nix
     ../../modules/services/idea-community.nix
-    ../../modules/services/pycharm-community.nix
     ../../modules/services/vendir.nix
     ../../modules/services/wayland.nix
   ];
