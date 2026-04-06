@@ -200,6 +200,7 @@
 
   environment.systemPackages = with pkgs; [
     git
+    guile
   ];
 
   services.bird = {
