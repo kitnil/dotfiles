@@ -320,7 +320,7 @@
                       ;;
                       ;; This is a work around stability issues.  The specific
                       ;; values may need to be adjusted based on the system.
-                      (system* "sudo" "/bin/sh" "-c" "echo 's 1 2200 > /sys/class/drm/card0/device/pp_od_clk_voltage")
+                      (system* "sudo" "/bin/sh" "-c" "echo 's 1 2200' > /sys/class/drm/card0/device/pp_od_clk_voltage")
                       (system* "sudo" "/bin/sh" "-c" "echo 'c' > /sys/class/drm/card0/device/pp_od_clk_voltage")
 
                       (guard (c ((invoke-error? c)
