@@ -35,8 +35,9 @@ in
     pkgs.jetbrains.pycharm-oss
     pkgs.mariadb.client
     pkgs.pass
-    pkgs.skopeo
+    pkgs.ripgrep
     pkgs.robo3t
+    pkgs.skopeo
     pkgs.xwayland-satellite
   ]
   ++ (map (file: pkgs.writeScriptBin (builtins.baseNameOf file) (builtins.readFile file)) [
