@@ -33,6 +33,47 @@
     ./bash/mjru-vpn.sh
   ]);
 
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      env = {
+        TERM = "xterm-256color";
+      };
+      font = {
+        size = 10;
+      };
+      general = {
+        live_config_reload = false;
+      };
+      colors = {
+        primary = {
+          foreground = "0xFFFFFF";
+          background = "0x000000";
+        };
+        normal = {
+          black = "0x000000";
+          red = "0xB21818";
+          green = "0x66CD00";
+          yellow = "0xB26818";
+          blue = "0x4169e1";
+          magenta = "0xB218B2";
+          cyan = "0x18B2B2";
+          white = "0xB2B2B2";
+        };
+        bright = {
+          black = "0x686868";
+          red = "0xFF5454";
+          green = "0x54FF54";
+          yellow = "0xEEC900";
+          blue = "0x5454FF";
+          magenta = "0xFF54FF";
+          cyan = "0x54FFFF";
+          white = "0xFFFFFF";
+        };
+      };
+    };
+  };
+
   programs.ssh = {
     enable = true;
   };
