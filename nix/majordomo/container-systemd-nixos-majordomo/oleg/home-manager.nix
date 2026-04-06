@@ -57,6 +57,13 @@ in
     ./bash/mjru-vpn.sh
   ]);
 
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.adwaita-icon-theme;
+    name = "Adwaita";
+    size = 32;
+  };
+
   programs.alacritty = {
     enable = true;
     settings = {
