@@ -412,9 +412,9 @@ program.")))
                             (mount-point "/srv/container/nixos-gw")
                             (type "btrfs"))
                           (file-system
-                            (device (file-system-label "nixosmajordomo"))
-                            (mount-point "/srv/container/nixos-majordomo")
-                            (type "ext4"))
+                            (device (file-system-label "nixosmajordomoroot"))
+                            (mount-point "/srv/container/nixos-majordomo-root")
+                            (type "btrfs"))
                           (file-system
                             (device (file-system-label "nixostor"))
                             (mount-point "/srv/container/nixos-tor")
@@ -573,10 +573,10 @@ program.")))
 
          (service container-service-type
                   (container-configuration
-                   (bundle "/srv/container/nixos-majordomo")
+                   (bundle "/srv/container/nixos-majordomo-root")
                    (name "nixos-majordomo")
                    (requirement '(file-system-/sys/fs/cgroup
-                                  file-system-/srv/container/nixos-majordomo
+                                  file-system-/srv/container/nixos-majordomo-root
                                   ns-net-nixos-majordomo
                                   wait-for-file-/var/run/netns/nixos-majordomo
                                   wait-for-file-/run/user/1000/wayland-1))
