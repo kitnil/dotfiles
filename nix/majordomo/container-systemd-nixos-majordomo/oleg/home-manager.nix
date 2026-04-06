@@ -104,6 +104,23 @@ in
       };
     };
   };
+  programs.fuzzel = {
+    enable = true;
+    settings = {
+      border = {
+        radius = 8;
+      };
+      colors = {
+        background = "#000000ff";
+        text = "#ffffffff";
+        selection = "#2e8b57ff";
+        selection-text = "#ffffffff";
+        match = "#83a598ff";
+        selection-match = "#ebdbb2ff";
+        border = "#2e8b57ff";
+      };
+    };
+  };
 
   programs.ssh = {
     enable = true;
