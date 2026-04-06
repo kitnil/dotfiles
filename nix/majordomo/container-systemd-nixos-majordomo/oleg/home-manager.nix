@@ -33,6 +33,7 @@ in
     pkgs.ipmitool
     pkgs.ipmiview
     pkgs.jetbrains.pycharm-oss
+    pkgs.kubectl
     pkgs.mariadb.client
     pkgs.pass
     pkgs.ripgrep
