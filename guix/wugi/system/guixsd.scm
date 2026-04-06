@@ -449,13 +449,6 @@
                       (display #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/09-piraeus.sh")
                                              #:recursive? #t))
                       (newline)
-                      (display "sudo herd start container-guix-workstation\n")
-                      (format #t "PYTHON_TTY_DEVICE=~s PYTHON_TTY_STRING=~s ~a~%"
-                              "/dev/tty8"
-                              "password"
-                              #$(local-file (string-append %distro-directory "/dot_local/bin/python-tty")
-                                            #:recursive? #t))
-                      (newline)
 
                       (invoke "sudo" "mkdir" "-p" "/srv/runc/guix-workstation")
                       (invoke "sudo" "mount" "/dev/lvm1/guixworkstation" "/srv/runc/guix-workstation")
