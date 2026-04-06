@@ -260,12 +260,11 @@ EndSection\n")
   (string-append %distro-directory "/dotfiles/etc/ssl/ca.pem"))
 
 (define %mtls
-  (begin
-    (if (file-exists? %mtls-certificate)
-        (list (format #f "ssl_client_certificate ~a;"
-                      (local-file %mtls-certificate))
-              "ssl_verify_client on;")
-        '())))
+  (if (file-exists? %mtls-certificate)
+      (list #~(format #f "ssl_client_certificate ~a;"
+                      #$(local-file %mtls-certificate))
+            "ssl_verify_client on;")
+      '()))
 
 (define* (proxy host port
                 #:key
@@ -313,9 +312,7 @@ EndSection\n")
                (list (string-append listen ":80"))))
    (ssl-certificate (if ssl-key? (letsencrypt-certificate host) #f))
    (ssl-certificate-key (if ssl-key? (letsencrypt-key host) #f))
-   (raw-content (if (and mtls? (file-exists? %mtls-certificate))
-                    %mtls
-                    '()))))
+   (raw-content (if mtls? %mtls '()))))
 
 (define %nginx-lua-package-path
   (list lua-resty-core
