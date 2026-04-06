@@ -350,7 +350,6 @@
                  sshfs
                  sqlite unzip zip p7zip
                  curl wget
-                 iputils
 
                  texinfo
 

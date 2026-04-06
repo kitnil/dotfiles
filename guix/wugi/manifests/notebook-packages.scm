@@ -50,7 +50,6 @@
          git
          gnupg
          htop
-         iputils
          jq
          lm-sensors
          gnu-make

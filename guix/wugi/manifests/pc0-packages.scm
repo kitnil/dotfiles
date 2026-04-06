@@ -61,7 +61,6 @@
          gnu-make
          gnupg
          htop
-         iputils
          jq
          lm-sensors
          looking-glass-client
