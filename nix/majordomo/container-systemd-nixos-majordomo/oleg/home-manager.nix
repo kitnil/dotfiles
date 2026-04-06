@@ -5,6 +5,7 @@
     ./private.nix
   ];
   home.packages = [
+    pkgs.alacritty
     pkgs.fuzzel
     pkgs.ipmitool
     pkgs.ipmiview
