@@ -38,6 +38,7 @@ in
     pkgs.pass
     pkgs.ripgrep
     pkgs.robo3t
+    pkgs.rsync
     pkgs.skopeo
     pkgs.xwayland-satellite
   ]
