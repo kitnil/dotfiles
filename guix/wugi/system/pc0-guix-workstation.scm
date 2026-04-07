@@ -416,6 +416,10 @@ program.")))
                             (mount-point "/srv/container/nixos-majordomo-root")
                             (type "btrfs"))
                           (file-system
+                            (device (file-system-label "nixosmajordomomysql"))
+                            (mount-point "/srv/container/nixos-majordomo-mysql")
+                            (type "ext4"))
+                          (file-system
                             (device (file-system-label "nixostor"))
                             (mount-point "/srv/container/nixos-tor")
                             (type "btrfs"))
@@ -577,6 +581,7 @@ program.")))
                    (name "nixos-majordomo")
                    (requirement '(file-system-/sys/fs/cgroup
                                   file-system-/srv/container/nixos-majordomo-root
+                                  file-system-/srv/container/nixos-majordomo-mysql
                                   ns-net-nixos-majordomo
                                   wait-for-file-/var/run/netns/nixos-majordomo
                                   wait-for-file-/run/user/1000/wayland-1))
