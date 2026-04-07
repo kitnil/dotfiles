@@ -416,7 +416,7 @@ program.")))
                             (mount-point "/srv/container/nixos-majordomo-root")
                             (type "btrfs"))
                           (file-system
-                            (device (file-system-label "nixosmajordomomysql"))
+                            (device (file-system-label "nixosmajordomomy"))
                             (mount-point "/srv/container/nixos-majordomo-mysql")
                             (type "ext4"))
                           (file-system
