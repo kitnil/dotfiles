@@ -1671,7 +1671,8 @@
          (let ((out (derivation->output-path drv)))
            (display out)
            (newline)
-           (when backup?
-             (copy-file output (string-append output ".1")))
+           (let ((backup-file (string-append output ".1")))
+             (when (and backup? (file-exists? backup-file))
+               (copy-file output backup-file)))
            (when output
              (copy-file out output))))))
