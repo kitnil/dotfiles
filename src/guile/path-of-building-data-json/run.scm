@@ -104,6 +104,54 @@
                  '("Evasion"
                    "Evasion/Energy Shield"))))
 
+  (define templar-args
+    (append (map (lambda (defence)
+                   (string-append "--defence=" defence))
+                 '("Armour/Energy Shield"
+                   "Armour"
+                   "Energy Shield"))
+
+            (map (lambda (defence)
+                   (string-append "--exclude-defence=" defence))
+                 '("Armour/Evasion"
+                   "Evasion"
+                   "Evasion/Energy Shield"))
+
+            ;; (map (lambda (weapon)
+            ;;        (string-append "--exclude-weapon=" weapon))
+            ;;      '("Corpses"
+            ;;        "One Hand Axes"
+            ;;        "One Hand Maces"
+            ;;        "Rune Daggers"
+            ;;        "Sceptres"
+            ;;        "Staves"
+            ;;        "One Hand Swords"
+            ;;        "Two Hand Swords"
+            ;;        "Two Hand Axes"
+            ;;        "Two Hand Maces"
+            ;;        "Wands"
+            ;;        "Warstaves"))
+
+            ;; (map (lambda (weapon)
+            ;;        (string-append "--weapon=" weapon))
+            ;;      '("Bow"
+            ;;        "Quiver"
+            ;;        "Claw"
+            ;;        "Dagger"))
+
+            ;; (map (lambda (weapon)
+            ;;        (string-append "--weapon-class=" weapon))
+            ;;      '("Bow"
+            ;;        "Quiver"
+            ;;        "Claw"
+            ;;        "Dagger"))
+
+            ;; (map (lambda (shield)
+            ;;        (string-append "--shield-subtype=" shield))
+            ;;      '("Evasion"
+            ;;        "Evasion/Energy Shield"))
+            ))
+
   ;; duelist
   (apply invoke
          (append (list poe-filter-script "--backup" "--ruthless"
@@ -116,4 +164,11 @@
          (append (list poe-filter-script "--backup" "--ruthless"
                        (string-append "--output="
                                       (output-file "shadow.ruthlessfilter")))
-                 shadow-args)))
+                 shadow-args))
+
+  ;; templar
+  (apply invoke
+         (append (list poe-filter-script "--backup" "--ruthless"
+                       (string-append "--output="
+                                      (output-file "templar.filter")))
+                 templar-args)))
