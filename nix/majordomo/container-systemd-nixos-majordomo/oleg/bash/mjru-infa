@@ -37,6 +37,16 @@ WHERE equip_servers.equip_rack_id = equip_racks.equip_rack_id AND equip_racks.eq
 ORDER BY equip_racks.name;
 EOF
         ;;
+    motherboard)
+        mariadb -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF \
+            | awk '{$NF = "https://billing2.intr/servers/edit/"$NF; print}' \
+            | expand -t1 | column -t
+SELECT equip_datacenters.name AS dc, equip_racks.name AS rack, equip_servers.name AS name, equip_servers.dcid AS dcid, equip_servers.datacenter_number AS dcnum, equip_servers.model as motherboard, equip_servers.equip_server_id AS bil
+FROM equip_servers, equip_racks, equip_datacenters
+WHERE equip_servers.equip_rack_id = equip_racks.equip_rack_id AND equip_racks.equip_datacenter_id = equip_datacenters.equip_datacenter_id
+ORDER BY equip_racks.name;
+EOF
+        ;;
     client)
         mariadb -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF
 SELECT equip_servers.name,clients.email
