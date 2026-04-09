@@ -69,6 +69,7 @@ in
     gtk.enable = true;
     package = pkgs.adwaita-icon-theme;
     name = "Adwaita";
+    size = 16;
   };
 
   systemd.user.services.xwayland-satellite = {
