@@ -32,6 +32,9 @@
       system = "x86_64-linux";
     in
       {
+        overlay = final: prev: {
+          inherit (nixpkgs-21-11.legacyPackages.${system}) robo3t;
+        };
         packages.${system} =
           let
             pkgs = import nixpkgs {
@@ -166,6 +169,9 @@
                 {
                   nixpkgs.config.allowUnfree = true;
                   nixpkgs.system = system;
+                  nixpkgs.overlays = [
+                    self.overlay
+                  ];
                   environment.systemPackages = [
                     pkgs.binutils
                     pkgs.ethtool
@@ -200,7 +206,6 @@
                     oleg = ./container-systemd-nixos-majordomo/oleg/home-manager.nix;
                   };
                   extraSpecialArgs = {
-                    inherit (nixpkgs-21-11.legacyPackages.${system}) robo3t;
                     inherit (github-com-kitnil-nix-ipmiview.packages.${system})
                       ipmiview-wrapper;
                   };
