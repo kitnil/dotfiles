@@ -384,6 +384,11 @@
         firejail = prev.firejail.overrideAttrs (old: {
           configureFlags = [ "--disable-sandbox-check" ];
         });
+        gamescope = prev.gamescope.overrideAttrs (old: {
+          patches = old.patches ++ [
+            ./gamescope-clipboard.patch
+          ];;
+        });
       };
       nixosConfigurations = {
         container-systemd = nixpkgs.lib.nixosSystem {
