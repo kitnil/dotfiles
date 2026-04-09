@@ -384,6 +384,16 @@
         firejail = prev.firejail.overrideAttrs (old: {
           configureFlags = [ "--disable-sandbox-check" ];
         });
+        gamescope = prev.gamescope.overrideAttrs (old: {
+          src = prev.fetchFromGitHub {
+            owner = "kitnil";
+            repo = "gamescope";
+            rev = "bdf00037188de93d0a098e7183a202b7e551a1a6";
+            fetchSubmodules = true;
+            hash = "sha256-n+aeYoLVMhnucb17LvV5FHeMdjKH4vDxq/ahU6e8i28=";
+          };
+          patches = [];
+        });
       };
       nixosConfigurations = {
         container-systemd = nixpkgs.lib.nixosSystem {
