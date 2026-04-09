@@ -187,4 +187,5 @@
       ReserveVT = 0;
     };
   };
+  xdg.icons.fallbackCursorThemes = [ "Adwaita" ];
 }
