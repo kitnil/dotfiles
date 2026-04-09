@@ -67,8 +67,8 @@ in
   };
   home.pointerCursor = {
     gtk.enable = true;
-    package = pkgs.adwaita-icon-theme;
-    name = "Adwaita";
+    package = pkgs.vanilla-dmz;
+    name = "Vanilla-DMZ";
   };
 
   systemd.user.services.xwayland-satellite = {
