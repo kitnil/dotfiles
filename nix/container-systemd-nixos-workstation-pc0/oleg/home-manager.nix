@@ -71,10 +71,6 @@ in
     name = "Adwaita";
     size = 32;
   };
-  home.file.".local/share/icons/default" = {
-    source = "${pkgs.kdePackages.breeze}/share/icons/breeze_cursors/";
-    recursive = true;
-  };
 
   systemd.user.services.xwayland-satellite = {
     Unit = {

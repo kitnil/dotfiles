@@ -187,5 +187,4 @@
       ReserveVT = 0;
     };
   };
-  xdg.icons.fallbackCursorThemes = [ "breeze_cursors" ];
 }
