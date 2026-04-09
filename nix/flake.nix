@@ -387,7 +387,7 @@
         gamescope = prev.gamescope.overrideAttrs (old: {
           patches = old.patches ++ [
             ./gamescope-clipboard.patch
-          ];;
+          ];
         });
       };
       nixosConfigurations = {
