@@ -180,6 +180,15 @@ context.modules = [
         }
     }
 ]
+"))
+                        ;; https://www.reddit.com/r/archlinux/comments/190dvl8/pipewirewayland_how_to_stop_applications_from/
+                        `(".config/pipewire/pipewire.conf.d/99-stop-microphone-auto-adjust.conf"
+                          ,(mixed-text-file "99-stop-microphone-auto-adjust.conf" "\
+access.rules = [
+  {
+    actions = { update-props = { default_permissions = \"rx\" } }
+  }
+]
 ")))))
 
 (define* (runc-fuzzel container-name #:key launch-prefix)
