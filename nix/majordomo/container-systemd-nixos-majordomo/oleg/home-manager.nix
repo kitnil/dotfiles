@@ -19,6 +19,10 @@ let
       epkgs.wgrep
     ]
   ));
+  python-with-packages = pkgs.python3.withPackages (python-packages:
+    with python-packages; [
+      pymongo
+    ]);
 in
 {
   imports = [
@@ -27,6 +31,7 @@ in
   ];
   home.packages = [
     emacs-with-packages
+    python-with-packages
 
     pkgs.alacritty
     pkgs.fuzzel
