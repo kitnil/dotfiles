@@ -43,7 +43,6 @@
   #:use-module (wugi home services gtk)
   #:use-module (wugi home services rust-apps)
   #:use-module (wugi home services lisp)
-  #:use-module (wugi home services python)
   #:use-module (wugi home services nano)
   #:use-module (wugi home services dns)
   #:use-module (wugi home services web)
@@ -403,7 +402,6 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
                      ("RIPGREP_CONFIG_PATH" . "${HOME}/.config/ripgrep/ripgreprc")
                      ("SSHRC_BECOME" . "yes")
                      ("GRADLE_HOME" . "/opt/gradle")
-                     ("PYTHONSTARTUP" . "${HOME}/.pythonrc")
                      ("TMUXIFIER_LAYOUT_PATH" . "${HOME}/.tmuxifier-layouts")
                      ("EDITOR" . "emacsclient -nw -c")
                      ("MANWIDTH" . "80")
@@ -471,8 +469,6 @@ allow-preset-passphrase"))))
        home-mycli-service
 
        home-nano-service
-
-       home-python-service
 
        home-sbcl-service
 

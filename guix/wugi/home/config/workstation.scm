@@ -42,7 +42,6 @@
   #:use-module (wugi home services mime)
   #:use-module (wugi home services nano)
   #:use-module (wugi home services nix)
-  #:use-module (wugi home services python)
   #:use-module (wugi home services rust-apps)
   #:use-module (wugi home services shell)
   #:use-module (wugi home services terminals)
@@ -324,7 +323,6 @@ access.rules = [
         home-nix-service
         home-parallel-service
         home-postgresql-service
-        home-python-service
         home-qterminal-service
         home-ripgrep-service
         home-sbcl-service
@@ -397,7 +395,6 @@ access.rules = [
                       ("RIPGREP_CONFIG_PATH" . "${HOME}/.config/ripgrep/ripgreprc")
                       ("SSHRC_BECOME" . "yes")
                       ("GRADLE_HOME" . "/opt/gradle")
-                      ("PYTHONSTARTUP" . "${HOME}/.pythonrc")
                       ("TMUXIFIER_LAYOUT_PATH" . "${HOME}/.tmuxifier-layouts")
                       ("EDITOR" . "emacsclient -nw -c")
                       ("MANWIDTH" . "80")

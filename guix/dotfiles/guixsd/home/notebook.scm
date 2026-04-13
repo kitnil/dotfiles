@@ -22,7 +22,6 @@
              (home services gtk)
              (home services rust-apps)
              (home services lisp)
-             (home services python)
              (home services nano)
              (home services dns)
              (home services web)
@@ -253,7 +252,6 @@
    home-ripgrep-service
    home-screen-service
    home-sbcl-service
-   home-python-service
    home-bind-utils-service
    ;; home-shellcheck-service
    home-bin-service
