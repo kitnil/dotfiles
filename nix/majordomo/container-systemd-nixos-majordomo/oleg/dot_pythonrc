@@ -7,6 +7,7 @@ import os
 
 class MongoHms:
     """Connect to Mongo database and provide methods to control HMS."""
+    from bson.objectid import ObjectId
     import pymongo
 
     def __init__(self):
@@ -134,4 +135,17 @@ class MongoHms:
             "updated" : current_time,
             "_class" : "ru.majordomo.hms.appscat.model.Installer"
         })
+
+    def template_replace_container_registry(self):
+        for template in self.template.find():
+            if 'sourceUri' in template and template['sourceUri']:
+                if 'docker-registry.intr' in template['sourceUri']:
+                    pp(template)
+                    self.template.update_many({'_id': template['_id']},
+                                              {"$set": {"sourceUri":template['sourceUri'].replace('docker-registry.intr', 'docker-registry.corp1.majordomo.ru')}})
+            if 'deployImagePath' in template and template['deployImagePath']:
+                if 'docker-registry.intr' in template['deployImagePath']:
+                    pp(template)
+                    self.template.update_many({'_id': template['_id']},
+                                              {"$set": {"deployImagePath":template['deployImagePath'].replace('docker-registry.intr', 'docker-registry.corp1.majordomo.ru')}})
 
