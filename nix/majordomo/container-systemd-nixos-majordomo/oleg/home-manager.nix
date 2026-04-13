@@ -402,6 +402,12 @@ in
   };
 
   home.file = {
+    ".pythonrc" = {
+      text = builtins.readFile ./dot_pythonrc;
+    };
+  };
+
+  home.file = {
     ".mozilla/native-messaging-hosts/passff.json" = {
       text = builtins.toJSON {
         allowed_extensions = [ "passff@wugi.info" ];
