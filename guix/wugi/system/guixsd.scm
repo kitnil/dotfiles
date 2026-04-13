@@ -322,6 +322,9 @@
                       ;; values may need to be adjusted based on the system.
                       (system* "sudo" "/bin/sh" "-c" "echo 's 1 2200' > /sys/class/drm/card0/device/pp_od_clk_voltage")
                       (system* "sudo" "/bin/sh" "-c" "echo 'c' > /sys/class/drm/card0/device/pp_od_clk_voltage")
+                      ;; High temperature in performance mode, cannot change
+                      ;; performance mode to something different.
+                      (system* "sudo" "/bin/sh" "-c" "echo low > /sys/class/drm/card0/device/power_dpm_force_performance_level")
 
                       (guard (c ((invoke-error? c)
                                  (report-invoke-error c)
