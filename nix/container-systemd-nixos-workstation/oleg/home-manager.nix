@@ -76,6 +76,8 @@ in {
     emacs-with-packages
 
     rusty-path-of-building
+
+    yt-dlp
   ];
 
   home.file = {
