@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, python-with-packages, ... }:
 
 let
   emacs-with-packages = with pkgs; ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
@@ -19,10 +19,6 @@ let
       epkgs.wgrep
     ]
   ));
-  python-with-packages = pkgs.python3.withPackages (python-packages:
-    with python-packages; [
-      pymongo
-    ]);
 in
 {
   imports = [
@@ -31,7 +27,7 @@ in
   ];
   home.packages = [
     emacs-with-packages
-    python-with-packages
+    pkgs.python-with-packages
 
     pkgs.alacritty
     pkgs.fuzzel

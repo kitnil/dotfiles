@@ -34,6 +34,10 @@
       {
         overlay = final: prev: {
           inherit (nixpkgs-21-11.legacyPackages.${system}) robo3t;
+          python-with-packages = nixpkgs-21-11.legacyPackages.${system}.python3.withPackages (python-packages:
+            with python-packages; [
+              pymongo
+            ]);
         };
         packages.${system} =
           let
