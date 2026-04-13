@@ -77,6 +77,7 @@ in {
 
     rusty-path-of-building
 
+    mpv
     yt-dlp
   ];
 
