@@ -22,6 +22,7 @@ class MongoHms:
         self.service = self.myclient["staffResourceController"]["service"]
         self.socket = self.myclient["staffResourceController"]["socket"]
         self.service_socket = self.myclient["staffResourceController"]["serviceSocket"]
+        self.template = self.myclient["staffResourceController"]["template"]
         self.installer = self.myclient["appscat"]["installer"]
 
     def ip_address_to_int(self, ip_address):
