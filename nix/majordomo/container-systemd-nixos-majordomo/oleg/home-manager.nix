@@ -152,6 +152,7 @@ in
   };
 
   programs.bash = {
+    enable = true;
     bashrcExtra = ''
       . ${./mjru.bash}
     '';
