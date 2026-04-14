@@ -46,6 +46,7 @@ in
     pkgs.rsync
     pkgs.skopeo
     pkgs.xwayland-satellite
+    pkgs.wlvncc
   ]
   ++ (map (file: pkgs.writeScriptBin (builtins.baseNameOf file) (builtins.readFile file)) [
     ./bash/Majordomo_LLC_Root_CA.crt.sh
