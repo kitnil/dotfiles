@@ -30,6 +30,7 @@ in
     pkgs.python-with-packages
 
     pkgs.alacritty
+    pkgs.file
     pkgs.fluxcd
     pkgs.jq
     pkgs.fuzzel
