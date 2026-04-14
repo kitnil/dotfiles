@@ -30,6 +30,7 @@ in
     pkgs.python-with-packages
 
     pkgs.alacritty
+    pkgs.jq
     pkgs.fuzzel
     pkgs.ipmitool
     pkgs.ipmiview
