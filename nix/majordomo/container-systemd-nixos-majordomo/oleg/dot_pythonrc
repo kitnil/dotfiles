@@ -149,3 +149,9 @@ class MongoHms:
                     self.template.update_many({'_id': template['_id']},
                                               {"$set": {"deployImagePath":template['deployImagePath'].replace('docker-registry.intr', 'docker-registry.corp1.majordomo.ru')}})
 
+    def appscat_replace_container_registry(self):
+        for installer in self.installer.find():
+            if 'dockerImage' in installer and 'docker-registry.intr' in installer['dockerImage']:
+                pp(installer)
+                self.installer.update_many({'_id': installer['_id']},
+                                           {"$set": {"dockerImage":installer['dockerImage'].replace('docker-registry.intr', 'docker-registry.corp1.majordomo.ru')}})
