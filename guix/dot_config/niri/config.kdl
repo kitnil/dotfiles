@@ -769,4 +769,5 @@ binds {
 
 environment {
     GTK_THEME "Adwaita:dark"
+    _JAVA_AWT_WM_NONREPARENTING "1"
 }
