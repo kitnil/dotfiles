@@ -1414,6 +1414,21 @@
    (set-font-size 45)
    (continue? #t)))
 
+(define poe-filter-best-boots
+  (poe-item-filter-block-configuration
+   (commentary "Highlight boots.")
+   (base-types '("Fugitive Boots"))
+   (play-effect
+    (poe-item-filter-play-effect-configuration
+     (colour 'White)))
+      (minimap-icon
+    (poe-item-filter-minimap-icon-configuration
+     (enabled? #t)
+     (size 1)
+     (colour 'White)
+     (shape 'Hexagon)))
+   (continue? #t)))
+
 (define poe-filter-best-wands
   (poe-item-filter-block-configuration
    (commentary "Increase font size for high level wands base items.")
@@ -1637,7 +1652,8 @@
                       (not (null? (poe-item-filter-block-configuration-classes rule))))
                     (list (poe-filter-preferred-weapons weapon-classes)))
 
-            (list poe-filter-best-sceptres
+            (list poe-filter-best-boots
+                  poe-filter-best-sceptres
                   poe-filter-best-wands
                   poe-filter-best-staffs)
 
