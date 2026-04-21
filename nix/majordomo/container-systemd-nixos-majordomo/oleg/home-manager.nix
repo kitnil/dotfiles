@@ -37,6 +37,7 @@ in
     pkgs.fuzzel
     pkgs.ipmitool
     pkgs.ipmiview
+    pkgs.jetbrains.idea-oss
     pkgs.jetbrains.pycharm-oss
     pkgs.kubectl
     pkgs.mariadb.client
