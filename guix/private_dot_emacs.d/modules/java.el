@@ -1,5 +1,3 @@
-(add-hook 'java-mode-hook 'highlight-indent-guides-mode)
-
 (defconst wi-java--prettify-symbols-alist
   `(("@Bean" . ,(string-to-symbols "@instance-of-a-class")) ;fancy word
     ("@Autowired" . ,(string-to-symbols "@field-injection"))
