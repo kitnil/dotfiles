@@ -546,8 +546,6 @@ allow-preset-passphrase"))))
 
        ;; TODO: Add those
        ;; dot_config/guile/mariadb.scm
-       ;; dot_config/mjru/encrypted_config.scm
-       ;; dot_config/mjru/encrypted_firefox.scm
 
        ;; Symlinking to store breaks espanso, so use files instead.
        (simple-service 'espanso-config
