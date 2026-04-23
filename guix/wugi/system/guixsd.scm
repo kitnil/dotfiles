@@ -1218,6 +1218,8 @@ location / {
          ;; for topolvm
          (extra-special-file "/sbin/lvm"
                              (file-append lvm2 "/sbin/lvm"))
+         (extra-special-file "/sbin/losetup"
+                             (file-append util-linux-with-udev "/sbin/losetup"))
          ;; (extra-special-file "/bin/setquota")
 
          (udev-rules-service 'kvm
