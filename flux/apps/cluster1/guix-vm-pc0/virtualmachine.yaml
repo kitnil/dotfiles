@@ -8,7 +8,7 @@ spec:
       name: guix-dv
     spec:
       pvc:
-        storageClassName: topolvm-provisioner
+        storageClassName: topolvm-provisioner-pool0
         volumeMode: Block
         accessModes:
         - ReadWriteOnce
