@@ -9,11 +9,12 @@ spec:
     spec:
       pvc:
         storageClassName: topolvm-provisioner
+        volumeMode: Block
         accessModes:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 10Gi
+            storage: 16Gi
       source:
         http:
           url: https://iso.wugi.info/guix-system-vm-image-1.5.0.x86_64-linux.raw
