@@ -54,6 +54,7 @@ in
       jetbrains.pycharm-oss
 
       kubernetes-helm
+      kubevirt
     ];
   };
   programs.firefox = {
