@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2022, 2023, 2024, 2025 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2022, 2023, 2024, 2025, 2026 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -350,6 +350,7 @@
                               ":" #$(file-append gzip "/bin")
                               ":" #$(file-append kmod "/bin")
                               ":" #$(file-append util-linux "/bin")
+                              ":" #$(file-append util-linux "/sbin")
                               ":" #$(string-append
                                      (kubelet-configuration-kubelet config)
                                      "/bin")))
