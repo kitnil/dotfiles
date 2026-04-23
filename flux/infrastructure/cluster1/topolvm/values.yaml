@@ -10,7 +10,7 @@ lvmd:
   - name: vg0
     volume-group: vg0
     default: true
-    spare-gb: 10
+    spare-gb: 1
 
   # lvmd.affinity -- Specify affinity.
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
