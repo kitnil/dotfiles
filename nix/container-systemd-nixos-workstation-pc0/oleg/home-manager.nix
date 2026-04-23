@@ -56,6 +56,7 @@ in
       fluxcd
       kubernetes-helm
       kubevirt
+      tigervnc
     ];
   };
   programs.firefox = {
