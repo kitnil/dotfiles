@@ -53,6 +53,7 @@ in
 
       jetbrains.pycharm-oss
 
+      fluxcd
       kubernetes-helm
       kubevirt
     ];
