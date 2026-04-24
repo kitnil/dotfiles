@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: execute-in-vm-with-ssh-taskrun-clean
+spec:
+  serviceAccountName: execute-in-vm-task
+  taskRef:
+    kind: ClusterTask
+    name: execute-in-vm
+  params:
+  - name: vmName
+    value: vm-guix-datavolume
+  - name: secretName
+    value: ssh-secret
+  - name: script
+    value: |
+      #!/usr/bin/env bash
+      set -o nounset -o errexit -o pipefail -o xtrace
+      sudo -i touch /foo
+      # sudo -i guix pull --substitute-urls='https://bordeaux.guix.gnu.org https://mirrors.sjtug.sjtu.edu.cn/guix' --url=https://cgit.wugi.info/git/guix/guix --branch=codeberg-master
+      # sudo -i guix system reconfigure --substitute-urls='https://bordeaux.guix.gnu.org https://mirrors.sjtug.sjtu.edu.cn/guix' /etc/config.scm
