@@ -24,6 +24,7 @@ class MongoHms:
         self.socket = self.myclient["staffResourceController"]["socket"]
         self.service_socket = self.myclient["staffResourceController"]["serviceSocket"]
         self.template = self.myclient["staffResourceController"]["template"]
+        self.config_template = self.myclient["staffResourceController"]["configTemplate"]
         self.installer = self.myclient["appscat"]["installer"]
 
     def ip_address_to_int(self, ip_address):
@@ -155,3 +156,10 @@ class MongoHms:
                 pp(installer)
                 self.installer.update_many({'_id': installer['_id']},
                                            {"$set": {"dockerImage":installer['dockerImage'].replace('docker-registry.intr', 'docker-registry.corp1.majordomo.ru')}})
+
+    def config_template_replace_gitlab_url(self):
+        for config_template in self.config_template.find():
+            if 'fileLink' in config_template and 'gitlab.intr' in config_template['fileLink']:
+                pp(config_template)
+                self.config_template.update_many({'_id': config_template['_id']},
+                                                 {"$set": {"fileLink":config_template['fileLink'].replace('gitlab.intr', 'gitlab.corp1.majordomo.ru')}})
