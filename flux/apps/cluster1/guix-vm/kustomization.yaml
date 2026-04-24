@@ -4,3 +4,5 @@ namespace: guix-vm
 resources:
 - ../../base/guix
 - service.yaml
+patchesStrategicMerge:
+- virtualmachine.yaml

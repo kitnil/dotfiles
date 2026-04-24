@@ -1,0 +1,20 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: vm-guix-datavolume
+spec:
+  dataVolumeTemplates:
+  - metadata:
+      name: guix-dv
+    spec:
+      pvc:
+        storageClassName: topolvm-provisioner-pool0
+        volumeMode: Block
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 24Gi
+      source:
+        http:
+          url: https://iso.wugi.info/guix.raw
