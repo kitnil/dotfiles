@@ -57,6 +57,8 @@ in
       kubernetes-helm
       kubevirt
       tigervnc
+
+      libreoffice
     ];
   };
   programs.firefox = {
