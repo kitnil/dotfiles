@@ -33,22 +33,25 @@ in
     pkgs.fd
     pkgs.file
     pkgs.fluxcd
-    pkgs.jq
     pkgs.fuzzel
+    pkgs.gron
     pkgs.ipmitool
     pkgs.ipmiview
     pkgs.jetbrains.idea-oss
     pkgs.jetbrains.pycharm-oss
+    pkgs.jq
     pkgs.kubectl
+    pkgs.kubernetes-helm
+    pkgs.kubevirt
     pkgs.mariadb.client
     pkgs.pass
     pkgs.ripgrep
     pkgs.robo3t
     pkgs.rsync
     pkgs.skopeo
-    pkgs.xwayland-satellite
+    pkgs.tigervnc
     pkgs.wlvncc
-    pkgs.gron
+    pkgs.xwayland-satellite
     pkgs.yq
   ]
   ++ (map (file: pkgs.writeScriptBin (builtins.baseNameOf file) (builtins.readFile file)) [
