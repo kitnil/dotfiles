@@ -273,6 +273,10 @@ access.rules = [
                                   ,(program-file "fuzzel-nixos-workstation"
                                                  (runc-fuzzel "nixos-workstation"
                                                               #:launch-prefix "--launch-prefix=/etc/profiles/per-user/oleg/bin/fuzzel-wrapper")))
+                                `("bin/fuzzel-nixos-games"
+                                  ,(program-file "fuzzel-nixos-games"
+                                                 (runc-fuzzel "nixos-games"
+                                                              #:launch-prefix "--launch-prefix=/etc/profiles/per-user/oleg/bin/fuzzel-wrapper")))
                                 `("bin/fuzzel-nixos-majordomo"
                                   ,(program-file "fuzzel-nixos-majordomo"
                                                  (runc-fuzzel "nixos-majordomo")))))))
