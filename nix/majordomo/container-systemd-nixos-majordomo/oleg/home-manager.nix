@@ -432,6 +432,18 @@ in
           name = Oleg Pykhalov
       '';
     };
+    ".local/share/applications/k9s.desktop" = {
+      text = ''
+        [Desktop Entry]
+        Type=Application
+        Version=1.0
+        Name=k9s
+        Exec=${pkgs.k9s}/bin/k9s
+        Terminal=true
+        Categories=System;Monitor;ConsoleOnly;
+        Keywords=system;process;task
+      '';
+    };
     ".emacs".source = ../../../../guix/dot_emacs;
     ".emacs.d/modules/audio.el".source = ../../../../guix/private_dot_emacs.d/modules/audio.el;
     ".emacs.d/modules/blog.el".source = ../../../../guix/private_dot_emacs.d/modules/blog.el;
