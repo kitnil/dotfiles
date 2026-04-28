@@ -130,6 +130,9 @@ in
         selection-match = "#ebdbb2ff";
         border = "#2e8b57ff";
       };
+      main = {
+        terminal ="${pkgs.alacritty}/bin/alacritty -e";
+      };
     };
   };
 
