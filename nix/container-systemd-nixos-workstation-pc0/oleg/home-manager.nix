@@ -27,7 +27,7 @@ in
         selection-match = "#ebdbb2ff";
         border = "#2e8b57ff";
       };
-      terminal ="${pgks.alacritty}/bin/alacritty -c";
+      terminal ="${pkgs.alacritty}/bin/alacritty -c";
     };
   };
   programs.chromium = {
