@@ -441,6 +441,7 @@ in
         Type=Application
         Version=1.0
         Name=k9s
+        Icon=${pkgs.k9s.src}/assets/k9s.png
         Exec=${pkgs.k9s}/bin/k9s
         Terminal=true
         Categories=System;Monitor;ConsoleOnly;
