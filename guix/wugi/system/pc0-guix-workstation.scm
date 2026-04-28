@@ -263,6 +263,23 @@
                       (invoke "ip" "link" "set" "nixos24" "up")
                       (invoke "ip" "netns" "exec" "nixos-kube103" "ip" "addr" "add" "192.168.0.104/32" "dev" "eth0")))))
 
+(define ns-net-nixos-games-program-file
+  (program-file "ns-net-nixos-games"
+                (with-imported-modules (source-module-closure '((guix build utils)))
+                  #~(begin
+                      (use-modules (guix build utils))
+                      (setenv "PATH"
+                              (string-append "/run/current-system/profile/bin:"
+                                             "/run/current-system/profile/sbin"))
+                      (invoke "ip" "netns" "add" "nixos-games")
+                      (invoke "ip" "link" "add" "name" "nixos26" "type" "veth" "peer" "name" "nixos27")
+                      (invoke "ip" "link" "set" "dev" "nixos27" "netns" "nixos-games")
+                      (invoke "ip" "netns" "exec" "nixos-games" "ip" "link" "set" "nixos27" "name" "eth0")
+                      (invoke "ip" "netns" "exec" "nixos-games" "ip" "link" "set" "eth0" "up")
+                      (invoke "ip" "link" "set" "nixos26" "master" "br0")
+                      (invoke "ip" "link" "set" "nixos26" "up")
+                      (invoke "ip" "netns" "exec" "nixos-games" "ip" "addr" "add" "192.168.0.105/32" "dev" "eth0")))))
+
 (define ns-net-fedora-program-file
   (program-file "ns-net-fedora"
                 (with-imported-modules (source-module-closure '((guix build utils)))
@@ -464,6 +481,10 @@ program.")))
                             (mount-point "/srv/container/nixos-kube103")
                             (type "ext4"))
                           (file-system
+                            (device (file-system-label "nixosgames"))
+                            (mount-point "/srv/container/nixos-games")
+                            (type "btrfs"))
+                          (file-system
                             (device (file-system-label "steam"))
                             (mount-point "/mnt/steam")
                             (type "btrfs"))))
@@ -638,6 +659,17 @@ program.")))
 
          (service container-service-type
                   (container-configuration
+                   (bundle "/srv/container/nixos-games")
+                   (name "nixos-games")
+                   (requirement '(file-system-/sys/fs/cgroup
+                                  file-system-/srv/container/nixos-games
+                                  ns-net-nixos-games
+                                  wait-for-file-/var/run/netns/nixos-games))
+                   (auto-start? #t)
+                   (wait-for-files '("/var/run/netns/nixos-games"))))
+
+         (service container-service-type
+                  (container-configuration
                    (bundle "/srv/container/nixos-bview")
                    (name "nixos-bview")
                    (requirement '(file-system-/sys/fs/cgroup
@@ -796,6 +828,16 @@ program.")))
                                 (requirement '(networking))
                                 (start #~(make-forkexec-constructor
                                           (list #$ns-net-nixos-kube103-program-file)))
+                                (respawn? #f)
+                                (auto-start? #t)
+                                (one-shot? #t))))
+
+         (simple-service 'ns-net-nixos-games shepherd-root-service-type
+                         (list (shepherd-service
+                                (provision '(ns-net-nixos-games))
+                                (requirement '(networking))
+                                (start #~(make-forkexec-constructor
+                                          (list #$ns-net-nixos-games-program-file)))
                                 (respawn? #f)
                                 (auto-start? #t)
                                 (one-shot? #t))))
