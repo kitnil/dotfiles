@@ -184,7 +184,7 @@
         ]
       ];
       containerSystemdNixosGamesPc0Modules = builtins.concatLists [
-        containerSystemdNixosGamesModules
+        containerSystemdNixosWorkstationModules
         [
           ./container-systemd-nixos-games-pc0/hosts/nixos-systemd.nix
           {
