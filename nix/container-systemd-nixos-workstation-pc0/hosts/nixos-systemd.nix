@@ -71,46 +71,6 @@
     11434                       # ollama
     31247                       # prometheus mtr exporters
   ];
-  # https://nixos.wiki/wiki/Steam
-  programs.steam = {
-    enable = true;
-    # Open ports in the firewall for Steam Remote Play
-    remotePlay.openFirewall = true;
-    # Open ports in the firewall for Source Dedicated Server
-    dedicatedServer.openFirewall = true;
-    # Open ports in the firewall for Steam Local Network Game Transfers
-    localNetworkGameTransfers.openFirewall = true;
-    # https://github.com/nixos/nixpkgs/issues/437281
-    extraPackages = [
-      pkgs.adwaita-icon-theme
-      pkgs.gamescope
-      pkgs.mangohud
-      pkgs.xterm
-    ];
-    package = pkgs.steam.override {
-      extraLibraries = pkgs: [ pkgs.xorg.libxcb ];
-      extraEnv = {
-        MANGOHUD = true;
-        OBS_VKCAPTURE = true;
-      };
-      extraPkgs = pkgs: [
-        pkgs.xorg.libXcursor
-        pkgs.xorg.libXi
-        pkgs.xorg.libXinerama
-        pkgs.xorg.libXScrnSaver
-        pkgs.libpng
-        pkgs.libpulseaudio
-        pkgs.libvorbis
-        pkgs.stdenv.cc.cc.lib
-        pkgs.libkrb5
-        pkgs.keyutils
-        pkgs.gamemode
-      ];
-    };
-    extraCompatPackages = [
-      pkgs.proton-ge-bin
-    ];
-  };
   systemd.services.reload-systemd-vconsole-setup.enable = false;
 
   services.avahi = {

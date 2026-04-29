@@ -50,8 +50,6 @@ in
       yt-title-updater-python
       streamtitle
 
-      steam
-
       vulkan-tools
 
       jetbrains.pycharm-oss
