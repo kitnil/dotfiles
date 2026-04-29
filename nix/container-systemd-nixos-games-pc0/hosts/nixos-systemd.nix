@@ -165,7 +165,7 @@
   systemd.services."autovt@tty1" = {
     enable = false;
   };
-  systemd.services."getty@tty14" = {
+  systemd.services."getty@tty15" = {
     enable = true;
     wantedBy = [ "multi-user.target" ];
   };
