@@ -183,6 +183,19 @@
           }
         ]
       ];
+      containerSystemdNixosGamesPc0Modules = builtins.concatLists [
+        containerSystemdNixosGamesModules
+        [
+          ./container-systemd-nixos-games-pc0/hosts/nixos-systemd.nix
+          {
+            home-manager = {
+              users = {
+                oleg = ./container-systemd-nixos-games-pc0/oleg/home-manager.nix;
+              };
+            };
+          }
+        ]
+      ];
       containerSystemdNixosTorModules = builtins.concatLists [
         commonModules
         [
@@ -401,6 +414,9 @@
         };
         container-systemd-nixos-workstation-pc0 = nixpkgs.lib.nixosSystem {
           modules = containerSystemdNixosWorkstationPc0Modules;
+        };
+        container-systemd-nixos-games-pc0 = nixpkgs.lib.nixosSystem {
+          modules = containerSystemdNixosGamesPc0Modules;
         };
         container-systemd-nixos-tor = nixpkgs.lib.nixosSystem {
           modules = containerSystemdNixosTorModules;
