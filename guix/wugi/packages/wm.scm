@@ -199,3 +199,12 @@ many gaming-centric features such as:
 @item Limiting framerates.
 @end itemize")
     (license license:bsd-2)))
+
+(define-public niri-patched
+  (package
+    (inherit niri)
+    (name "niri-patched")
+    (source
+     (origin
+       (inherit (package-source niri))
+       (patches (search-patches "niri-global-shortcut-portal.patch"))))))
