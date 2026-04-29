@@ -239,7 +239,7 @@
             "allow": true,
             "type": "c",
             "major": 4,
-            "minor": 14,
+            "minor": 15,
             "access": "rw"
         },
         {
