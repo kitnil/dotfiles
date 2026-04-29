@@ -37,7 +37,6 @@
   };
   environment.systemPackages = [
     pkgs.guile
-    pkgs.mangohud
     pkgs.mtr
     pkgs.wireshark
   ];
