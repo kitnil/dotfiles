@@ -75,8 +75,6 @@ in {
 
     emacs-with-packages
 
-    rusty-path-of-building
-
     mpv
     yt-dlp
   ];

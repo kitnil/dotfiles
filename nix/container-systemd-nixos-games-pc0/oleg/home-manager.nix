@@ -11,6 +11,7 @@ in
     pkgs.firejail
     pkgs.fuzzel-wrapper
     pkgs.tor-browser
+    pkgs.rusty-path-of-building
   ];
   programs.fuzzel = {
     enable = true;
