@@ -8,9 +8,7 @@ in
     ./../private.nix
   ];
   home.packages = [
-    pkgs.firejail
     pkgs.fuzzel-wrapper
-    pkgs.tor-browser
     pkgs.rusty-path-of-building
   ];
   programs.fuzzel = {
@@ -33,46 +31,15 @@ in
       };
     };
   };
-  programs.chromium = {
-    enable = true;
-    commandLineArgs = [ "--ozone-platform=wayland" ];
-  };
   programs.obs-studio = {
     enable = true;
     plugins = with pkgs; [
-      espanso-wayland
-
       obs-studio-plugins.obs-multi-rtmp
       obs-studio-plugins.obs-pipewire-audio-capture
       obs-studio-plugins.obs-vkcapture
 
-      socialstream
-
-      yt-title-updater-python
-      streamtitle
-
-      steam
-
       vulkan-tools
-
-      jetbrains.pycharm-oss
-
-      fluxcd
-      kubernetes-helm
-      kubevirt
-      tigervnc
-
-      libreoffice
     ];
-  };
-  programs.firefox = {
-    profiles = {
-      stream-manager = (firefoxBaseProfile { ech = false; }) // {
-        name = "stream-manager";
-        id = 18243;
-        isDefault = false;
-      };
-    };
   };
   home.pointerCursor = {
     gtk.enable = true;
