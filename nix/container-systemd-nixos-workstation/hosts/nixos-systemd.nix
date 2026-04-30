@@ -40,4 +40,8 @@
 
   # Do not override group owner for files in /dev/snd directory.
   users.groups.audio.gid = lib.mkForce 116;
+
+  documentation = {
+    enable = true;
+  };
 }
