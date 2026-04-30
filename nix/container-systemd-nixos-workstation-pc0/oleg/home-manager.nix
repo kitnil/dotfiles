@@ -8,6 +8,7 @@ in
     ./../private.nix
   ];
   home.packages = [
+    pkgs.filezilla
     pkgs.firejail
     pkgs.fuzzel-wrapper
     pkgs.tor-browser
