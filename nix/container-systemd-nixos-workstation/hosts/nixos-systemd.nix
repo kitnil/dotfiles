@@ -43,6 +43,7 @@
 
   documentation = {
     enable = true;
+    cache.enable = true;
     doc.enable = true;
     info.enable = true;
     man.enable = true;
