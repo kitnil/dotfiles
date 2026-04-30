@@ -41,8 +41,14 @@
   # Do not override group owner for files in /dev/snd directory.
   users.groups.audio.gid = lib.mkForce 116;
 
+  environment.systemPackages = [
+    pkgs.man-pages
+    pkgs.man-pages-posix
+  ];
+
   documentation = {
     enable = true;
+    dev.enable = true;
     doc.enable = true;
     info.enable = true;
     man = {
