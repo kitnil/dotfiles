@@ -44,6 +44,7 @@ in
     pkgs.kubernetes-helm
     pkgs.kubevirt
     pkgs.mariadb.client
+    pkgs.parallel
     pkgs.pass
     pkgs.ripgrep
     pkgs.robo3t
