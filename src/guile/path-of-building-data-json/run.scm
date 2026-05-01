@@ -73,7 +73,6 @@
                  '("Corpses"
                    "One Hand Axes"
                    "One Hand Maces"
-                   "Rune Daggers"
                    "Sceptres"
                    "Staves"
                    "One Hand Swords"
