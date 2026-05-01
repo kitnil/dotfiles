@@ -50,7 +50,6 @@
   #:use-module (wugi home services video)
   #:use-module (wugi home services web)
   #:use-module (wugi manifests workstation)
-  #:use-module (wugi packages wm)
   #:use-module (wugi utils)
   #:export (%workstation-packages
             %workstation-services
@@ -436,7 +435,5 @@ tls_trust_file /etc/ssl/certs/ca-certificates.crt\n")
    (packages %workstation-packages)
    (services
     (append
-     (list (service home-niri-service-type
-                    (niri-configuration
-                     (package niri-patched))))
+     (list (service home-niri-service-type))
      %workstation-services))))
