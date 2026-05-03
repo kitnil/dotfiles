@@ -576,12 +576,10 @@
    (socket-group (poe-item-filter-conditional-value-configuration
                   (value '3RGB)
                   (operator '>=)))
-   (set-text-color
+   (set-background-color
     (poe-item-filter-color-configuration
-     (red 30) (green 190) (blue 190) (alpha 255)))
-   (set-border-color
-    (poe-item-filter-color-configuration
-     (red 30) (green 190) (blue 190) (alpha 255)))))
+     (red 160) (green 82) (blue 45)
+     (alpha 230)))))
 
 (define poe-filter-vendor-3-green-sockets
   (poe-item-filter-block-configuration
