@@ -567,9 +567,9 @@
      (colour 'Red)
      (shape 'Star)))))
 
-(define poe-filter-vendor-3-sockets
+(define poe-filter-vendor-recipe-chromatic-orb
   (poe-item-filter-block-configuration
-   (commentary "Highlight sockets vendor recipe.")
+   (commentary "Highlight Chromatic Orb vendor recipe.")
    (area-level (poe-item-filter-conditional-value-configuration
                 (value 75)
                 (operator '<)))
@@ -1666,7 +1666,7 @@
                   poe-filter-memory-strands
                   poe-filter-scrolls
                   poe-filter-vendor-5-linked-sockets
-                  poe-filter-vendor-3-sockets
+                  poe-filter-vendor-recipe-chromatic-orb
                   poe-filter-vendor-3-green-sockets
                   poe-filter-vendor-6-sockets
                   poe-filter-unique
