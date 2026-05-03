@@ -523,6 +523,14 @@
    (base-types '("Portal Scroll"
                  "Scroll of Wisdom"))))
 
+(define poe-filter-transparent-background
+  (poe-item-filter-block-configuration
+   (commentary "Transparent background.")
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 0) (blue 0) (alpha 210)))
+   (continue? #t)))
+
 (define poe-filter-vendor-5-linked-sockets
   (poe-item-filter-block-configuration
    (commentary "Highlight 5 linked sockets.")
@@ -540,7 +548,11 @@
      (red 255) (green 0) (blue 0) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 255) (green 255) (blue 255) (alpha 255)))
+     (red 255) (green 255) (blue 255)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (play-alert-sound
     (poe-item-filter-play-alert-sound-configuration
      (id 6)
@@ -696,7 +708,11 @@
      (red 255) (green 0) (blue 0) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 255) (green 255) (blue 255) (alpha 255)))
+     (red 255) (green 255) (blue 255)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (play-alert-sound
     (poe-item-filter-play-alert-sound-configuration
      (id 6)
@@ -763,7 +779,11 @@
      (red 0) (green 0) (blue 0) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 249) (green 150) (blue 25) (alpha 255)))
+     (red 249) (green 150) (blue 25)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (play-alert-sound
     (poe-item-filter-play-alert-sound-configuration
      (id 2)
@@ -816,7 +836,11 @@
      (red 0) (green 0) (blue 0) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 120) (green 200) (blue 160) (alpha 255)))
+     (red 120) (green 200) (blue 160)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (play-alert-sound
     (poe-item-filter-play-alert-sound-configuration
      (id 2)
@@ -843,7 +867,11 @@
      (red 255) (green 178) (blue 135) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 20) (green 20) (blue 0) (alpha 255)))
+     (red 20) (green 20) (blue 0)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (play-effect
     (poe-item-filter-play-effect-configuration
      (colour 'Orange)))))
@@ -860,7 +888,11 @@
      (red 0) (green 0) (blue 0) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 213) (green 159) (blue 0) (alpha 255)))
+     (red 213) (green 159) (blue 0)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (minimap-icon
     (poe-item-filter-minimap-icon-configuration
      (enabled? #t)
@@ -880,7 +912,11 @@
      (red 0) (green 0) (blue 0) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 0) (green 100) (blue 150) (alpha 255)))
+     (red 0) (green 100) (blue 150)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (continue? #t)))
 
 (define poe-filter-jewelry-best
@@ -905,7 +941,11 @@
      (red 0) (green 0) (blue 0) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 38) (green 0) (blue 86) (alpha 255)))
+     (red 38) (green 0) (blue 86)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (set-font-size 45)
    (continue? #t)))
 
@@ -918,7 +958,11 @@
      (red 0) (green 0) (blue 0) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 38) (green 0) (blue 86) (alpha 255)))
+     (red 38) (green 0) (blue 86)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (set-font-size 45)
    (continue? #t)))
 
@@ -951,7 +995,11 @@
      (red 74) (green 230) (blue 58) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 20) (green 20) (blue 0) (alpha 255)))
+     (red 20) (green 20) (blue 0)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (play-alert-sound
     (poe-item-filter-play-alert-sound-configuration
      (id 3)
@@ -978,10 +1026,11 @@
      (red 255) (green 0) (blue 255) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 100)
-     (green 0)
-     (blue 100)
-     (alpha 255)))
+     (red 100) (green 0) (blue 100)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (play-alert-sound
     (poe-item-filter-play-alert-sound-configuration
      (id 3)
@@ -1007,7 +1056,11 @@
      (red 0) (green 0) (blue 0) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 235) (green 235) (blue 235) (alpha 255)))
+     (red 235) (green 235) (blue 235)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (play-alert-sound
     (poe-item-filter-play-alert-sound-configuration
      (id 5)
@@ -1032,10 +1085,11 @@
      (red 0) (green 240) (blue 190) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 47)
-     (green 0)
-     (blue 74)
-     (alpha 255)))
+     (red 47) (green 0) (blue 74)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (play-effect
     (poe-item-filter-play-effect-configuration
      (colour 'Purple)))
@@ -1098,7 +1152,11 @@
      (red 255) (green 0) (blue 0) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 255) (green 255) (blue 255) (alpha 255)))
+     (red 255) (green 255) (blue 255)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (play-alert-sound
     (poe-item-filter-play-alert-sound-configuration
      (id 6)
@@ -1183,7 +1241,11 @@
      (red 255) (green 178) (blue 135) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 20) (green 20) (blue 0) (alpha 255)))
+     (red 20) (green 20) (blue 0)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (play-effect
     (poe-item-filter-play-effect-configuration
      (colour 'Orange)))))
@@ -1200,7 +1262,11 @@
      (red 255) (green 85) (blue 85) (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 40) (green 0) (blue 30) (alpha 255)))
+     (red 40) (green 0) (blue 30)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (play-effect
     (poe-item-filter-play-effect-configuration
      (colour 'Yellow)))
@@ -1477,18 +1543,20 @@
      (alpha 255)))
    (set-background-color
     (poe-item-filter-color-configuration
-     (red 25)
-     (green 100)
-     (blue 75)
-     (alpha 255)))
+     (red 25) (green 100) (blue 75)
+     (alpha
+      (poe-item-filter-color-configuration-alpha
+       (poe-item-filter-block-configuration-set-background-color
+        poe-filter-transparent-background)))))
    (continue? #t)))
 
 (define %poe-filter-flasks-color
   (poe-item-filter-color-configuration
-   (red 140)
-   (green 60)
-   (blue 25)
-   (alpha 255)))
+   (red 140) (green 60) (blue 25)
+   (alpha
+    (poe-item-filter-color-configuration-alpha
+     (poe-item-filter-block-configuration-set-background-color
+      poe-filter-transparent-background)))))
 
 (define poe-filter-utility-flasks
   (poe-item-filter-block-configuration
@@ -1547,14 +1615,6 @@
    (rarity '(Magic Rare Unique))
    (identified? #t)
    (show? #f)
-   (continue? #t)))
-
-(define poe-filter-transparent-background
-  (poe-item-filter-block-configuration
-   (commentary "Transparent background.")
-   (set-background-color
-    (poe-item-filter-color-configuration
-     (red 0) (green 0) (blue 0) (alpha 210)))
    (continue? #t)))
 
 (define (main args)
