@@ -1546,7 +1546,16 @@
    (commentary "Hide identified items.")
    (rarity '(Magic Rare Unique))
    (identified? #t)
-   (show? #f)))
+   (show? #f)
+   (continue? #t)))
+
+(define poe-filter-transparent-background
+  (poe-item-filter-block-configuration
+   (commentary "Transparent background.")
+   (set-background-color
+    (poe-item-filter-color-configuration
+     (red 0) (green 0) (blue 0) (alpha 210)))
+   (continue? #t)))
 
 (define (main args)
   (define opts
@@ -1588,7 +1597,8 @@
   (define backup?
     (assoc-ref opts 'backup?))
   (define poe-filter-blocks
-    (append (if ruthless? (list poe-filter-level-gems) '())
+    (append (list poe-filter-transparent-background)
+            (if ruthless? (list poe-filter-level-gems) '())
             (list poe-filter-basic
                   poe-filter-crafting
                   poe-filter-quality-low-level
