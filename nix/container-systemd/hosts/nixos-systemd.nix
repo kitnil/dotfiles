@@ -11,7 +11,6 @@
   ];
 
   boot.isContainer = true;
-  boot.loader.initScript.enable = true;
   boot.tmp = {
     useTmpfs = true;
   };
