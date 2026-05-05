@@ -51,6 +51,7 @@ in
     pkgs.robo3t
     pkgs.rsync
     pkgs.skopeo
+    pkgs.sshpass
     pkgs.tigervnc
     pkgs.wlvncc
     pkgs.xwayland-satellite
