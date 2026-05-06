@@ -42,6 +42,10 @@ lvmd:
     operator: Equal
     effect: NoSchedule
 
+  prometheus:
+    podMonitor:
+      enabled: true
+
 storageClasses:
 - name: topolvm-provisioner  # Defines name of storage class.
   storageClass:
