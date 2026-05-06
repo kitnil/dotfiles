@@ -95,3 +95,7 @@ node:
   - key: edge.cluster.local/not-schedulable
     operator: Equal
     effect: NoSchedule
+
+  prometheus:
+    podMonitor:
+      enabled: true
